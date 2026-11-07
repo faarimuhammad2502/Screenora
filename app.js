@@ -68,12 +68,12 @@
       gapFootnote: 'Celah ini berpotensi menurunkan skor filter awal pada ATS korporasi multinasional.',
       rewriteHead: 'Optimasi Kalimat Berdampak (Formula XYZ)',
       copyBtn: 'Salin Teks',
-      proBannerTitle: 'Ingin Bedah Tuntas Seluruh Kalimat CV & Dapatkan Format ATS Baru?',
-      proBannerDesc: 'Dapatkan laporan komprehensif 10 halaman, bedah seluruh butir pengalaman, atau jadwalkan konsultasi 1-on-1 bersama praktisi HR bersertifikat.',
-      qrisModalTitle: 'Laporan Diagnostik 10 Halaman & Format ATS',
-      qrisModalSubtitle: 'Akses instan bedah seluruh kalimat pengalaman, deteksi celah ATS lengkap, dan template siap pakai.',
-      consultModalTitle: 'Konsultasi 1-on-1 bersama HR & Career Specialist',
-      consultModalSubtitle: 'Sesi privat tatap muka daring untuk bedah portofolio, evaluasi kesiapan profil, dan latihan simulasi wawancara kerja nyata.',
+      proBannerTitle: 'Laporan Lengkap & Sesi Konsultasi Privat (Segera Hadir)',
+      proBannerDesc: 'Fitur generator laporan 10 halaman & sesi mentoring saat ini sedang disiapkan. Seluruh diagnostik dasar Screenora sekarang 100% Gratis. Punya pertanyaan atau saran? Hubungi Faari via email.',
+      qrisModalTitle: 'Laporan Diagnostik 10 Halaman (Segera Hadir)',
+      qrisModalSubtitle: 'Fitur unduh laporan 10 halaman dan template ATS sedang dalam tahap pengembangan. Saat ini Screenora 100% Gratis!',
+      consultModalTitle: 'Pusat Diskusi, Masukan & Konsultasi Karir',
+      consultModalSubtitle: 'Sesi mentoring privat tatap muka saat ini sedang disiapkan. Seluruh fitur pemindaian dasar Screenora 100% Gratis. Untuk pertanyaan, kritik, atau masukan pengembangan, silakan hubungi kami via email.',
       legalDisclaimer: 'Screenora adalah alat simulasi dan diagnostik persiapan karir independen berbasis algoritma heuristik, tidak berafiliasi atau menjamin penerimaan kerja di instansi, BUMN, maupun perusahaan mana pun.',
       toastCopied: 'Kalimat rekomendasi berhasil disalin ke clipboard!',
       toastSampleLoaded: 'Sampel profil kandidat berhasil dimuat!',
@@ -117,12 +117,12 @@
       gapFootnote: 'These gaps may trigger early automated disqualification on multinational ATS filters.',
       rewriteHead: 'High-Impact Sentence Optimization (XYZ Formula)',
       copyBtn: 'Copy Text',
-      proBannerTitle: 'Want a Complete Line-by-Line CV Audit & New ATS Template?',
-      proBannerDesc: 'Get a 10-page diagnostic breakdown, complete experience overhaul, or book a private 1-on-1 session with a certified HR specialist.',
-      qrisModalTitle: '10-Page Diagnostic Report & ATS Format',
-      qrisModalSubtitle: 'Instant access to full XYZ sentence breakdown, ATS gap diagnostics, and ready-to-use template.',
-      consultModalTitle: '1-on-1 Consultation with HR & Career Specialist',
-      consultModalSubtitle: 'Private live 1-on-1 session for portfolio audit, profile readiness review, and real STAR interview simulation.',
+      proBannerTitle: 'Complete Diagnostic Report & Private Mentoring (Coming Soon)',
+      proBannerDesc: 'The 10-page diagnostic report & private consultation are currently in development. Basic Screenora diagnostic features are 100% Free. Questions or feedback? Contact Faari directly via email.',
+      qrisModalTitle: '10-Page Diagnostic Report (Coming Soon)',
+      qrisModalSubtitle: 'The 10-page deep-dive report & ATS template download are in development. Screenora is currently 100% Free!',
+      consultModalTitle: 'Career Discussion, Feedback & Mentoring (Coming Soon)',
+      consultModalSubtitle: 'Private 1-on-1 mentoring sessions are currently in development. Screenora is 100% Free to use. For questions, discussion, or feedback, email Faari directly!',
       legalDisclaimer: 'Screenora is an independent career diagnostic simulation based on heuristic algorithms, not affiliated with or guaranteeing job offers at any specific company.',
       toastCopied: 'Optimized sentence copied to clipboard!',
       toastSampleLoaded: 'Candidate sample profile loaded successfully!',
@@ -1691,7 +1691,7 @@ KEAHLIAN & KOMPETENSI
     // Dynamically update WhatsApp consultation link with contextual role & score
     if (DOM.consultWhatsAppBtn) {
       const targetRoleTitle = res.roleTitle || 'HR / Specialist';
-      const waMsg = `Halo Kak Faari, saya baru saja memindai CV di Screenora untuk posisi ${targetRoleTitle} (Skor ATS: ${res.score}%). Saya tertarik untuk konsultasi 1-on-1 bedah CV dan simulasi wawancara STAR. Mohon info ketersediaan jadwalnya ya Kak. Terima kasih!`;
+      const waMsg = `Halo Kak Faari, saya baru saja memindai CV di Screenora untuk posisi ${targetRoleTitle} (Skor ATS: ${res.score}%). Saya ingin tanya lebih lanjut dan memberikan masukan/saran terkait hasil evaluasi CV saya. Terima kasih!`;
       DOM.consultWhatsAppBtn.href = `https://wa.me/6285892344722?text=${encodeURIComponent(waMsg)}`;
     }
 
