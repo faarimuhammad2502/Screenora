@@ -1318,6 +1318,9 @@ KEAHLIAN & KOMPETENSI
         if (!window.pdfjsLib) {
           throw new Error('PDF.js engine is not ready.');
         }
+        if (!window.pdfjsLib.GlobalWorkerOptions.workerSrc) {
+          window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
         const arrayBuffer = await file.arrayBuffer();
         const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
         const pageTextPromises = [];

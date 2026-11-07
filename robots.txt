@@ -1,0 +1,6 @@
+# Screenora Search Engine Crawler Policy
+User-agent: *
+Allow: /
+
+# Sitemap Index
+Sitemap: https://screenora.vercel.app/sitemap.xml
