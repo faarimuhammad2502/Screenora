@@ -203,9 +203,9 @@
         <div class="flex flex-col">
           <div class="flex items-center gap-2.5">
             <span class="font-heading font-extrabold text-base tracking-wider text-dark-textPri dark:text-dark-textPri">SCREENORA</span>
-            <span class="hidden md:inline-block text-[11px] font-mono text-dark-textMuted tracking-wider pl-2.5 border-l border-dark-border">Diagnostic Studio</span>
+            <span class="hidden md:inline-block text-[11px] font-mono text-dark-textMuted tracking-wider pl-2.5 border-l border-dark-border" data-i18n="navStudio">Diagnostic Studio</span>
           </div>
-          <span class="text-[11px] text-dark-textSec dark:text-dark-textSec hidden sm:block tracking-tight" data-i18n="navSubtitle">AI Resume Intelligence & ATS Diagnostic</span>
+          <span class="text-[11px] text-dark-textSec dark:text-dark-textSec hidden sm:block tracking-tight" data-i18n="navSubtitle">Kecerdasan Resume & Diagnostik ATS</span>
         </div>
       </a>
 
@@ -261,7 +261,7 @@
     <section class="mb-10 text-center max-w-3xl mx-auto">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-dark-well border border-dark-wellBorder text-dark-textSec text-[11px] font-mono uppercase tracking-wider mb-4 shadow-sm">
         <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
-        <span data-i18n="heroBadge" class="text-dark-textPri font-medium">ATS Diagnostic & Behavioral Screening</span>
+        <span data-i18n="heroBadge" class="text-dark-textPri font-medium">Diagnostik ATS & Pemindaian Psikologi HR</span>
       </div>
       <h1 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold tracking-tight text-dark-textPri dark:text-dark-textPri leading-tight" data-i18n="heroTitle">
         Ketahui Skor Kelolosan CV & Celah ATS Sebelum Melamar
@@ -294,7 +294,7 @@
               <h2 class="text-xs font-bold uppercase tracking-wider text-dark-textPri inline-block" data-i18n="step1Label">Dokumen CV Pelamar</h2>
             </div>
             <div class="flex items-center gap-1 bg-dark-well dark:bg-dark-well p-1 rounded-lg border border-dark-wellBorder dark:border-dark-wellBorder text-xs">
-              <button id="tabUploadBtn" class="px-2.5 py-1 rounded bg-dark-surface dark:bg-dark-surface text-dark-textPri font-medium shadow-sm transition-all" data-i18n="tabUpload">Upload File</button>
+              <button id="tabUploadBtn" class="px-2.5 py-1 rounded bg-dark-surface dark:bg-dark-surface text-dark-textPri font-medium shadow-sm transition-all" data-i18n="tabUpload">Unggah Berkas</button>
               <button id="tabPasteBtn" class="px-2.5 py-1 rounded text-dark-textSec hover:text-dark-textPri transition-all" data-i18n="tabPaste">Tempel Teks</button>
             </div>
           </div>
@@ -315,7 +315,7 @@
               <input type="file" id="cvFileInput" accept=".pdf,.docx,.txt" class="hidden">
               
               <button type="button" id="browseFileBtn" class="mt-4 px-4 py-1.5 bg-dark-surface dark:bg-dark-surface hover:bg-dark-border border border-dark-border rounded-lg text-xs font-medium text-dark-textPri transition-colors" data-i18n="browseBtn">
-                Jelajahi File
+                Pilih Berkas
               </button>
             </div>
 
@@ -343,7 +343,7 @@
           <span data-i18n="formatNotice">Didukung: PDF Teks, Word DOCX, TXT</span>
           <span class="text-brand-emerald flex items-center gap-1.5" data-i18n="privacyNotice">
             <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
-            Zero-Data Retention (Client-Side)
+            Privasi Terjamin: Pemrosesan Lokal di Browser
           </span>
         </div>
       </div>
@@ -657,7 +657,7 @@
 
             <div class="flex items-center justify-between text-[11px] text-dark-textMuted mt-2.5">
               <span id="scoreTierLabel" class="font-heading font-semibold text-brand-emerald">Kecocokan Tinggi (≥80%)</span>
-              <span id="scorePercentageTxt" class="font-mono text-xs font-bold text-dark-textPri">82% Match</span>
+              <span id="scorePercentageTxt" class="font-mono text-xs font-bold text-dark-textPri">82% Cocok</span>
             </div>
           </div>
 
@@ -667,16 +667,16 @@
               <!-- Tier Badge -->
               <span id="tierBadgePill" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-heading font-semibold tracking-wide">
                 <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
-                <span>Kualifikasi Tinggi • Prioritas Shortlist</span>
+                <span>Kualifikasi Tinggi • Prioritas Utama</span>
               </span>
               
               <!-- Subtle Scale Legend -->
               <div class="inline-flex items-center gap-2 text-[10.5px] text-dark-textMuted font-mono">
-                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span data-i18n="scaleShortlist">≥80% Shortlist</span></span>
+                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span data-i18n="scaleShortlist">≥80% Prioritas Utama</span></span>
                 <span>•</span>
-                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span data-i18n="scaleReserve">65–79% Cadangan</span></span>
+                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span data-i18n="scaleReserve">65–79% Kelompok Cadangan</span></span>
                 <span>•</span>
-                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span><span data-i18n="scaleRisk">&lt;65% Rawan</span></span>
+                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span><span data-i18n="scaleRisk">&lt;65% Risiko Gugur</span></span>
               </div>
             </div>
 
@@ -784,7 +784,7 @@
             </span>
             <div>
               <h3 class="text-xs font-heading font-bold uppercase tracking-wider text-dark-textPri" data-i18n="rewriteHead">Optimasi Kalimat Berdampak (Formula XYZ)</h3>
-              <p class="text-[11px] text-slate-600 dark:text-dark-textMuted font-mono" data-i18n="rewriteSubheader">Standar Google: Accomplished [X], measured by [Y], by doing [Z]</p>
+              <p class="text-[11px] text-slate-600 dark:text-dark-textMuted font-mono" data-i18n="rewriteSubheader">Format Baku Google: Accomplished [X], measured by [Y], by doing [Z]</p>
             </div>
           </div>
         </div>
@@ -970,7 +970,7 @@
 
       <div class="flex items-center gap-2 mb-1.5">
         <span class="w-2 h-2 rounded-full bg-brand-amber animate-pulse"></span>
-        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-amber" data-i18n="qrisModalBadge">COMING SOON • TAHAP PERSIAPAN</span>
+        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-amber" data-i18n="qrisModalBadge">SEGERA HADIR • TAHAP PERSIAPAN</span>
       </div>
       <h3 class="text-lg font-heading font-extrabold text-dark-textPri" data-i18n="qrisModalTitle">Laporan Diagnostik 10 Halaman & Format ATS</h3>
       <p class="text-xs text-dark-textSec mt-1 mb-5" data-i18n="qrisModalSubtitle">Fitur generator laporan komprehensif dan integrasi pembayaran QRIS resmi sedang dalam proses persiapan oleh Faari.</p>

@@ -42,14 +42,15 @@
   const i18n = {
     id: {
       // Top Navigation
-      navSubtitle: 'AI Resume Intelligence & ATS Diagnostic',
+      navStudio: 'Studio Diagnostik',
+      navSubtitle: 'Kecerdasan Resume & Diagnostik ATS',
       privacyBadge: 'Lokal & Terenkripsi',
       navScan: 'Skrining CV',
       navTemplates: 'Template ATS',
       badgeNew: 'Baru',
 
       // Hero Section
-      heroBadge: 'ATS Diagnostic & Behavioral Screening',
+      heroBadge: 'Diagnostik ATS & Pemindaian Psikologi HR',
       heroTitle: 'Ketahui Skor Kelolosan CV & Celah ATS Sebelum Melamar',
       heroDesc: 'Pemindaian teks lokal mendeteksi keberadaan kata kunci kompetensi, struktur kalimat berbobot formula XYZ, dan parameter kelolosan rekruter dalam 3 detik tanpa mengunggah data Anda ke server asing.',
       samplePrompt: 'Ingin coba langsung tanpa berkas?',
@@ -57,14 +58,14 @@
 
       // Step 1: Input Document
       step1Label: 'Dokumen CV Pelamar',
-      tabUpload: 'Upload File',
+      tabUpload: 'Unggah Berkas',
       tabPaste: 'Tempel Teks',
       dropzonePrompt: 'Pilih atau Seret Berkas CV (PDF / DOCX)',
       dropzoneLimit: 'Maksimal 5 MB • Teks digital (bukan hasil scan foto/gambar)',
-      browseBtn: 'Jelajahi File',
+      browseBtn: 'Pilih Berkas',
       pasteHint: 'Tips: Anda bisa langsung menyalin seluruh teks dari Google Docs atau file CV Anda.',
       formatNotice: 'Didukung: PDF Teks, Word DOCX, TXT',
-      privacyNotice: 'Zero-Data Retention (Client-Side)',
+      privacyNotice: 'Privasi Terjamin: Pemrosesan Lokal di Browser (Tanpa Server)',
       rawCvPlaceholder: 'Tempel ringkasan pengalaman kerja, riwayat pendidikan, dan keahlian CV Anda di sini...',
 
       // Step 2: Target Role & Market Standard
@@ -104,9 +105,9 @@
 
       // Results Header & Scorecard
       retestBtn: 'Uji Dokumen atau Posisi Lain',
-      scaleShortlist: '≥80% Shortlist',
-      scaleReserve: '65–79% Cadangan',
-      scaleRisk: '<65% Rawan',
+      scaleShortlist: '≥80% Prioritas Utama',
+      scaleReserve: '65–79% Kelompok Cadangan',
+      scaleRisk: '<65% Risiko Gugur',
       recBadge: 'Rekomendasi',
       strengthsHead: 'Kekuatan Kompetensi Terverifikasi',
       strengthFootnote: 'Poin ini adalah nilai jual utama yang wajib ditekankan saat menjawab wawancara.',
@@ -116,7 +117,7 @@
 
       // Card 04: XYZ Formula & STAR Interview
       rewriteHead: 'Optimasi Kalimat Berdampak (Formula XYZ)',
-      rewriteSubheader: 'Standar Google: Accomplished [X], measured by [Y], by doing [Z]',
+      rewriteSubheader: 'Format Baku Google: Accomplished [X], measured by [Y], by doing [Z]',
       rewriteBeforeTitle: 'Draft Kalimat Asli',
       rewriteBeforeSub: 'Kalimat pasif, tanpa metrik hasil, dan tidak membuktikan kapasitas kerja nyata.',
       rewriteAfterTitle: 'Rekomendasi Formula XYZ (Siap Salin)',
@@ -149,7 +150,7 @@
       faqA5: 'Sesi konsultasi privat berdurasi 45 menit yang dilakukan secara interaktif via Google Meet atau WhatsApp Call bersama Muhammad Faari Akbar (S1 Psikologi & Praktisi Talent Management). Dalam sesi ini, CV Anda akan dibedah baris per baris, profil LinkedIn dioptimalkan untuk menarik recruiter inbound, serta simulasi langsung menjawab pertanyaan wawancara kritis menggunakan teknik STAR (Situation, Task, Action, Result).',
 
       // Modals
-      qrisModalBadge: 'COMING SOON • TAHAP PERSIAPAN',
+      qrisModalBadge: 'SEGERA HADIR • TAHAP PERSIAPAN',
       qrisModalTitle: 'Laporan Diagnostik 10 Halaman & Format ATS (Segera Hadir)',
       qrisModalSubtitle: 'Fitur generator laporan komprehensif dan integrasi pembayaran QRIS resmi sedang dalam proses persiapan oleh Faari.',
       qrisFreeNoticeHead: '100% Gratis untuk Skrining CV',
@@ -187,27 +188,28 @@
       tier1Label: 'Kecocokan Tinggi (≥80%)',
       tier2Label: 'Kecocokan Cukup (65-79%)',
       tier3Label: 'Perlu Optimasi (<65%)',
-      tier1Badge: 'Kualifikasi Tinggi • Prioritas Shortlist',
+      tier1Badge: 'Kualifikasi Tinggi • Prioritas Utama',
       tier2Badge: 'Kualifikasi Cukup • Kelompok Cadangan',
       tier3Badge: 'Perlu Optimasi • Risiko Gugur ATS'
     },
     en: {
       // Top Navigation
+      navStudio: 'Diagnostic Studio',
       navSubtitle: 'AI Resume Intelligence & ATS Diagnostic',
-      privacyBadge: 'Local & Private',
+      privacyBadge: 'Local & Encrypted',
       navScan: 'CV Screening',
       navTemplates: 'ATS Templates',
       badgeNew: 'New',
 
       // Hero Section
-      heroBadge: 'ATS Diagnostic & Behavioral Screening',
+      heroBadge: 'ATS Diagnostic & HR Behavioral Screening',
       heroTitle: 'Know Your CV Pass Rate & ATS Gaps Before Applying',
       heroDesc: 'Local in-browser text engine detects competency keywords, high-impact XYZ sentence structures, and recruiter screening benchmarks in 3 seconds without sending your data to external servers.',
       samplePrompt: 'Want to test instantly without a file?',
       sampleBtn: 'Load Sample HR / Analyst Profile',
 
       // Step 1: Input Document
-      step1Label: 'Applicant CV File',
+      step1Label: 'Applicant Resume File',
       tabUpload: 'Upload File',
       tabPaste: 'Paste Text',
       dropzonePrompt: 'Select or Drag & Drop CV File (PDF / DOCX)',
@@ -215,7 +217,7 @@
       browseBtn: 'Browse File',
       pasteHint: 'Pro-tip: You can directly copy and paste the entire text from Google Docs or Word.',
       formatNotice: 'Supported: PDF Text, Word DOCX, TXT',
-      privacyNotice: 'Zero-Data Retention (Client-Side)',
+      privacyNotice: 'Zero-Data Retention (100% In-Browser Privacy)',
       rawCvPlaceholder: 'Paste your resume summary, work experience, education, and skills here...',
 
       // Step 2: Target Role & Market Standard
@@ -255,7 +257,7 @@
 
       // Results Header & Scorecard
       retestBtn: 'Test Another Document or Role',
-      scaleShortlist: '≥80% Shortlist',
+      scaleShortlist: '≥80% Shortlist Priority',
       scaleReserve: '65–79% Backup Pool',
       scaleRisk: '<65% At Risk',
       recBadge: 'Recommendation',
@@ -349,23 +351,47 @@
   // --------------------------------------------------------------------------
   const ARCHETYPE_TEMPLATES = {
     growth: {
-      title: 'Growth Marketing & Revenue Specialist',
-      keywords: 'Growth Hacking, CAC, LTV, Performance Marketing, Meta Ads, Google Ads, SEO, Funnel Optimization, A/B Testing, ROI, Retention, Conversion Rate',
+      title: {
+        id: 'Spesialis Growth Marketing & Revenue',
+        en: 'Growth Marketing & Revenue Specialist'
+      },
+      keywords: {
+        id: 'Growth Hacking, CAC, LTV, Performance Marketing, Meta Ads, Google Ads, SEO, Funnel Optimization, A/B Testing, ROI, Retensi, Tingkat Konversi',
+        en: 'Growth Hacking, CAC, LTV, Performance Marketing, Meta Ads, Google Ads, SEO, Funnel Optimization, A/B Testing, ROI, Retention, Conversion Rate'
+      },
       seniority: 'mid'
     },
     tech: {
-      title: 'Senior Software & Cloud Systems Engineer',
-      keywords: 'Architecture, Clean Code, CI/CD, Microservices, API Design, Docker, Kubernetes, PostgreSQL, Scalability, Automated Testing, Cloud AWS, GCP',
+      title: {
+        id: 'Senior Software & Cloud Systems Engineer',
+        en: 'Senior Software & Cloud Systems Engineer'
+      },
+      keywords: {
+        id: 'Arsitektur Sistem, Clean Code, CI/CD, Microservices, RESTful API, Docker, Kubernetes, PostgreSQL, Skalabilitas, Pengujian Otomatis, Cloud AWS, GCP',
+        en: 'Architecture, Clean Code, CI/CD, Microservices, API Design, Docker, Kubernetes, PostgreSQL, Scalability, Automated Testing, Cloud AWS, GCP'
+      },
       seniority: 'senior'
     },
     ops: {
-      title: 'People Operations & Organization Development',
-      keywords: 'Employee Engagement, People Analytics, Performance Management, SOP, OKR, Talent Retention, Onboarding, Change Management, HRIS, Culture',
+      title: {
+        id: 'Operasional SDM & Pengembangan Organisasi',
+        en: 'People Operations & Organization Development'
+      },
+      keywords: {
+        id: 'Employee Engagement, People Analytics, Manajemen Kinerja, SOP, OKR, Retensi Talenta, Onboarding, Manajemen Perubahan, HRIS, Budaya Kerja',
+        en: 'Employee Engagement, People Analytics, Performance Management, SOP, OKR, Talent Retention, Onboarding, Change Management, HRIS, Culture'
+      },
       seniority: 'mid'
     },
     research: {
-      title: 'Quantitative Research & Strategic Analyst',
-      keywords: 'Statistical Analysis, Python, SQL, Hypothesis Testing, Survey Design, Data Visualization, Market Sizing, Behavioral Modeling, Insights, Methodology',
+      title: {
+        id: 'Riset Kuantitatif & Analis Strategis',
+        en: 'Quantitative Research & Strategic Analyst'
+      },
+      keywords: {
+        id: 'Analisis Statistik, Python, SQL, Uji Hipotesis, Desain Survei, Visualisasi Data, Ukuran Pasar, Pemodelan Perilaku, Wawasan Data, Metodologi',
+        en: 'Statistical Analysis, Python, SQL, Hypothesis Testing, Survey Design, Data Visualization, Market Sizing, Behavioral Modeling, Insights, Methodology'
+      },
       seniority: 'mid'
     }
   };
@@ -1751,9 +1777,13 @@ KEAHLIAN & KOMPETENSI
   function applyArchetypeTemplate(templateKey) {
     const tpl = ARCHETYPE_TEMPLATES[templateKey];
     if (!tpl) return;
+    const lang = state.language || 'id';
 
-    if (DOM.customRoleTitleInput) DOM.customRoleTitleInput.value = tpl.title;
-    if (DOM.customRoleKeywordsInput) DOM.customRoleKeywordsInput.value = tpl.keywords;
+    const titleVal = typeof tpl.title === 'object' ? (tpl.title[lang] || tpl.title.id) : tpl.title;
+    const keywordsVal = typeof tpl.keywords === 'object' ? (tpl.keywords[lang] || tpl.keywords.id) : tpl.keywords;
+
+    if (DOM.customRoleTitleInput) DOM.customRoleTitleInput.value = titleVal;
+    if (DOM.customRoleKeywordsInput) DOM.customRoleKeywordsInput.value = keywordsVal;
     
     // Set Seniority
     state.customSeniority = tpl.seniority;
@@ -1769,7 +1799,7 @@ KEAHLIAN & KOMPETENSI
       });
     }
 
-    showToast(state.language === 'id' ? `${tpl.title.split(' ')[0]} template dimuat!` : `${tpl.title.split(' ')[0]} template applied!`);
+    showToast(lang === 'id' ? 'Template posisi kustom berhasil dimuat!' : 'Custom role template loaded successfully!');
   }
 
   // --------------------------------------------------------------------------
@@ -2003,8 +2033,10 @@ KEAHLIAN & KOMPETENSI
     const lang = state.language;
 
     DOM.resDocName.textContent = (lang === 'id' ? 'Hasil Evaluasi: ' : 'Evaluation: ') + res.documentName;
-    const stdLabel = res.screeningStandard === 'global' ? '🌐 Global MNC' : '🇮🇩 Standar Nasional';
-    DOM.resRoleName.textContent = '• ' + (lang === 'id' ? 'Posisi: ' : 'Target: ') + res.roleTitle + ' (' + stdLabel + ')';
+    const stdLabel = res.screeningStandard === 'global'
+      ? (lang === 'id' ? '🌐 Multinasional Global' : '🌐 Global MNC')
+      : (lang === 'id' ? '🇮🇩 Standar Nasional' : '🇮🇩 National Standard');
+    DOM.resRoleName.textContent = '• ' + (lang === 'id' ? 'Posisi Target: ' : 'Target Role: ') + res.roleTitle + ' (' + stdLabel + ')';
 
     const isDark = state.theme === 'dark';
     const palette = getTierPalette(res.tier, isDark);
@@ -2025,7 +2057,7 @@ KEAHLIAN & KOMPETENSI
 
     DOM.progressBarFill.style.width = targetScore + '%';
     DOM.progressBarFill.style.backgroundColor = palette.scoreColor;
-    DOM.scorePercentageTxt.textContent = targetScore + '% Match';
+    DOM.scorePercentageTxt.textContent = targetScore + (lang === 'id' ? '% Cocok' : '% Match');
 
     DOM.scoreTierLabel.textContent = res.tierName;
     DOM.scoreTierLabel.style.color = palette.color;

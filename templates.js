@@ -259,13 +259,14 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   // --------------------------------------------------------------------------
   const i18n = {
     id: {
+      tplNavHub: 'Pusat Template',
       tplNavSubtitle: 'Katalog Template Resume ATS Teruji',
-      tplBackBtn: 'Kembali ke Skrining CV',
+      tplBackBtn: '← Kembali ke Skrining CV',
       tplHeroBadge: 'Koleksi Format Tervalidasi • Workday, Taleo, Greenhouse & BUMN',
       tplHeroTitle: 'Katalog Template CV ATS Standar Nasional & Internasional',
       tplHeroDesc: 'Setiap template di bawah ini dirancang dengan struktur 1-kolom resmi, formula XYZ terukur, dan margin proporsional. Dilengkapi pratinjau lembar resume nyata dan berkas Word (.docx) siap unduh.',
-      tplPill1: 'Single-Column Hierarchy',
-      tplPill2: 'Formula XYZ & Action Verbs',
+      tplPill1: 'Hierarki 1-Kolom Resmi',
+      tplPill2: 'Formula XYZ & Verba Aksi',
       tplPill3: 'Format Word (.docx) Asli',
 
       // Filter tabs
@@ -278,69 +279,73 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       // Common card elements
       btnDownloadDocx: 'Unduh Format Word (.docx)',
       btnCopyText: 'Salin Teks',
-      btnPreview: 'Preview 👁',
+      btnPreview: 'Pratinjau 👁',
       hoverPreview: '👁 Pratinjau Dokumen Lengkap',
+      hoverProComingSoon: '🔒 Segera Hadir (Fitur Pro)',
       btnComingSoon: 'Segera Hadir (Sedang Disiapkan)',
       cardProBadge: 'Fitur Pro',
+      match98: '98% Cocok ATS',
+      match97: '97% Cocok ATS',
+      match99: '99% Cocok ATS',
 
       // Card 1: Classic Corporate
       c1Meta: 'Standar BUMN & Nasional',
       c1Title: 'Classic Corporate Indonesia',
       c1Desc: 'Format 1-kolom konservatif resmi yang paling disukai rekruter BUMN, Perbankan, FMCG, dan korporat swasta besar. Struktur rapi dengan pembagian section baku.',
       c1Spec1: '<strong>Hierarki Font:</strong> Calibri / Arial (Bebas font glitch)',
-      c1Spec2: '<strong>Section Baku:</strong> Profil, Pengalaman XYZ, Edukasi, Skill',
-      c1Spec3: '<strong>Cocok untuk:</strong> HR, Finance, Operations, Sales, Legal',
+      c1Spec2: '<strong>Bagian Baku:</strong> Ringkasan, Pengalaman XYZ, Edukasi, Keahlian',
+      c1Spec3: '<strong>Cocok untuk:</strong> HR, Keuangan, Operasional, Penjualan, Legal',
       c1PaperBadge: 'Format 1-Kolom BUMN',
       c1PaperPage: 'Halaman 1 dari 1',
 
       // Card 2: Fresh Grad
-      c2Meta: 'Fresh Graduate & Switcher',
+      c2Meta: 'Lulusan Baru & Pengalihan Karir',
       c2Title: 'Fresh Grad & Kampus Merdeka',
       c2Desc: 'Format yang menonjolkan riwayat pendidikan, skripsi/penelitian, magang mandiri/MSIB, dan kepemimpinan organisasi untuk kandidat dengan jam terbang awal.',
       c2Spec1: '<strong>Hierarki:</strong> Riwayat Edukasi & Proyek ditempatkan di atas',
       c2Spec2: '<strong>Sorotan Khusus:</strong> Sertifikasi pelatihan, kursus, & tools',
-      c2Spec3: '<strong>Cocok untuk:</strong> Lulusan Baru, Shadow Teacher, Guru, Intern',
-      c2PaperBadge: 'Edukasi & Proyek-First',
+      c2Spec3: '<strong>Cocok untuk:</strong> Lulusan Baru, Pendidik, Intern, Switcher',
+      c2PaperBadge: 'Utamakan Edukasi & Proyek',
       c2PaperPage: 'Halaman 1 dari 1',
 
       // Card 3: Executive Leadership
       c3Meta: 'Eksekutif & Manajerial',
       c3Title: 'Executive & P&L Leadership',
       c3Desc: 'Struktur 2-halaman berdensitas tinggi untuk Head of Department, General Manager, dan Direktur yang butuh menonjolkan tanggung jawab anggaran dan tim besar.',
-      c3Spec1: '<strong>Fokus:</strong> Metrik P&L, Revenue Growth, & Skalabilitas Tim',
-      c3Spec2: '<strong>Format:</strong> Executive Summary + Core Competencies Matrix',
-      c3Spec3: '<strong>Cocok untuk:</strong> VP, Director, GM, Senior Lead',
-      c3PaperBadge: 'Director & P&L Standard',
+      c3Spec1: '<strong>Fokus:</strong> Metrik P&L, Pertumbuhan Omset, & Skalabilitas Tim',
+      c3Spec2: '<strong>Format:</strong> Ringkasan Eksekutif + Matriks Kompetensi Inti',
+      c3Spec3: '<strong>Cocok untuk:</strong> VP, Direktur, General Manager, Senior Lead',
+      c3PaperBadge: 'Standar Direktur & P&L',
       c3PaperPage: 'Halaman 1 dari 2',
 
       // Card 4: Global Tech
-      c4Meta: 'Global Tech & Remote',
+      c4Meta: 'Teknologi Global & Remote',
       c4Title: 'Global Tech & Software Engineer',
       c4Desc: 'Standar US & EU remote work. 0% data pribadi sensitif (bebas foto/usia demi kepatuhan anti-bias EEOC), dengan tautan GitHub, serta kategorisasi Tech Stack.',
-      c4Spec1: '<strong>Bahasa:</strong> English (Action Verbs: Architected, Engineered)',
-      c4Spec2: '<strong>Skills Matrix:</strong> Languages, Frameworks, Cloud, Databases',
+      c4Spec1: '<strong>Bahasa Dokumen:</strong> Bahasa Inggris (Kata Kerja: Architected, Engineered)',
+      c4Spec2: '<strong>Matriks Keahlian:</strong> Bahasa Pemrograman, Framework, Cloud, Basis Data',
       c4Spec3: '<strong>Cocok untuk:</strong> Fullstack, Backend, DevOps, Data Engineer',
-      c4PaperBadge: 'Workday & Greenhouse Compliant',
+      c4PaperBadge: 'Sesuai Standar Workday & Greenhouse',
       c4PaperPage: 'Halaman 1 dari 1',
 
       // Card 5: Global Product
-      c5Meta: 'Global Product & Ops',
+      c5Meta: 'Produk Global & Operasional',
       c5Title: 'International Product & Operations',
-      c5Desc: 'Format yang diformulasikan untuk Product Manager, Business Analyst, dan Growth Lead. Padat metrik kuantitatif (MRR, retention, conversion, CAC).',
-      c5Spec1: '<strong>Bahasa:</strong> English (Action Verbs: Spearheaded, Scaled)',
-      c5Spec2: '<strong>Fokus:</strong> User discovery, product roadmaps, data analytics',
-      c5Spec3: '<strong>Cocok untuk:</strong> PM, Business Analyst, Strategy & Ops',
-      c5PaperBadge: 'Metrics & ARR Focused',
+      c5Desc: 'Format yang diformulasikan untuk Product Manager, Business Analyst, dan Growth Lead. Padat metrik kuantitatif (MRR, retensi, konversi, CAC).',
+      c5Spec1: '<strong>Bahasa Dokumen:</strong> Bahasa Inggris (Kata Kerja: Spearheaded, Scaled)',
+      c5Spec2: '<strong>Fokus:</strong> Riset Pengguna, Roadmap Produk, & Analisis Data',
+      c5Spec3: '<strong>Cocok untuk:</strong> Product Manager, Business Analyst, Strategi & Operasional',
+      c5PaperBadge: 'Fokus Metrik & Pertumbuhan ARR',
       c5PaperPage: 'Halaman 1 dari 1',
 
       // Card 6: Silicon Valley
-      c6Meta: 'Silicon Valley & Venture',
+      c6Meta: 'Startup Silicon Valley & Venture',
       c6Title: 'Silicon Valley Startup Elite',
       c6Desc: 'Layout 1-halaman ultra-padat dengan teknik penulisan high-signal low-noise untuk kandidat senior di ekosistem startup Seri A hingga Pra-IPO.',
-      c6Spec1: '<strong>Format:</strong> 1-Page High-Density Silicon Valley Standard',
-      c6Spec2: '<strong>Fokus:</strong> Seed-to-Scale, 0-to-1 building, high ownership',
+      c6Spec1: '<strong>Format:</strong> 1 Halaman Berdensitas Tinggi Standar Silicon Valley',
+      c6Spec2: '<strong>Fokus:</strong> Fase Inkubasi hingga Skala Besar, Kepemilikan Penuh',
       c6Spec3: '<strong>Cocok untuk:</strong> Staff Engineer, Growth Architect, Founding Ops',
-      c6PaperBadge: 'Elite 1-Page Layout',
+      c6PaperBadge: 'Format Elite 1 Halaman',
       c6PaperPage: 'Halaman 1 dari 1',
 
       // Guide Section
@@ -380,8 +385,9 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       toastCopyFailed: 'Gagal menyalin teks secara otomatis.'
     },
     en: {
+      tplNavHub: 'Templates Hub',
       tplNavSubtitle: 'Tested ATS Resume Template Catalog',
-      tplBackBtn: 'Back to CV Screening',
+      tplBackBtn: '← Back to CV Screening',
       tplHeroBadge: 'Validated Format Collection • Workday, Taleo, Greenhouse & SOE',
       tplHeroTitle: 'ATS Resume Template Catalog — National & International Standards',
       tplHeroDesc: 'Every template below is engineered with official single-column hierarchy, quantifiable XYZ bullet points, and recruiter-approved margins. Includes realistic paper previews and ready-to-use Word (.docx) downloads.',
@@ -401,8 +407,12 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       btnCopyText: 'Copy Text',
       btnPreview: 'Preview 👁',
       hoverPreview: '👁 Full Document Preview',
+      hoverProComingSoon: '🔒 Coming Soon (Pro Feature)',
       btnComingSoon: 'Coming Soon (In Progress)',
       cardProBadge: 'Pro Feature',
+      match98: '98% ATS Match',
+      match97: '97% ATS Match',
+      match99: '99% ATS Match',
 
       // Card 1: Classic Corporate
       c1Meta: 'SOE & National Standard',
