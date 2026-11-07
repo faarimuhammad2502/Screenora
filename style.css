@@ -132,6 +132,34 @@ html:not(.dark) #proModalOverlay .bg-dark-well {
   border-color: #E2E6ED !important;
 }
 
+select option, select optgroup {
+  background-color: #111319;
+  color: #F8FAFC;
+}
+
+html:not(.dark) select option, html:not(.dark) select optgroup {
+  background-color: #FFFFFF;
+  color: #0A0D14;
+}
+
+html:not(.dark) select#roleSelect {
+  background-color: #F1F3F7;
+  color: #0A0D14;
+  border-color: #DEE2EA;
+}
+
+/* Custom Template Archetype & Seniority Buttons */
+.custom-archetype-btn:hover {
+  background-color: rgba(16, 185, 129, 0.08);
+}
+
+.seniority-pill.active {
+  background-color: rgba(16, 185, 129, 0.15) !important;
+  border-color: rgba(16, 185, 129, 0.4) !important;
+  color: #10B981 !important;
+  font-weight: 600;
+}
+
 /* ==========================================================================
    ROLE PILL ACTIVE STATES
    ========================================================================== */
