@@ -812,31 +812,44 @@
         </div>
       </div>
 
-      <!-- CARD 5: COMING SOON BANNER & DIRECT EMAIL FEEDBACK -->
-      <div class="bg-dark-well dark:bg-dark-well border border-dark-wellBorder rounded-2xl p-6 sm:p-7 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
-        <div class="space-y-1.5 text-center md:text-left">
-          <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-brand-amber/15 text-brand-amber border border-brand-amber/30">Fitur Lanjutan • Segera Hadir</span>
-          <h2 class="text-base sm:text-lg font-heading font-bold text-dark-textPri" data-i18n="proBannerTitle">
-            Laporan Lengkap & Sesi Konsultasi Privat (Segera Hadir)
-          </h2>
-          <p class="text-xs text-dark-textSec max-w-xl leading-relaxed" data-i18n="proBannerDesc">
-            Fitur generator laporan 10 halaman & konsultasi saat ini sedang disiapkan. Seluruh diagnostik dasar Screenora sekarang 100% Gratis. Punya pertanyaan atau saran? Hubungi Faari via email.
-          </p>
+      <!-- CARD 5: COMING SOON BANNER & DIRECT ACTIONS -->
+      <div class="bg-dark-well dark:bg-dark-well border border-dark-wellBorder rounded-2xl p-6 sm:p-7 shadow-xl space-y-5">
+        <!-- Top Row: Badge, Title & Status -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-dark-border pb-4">
+          <div class="space-y-1">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-amber/15 text-brand-amber border border-brand-amber/30 text-[10px] font-mono font-bold uppercase tracking-wider whitespace-nowrap">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span>
+              <span>Fitur Lanjutan • Segera Hadir</span>
+            </div>
+            <h2 class="text-base sm:text-lg font-heading font-bold text-dark-textPri" data-i18n="proBannerTitle">
+              Laporan Lengkap & Sesi Konsultasi Privat (Segera Hadir)
+            </h2>
+          </div>
+          <span class="text-[11px] font-mono text-brand-emerald px-2.5 py-1 rounded-lg bg-brand-emeraldBg border border-brand-emerald/30 whitespace-nowrap self-start md:self-center">
+            ✓ Skrining 100% Gratis
+          </span>
         </div>
 
-        <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-          <a href="templates.html" class="w-full sm:w-auto px-4 py-3 rounded-xl font-heading font-semibold text-xs uppercase tracking-wider bg-dark-surface border border-brand-emerald/40 text-brand-emerald hover:bg-brand-emerald/10 transition-all whitespace-nowrap flex items-center justify-center gap-2">
-            <svg class="w-3.5 h-3.5 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            <span>Katalog Template ATS (.docx)</span>
-          </a>
-          <button id="openProModalBtn" class="w-full sm:w-auto px-4 py-3 rounded-xl font-heading font-medium text-xs uppercase tracking-wider bg-dark-surface border border-dark-border text-dark-textSec hover:text-dark-textPri hover:border-brand-amber/50 transition-all whitespace-nowrap flex items-center justify-center gap-2">
-            <svg class="w-3.5 h-3.5 text-brand-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span>Buka Laporan (Coming Soon)</span>
-          </button>
-          <button id="openConsultModalBtn" class="w-full sm:w-auto px-5 py-3 rounded-xl font-heading font-bold text-xs uppercase tracking-wider bg-brand-emerald text-black hover:bg-brand-emeraldDark transition-all shadow-lg shadow-brand-emerald/10 whitespace-nowrap flex items-center justify-center gap-2">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-            <span>Konsultasi & Masukan (Email)</span>
-          </button>
+        <!-- Bottom Row: Description & Actions -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+          <p class="text-xs text-dark-textSec max-w-2xl leading-relaxed" data-i18n="proBannerDesc">
+            Fitur generator laporan 10 halaman & konsultasi saat ini sedang disiapkan. Seluruh diagnostik dasar Screenora sekarang 100% Gratis. Butuh format CV standar yang teruji lolos ATS? Buka katalog template kami, atau hubungi Faari langsung via email untuk masukan dan pertanyaan.
+          </p>
+
+          <div class="flex flex-wrap sm:flex-nowrap items-center gap-2.5 shrink-0">
+            <a href="templates.html" class="w-full sm:w-auto px-4 py-2.5 rounded-xl font-heading font-bold text-xs uppercase tracking-wider bg-brand-emerald text-black hover:bg-brand-emeraldDark transition-all shadow-md shadow-brand-emerald/10 whitespace-nowrap flex items-center justify-center gap-2">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              <span>Katalog Template ATS (.docx)</span>
+            </a>
+            <button id="openProModalBtn" class="w-full sm:w-auto px-3.5 py-2.5 rounded-xl font-heading font-medium text-xs uppercase tracking-wider bg-dark-surface border border-dark-border text-dark-textSec hover:text-dark-textPri hover:border-brand-amber/50 transition-all whitespace-nowrap flex items-center justify-center gap-2">
+              <svg class="w-3.5 h-3.5 text-brand-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <span>Buka Laporan (Coming Soon)</span>
+            </button>
+            <button id="openConsultModalBtn" class="w-full sm:w-auto px-3.5 py-2.5 rounded-xl font-heading font-medium text-xs uppercase tracking-wider bg-dark-surface border border-dark-border text-dark-textSec hover:text-dark-textPri hover:border-brand-emerald/50 transition-all whitespace-nowrap flex items-center justify-center gap-2">
+              <svg class="w-3.5 h-3.5 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+              <span>Email Faari</span>
+            </button>
+          </div>
         </div>
       </div>
 
