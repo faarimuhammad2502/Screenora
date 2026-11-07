@@ -1214,10 +1214,36 @@ KEAHLIAN & KOMPETENSI
   // --------------------------------------------------------------------------
   // 6. THEME MANAGEMENT
   // --------------------------------------------------------------------------
+  function getTierPalette(tier, isDark) {
+    if (tier === 1) {
+      return {
+        color: isDark ? '#10B981' : '#047857',
+        border: isDark ? 'rgba(16, 185, 129, 0.35)' : '#A7F3D0',
+        bg: isDark ? 'rgba(16, 185, 129, 0.10)' : '#ECFDF5',
+        scoreColor: isDark ? '#10B981' : '#059669'
+      };
+    } else if (tier === 2) {
+      return {
+        color: isDark ? '#F59E0B' : '#92400E',
+        border: isDark ? 'rgba(245, 158, 11, 0.35)' : '#FDE68A',
+        bg: isDark ? 'rgba(245, 158, 11, 0.10)' : '#FFFBEB',
+        scoreColor: isDark ? '#F59E0B' : '#B45309'
+      };
+    } else {
+      return {
+        color: isDark ? '#EF4444' : '#991B1B',
+        border: isDark ? 'rgba(239, 68, 68, 0.35)' : '#FECACA',
+        bg: isDark ? 'rgba(239, 68, 68, 0.10)' : '#FFF5F5',
+        scoreColor: isDark ? '#EF4444' : '#DC2626'
+      };
+    }
+  }
+
   function applyTheme(theme) {
     state.theme = theme;
     localStorage.setItem('screenora_theme', theme);
-    if (theme === 'dark') {
+    const isDark = theme === 'dark';
+    if (isDark) {
       DOM.html.classList.add('dark');
       if (DOM.themeIcon) {
         DOM.themeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-dark-textSec" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>`;
@@ -1229,6 +1255,18 @@ KEAHLIAN & KOMPETENSI
         DOM.themeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-dark-textSec" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" stroke-width="2"></circle><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>`;
       }
       if (DOM.themeLabel) DOM.themeLabel.textContent = 'Light';
+    }
+
+    if (state.currentAnalysis && DOM.scoreNumber) {
+      const palette = getTierPalette(state.currentAnalysis.tier, isDark);
+      DOM.scoreNumber.style.color = palette.scoreColor;
+      if (DOM.progressBarFill) DOM.progressBarFill.style.backgroundColor = palette.scoreColor;
+      if (DOM.scoreTierLabel) DOM.scoreTierLabel.style.color = palette.color;
+      if (DOM.tierBadgePill) {
+        DOM.tierBadgePill.style.color = palette.color;
+        DOM.tierBadgePill.style.borderColor = palette.border;
+        DOM.tierBadgePill.style.backgroundColor = palette.bg;
+      }
     }
   }
 
@@ -1677,10 +1715,13 @@ KEAHLIAN & KOMPETENSI
     const stdLabel = res.screeningStandard === 'global' ? '🌐 Global MNC' : '🇮🇩 Standar Nasional';
     DOM.resRoleName.textContent = '• ' + (lang === 'id' ? 'Posisi: ' : 'Target: ') + res.roleTitle + ' (' + stdLabel + ')';
 
+    const isDark = state.theme === 'dark';
+    const palette = getTierPalette(res.tier, isDark);
+
     let currentCount = 0;
     const targetScore = res.score;
     DOM.scoreNumber.textContent = '0';
-    DOM.scoreNumber.style.color = res.tierColor;
+    DOM.scoreNumber.style.color = palette.scoreColor;
 
     const timer = setInterval(() => {
       currentCount += 2;
@@ -1692,15 +1733,15 @@ KEAHLIAN & KOMPETENSI
     }, 20);
 
     DOM.progressBarFill.style.width = targetScore + '%';
-    DOM.progressBarFill.style.backgroundColor = res.tierColor;
+    DOM.progressBarFill.style.backgroundColor = palette.scoreColor;
     DOM.scorePercentageTxt.textContent = targetScore + '% Match';
 
     DOM.scoreTierLabel.textContent = res.tierName;
-    DOM.scoreTierLabel.style.color = res.tierColor;
+    DOM.scoreTierLabel.style.color = palette.color;
     DOM.tierBadgePill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-current"></span><span>${res.tierBadge}</span>`;
-    DOM.tierBadgePill.style.color = res.tierColor;
-    DOM.tierBadgePill.style.borderColor = res.tier === 1 ? 'rgba(16, 185, 129, 0.35)' : (res.tier === 2 ? 'rgba(245, 158, 11, 0.35)' : 'rgba(239, 68, 68, 0.35)');
-    DOM.tierBadgePill.style.backgroundColor = res.tier === 1 ? 'rgba(16, 185, 129, 0.10)' : (res.tier === 2 ? 'rgba(245, 158, 11, 0.10)' : 'rgba(239, 68, 68, 0.10)');
+    DOM.tierBadgePill.style.color = palette.color;
+    DOM.tierBadgePill.style.borderColor = palette.border;
+    DOM.tierBadgePill.style.backgroundColor = palette.bg;
 
     DOM.tierNarrativeTxt.textContent = res.narrative;
     DOM.recruiterAdviceTxt.textContent = res.advice;
@@ -1711,15 +1752,15 @@ KEAHLIAN & KOMPETENSI
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/"/g, '&quot;');
-      const highlightColor = isStrength ? 'text-emerald-300' : 'text-amber-300';
-      return escaped.replace(/&quot;([^&]+)&quot;/g, `<code class="px-1.5 py-0.5 rounded bg-dark-well border border-dark-wellBorder text-[11px] font-mono ${highlightColor} font-semibold">$1</code>`);
+      const pillClass = isStrength ? 'diagnostic-pill-strength' : 'diagnostic-pill-gap';
+      return escaped.replace(/&quot;([^&]+)&quot;/g, `<code class="${pillClass} px-1.5 py-0.5 rounded text-[11px] font-mono font-semibold">$1</code>`);
     }
 
     DOM.strengthCountBadge.textContent = `${res.strengths.length} ` + (lang === 'id' ? 'Kualifikasi Terdeteksi' : 'Strengths Met');
     DOM.strengthsList.innerHTML = res.strengths.map(s => `
       <li class="flex items-start gap-2.5">
         <span class="w-4 h-4 rounded-full bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">✓</span>
-        <span class="text-xs text-slate-300 leading-relaxed">${formatDiagnosticBullet(s, true)}</span>
+        <span class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">${formatDiagnosticBullet(s, true)}</span>
       </li>
     `).join('');
 
@@ -1727,7 +1768,7 @@ KEAHLIAN & KOMPETENSI
     DOM.gapsList.innerHTML = res.gaps.map(g => `
       <li class="flex items-start gap-2.5">
         <span class="w-4 h-4 rounded-full bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">!</span>
-        <span class="text-xs text-slate-300 leading-relaxed">${formatDiagnosticBullet(g, false)}</span>
+        <span class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">${formatDiagnosticBullet(g, false)}</span>
       </li>
     `).join('');
 

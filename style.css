@@ -44,94 +44,456 @@ html:not(.dark) ::-webkit-scrollbar-thumb:hover {
 
 /* ==========================================================================
    LIGHT MODE OVERRIDES
-   Ensures 100% harmonious contrast in light theme
+   Eye-friendly, matte off-white architectural palette & high-contrast typography
+   Strictly anti-glare: zero harsh pure white washouts, 100% WCAG AA/AAA legibility
    ========================================================================== */
 html:not(.dark) body {
-  background-color: #F8F9FB !important;
-  color: #0A0D14 !important;
+  background-color: #EFF2F6 !important;
+  color: #0F172A !important;
 }
 
 html:not(.dark) header {
-  background-color: rgba(255, 255, 255, 0.92) !important;
-  border-color: #E2E6ED !important;
+  background-color: rgba(239, 242, 246, 0.94) !important;
+  border-color: #D6DCE6 !important;
 }
 
 html:not(.dark) .bg-dark-surface {
-  background-color: #FFFFFF !important;
-  border-color: #E2E6ED !important;
+  background-color: #FAFBFD !important;
+  border-color: #D6DCE6 !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
 }
 
 html:not(.dark) .bg-dark-well {
-  background-color: #F1F3F7 !important;
-  border-color: #DEE2EA !important;
+  background-color: #E6EBF2 !important;
+  border-color: #CFD7E4 !important;
 }
 
 html:not(.dark) .border-dark-border {
-  border-color: #E2E6ED !important;
+  border-color: #D6DCE6 !important;
 }
 
 html:not(.dark) .border-dark-wellBorder {
-  border-color: #DEE2EA !important;
+  border-color: #CFD7E4 !important;
 }
 
+/* Typography Overrides (Deep Slate Palette for Maximum Legibility) */
 html:not(.dark) .text-dark-textPri {
-  color: #0A0D14 !important;
+  color: #0F172A !important;
 }
 
 html:not(.dark) .text-dark-textSec {
-  color: #5F6675 !important;
+  color: #475569 !important;
 }
 
 html:not(.dark) .text-dark-textMuted {
-  color: #8C95A6 !important;
+  color: #64748B !important;
 }
 
+/* Fix Hardcoded Pale Utility Classes that Disappear on Light Backgrounds */
+html:not(.dark) .text-slate-300 {
+  color: #1E293B !important;
+}
+
+html:not(.dark) .text-slate-400 {
+  color: #475569 !important;
+}
+
+html:not(.dark) .text-slate-500 {
+  color: #475569 !important;
+}
+
+html:not(.dark) .text-slate-600 {
+  color: #334155 !important;
+}
+
+html:not(.dark) .text-emerald-100 {
+  color: #064E3B !important;
+}
+
+html:not(.dark) .text-emerald-300 {
+  color: #047857 !important;
+}
+
+html:not(.dark) .text-emerald-400 {
+  color: #047857 !important;
+}
+
+html:not(.dark) .text-amber-300 {
+  color: #92400E !important;
+}
+
+html:not(.dark) .text-amber-400 {
+  color: #92400E !important;
+}
+
+html:not(.dark) .text-rose-400 {
+  color: #991B1B !important;
+}
+
+html:not(.dark) .text-rose-400\/80 {
+  color: #9F1239 !important;
+}
+
+html:not(.dark) .text-brand-emerald {
+  color: #047857 !important;
+}
+
+html:not(.dark) .text-brand-amber {
+  color: #92400E !important;
+}
+
+/* Badges & Accent Containers in Light Mode */
+html:not(.dark) .bg-emerald-500\/10 {
+  background-color: #ECFDF5 !important;
+  border-color: #A7F3D0 !important;
+  color: #047857 !important;
+}
+
+html:not(.dark) .bg-emerald-500\/15 {
+  background-color: #D1FAE5 !important;
+  color: #047857 !important;
+}
+
+html:not(.dark) .bg-amber-500\/10 {
+  background-color: #FFFBEB !important;
+  border-color: #FDE68A !important;
+  color: #92400E !important;
+}
+
+html:not(.dark) .bg-amber-500\/15 {
+  background-color: #FEF3C7 !important;
+  color: #92400E !important;
+}
+
+html:not(.dark) .bg-brand-emeraldBg {
+  background-color: #ECFDF5 !important;
+  border-color: #A7F3D0 !important;
+  color: #065F46 !important;
+}
+
+html:not(.dark) .bg-brand-amber\/10,
+html:not(.dark) .bg-brand-amber\/15 {
+  background-color: #FFFBEB !important;
+  border-color: #FDE68A !important;
+  color: #92400E !important;
+}
+
+/* Nav Logo Icon */
 html:not(.dark) #navLogoIcon {
   background-color: #FFFFFF !important;
   border-color: #CBD5E1 !important;
 }
 
 html:not(.dark) #navLogoIcon svg rect {
-  fill: #0A0D14;
+  fill: #0F172A;
 }
 
 html:not(.dark) #navLogoIcon svg rect[fill="#10B981"] {
   fill: #059669;
 }
 
+/* Card 01 Hero Score Light Mode Overrides */
+html:not(.dark) #tierBadgePill {
+  font-weight: 700 !important;
+}
+
+/* Diagnostic Keyword Highlight Pills (Card 02 & Card 03) */
+.diagnostic-pill-strength {
+  background-color: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #6EE7B7;
+}
+
+.diagnostic-pill-gap {
+  background-color: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #FCD34D;
+}
+
+html:not(.dark) .diagnostic-pill-strength {
+  background-color: #ECFDF5 !important;
+  border-color: #A7F3D0 !important;
+  color: #065F46 !important;
+}
+
+html:not(.dark) .diagnostic-pill-gap {
+  background-color: #FFFBEB !important;
+  border-color: #FDE68A !important;
+  color: #92400E !important;
+}
+
+/* Card 04 Formula XYZ Containers in Light Mode */
+html:not(.dark) #rewriteBeforeCard {
+  background-color: #FFF5F5 !important;
+  border-color: #FECACA !important;
+}
+
+html:not(.dark) #rewriteBeforeTitle {
+  color: #991B1B !important;
+}
+
+html:not(.dark) #rewriteBeforeTxt {
+  background-color: #FFFFFF !important;
+  border-color: #FCA5A5 !important;
+  color: #881337 !important;
+}
+
+html:not(.dark) #rewriteBeforeSub {
+  color: #9F1239 !important;
+}
+
+html:not(.dark) #rewriteAfterCard {
+  background-color: #F0FDF4 !important;
+  border-color: #A7F3D0 !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.08) !important;
+}
+
+html:not(.dark) #rewriteAfterTitle {
+  color: #065F46 !important;
+}
+
+html:not(.dark) #rewriteAfterTxt {
+  background-color: #FFFFFF !important;
+  border-color: #6EE7B7 !important;
+  color: #064E3B !important;
+}
+
+html:not(.dark) #rewriteAfterSub {
+  color: #047857 !important;
+}
+
+html:not(.dark) #copyRewriteBtn {
+  color: #047857 !important;
+}
+
+html:not(.dark) #copyRewriteBtn:hover {
+  color: #064E3B !important;
+}
+
+/* Dropzone & Inputs in Light Mode */
+html:not(.dark) #dropzone {
+  background-color: #EEF2F7 !important;
+  border-color: #CBD5E1 !important;
+}
+
+html:not(.dark) #dropzone:hover,
+html:not(.dark) #dropzone.dragover {
+  border-color: #059669 !important;
+  background-color: #ECFDF5 !important;
+}
+
+html:not(.dark) #rawCvText {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+html:not(.dark) #browseFileBtn {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+html:not(.dark) #tabUploadBtn,
+html:not(.dark) #tabPasteBtn {
+  color: #475569;
+}
+
+html:not(.dark) #tabUploadBtn.bg-dark-surface,
+html:not(.dark) #tabPasteBtn.bg-dark-surface {
+  background-color: #FFFFFF !important;
+  color: #0F172A !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Step 02 Selection Buttons in Light Mode */
+html:not(.dark) #stdNasionalBtn.bg-dark-surface,
+html:not(.dark) #stdGlobalBtn.bg-dark-surface {
+  background-color: #FFFFFF !important;
+  border-color: #059669 !important;
+  color: #047857 !important;
+  font-weight: 700 !important;
+}
+
 html:not(.dark) .role-pill.active-role {
-  background-color: #EBF0FA !important;
-  border-color: #C5D3E8 !important;
+  background-color: #E0E7F5 !important;
+  border-color: #93C5FD !important;
+}
+
+html:not(.dark) .role-pill.active-role p:first-child {
+  color: #0F172A !important;
+  font-weight: 700 !important;
 }
 
 html:not(.dark) .role-pill:not(.active-role) {
-  background-color: #FAFAFC !important;
-  border-color: #E2E6ED !important;
+  background-color: #FFFFFF !important;
+  border-color: #D6DCE6 !important;
 }
 
+html:not(.dark) .role-pill:not(.active-role) p:first-child {
+  color: #0F172A !important;
+}
+
+html:not(.dark) .seniority-pill.active {
+  background-color: #DCFCE7 !important;
+  border-color: #86EFAC !important;
+  color: #15803D !important;
+  font-weight: 700 !important;
+}
+
+html:not(.dark) .seniority-pill:not(.active) {
+  background-color: #FFFFFF !important;
+  border-color: #D6DCE6 !important;
+  color: #475569 !important;
+}
+
+/* Primary Action Buttons */
 html:not(.dark) #runAnalysisBtn {
-  background-color: #0A0D14 !important;
+  background-color: #0F172A !important;
   color: #FFFFFF !important;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.15) !important;
 }
 
 html:not(.dark) #runAnalysisBtn:hover {
-  background-color: #1E232E !important;
+  background-color: #1E293B !important;
 }
 
-html:not(.dark) #qrisModalOverlay .bg-dark-surface,
-html:not(.dark) #consultModalOverlay .bg-dark-surface,
-html:not(.dark) #proModalOverlay .bg-dark-surface {
+/* Card 05 Action Buttons in Light Mode */
+html:not(.dark) #openProModalBtn,
+html:not(.dark) #openConsultModalBtn {
+  background-color: #FFFFFF !important;
+  border-color: #CFD7E4 !important;
+  color: #1E293B !important;
+}
+
+html:not(.dark) #openProModalBtn:hover {
+  border-color: #F59E0B !important;
+  color: #92400E !important;
+}
+
+html:not(.dark) #openConsultModalBtn:hover {
+  border-color: #059669 !important;
+  color: #065F46 !important;
+}
+
+/* Templates Page: Filter Bar & Document Sheets */
+html:not(.dark) #filterBar {
+  background-color: #E2E8F0 !important;
+  border-color: #CBD5E1 !important;
+}
+
+html:not(.dark) .filter-btn.active {
+  background-color: #FFFFFF !important;
+  border-color: #059669 !important;
+  color: #047857 !important;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08) !important;
+  font-weight: 700 !important;
+}
+
+html:not(.dark) .filter-btn:not(.active) {
+  color: #475569 !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+html:not(.dark) .filter-btn:not(.active):hover {
+  color: #0F172A !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
+}
+
+html:not(.dark) .template-card {
+  background-color: #FAFBFD !important;
+  border-color: #D6DCE6 !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
+}
+
+html:not(.dark) .template-card:hover {
+  border-color: #059669 !important;
+  box-shadow: 0 10px 28px rgba(5, 150, 105, 0.08) !important;
+}
+
+html:not(.dark) .template-card .w-full.bg-white {
   background-color: #FFFFFF !important;
   border-color: #CBD5E1 !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.07) !important;
+}
+
+html:not(.dark) .template-card button[onclick^="downloadTemplate"] {
+  background-color: #059669 !important;
+  color: #FFFFFF !important;
+}
+
+html:not(.dark) .template-card button[onclick^="downloadTemplate"]:hover {
+  background-color: #047857 !important;
+}
+
+html:not(.dark) .template-card button[onclick^="copyTemplateText"] {
+  background-color: #E8EDF5 !important;
+  border-color: #CFD7E4 !important;
+  color: #0F172A !important;
+}
+
+html:not(.dark) .template-card button[onclick^="openPreviewModal"] {
+  background-color: #E8EDF5 !important;
+  border-color: #CFD7E4 !important;
+  color: #334155 !important;
+}
+
+html:not(.dark) .template-card button[onclick^="openComingSoonModal"] {
+  background-color: #FFFBEB !important;
+  border-color: #FDE68A !important;
+  color: #92400E !important;
+  font-weight: 700 !important;
+}
+
+/* Modals in Light Mode */
+html:not(.dark) #qrisModalOverlay .bg-dark-surface,
+html:not(.dark) #consultModalOverlay .bg-dark-surface,
+html:not(.dark) #proModalOverlay .bg-dark-surface,
+html:not(.dark) #previewModalOverlay .bg-dark-surface,
+html:not(.dark) #comingSoonModalOverlay .bg-dark-surface {
+  background-color: #FAFBFD !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2) !important;
 }
 
 html:not(.dark) #qrisModalOverlay .bg-dark-well,
 html:not(.dark) #consultModalOverlay .bg-dark-well,
-html:not(.dark) #proModalOverlay .bg-dark-well {
-  background-color: #F8F9FB !important;
-  border-color: #E2E6ED !important;
+html:not(.dark) #proModalOverlay .bg-dark-well,
+html:not(.dark) #previewModalOverlay .bg-dark-well,
+html:not(.dark) #comingSoonModalOverlay .bg-dark-well {
+  background-color: #EEF2F6 !important;
+  border-color: #CFD7E4 !important;
+  color: #0F172A !important;
 }
 
+html:not(.dark) #previewTextContent {
+  background-color: #EEF2F6 !important;
+  border-color: #CFD7E4 !important;
+  color: #0F172A !important;
+}
+
+html:not(.dark) #previewDownloadBtn {
+  background-color: #059669 !important;
+  color: #FFFFFF !important;
+}
+
+html:not(.dark) #previewCopyBtn {
+  background-color: #E8EDF5 !important;
+  border-color: #CFD7E4 !important;
+  color: #0F172A !important;
+}
+
+/* Toast Notification in Light Mode */
+html:not(.dark) #toast {
+  background-color: #0F172A !important;
+  border-color: #334155 !important;
+  color: #F8FAFC !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Dropdown Selects */
 select option, select optgroup {
   background-color: #111319;
   color: #F8FAFC;
@@ -139,13 +501,13 @@ select option, select optgroup {
 
 html:not(.dark) select option, html:not(.dark) select optgroup {
   background-color: #FFFFFF;
-  color: #0A0D14;
+  color: #0F172A;
 }
 
 html:not(.dark) select#roleSelect {
-  background-color: #F1F3F7;
-  color: #0A0D14;
-  border-color: #DEE2EA;
+  background-color: #FFFFFF;
+  color: #0F172A;
+  border-color: #CBD5E1;
 }
 
 /* Custom Template Archetype & Seniority Buttons */
