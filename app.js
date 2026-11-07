@@ -82,12 +82,12 @@
       toastAnalyzing: 'Memindai teks dan menghitung matriks kompetensi...',
       toastPaymentSuccess: 'Simulasi Berhasil! Laporan diagnostik 10-halaman Anda siap diunduh.',
       toastTemplateLoaded: 'Template posisi kustom berhasil dimuat!',
-      tier1Label: 'HIJAU (≥80%) : MATCH TINGGI',
-      tier2Label: 'KUNING (65-79%) : CADANGAN POTENSIAL',
-      tier3Label: 'MERAH (<65%) : RAWAN TERELIMINASI',
-      tier1Badge: 'TIER 1 : SHORTLIST CANDIDATE (HIGH FIT)',
-      tier2Badge: 'TIER 2 : BACKUP CANDIDATE (MODERATE FIT)',
-      tier3Badge: 'TIER 3 : HIGH RISK / GAP IDENTIFIED (LOW FIT)'
+      tier1Label: 'Kecocokan Tinggi (≥80%)',
+      tier2Label: 'Kecocokan Cukup (65-79%)',
+      tier3Label: 'Perlu Optimasi (<65%)',
+      tier1Badge: 'Kualifikasi Tinggi • Prioritas Shortlist',
+      tier2Badge: 'Kualifikasi Cukup • Kelompok Cadangan',
+      tier3Badge: 'Perlu Optimasi • Risiko Gugur ATS'
     },
     en: {
       navSubtitle: 'AI Resume Intelligence & ATS Diagnostic',
@@ -131,12 +131,12 @@
       toastAnalyzing: 'Scanning resume text and evaluating competency matrix...',
       toastPaymentSuccess: 'Simulation Successful! Your 10-page report is ready for download.',
       toastTemplateLoaded: 'Custom role template loaded successfully!',
-      tier1Label: 'GREEN (≥80%) : HIGH MATCH',
-      tier2Label: 'AMBER (65-79%) : POTENTIAL BACKUP',
-      tier3Label: 'RED (<65%) : HIGH RISK OF REJECTION',
-      tier1Badge: 'TIER 1 : SHORTLIST CANDIDATE (HIGH FIT)',
-      tier2Badge: 'TIER 2 : BACKUP CANDIDATE (MODERATE FIT)',
-      tier3Badge: 'TIER 3 : HIGH RISK / GAP IDENTIFIED (LOW FIT)'
+      tier1Label: 'High Match (≥80%)',
+      tier2Label: 'Moderate Match (65-79%)',
+      tier3Label: 'Needs Optimization (<65%)',
+      tier1Badge: 'High Qualification • Shortlist Priority',
+      tier2Badge: 'Moderate Match • Candidate Pool',
+      tier3Badge: 'Optimization Needed • ATS Risk'
     }
   };
 
@@ -1699,25 +1699,35 @@ KEAHLIAN & KOMPETENSI
     DOM.scoreTierLabel.style.color = res.tierColor;
     DOM.tierBadgePill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-current"></span><span>${res.tierBadge}</span>`;
     DOM.tierBadgePill.style.color = res.tierColor;
-    DOM.tierBadgePill.style.borderColor = res.tierColor;
-    DOM.tierBadgePill.style.backgroundColor = res.tier === 1 ? 'rgba(16, 185, 129, 0.12)' : (res.tier === 2 ? 'rgba(245, 158, 11, 0.12)' : 'rgba(239, 68, 68, 0.12)');
+    DOM.tierBadgePill.style.borderColor = res.tier === 1 ? 'rgba(16, 185, 129, 0.35)' : (res.tier === 2 ? 'rgba(245, 158, 11, 0.35)' : 'rgba(239, 68, 68, 0.35)');
+    DOM.tierBadgePill.style.backgroundColor = res.tier === 1 ? 'rgba(16, 185, 129, 0.10)' : (res.tier === 2 ? 'rgba(245, 158, 11, 0.10)' : 'rgba(239, 68, 68, 0.10)');
 
     DOM.tierNarrativeTxt.textContent = res.narrative;
     DOM.recruiterAdviceTxt.textContent = res.advice;
 
-    DOM.strengthCountBadge.textContent = `${res.strengths.length} ` + (lang === 'id' ? 'Poin Kuat' : 'Strengths');
+    function formatDiagnosticBullet(str, isStrength) {
+      const escaped = String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+      const highlightColor = isStrength ? 'text-emerald-300' : 'text-amber-300';
+      return escaped.replace(/&quot;([^&]+)&quot;/g, `<code class="px-1.5 py-0.5 rounded bg-dark-well border border-dark-wellBorder text-[11px] font-mono ${highlightColor} font-semibold">$1</code>`);
+    }
+
+    DOM.strengthCountBadge.textContent = `${res.strengths.length} ` + (lang === 'id' ? 'Kualifikasi Terdeteksi' : 'Strengths Met');
     DOM.strengthsList.innerHTML = res.strengths.map(s => `
-      <li class="flex items-start gap-2">
-        <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
-        <span>${s}</span>
+      <li class="flex items-start gap-2.5">
+        <span class="w-4 h-4 rounded-full bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">✓</span>
+        <span class="text-xs text-slate-300 leading-relaxed">${formatDiagnosticBullet(s, true)}</span>
       </li>
     `).join('');
 
-    DOM.gapCountBadge.textContent = `${res.gaps.length} ` + (lang === 'id' ? 'Celah' : 'Gaps');
+    DOM.gapCountBadge.textContent = `${res.gaps.length} ` + (lang === 'id' ? 'Poin Perlu Ditambahkan' : 'Gaps to Fix');
     DOM.gapsList.innerHTML = res.gaps.map(g => `
-      <li class="flex items-start gap-2">
-        <span class="w-1.5 h-1.5 rounded-full bg-brand-amber mt-1.5 shrink-0"></span>
-        <span>${g}</span>
+      <li class="flex items-start gap-2.5">
+        <span class="w-4 h-4 rounded-full bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">!</span>
+        <span class="text-xs text-slate-300 leading-relaxed">${formatDiagnosticBullet(g, false)}</span>
       </li>
     `).join('');
 
