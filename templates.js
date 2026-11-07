@@ -355,9 +355,9 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     const buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach((btn) => {
       if (btn.getAttribute('data-filter') === filter) {
-        btn.className = 'filter-btn active px-4 py-2 rounded-xl text-xs font-semibold transition-all bg-brand-emerald text-black shadow-md shadow-brand-emerald/10';
+        btn.className = 'filter-btn active px-4 py-2 rounded-xl text-xs font-heading font-semibold transition-all bg-dark-surface border border-brand-emerald/40 text-brand-emerald shadow-sm whitespace-nowrap';
       } else {
-        btn.className = 'filter-btn px-4 py-2 rounded-xl text-xs font-medium text-dark-textSec hover:text-dark-textPri bg-dark-well border border-dark-wellBorder transition-all';
+        btn.className = 'filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap';
       }
     });
 
