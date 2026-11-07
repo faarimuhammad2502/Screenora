@@ -267,3 +267,17 @@ html:not(.dark) .skeleton-shimmer {
     padding: 0.75rem;
   }
 }
+
+/* ==========================================================================
+   FAQ ACCORDION MICRO-INTERACTIONS
+   ========================================================================== */
+.faq-toggle-btn[aria-expanded="true"] .faq-icon {
+  transform: rotate(45deg);
+  background-color: rgba(16, 185, 129, 0.2);
+  color: #10B981;
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.faq-answer {
+  transition: all 0.25s ease-in-out;
+}

@@ -1196,6 +1196,8 @@ KEAHLIAN & KOMPETENSI
     closeConsultModalBtn: document.getElementById('closeConsultModalBtn'),
     openProModalBtn: document.getElementById('openProModalBtn'),
     openConsultModalBtn: document.getElementById('openConsultModalBtn'),
+    consultWhatsAppBtn: document.getElementById('consultWhatsAppBtn'),
+    copyMissingKeywordsBtn: document.getElementById('copyMissingKeywordsBtn'),
 
     // Toast
     toast: document.getElementById('toast'),
@@ -1620,6 +1622,7 @@ KEAHLIAN & KOMPETENSI
       advice,
       strengths: strengths.slice(0, 4),
       gaps: gaps.slice(0, 3),
+      missingKeywords: missingKeywords.length > 0 ? missingKeywords : targetKeywords.slice(0, 6),
       beforeRewrite,
       afterRewrite,
       starQuestion,
@@ -1684,6 +1687,13 @@ KEAHLIAN & KOMPETENSI
     DOM.rewriteBeforeTxt.textContent = res.beforeRewrite;
     DOM.rewriteAfterTxt.textContent = res.afterRewrite;
     DOM.starQuestionTxt.textContent = res.starQuestion;
+
+    // Dynamically update WhatsApp consultation link with contextual role & score
+    if (DOM.consultWhatsAppBtn) {
+      const targetRoleTitle = res.roleTitle || 'HR / Specialist';
+      const waMsg = `Halo Kak Faari, saya baru saja memindai CV di Screenora untuk posisi ${targetRoleTitle} (Skor ATS: ${res.score}%). Saya tertarik untuk konsultasi 1-on-1 bedah CV dan simulasi wawancara STAR. Mohon info ketersediaan jadwalnya ya Kak. Terima kasih!`;
+      DOM.consultWhatsAppBtn.href = `https://wa.me/6285892344722?text=${encodeURIComponent(waMsg)}`;
+    }
 
     DOM.inputView.classList.add('hidden');
     DOM.resultsView.classList.remove('hidden');
@@ -1859,6 +1869,52 @@ KEAHLIAN & KOMPETENSI
         document.body.removeChild(ta);
         showToast(state.language === 'id' ? i18n.id.toastCopied : i18n.en.toastCopied);
       }
+    });
+
+    // Copy Missing ATS Keywords Button
+    if (DOM.copyMissingKeywordsBtn) {
+      DOM.copyMissingKeywordsBtn.addEventListener('click', async () => {
+        let kwList = '';
+        if (state.currentAnalysis && state.currentAnalysis.missingKeywords && state.currentAnalysis.missingKeywords.length > 0) {
+          kwList = state.currentAnalysis.missingKeywords.join(', ');
+        } else {
+          kwList = 'KPI, Process Improvement, Stakeholder Management, ATS Keywords';
+        }
+
+        try {
+          await navigator.clipboard.writeText(kwList);
+          showToast(state.language === 'id' ? 'Kata kunci rekomendasi berhasil disalin ke clipboard!' : 'Recommended keywords copied to clipboard!');
+        } catch (err) {
+          const ta = document.createElement('textarea');
+          ta.value = kwList;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          showToast(state.language === 'id' ? 'Kata kunci rekomendasi berhasil disalin ke clipboard!' : 'Recommended keywords copied to clipboard!');
+        }
+      });
+    }
+
+    // FAQ Accordion Interactivity
+    document.querySelectorAll('.faq-toggle-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+        const answer = btn.nextElementSibling;
+
+        // Auto close other open accordion items
+        document.querySelectorAll('.faq-toggle-btn').forEach(otherBtn => {
+          if (otherBtn !== btn) {
+            otherBtn.setAttribute('aria-expanded', 'false');
+            if (otherBtn.nextElementSibling) otherBtn.nextElementSibling.classList.add('hidden');
+          }
+        });
+
+        btn.setAttribute('aria-expanded', !isExpanded);
+        if (answer) {
+          answer.classList.toggle('hidden', isExpanded);
+        }
+      });
     });
 
     // Independent Modals
