@@ -211,15 +211,24 @@ html:not(.dark) #tierBadgePill {
 }
 
 html:not(.dark) .diagnostic-pill-strength {
-  background-color: #ECFDF5 !important;
-  border-color: #A7F3D0 !important;
-  color: #065F46 !important;
+  background-color: #D1FAE5 !important;
+  border: 1px solid #6EE7B7 !important;
+  color: #064E3B !important;
+  font-weight: 700 !important;
 }
 
 html:not(.dark) .diagnostic-pill-gap {
-  background-color: #FFFBEB !important;
-  border-color: #FDE68A !important;
-  color: #92400E !important;
+  background-color: #FEF3C7 !important;
+  border: 1px solid #FCD34D !important;
+  color: #78350F !important;
+  font-weight: 700 !important;
+}
+
+/* Guarantee Deep Contrast on All Bullet Texts in Card 02 & 03 */
+html:not(.dark) #strengthsList li span:last-child,
+html:not(.dark) #gapsList li span:last-child {
+  color: #0F172A !important;
+  font-weight: 500 !important;
 }
 
 /* Card 04 Formula XYZ Containers in Light Mode */
@@ -230,16 +239,18 @@ html:not(.dark) #rewriteBeforeCard {
 
 html:not(.dark) #rewriteBeforeTitle {
   color: #991B1B !important;
+  font-weight: 700 !important;
 }
 
 html:not(.dark) #rewriteBeforeTxt {
   background-color: #FFFFFF !important;
   border-color: #FCA5A5 !important;
-  color: #881337 !important;
+  color: #0F172A !important;
 }
 
 html:not(.dark) #rewriteBeforeSub {
   color: #9F1239 !important;
+  font-weight: 600 !important;
 }
 
 html:not(.dark) #rewriteAfterCard {
@@ -250,24 +261,34 @@ html:not(.dark) #rewriteAfterCard {
 
 html:not(.dark) #rewriteAfterTitle {
   color: #065F46 !important;
+  font-weight: 700 !important;
 }
 
 html:not(.dark) #rewriteAfterTxt {
   background-color: #FFFFFF !important;
   border-color: #6EE7B7 !important;
-  color: #064E3B !important;
+  color: #0F172A !important;
 }
 
 html:not(.dark) #rewriteAfterSub {
   color: #047857 !important;
+  font-weight: 600 !important;
 }
 
 html:not(.dark) #copyRewriteBtn {
   color: #047857 !important;
+  font-weight: 700 !important;
 }
 
 html:not(.dark) #copyRewriteBtn:hover {
   color: #064E3B !important;
+}
+
+/* STAR Interview Probing Quote in Light Mode */
+html:not(.dark) #starQuestionTxt {
+  color: #0F172A !important;
+  border-left-color: #D97706 !important;
+  font-weight: 500 !important;
 }
 
 /* Dropzone & Inputs in Light Mode */

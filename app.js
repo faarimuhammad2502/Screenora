@@ -1759,16 +1759,16 @@ KEAHLIAN & KOMPETENSI
     DOM.strengthCountBadge.textContent = `${res.strengths.length} ` + (lang === 'id' ? 'Kualifikasi Terdeteksi' : 'Strengths Met');
     DOM.strengthsList.innerHTML = res.strengths.map(s => `
       <li class="flex items-start gap-2.5">
-        <span class="w-4 h-4 rounded-full bg-emerald-500/15 text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">✓</span>
-        <span class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">${formatDiagnosticBullet(s, true)}</span>
+        <span class="w-4 h-4 rounded-full bg-emerald-100 border border-emerald-200 text-emerald-800 dark:bg-emerald-500/15 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">✓</span>
+        <span class="text-xs text-slate-900 dark:text-slate-300 font-medium dark:font-normal leading-relaxed">${formatDiagnosticBullet(s, true)}</span>
       </li>
     `).join('');
 
     DOM.gapCountBadge.textContent = `${res.gaps.length} ` + (lang === 'id' ? 'Poin Perlu Ditambahkan' : 'Gaps to Fix');
     DOM.gapsList.innerHTML = res.gaps.map(g => `
       <li class="flex items-start gap-2.5">
-        <span class="w-4 h-4 rounded-full bg-amber-500/15 text-amber-400 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">!</span>
-        <span class="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">${formatDiagnosticBullet(g, false)}</span>
+        <span class="w-4 h-4 rounded-full bg-amber-100 border border-amber-200 text-amber-800 dark:bg-amber-500/15 dark:text-amber-400 flex items-center justify-center shrink-0 mt-0.5 text-[10px] font-bold">!</span>
+        <span class="text-xs text-slate-900 dark:text-slate-300 font-medium dark:font-normal leading-relaxed">${formatDiagnosticBullet(g, false)}</span>
       </li>
     `).join('');
 
