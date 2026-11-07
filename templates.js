@@ -255,7 +255,255 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   };
 
   // --------------------------------------------------------------------------
-  // 2. STATE & INITIALIZATION
+  // 2. INTERNATIONALIZATION (i18n) DICTIONARY
+  // --------------------------------------------------------------------------
+  const i18n = {
+    id: {
+      tplNavSubtitle: 'Katalog Template Resume ATS Teruji',
+      tplBackBtn: 'Kembali ke Skrining CV',
+      tplHeroBadge: 'Koleksi Format Tervalidasi • Workday, Taleo, Greenhouse & BUMN',
+      tplHeroTitle: 'Katalog Template CV ATS Standar Nasional & Internasional',
+      tplHeroDesc: 'Setiap template di bawah ini dirancang dengan struktur 1-kolom resmi, formula XYZ terukur, dan margin proporsional. Dilengkapi pratinjau lembar resume nyata dan berkas Word (.docx) siap unduh.',
+      tplPill1: 'Single-Column Hierarchy',
+      tplPill2: 'Formula XYZ & Action Verbs',
+      tplPill3: 'Format Word (.docx) Asli',
+
+      // Filter tabs
+      filterAll: 'Semua Template (6)',
+      filterNasional: 'Standar Nasional (BUMN & Lokal)',
+      filterInternasional: 'Standar Internasional (Global MNC)',
+      filterFree: 'Akses Gratis',
+      filterPro: 'Pro (Segera Hadir)',
+
+      // Common card elements
+      btnDownloadDocx: 'Unduh Format Word (.docx)',
+      btnCopyText: 'Salin Teks',
+      btnPreview: 'Preview 👁',
+      hoverPreview: '👁 Pratinjau Dokumen Lengkap',
+      btnComingSoon: 'Segera Hadir (Sedang Disiapkan)',
+      cardProBadge: 'Fitur Pro',
+
+      // Card 1: Classic Corporate
+      c1Meta: 'Standar BUMN & Nasional',
+      c1Title: 'Classic Corporate Indonesia',
+      c1Desc: 'Format 1-kolom konservatif resmi yang paling disukai rekruter BUMN, Perbankan, FMCG, dan korporat swasta besar. Struktur rapi dengan pembagian section baku.',
+      c1Spec1: '<strong>Hierarki Font:</strong> Calibri / Arial (Bebas font glitch)',
+      c1Spec2: '<strong>Section Baku:</strong> Profil, Pengalaman XYZ, Edukasi, Skill',
+      c1Spec3: '<strong>Cocok untuk:</strong> HR, Finance, Operations, Sales, Legal',
+      c1PaperBadge: 'Format 1-Kolom BUMN',
+      c1PaperPage: 'Halaman 1 dari 1',
+
+      // Card 2: Fresh Grad
+      c2Meta: 'Fresh Graduate & Switcher',
+      c2Title: 'Fresh Grad & Kampus Merdeka',
+      c2Desc: 'Format yang menonjolkan riwayat pendidikan, skripsi/penelitian, magang mandiri/MSIB, dan kepemimpinan organisasi untuk kandidat dengan jam terbang awal.',
+      c2Spec1: '<strong>Hierarki:</strong> Riwayat Edukasi & Proyek ditempatkan di atas',
+      c2Spec2: '<strong>Sorotan Khusus:</strong> Sertifikasi pelatihan, kursus, & tools',
+      c2Spec3: '<strong>Cocok untuk:</strong> Lulusan Baru, Shadow Teacher, Guru, Intern',
+      c2PaperBadge: 'Edukasi & Proyek-First',
+      c2PaperPage: 'Halaman 1 dari 1',
+
+      // Card 3: Executive Leadership
+      c3Meta: 'Eksekutif & Manajerial',
+      c3Title: 'Executive & P&L Leadership',
+      c3Desc: 'Struktur 2-halaman berdensitas tinggi untuk Head of Department, General Manager, dan Direktur yang butuh menonjolkan tanggung jawab anggaran dan tim besar.',
+      c3Spec1: '<strong>Fokus:</strong> Metrik P&L, Revenue Growth, & Skalabilitas Tim',
+      c3Spec2: '<strong>Format:</strong> Executive Summary + Core Competencies Matrix',
+      c3Spec3: '<strong>Cocok untuk:</strong> VP, Director, GM, Senior Lead',
+      c3PaperBadge: 'Director & P&L Standard',
+      c3PaperPage: 'Halaman 1 dari 2',
+
+      // Card 4: Global Tech
+      c4Meta: 'Global Tech & Remote',
+      c4Title: 'Global Tech & Software Engineer',
+      c4Desc: 'Standar US & EU remote work. 0% data pribadi sensitif (bebas foto/usia demi kepatuhan anti-bias EEOC), dengan tautan GitHub, serta kategorisasi Tech Stack.',
+      c4Spec1: '<strong>Bahasa:</strong> English (Action Verbs: Architected, Engineered)',
+      c4Spec2: '<strong>Skills Matrix:</strong> Languages, Frameworks, Cloud, Databases',
+      c4Spec3: '<strong>Cocok untuk:</strong> Fullstack, Backend, DevOps, Data Engineer',
+      c4PaperBadge: 'Workday & Greenhouse Compliant',
+      c4PaperPage: 'Halaman 1 dari 1',
+
+      // Card 5: Global Product
+      c5Meta: 'Global Product & Ops',
+      c5Title: 'International Product & Operations',
+      c5Desc: 'Format yang diformulasikan untuk Product Manager, Business Analyst, dan Growth Lead. Padat metrik kuantitatif (MRR, retention, conversion, CAC).',
+      c5Spec1: '<strong>Bahasa:</strong> English (Action Verbs: Spearheaded, Scaled)',
+      c5Spec2: '<strong>Fokus:</strong> User discovery, product roadmaps, data analytics',
+      c5Spec3: '<strong>Cocok untuk:</strong> PM, Business Analyst, Strategy & Ops',
+      c5PaperBadge: 'Metrics & ARR Focused',
+      c5PaperPage: 'Halaman 1 dari 1',
+
+      // Card 6: Silicon Valley
+      c6Meta: 'Silicon Valley & Venture',
+      c6Title: 'Silicon Valley Startup Elite',
+      c6Desc: 'Layout 1-halaman ultra-padat dengan teknik penulisan high-signal low-noise untuk kandidat senior di ekosistem startup Seri A hingga Pra-IPO.',
+      c6Spec1: '<strong>Format:</strong> 1-Page High-Density Silicon Valley Standard',
+      c6Spec2: '<strong>Fokus:</strong> Seed-to-Scale, 0-to-1 building, high ownership',
+      c6Spec3: '<strong>Cocok untuk:</strong> Staff Engineer, Growth Architect, Founding Ops',
+      c6PaperBadge: 'Elite 1-Page Layout',
+      c6PaperPage: 'Halaman 1 dari 1',
+
+      // Guide Section
+      guideBadge: 'PANDUAN PRAKTISI REKRUTER',
+      guideTitle: 'Perbedaan Kritis CV ATS Indonesia vs Internasional',
+      guideSub: 'Banyak pelamar salah kaprah menyamakan seluruh CV ATS. Rekruter korporat lokal dan global memiliki kepatuhan sistem yang sangat berbeda.',
+      guideIdTitle: 'Standar Nasional (BUMN & Swasta Lokal)',
+      guideIdPoint1: '<strong>Domisili Kota Wajib:</strong> Cantumkan kota tinggal (misal: <em>Jakarta Timur, DKI Jakarta</em>) karena sering menjadi filter awal logistik penempatan kerja.',
+      guideIdPoint2: '<strong>Gelar & IPK:</strong> Untuk BUMN dan perbankan, penulisan gelar formal (S.Psi., S.Kom.) dan IPK masih menjadi syarat administratif filter awal.',
+      guideIdPoint3: '<strong>Sertifikasi Nasional:</strong> Sertifikasi BNSP, Brevet Pajak, atau sertifikasi lokal sangat dihargai dan perlu ditulis lengkap dengan nomor lisensi.',
+      guideIntlTitle: 'Standar Internasional (US, EU & Global Remote)',
+      guideIntlPoint1: '<strong>Anti-Bias EEOC (Strict):</strong> Dilarang memasukkan foto, tanggal lahir, usia, status perkawinan, atau agama. Pelanggaran ini memicu diskualifikasi otomatis sistem ATS global.',
+      guideIntlPoint2: '<strong>Action Verbs Lampau:</strong> Setiap butir wajib diawali kata kerja berdaya tinggi (e.g., <em>Spearheaded, Accelerated, Formulated, Built</em>) bukan kalimat tugas rutin.',
+      guideIntlPoint3: '<strong>Standar 1 Halaman:</strong> Di pasar AS/Eropa, kandidat di bawah 7 tahun pengalaman wajib memadatkan resume menjadi tepat 1 halaman (<em>single-page rule</em>).',
+
+      // Modals
+      tplModalTag: 'STANDAR FORMAT ATS',
+      tplModalTitle: 'Pratinjau Struktur Template',
+      tplModalSubtitle: 'Salin teks struktur ini ke Google Docs / Word Anda atau unduh langsung dalam berkas .docx siap edit.',
+      tplModalDownload: 'Unduh Berkas .docx',
+      tplModalCopy: 'Salin Teks Bersih',
+
+      tplCsBadge: 'FITUR LANJUTAN • SEGERA HADIR',
+      tplCsTitle: 'Template Sedang Disiapkan',
+      tplCsDesc: 'Format ini sedang difinalisasi agar memenuhi regulasi terbaru rekruter. Punya permintaan format industri khusus atau ingin berkonsultasi langsung dengan Faari?',
+      tplCsEmailBtn: 'Kirim Masukan via Email ke Faari',
+      tplCsClose: 'Tutup',
+
+      // Footer
+      tplFooterDesc: 'Seluruh template disusun berdasarkan standar algoritma parser ATS industri terbuka (Workday, Taleo, Greenhouse, Lever). Bebas digunakan tanpa biaya lisensi.',
+      tplFooterInquiry: 'Pertanyaan & Masukan:',
+      tplFooterCopyright: '© 2026 Screenora. Built for High-Impact Job Seekers & Modern HR Teams by Faari.',
+
+      // Toasts
+      toastDownloaded: 'Template berhasil diunduh!',
+      toastCopied: 'Format teks template berhasil disalin ke clipboard!',
+      toastCopyFailed: 'Gagal menyalin teks secara otomatis.'
+    },
+    en: {
+      tplNavSubtitle: 'Tested ATS Resume Template Catalog',
+      tplBackBtn: 'Back to CV Screening',
+      tplHeroBadge: 'Validated Format Collection • Workday, Taleo, Greenhouse & SOE',
+      tplHeroTitle: 'ATS Resume Template Catalog — National & International Standards',
+      tplHeroDesc: 'Every template below is engineered with official single-column hierarchy, quantifiable XYZ bullet points, and recruiter-approved margins. Includes realistic paper previews and ready-to-use Word (.docx) downloads.',
+      tplPill1: 'Single-Column Hierarchy',
+      tplPill2: 'Formula XYZ & Action Verbs',
+      tplPill3: 'Native Word (.docx) Format',
+
+      // Filter tabs
+      filterAll: 'All Templates (6)',
+      filterNasional: 'National Standard (SOE & Local)',
+      filterInternasional: 'International Standard (Global MNC)',
+      filterFree: 'Free Access',
+      filterPro: 'Pro (Coming Soon)',
+
+      // Common card elements
+      btnDownloadDocx: 'Download Word Format (.docx)',
+      btnCopyText: 'Copy Text',
+      btnPreview: 'Preview 👁',
+      hoverPreview: '👁 Full Document Preview',
+      btnComingSoon: 'Coming Soon (In Progress)',
+      cardProBadge: 'Pro Feature',
+
+      // Card 1: Classic Corporate
+      c1Meta: 'SOE & National Standard',
+      c1Title: 'Classic Corporate Indonesia',
+      c1Desc: 'Official conservative single-column format favored by Indonesian SOEs (BUMN), Banking, FMCG, and major corporations. Clean layout with standard sections.',
+      c1Spec1: '<strong>Font Hierarchy:</strong> Calibri / Arial (Glitch-free parsing)',
+      c1Spec2: '<strong>Standard Sections:</strong> Summary, XYZ Experience, Education, Skills',
+      c1Spec3: '<strong>Best For:</strong> HR, Finance, Operations, Sales, Legal',
+      c1PaperBadge: 'SOE 1-Column Standard',
+      c1PaperPage: 'Page 1 of 1',
+
+      // Card 2: Fresh Grad
+      c2Meta: 'Fresh Graduate & Career Switcher',
+      c2Title: 'Fresh Graduate & MSIB Internship',
+      c2Desc: 'Engineered to emphasize education, thesis research, verified internships, and leadership roles for early-career professionals.',
+      c2Spec1: '<strong>Hierarchy:</strong> Education & Projects placed at the top',
+      c2Spec2: '<strong>Highlights:</strong> Certifications, coursework, and practical tools',
+      c2Spec3: '<strong>Best For:</strong> Fresh Graduates, Educators, Interns, Switchers',
+      c2PaperBadge: 'Education & Project-First',
+      c2PaperPage: 'Page 1 of 1',
+
+      // Card 3: Executive Leadership
+      c3Meta: 'Executive & Management',
+      c3Title: 'Executive & P&L Leadership',
+      c3Desc: 'High-density 2-page layout designed for Heads of Department, General Managers, and Directors highlighting large-scale P&L and team stewardship.',
+      c3Spec1: '<strong>Focus:</strong> P&L metrics, Revenue Growth, and Team Scalability',
+      c3Spec2: '<strong>Format:</strong> Executive Summary + Competencies Matrix',
+      c3Spec3: '<strong>Best For:</strong> VP, Director, GM, Senior Department Lead',
+      c3PaperBadge: 'Director & P&L Standard',
+      c3PaperPage: 'Page 1 of 2',
+
+      // Card 4: Global Tech
+      c4Meta: 'Global Tech & Remote',
+      c4Title: 'Global Tech & Software Engineer',
+      c4Desc: 'US & EU remote work standard. 100% EEOC compliant (zero photo/age), verified GitHub links, and dense tech stack categorization.',
+      c4Spec1: '<strong>Language:</strong> English (Action Verbs: Architected, Engineered)',
+      c4Spec2: '<strong>Skills Matrix:</strong> Languages, Frameworks, Cloud, Databases',
+      c4Spec3: '<strong>Best For:</strong> Fullstack, Backend, DevOps, Data Engineers',
+      c4PaperBadge: 'Workday & Greenhouse Compliant',
+      c4PaperPage: 'Page 1 of 1',
+
+      // Card 5: Global Product
+      c5Meta: 'Global Product & Ops',
+      c5Title: 'International Product & Operations',
+      c5Desc: 'Tailored for Product Managers, Business Analysts, and Growth Leads. Packed with quantitative outcome metrics (MRR, retention, conversion, CAC).',
+      c5Spec1: '<strong>Language:</strong> English (Action Verbs: Spearheaded, Scaled)',
+      c5Spec2: '<strong>Focus:</strong> User discovery, product roadmaps, data analytics',
+      c5Spec3: '<strong>Best For:</strong> Product Managers, Business Analysts, Strategy & Ops',
+      c5PaperBadge: 'Metrics & ARR Focused',
+      c5PaperPage: 'Page 1 of 1',
+
+      // Card 6: Silicon Valley
+      c6Meta: 'Silicon Valley & Venture',
+      c6Title: 'Silicon Valley Startup Elite',
+      c6Desc: 'Ultra-dense 1-page layout with high-signal low-noise writing technique for senior talent in Series A to Pre-IPO startup ecosystems.',
+      c6Spec1: '<strong>Format:</strong> 1-Page High-Density Silicon Valley Standard',
+      c6Spec2: '<strong>Focus:</strong> Seed-to-Scale, 0-to-1 building, high ownership',
+      c6Spec3: '<strong>Best For:</strong> Staff Engineers, Growth Architects, Founding Ops',
+      c6PaperBadge: 'Elite 1-Page Layout',
+      c6PaperPage: 'Page 1 of 1',
+
+      // Guide Section
+      guideBadge: 'RECRUITER PRACTITIONER GUIDE',
+      guideTitle: 'Critical Differences: Indonesian vs International ATS Resumes',
+      guideSub: 'Many applicants mistakenly treat all ATS resumes the same. Local Indonesian corporate recruiters and global multinational systems have vastly different compliance rules.',
+      guideIdTitle: 'National Standard (Indonesian SOE & Local Corporate)',
+      guideIdPoint1: '<strong>City of Residence Mandatory:</strong> Include your city of residence (e.g. <em>East Jakarta, DKI Jakarta</em>) as it often serves as an initial logistical filter for local placement.',
+      guideIdPoint2: '<strong>Academic Degree & GPA:</strong> For Indonesian SOEs and banking, formal degree acronyms (S.Psi., S.Kom.) and GPA remain standard administrative gatekeeping criteria.',
+      guideIdPoint3: '<strong>National Certifications:</strong> BNSP, Tax Brevet, or authorized local professional certifications carry high weight and should be listed with license numbers.',
+      guideIntlTitle: 'International Standard (US, EU & Global Remote)',
+      guideIntlPoint1: '<strong>Strict EEOC Anti-Bias:</strong> Never include photos, date of birth, age, marital status, or religion. Doing so triggers immediate automated rejection in US/EU ATS platforms.',
+      guideIntlPoint2: '<strong>Past-Tense Action Verbs:</strong> Every bullet must start with strong power verbs (e.g., <em>Spearheaded, Accelerated, Formulated, Built</em>) instead of passive responsibility statements.',
+      guideIntlPoint3: '<strong>Single-Page Rule:</strong> For US/European markets, candidates with under 7 years of experience must condense their resume into exactly 1 page.',
+
+      // Modals
+      tplModalTag: 'ATS RESUME STANDARD',
+      tplModalTitle: 'Template Structure Preview',
+      tplModalSubtitle: 'Copy this structural text directly into Google Docs / Word or download as an editable .docx file.',
+      tplModalDownload: 'Download .docx File',
+      tplModalCopy: 'Copy Clean Text',
+
+      tplCsBadge: 'ADVANCED FEATURE • COMING SOON',
+      tplCsTitle: 'Template Under Preparation',
+      tplCsDesc: 'This format is currently being finalized to meet the latest recruiter criteria. Have a specific industry request or want to consult directly with Faari?',
+      tplCsEmailBtn: 'Send Feedback via Email to Faari',
+      tplCsClose: 'Close',
+
+      // Footer
+      tplFooterDesc: 'All templates are structured according to open enterprise ATS parser specifications (Workday, Taleo, Greenhouse, Lever). Free to use with zero licensing fees.',
+      tplFooterInquiry: 'Inquiries & Feedback:',
+      tplFooterCopyright: '© 2026 Screenora. Built for High-Impact Job Seekers & Modern HR Teams by Faari.',
+
+      // Toasts
+      toastDownloaded: 'Template downloaded successfully!',
+      toastCopied: 'Template text copied to clipboard!',
+      toastCopyFailed: 'Failed to copy text automatically.'
+    }
+  };
+
+  // --------------------------------------------------------------------------
+  // 3. STATE & INITIALIZATION
   // --------------------------------------------------------------------------
   const state = {
     theme: localStorage.getItem('screenora_theme') || 'dark',
@@ -328,6 +576,20 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
         DOM.langIdBtn.className = 'px-2.5 py-1 rounded-md transition-all text-dark-textSec dark:text-dark-textSec hover:text-dark-textPri';
       }
     }
+
+    const dict = i18n[lang];
+    if (dict) {
+      document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          if (dict[key].includes('<') && dict[key].includes('>')) {
+            el.innerHTML = dict[key];
+          } else {
+            el.textContent = dict[key];
+          }
+        }
+      });
+    }
   }
 
   // --------------------------------------------------------------------------
@@ -380,7 +642,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   function downloadTemplate(templateKey) {
     const tmpl = TEMPLATES[templateKey];
     if (!tmpl) {
-      showToast('Template tidak ditemukan.');
+      showToast(state.language === 'id' ? 'Template tidak ditemukan.' : 'Template not found.');
       return;
     }
 
@@ -460,7 +722,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 
-    showToast(`Template ${tmpl.title} berhasil diunduh!`);
+    showToast(state.language === 'id' ? `Template ${tmpl.title} berhasil diunduh!` : `Template ${tmpl.title} downloaded successfully!`);
   }
 
   // --------------------------------------------------------------------------
@@ -472,7 +734,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
 
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(tmpl.plainText).then(() => {
-        showToast('Format teks template berhasil disalin ke clipboard!');
+        showToast(state.language === 'id' ? i18n.id.toastCopied : i18n.en.toastCopied);
       }).catch(() => fallbackCopy(tmpl.plainText));
     } else {
       fallbackCopy(tmpl.plainText);
@@ -489,9 +751,9 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     textArea.select();
     try {
       document.execCommand('copy');
-      showToast('Format teks template berhasil disalin ke clipboard!');
+      showToast(state.language === 'id' ? i18n.id.toastCopied : i18n.en.toastCopied);
     } catch (e) {
-      showToast('Gagal menyalin teks secara otomatis.');
+      showToast(state.language === 'id' ? i18n.id.toastCopyFailed : i18n.en.toastCopyFailed);
     }
     document.body.removeChild(textArea);
   }
@@ -504,9 +766,20 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     if (!tmpl || !DOM.previewModalOverlay) return;
 
     state.currentActiveTemplate = templateKey;
-    if (DOM.previewTag) DOM.previewTag.textContent = tmpl.tag;
-    if (DOM.previewTitle) DOM.previewTitle.textContent = tmpl.title;
-    if (DOM.previewSubtitle) DOM.previewSubtitle.textContent = tmpl.description;
+    const lang = state.language || 'id';
+    const dict = i18n[lang] || i18n.id;
+
+    const metaMap = {
+      classic_corporate: { titleKey: 'c1Title', descKey: 'c1Desc', tag: lang === 'en' ? 'NATIONAL STANDARD • OFFICIAL 1-COLUMN' : 'STANDAR NASIONAL • 1-KOLOM RESMI' },
+      fresh_graduate: { titleKey: 'c2Title', descKey: 'c2Desc', tag: lang === 'en' ? 'NATIONAL STANDARD • ENTRY LEVEL' : 'STANDAR NASIONAL • ENTRY LEVEL' },
+      global_tech: { titleKey: 'c4Title', descKey: 'c4Desc', tag: 'INTERNATIONAL ATS • WORKDAY & GREENHOUSE READY' },
+      global_product: { titleKey: 'c5Title', descKey: 'c5Desc', tag: lang === 'en' ? 'INTERNATIONAL ATS • METRIC & KPI FOCUSED' : 'STANDAR INTERNASIONAL • METRIC & KPI' }
+    };
+
+    const meta = metaMap[templateKey];
+    if (DOM.previewTag) DOM.previewTag.textContent = meta ? meta.tag : tmpl.tag;
+    if (DOM.previewTitle) DOM.previewTitle.textContent = (meta && dict[meta.titleKey]) ? dict[meta.titleKey] : tmpl.title;
+    if (DOM.previewSubtitle) DOM.previewSubtitle.textContent = (meta && dict[meta.descKey]) ? dict[meta.descKey] : tmpl.description;
     if (DOM.previewTextContent) DOM.previewTextContent.textContent = tmpl.plainText;
 
     if (DOM.previewDownloadBtn) {
@@ -528,7 +801,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   function openComingSoonModal(templateName) {
     if (!DOM.comingSoonModalOverlay) return;
     if (DOM.comingSoonTitle) {
-      DOM.comingSoonTitle.textContent = `Template ${templateName} Sedang Disiapkan`;
+      DOM.comingSoonTitle.textContent = state.language === 'id' ? `Template ${templateName} Sedang Disiapkan` : `Template ${templateName} Under Preparation`;
     }
     DOM.comingSoonModalOverlay.classList.remove('hidden');
   }

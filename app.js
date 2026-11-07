@@ -41,13 +41,21 @@
   // --------------------------------------------------------------------------
   const i18n = {
     id: {
+      // Top Navigation
       navSubtitle: 'AI Resume Intelligence & ATS Diagnostic',
       privacyBadge: 'Lokal & Terenkripsi',
+      navScan: 'Skrining CV',
+      navTemplates: 'Template ATS',
+      badgeNew: 'Baru',
+
+      // Hero Section
       heroBadge: 'ATS Diagnostic & Behavioral Screening',
       heroTitle: 'Ketahui Skor Kelolosan CV & Celah ATS Sebelum Melamar',
       heroDesc: 'Pemindaian teks lokal mendeteksi keberadaan kata kunci kompetensi, struktur kalimat berbobot formula XYZ, dan parameter kelolosan rekruter dalam 3 detik tanpa mengunggah data Anda ke server asing.',
       samplePrompt: 'Ingin coba langsung tanpa berkas?',
       sampleBtn: 'Muat Sampel Profil HR / Analyst',
+
+      // Step 1: Input Document
       step1Label: 'Dokumen CV Pelamar',
       tabUpload: 'Upload File',
       tabPaste: 'Tempel Teks',
@@ -57,31 +65,125 @@
       pasteHint: 'Tips: Anda bisa langsung menyalin seluruh teks dari Google Docs atau file CV Anda.',
       formatNotice: 'Didukung: PDF Teks, Word DOCX, TXT',
       privacyNotice: 'Zero-Data Retention (Client-Side)',
+      rawCvPlaceholder: 'Tempel ringkasan pengalaman kerja, riwayat pendidikan, dan keahlian CV Anda di sini...',
+
+      // Step 2: Target Role & Market Standard
       step2Label: 'Posisi Pekerjaan Target',
       step2Hint: 'Pilih Cepat / Kustom',
+      standardSelectLabel: 'Standar Pasar Kerja ATS:',
+      stdNasionalLabel: '🇮🇩 Nasional (BUMN/Lokal)',
+      stdGlobalLabel: '🌐 Internasional (MNC)',
       roleSelectLabel: 'Pilih Posisi Standar / Kustom:',
+      roleAtsStandard: 'Standar ATS Korporat',
+      roleEssentialKeywords: 'Kata Kunci Esensial ATS:',
+
+      // Guided Custom Builder
+      customGuideTitle: 'Panduan Template Posisi Kustom',
+      customQuickFillSub: '1-Klik Isi Cepat',
+      customArchetypeLabel: 'Pilih Template Awal (Klik untuk Muat Otomatis):',
+      archGrowth: 'Growth & Komersial',
+      archTech: 'Engineering & Teknis',
+      archOps: 'Operasional & People',
+      archResearch: 'Riset & Analitika',
+      customRoleTitleLabel: 'Nama Jabatan Target:',
+      customRoleTitlePlaceholder: 'Contoh: Senior Growth Marketing Specialist',
+      customRoleTitleHint: 'Format: [Tingkat] + [Fungsi] + [Bidang Spesifik]',
+      customKeywordsLabel: 'Kata Kunci / Keahlian Wajib Diuji (Pisahkan koma):',
+      customKeywordsPlaceholder: 'misal: SQL, Tableau, ROI, Customer Journey, B2B',
+      customSeniorityLabel: 'Ekspektasi Tingkat Pengalaman:',
+      seniorityEntry: 'Entry (0-2 thn)',
+      seniorityMid: 'Mid (2-5 thn)',
+      senioritySenior: 'Senior (5+ thn)',
+
+      // Big CTA
       runBtnLabel: 'Mulai Pemindaian Dokumen',
       btnSubtext: 'Analisis Berbasis Psikologi HR • Standar ATS Korporat • Instan',
+
+      // Skeleton Loader
+      skeletonScanning: 'Memindai Matriks Kompetensi & Formula XYZ...',
+
+      // Results Header & Scorecard
       retestBtn: 'Uji Dokumen atau Posisi Lain',
+      scaleShortlist: '≥80% Shortlist',
+      scaleReserve: '65–79% Cadangan',
+      scaleRisk: '<65% Rawan',
+      recBadge: 'Rekomendasi',
       strengthsHead: 'Kekuatan Kompetensi Terverifikasi',
       strengthFootnote: 'Poin ini adalah nilai jual utama yang wajib ditekankan saat menjawab wawancara.',
       gapsHead: 'Celah Kualifikasi & Filter ATS',
-      gapFootnote: 'Celah ini berpotensi menurunkan skor filter awal pada ATS korporasi multinasional.',
+      gapFootnote: 'Lengkapi kata kunci ini untuk memperbesar peluang lolos filter awal ATS korporat.',
+      copyKeywordsBtn: 'Salin Kata Kunci',
+
+      // Card 04: XYZ Formula & STAR Interview
       rewriteHead: 'Optimasi Kalimat Berdampak (Formula XYZ)',
+      rewriteSubheader: 'Standar Google: Accomplished [X], measured by [Y], by doing [Z]',
+      rewriteBeforeTitle: 'Draft Kalimat Asli',
+      rewriteBeforeSub: 'Kalimat pasif, tanpa metrik hasil, dan tidak membuktikan kapasitas kerja nyata.',
+      rewriteAfterTitle: 'Rekomendasi Formula XYZ (Siap Salin)',
+      rewriteAfterSub: 'Berbasis dampak: Verba aksi berdaya tinggi (Z) + Metrik efisiensi terukur (Y) + Hasil bisnis (X).',
       copyBtn: 'Salin Teks',
+      starQuestionHeader: 'Simulasi Pertanyaan Wawancara (Teknik STAR) Berdasarkan Celah Ini:',
+
+      // Card 05: Pro Features & Actions
+      proBadge: 'Fitur Lanjutan • Segera Hadir',
       proBannerTitle: 'Laporan Lengkap & Sesi Konsultasi Privat (Segera Hadir)',
-      proBannerDesc: 'Fitur generator laporan 10 halaman & sesi mentoring saat ini sedang disiapkan. Seluruh diagnostik dasar Screenora sekarang 100% Gratis. Punya pertanyaan atau saran? Hubungi Faari via email.',
-      qrisModalTitle: 'Laporan Diagnostik 10 Halaman (Segera Hadir)',
-      qrisModalSubtitle: 'Fitur unduh laporan 10 halaman dan template ATS sedang dalam tahap pengembangan. Saat ini Screenora 100% Gratis!',
+      proBannerDesc: 'Fitur generator laporan 10 halaman & konsultasi saat ini sedang disiapkan. Seluruh diagnostik dasar Screenora sekarang 100% Gratis. Butuh format CV standar yang teruji lolos ATS? Buka katalog template kami, atau hubungi Faari langsung via email untuk masukan dan pertanyaan.',
+      proFreeBadge: '✓ Skrining 100% Gratis',
+      btnCatalog: 'Katalog Template ATS (.docx)',
+      btnUnlockReport: 'Buka Laporan (Segera Hadir)',
+      btnEmailFaari: 'Email Faari',
+
+      // FAQ Section
+      faqBadge: 'Pusat Pengetahuan Karir & Standar ATS',
+      faqHeading: 'Pertanyaan Umum Seputar Skrining CV & Rekrutmen',
+      faqSub: 'Standar penyaringan Applicant Tracking System dan psikologi penyeleksian HR korporat.',
+      faqQ1: 'Apa itu Formula XYZ dan mengapa rekruter multinasional mewajibkannya?',
+      faqA1: 'Formula XYZ adalah kerangka penulisan prestasi kerja yang dirumuskan oleh eksekutif Google: <em>"Accomplished [X] as measured by [Y], by doing [Z]"</em> (Mencapai hasil X yang diukur dengan metrik Y, melalui tindakan konkret Z). Berdasarkan psikologi industri HR, rekruter hanya meluangkan 6–8 detik untuk memindai CV. Kalimat pasif seperti <em>"Bertanggung jawab mengelola penjualan"</em> tidak membuktikan keberhasilan, sedangkan formula XYZ membuktikan kapasitas problem-solving dan dampak bisnis yang nyata.',
+      faqQ2: 'Bagaimana Screenora menjamin keamanan dan privasi berkas CV saya?',
+      faqA2: 'Screenora beroperasi dengan prinsip <strong>Zero-Data Retention (100% Client-Side)</strong>. Saat Anda mengunggah PDF atau menempel teks, pustaka ekstraksi (PDF.js) bekerja langsung di dalam memori peramban (browser) laptop atau ponsel Anda. Tidak ada data pribadi, riwayat karir, kontak, atau dokumen yang dikirimkan maupun disimpan ke server basis data eksternal.',
+      faqQ3: 'Apakah format CV bahasa Indonesia ramah sistem Applicant Tracking System (ATS)?',
+      faqA3: 'Ya! Sistem ATS modern (seperti Workday, Taleo, SAP SuccessFactors, atau sistem lokal) memproses teks digital apa pun bahasanya. Faktor penggugur utama pelamar di filter ATS bukanlah bahasa Indonesia atau Inggris, melainkan: berkas berformat gambar hasil scan yang tidak bisa di-parse teksnya, ketiadaan kata kunci teknis mutlak, atau tidak adanya struktur heading baku (Pendidikan, Pengalaman, Keahlian).',
+      faqQ4: 'Apa yang harus saya lakukan jika hasil evaluasi CV berada di Tier 3 (<65%)?',
+      faqA4: 'Jangan berkecil hati. Skor Tier 3 biasanya berarti kata kunci inti posisi tersebut belum tertulis eksplisit atau poin pekerjaan Anda masih berupa kalimat deskripsi tugas umum. Langkah perbaikannya: (1) Klik tombol <em>Salin Kata Kunci</em> pada kartu celah kualifikasi dan sisipkan istilah tersebut ke bagian keahlian/pengalaman; (2) Masukkan angka metrik konkret (persentase peningkatan, durasi, nominal, atau jumlah proyek); (3) Lakukan pemindaian ulang di Screenora hingga skor mencapai Tier 1 (&ge;80%).',
+      faqQ5: 'Bagaimana format sesi Konsultasi 1-on-1 bersama praktisi HR?',
+      faqA5: 'Sesi konsultasi privat berdurasi 45 menit yang dilakukan secara interaktif via Google Meet atau WhatsApp Call bersama Muhammad Faari Akbar (S1 Psikologi & Praktisi Talent Management). Dalam sesi ini, CV Anda akan dibedah baris per baris, profil LinkedIn dioptimalkan untuk menarik recruiter inbound, serta simulasi langsung menjawab pertanyaan wawancara kritis menggunakan teknik STAR (Situation, Task, Action, Result).',
+
+      // Modals
+      qrisModalBadge: 'COMING SOON • TAHAP PERSIAPAN',
+      qrisModalTitle: 'Laporan Diagnostik 10 Halaman & Format ATS (Segera Hadir)',
+      qrisModalSubtitle: 'Fitur generator laporan komprehensif dan integrasi pembayaran QRIS resmi sedang dalam proses persiapan oleh Faari.',
+      qrisFreeNoticeHead: '100% Gratis untuk Skrining CV',
+      qrisFreeNoticeBody: 'Seluruh pemindaian skor, deteksi kata kunci kompetensi, perbaikan formula XYZ, dan latihan pertanyaan STAR di Screenora saat ini dapat Anda gunakan <strong>100% Gratis</strong> tanpa biaya.',
+      qrisUpcomingTitle: 'Rencana Fitur yang Akan Datang:',
+      qrisUpcoming1: 'Bedah mendalam seluruh butir kalimat pengalaman kerja formula XYZ.',
+      qrisUpcoming2: 'Daftar lengkap 25+ kata kunci ATS industri spesifik.',
+      qrisUpcoming3: 'Unduh template dokumen Word (.docx) standar format ATS siap pakai.',
+      qrisFeedbackBtn: 'Kirim Masukan via Email',
+      qrisCreatorContact: 'Kontak Pembuat: faarimuhammad25@gmail.com',
+
+      consultModalBadge: 'DISKUSI, MASUKAN & KONSULTASI • SEGERA HADIR',
       consultModalTitle: 'Pusat Diskusi, Masukan & Konsultasi Karir',
       consultModalSubtitle: 'Sesi mentoring privat tatap muka saat ini sedang disiapkan. Seluruh fitur pemindaian dasar Screenora 100% Gratis. Untuk pertanyaan, kritik, atau masukan pengembangan, silakan hubungi kami via email.',
+      consultStatusLabel: 'Status Akses Screenora',
+      consultStatusValue: '100% Gratis',
+      consultStatusBadge: 'Mentoring Segera Hadir',
+      consultSectionQ: 'Punya Pertanyaan, Saran, atau Masukan?',
+      consultSectionDesc: 'Faari (kreator Screenora) sangat menyambut feedback, kritik membangun, ide fitur baru, maupun pertanyaan seputar hasil evaluasi CV Anda. Kirimkan pesan langsung melalui email atau WhatsApp.',
+      consultEmailBtn: 'Kirim Email ke faarimuhammad25@gmail.com',
+      consultWhatsAppBtnText: 'Chat Singkat via WhatsApp',
+
+      // Footer
       legalDisclaimer: 'Screenora adalah alat simulasi dan diagnostik persiapan karir independen berbasis algoritma heuristik, tidak berafiliasi atau menjamin penerimaan kerja di instansi, BUMN, maupun perusahaan mana pun.',
+      footerInquiry: 'Pertanyaan & Masukan:',
+
+      // Toast Notifications & Tiers
       toastCopied: 'Kalimat rekomendasi berhasil disalin ke clipboard!',
       toastSampleLoaded: 'Sampel profil kandidat berhasil dimuat!',
       toastNoText: 'Silakan unggah berkas CV atau tempel teks riwayat Anda terlebih dahulu.',
       toastAnalyzing: 'Memindai teks dan menghitung matriks kompetensi...',
       toastPaymentSuccess: 'Simulasi Berhasil! Laporan diagnostik 10-halaman Anda siap diunduh.',
       toastTemplateLoaded: 'Template posisi kustom berhasil dimuat!',
+      toastKeywordsCopied: 'Kata kunci celah berhasil disalin ke clipboard!',
       tier1Label: 'Kecocokan Tinggi (≥80%)',
       tier2Label: 'Kecocokan Cukup (65-79%)',
       tier3Label: 'Perlu Optimasi (<65%)',
@@ -90,13 +192,21 @@
       tier3Badge: 'Perlu Optimasi • Risiko Gugur ATS'
     },
     en: {
+      // Top Navigation
       navSubtitle: 'AI Resume Intelligence & ATS Diagnostic',
       privacyBadge: 'Local & Private',
+      navScan: 'CV Screening',
+      navTemplates: 'ATS Templates',
+      badgeNew: 'New',
+
+      // Hero Section
       heroBadge: 'ATS Diagnostic & Behavioral Screening',
       heroTitle: 'Know Your CV Pass Rate & ATS Gaps Before Applying',
       heroDesc: 'Local in-browser text engine detects competency keywords, high-impact XYZ sentence structures, and recruiter screening benchmarks in 3 seconds without sending your data to external servers.',
       samplePrompt: 'Want to test instantly without a file?',
       sampleBtn: 'Load Sample HR / Analyst Profile',
+
+      // Step 1: Input Document
       step1Label: 'Applicant CV File',
       tabUpload: 'Upload File',
       tabPaste: 'Paste Text',
@@ -106,31 +216,125 @@
       pasteHint: 'Pro-tip: You can directly copy and paste the entire text from Google Docs or Word.',
       formatNotice: 'Supported: PDF Text, Word DOCX, TXT',
       privacyNotice: 'Zero-Data Retention (Client-Side)',
+      rawCvPlaceholder: 'Paste your resume summary, work experience, education, and skills here...',
+
+      // Step 2: Target Role & Market Standard
       step2Label: 'Target Job Role',
       step2Hint: 'Quick Select / Custom',
+      standardSelectLabel: 'ATS Job Market Standard:',
+      stdNasionalLabel: '🇮🇩 National (Local / SOE)',
+      stdGlobalLabel: '🌐 International (Global MNC)',
       roleSelectLabel: 'Select Standard or Custom Role:',
+      roleAtsStandard: 'Enterprise ATS Standard',
+      roleEssentialKeywords: 'Essential ATS Keywords:',
+
+      // Guided Custom Builder
+      customGuideTitle: 'Custom Role Template Guide',
+      customQuickFillSub: '1-Click Quick Fill',
+      customArchetypeLabel: 'Choose Archetype (Click to Auto-Fill):',
+      archGrowth: 'Growth & Commercial',
+      archTech: 'Engineering & Technical',
+      archOps: 'Operations & People',
+      archResearch: 'Research & Analytics',
+      customRoleTitleLabel: 'Target Job Title:',
+      customRoleTitlePlaceholder: 'e.g. Senior Growth Marketing Specialist',
+      customRoleTitleHint: 'Format: [Seniority] + [Function] + [Specialization]',
+      customKeywordsLabel: 'Must-Have ATS Keywords (Comma separated):',
+      customKeywordsPlaceholder: 'e.g. SQL, Tableau, ROI, Customer Journey, B2B',
+      customSeniorityLabel: 'Experience Level Expectation:',
+      seniorityEntry: 'Entry (0-2 yrs)',
+      seniorityMid: 'Mid (2-5 yrs)',
+      senioritySenior: 'Senior (5+ yrs)',
+
+      // Big CTA
       runBtnLabel: 'Run Resume Screening',
       btnSubtext: 'HR Psychology Analytics • Enterprise ATS Benchmark • Instant',
+
+      // Skeleton Loader
+      skeletonScanning: 'Scanning Competency Matrix & XYZ Formula...',
+
+      // Results Header & Scorecard
       retestBtn: 'Test Another Document or Role',
+      scaleShortlist: '≥80% Shortlist',
+      scaleReserve: '65–79% Backup Pool',
+      scaleRisk: '<65% At Risk',
+      recBadge: 'Recommendation',
       strengthsHead: 'Verified Competency Strengths',
       strengthFootnote: 'These key selling points should be emphasized during behavioral interviews.',
       gapsHead: 'ATS Qualification Gaps',
-      gapFootnote: 'These gaps may trigger early automated disqualification on multinational ATS filters.',
+      gapFootnote: 'Address these keywords to significantly increase your ATS screening pass rate.',
+      copyKeywordsBtn: 'Copy Keywords',
+
+      // Card 04: XYZ Formula & STAR Interview
       rewriteHead: 'High-Impact Sentence Optimization (XYZ Formula)',
+      rewriteSubheader: 'Google Standard: Accomplished [X], measured by [Y], by doing [Z]',
+      rewriteBeforeTitle: 'Original Draft Sentence',
+      rewriteBeforeSub: 'Passive phrasing, lacks metrics, and fails to demonstrate measurable impact.',
+      rewriteAfterTitle: 'Recommended XYZ Formula (Ready to Copy)',
+      rewriteAfterSub: 'Impact-driven: High-action verb (Z) + Measurable efficiency metric (Y) + Business outcome (X).',
       copyBtn: 'Copy Text',
+      starQuestionHeader: 'Behavioral Interview Question (STAR Technique) Based on This Gap:',
+
+      // Card 05: Pro Features & Actions
+      proBadge: 'Advanced Feature • Coming Soon',
       proBannerTitle: 'Complete Diagnostic Report & Private Mentoring (Coming Soon)',
-      proBannerDesc: 'The 10-page diagnostic report & private consultation are currently in development. Basic Screenora diagnostic features are 100% Free. Questions or feedback? Contact Faari directly via email.',
-      qrisModalTitle: '10-Page Diagnostic Report (Coming Soon)',
-      qrisModalSubtitle: 'The 10-page deep-dive report & ATS template download are in development. Screenora is currently 100% Free!',
-      consultModalTitle: 'Career Discussion, Feedback & Mentoring (Coming Soon)',
+      proBannerDesc: 'The 10-page diagnostic report & private consultation are currently in development. Basic Screenora diagnostic features are 100% Free. Looking for tested ATS formats? Browse our template catalog, or email Faari directly with feedback and questions.',
+      proFreeBadge: '✓ 100% Free Screening',
+      btnCatalog: 'ATS Template Catalog (.docx)',
+      btnUnlockReport: 'Unlock Report (Coming Soon)',
+      btnEmailFaari: 'Email Faari',
+
+      // FAQ Section
+      faqBadge: 'Career Knowledge & ATS Standards',
+      faqHeading: 'Frequently Asked Questions About CV Screening & Recruitment',
+      faqSub: 'Applicant Tracking System filtering standards and corporate HR hiring psychology.',
+      faqQ1: 'What is the XYZ Formula and why do multinational recruiters expect it?',
+      faqA1: 'The XYZ Formula is a bullet-point achievement framework formulated by Google leadership: <em>"Accomplished [X] as measured by [Y], by doing [Z]"</em>. In HR psychology, recruiters spend only 6 to 8 seconds scanning a resume. Passive task statements like <em>"Responsible for managing sales"</em> fail to demonstrate competence, whereas the XYZ formula provides hard evidence of problem-solving ability and quantifiable business impact.',
+      faqQ2: 'How does Screenora protect the privacy and security of my CV document?',
+      faqA2: 'Screenora operates under strict <strong>Zero-Data Retention (100% Client-Side)</strong>. When you upload a PDF or paste text, the client-side parsing engine (PDF.js) runs entirely inside your local web browser memory. No private data, contact information, career history, or documents are ever uploaded, transmitted, or stored on external servers or databases.',
+      faqQ3: 'Is an Indonesian-language CV compatible with Applicant Tracking Systems (ATS)?',
+      faqA3: 'Yes! Modern enterprise ATS platforms (such as Workday, Taleo, SAP SuccessFactors, and local HRIS) parse digital text regardless of language. The primary reasons resumes fail ATS screening are not the language, but rather: image-scanned files without selectable text, absence of essential technical keywords, or missing standard headings (Education, Experience, Skills).',
+      faqQ4: 'What should I do if my resume evaluation falls into Tier 3 (<65%)?',
+      faqA4: 'Do not be discouraged. A Tier 3 score simply means key core competencies for that job title are missing or job descriptions read like passive task lists. To improve: (1) Click <em>Copy Keywords</em> in the Qualification Gaps card and embed those terms in your skills/experience sections; (2) Add quantifiable metrics (growth %, timeline, currency, project volume); (3) Re-scan on Screenora until your score reaches Tier 1 (&ge;80%).',
+      faqQ5: 'What is included in the 1-on-1 Consultation session with an HR practitioner?',
+      faqA5: 'A 45-minute interactive 1-on-1 consultation conducted remotely via Google Meet or WhatsApp Call with Muhammad Faari Akbar (B.Sc. in Psychology & Talent Management Practitioner). The session includes line-by-line CV critique, LinkedIn inbound recruiter optimization, and real-time behavioral interview mock practice using the STAR technique (Situation, Task, Action, Result).',
+
+      // Modals
+      qrisModalBadge: 'COMING SOON • UNDER PREPARATION',
+      qrisModalTitle: '10-Page Diagnostic Report & ATS Format (Coming Soon)',
+      qrisModalSubtitle: 'The comprehensive diagnostic report generator and official payment integration are currently being prepared by Faari.',
+      qrisFreeNoticeHead: '100% Free for CV Screening',
+      qrisFreeNoticeBody: 'All score scanning, competency keyword detection, XYZ formula enhancement, and STAR practice questions on Screenora are currently <strong>100% Free</strong> to use.',
+      qrisUpcomingTitle: 'Upcoming Roadmap Features:',
+      qrisUpcoming1: 'In-depth line-by-line rewrite of every work experience bullet using the XYZ formula.',
+      qrisUpcoming2: 'Complete checklist of 25+ industry-specific ATS keywords.',
+      qrisUpcoming3: 'Downloadable native Word (.docx) ATS-compliant resume templates.',
+      qrisFeedbackBtn: 'Send Feedback via Email',
+      qrisCreatorContact: 'Creator Contact: faarimuhammad25@gmail.com',
+
+      consultModalBadge: 'DISCUSSION, FEEDBACK & CONSULTATION • COMING SOON',
+      consultModalTitle: 'Career Discussion, Feedback & Mentoring',
       consultModalSubtitle: 'Private 1-on-1 mentoring sessions are currently in development. Screenora is 100% Free to use. For questions, discussion, or feedback, email Faari directly!',
+      consultStatusLabel: 'Screenora Access Status',
+      consultStatusValue: '100% Free',
+      consultStatusBadge: 'Mentoring Coming Soon',
+      consultSectionQ: 'Have Questions, Suggestions, or Feedback?',
+      consultSectionDesc: 'Faari (Screenora creator) warmly welcomes feedback, constructive criticism, new feature ideas, or questions about your resume evaluation. Reach out directly via email or WhatsApp.',
+      consultEmailBtn: 'Send Email to faarimuhammad25@gmail.com',
+      consultWhatsAppBtnText: 'Quick Chat via WhatsApp',
+
+      // Footer
       legalDisclaimer: 'Screenora is an independent career diagnostic simulation based on heuristic algorithms, not affiliated with or guaranteeing job offers at any specific company.',
+      footerInquiry: 'Inquiries & Feedback:',
+
+      // Toast Notifications & Tiers
       toastCopied: 'Optimized sentence copied to clipboard!',
       toastSampleLoaded: 'Candidate sample profile loaded successfully!',
       toastNoText: 'Please upload a CV file or paste your resume text first.',
       toastAnalyzing: 'Scanning resume text and evaluating competency matrix...',
       toastPaymentSuccess: 'Simulation Successful! Your 10-page report is ready for download.',
       toastTemplateLoaded: 'Custom role template loaded successfully!',
+      toastKeywordsCopied: 'Qualification gap keywords copied to clipboard!',
       tier1Label: 'High Match (≥80%)',
       tier2Label: 'Moderate Match (65-79%)',
       tier3Label: 'Needs Optimization (<65%)',
@@ -1274,34 +1478,121 @@ KEAHLIAN & KOMPETENSI
     applyTheme(state.theme === 'dark' ? 'light' : 'dark');
   }
 
+  function escapeHtml(str) {
+    if (!str) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
   // --------------------------------------------------------------------------
   // 7. LANGUAGE (i18n) MANAGEMENT
   // --------------------------------------------------------------------------
+  function renderRoleSelectOptions(lang) {
+    if (!DOM.roleSelect) return;
+    const currentVal = DOM.roleSelect.value || state.selectedRole || 'hr';
+
+    const groups = [];
+    const groupMap = new Map();
+
+    for (const [key, cfg] of Object.entries(ROLE_CONFIGS)) {
+      const catLabel = cfg.category ? (cfg.category[lang] || cfg.category.id) : 'Other';
+      if (!groupMap.has(catLabel)) {
+        const groupObj = { label: catLabel, options: [] };
+        groupMap.set(catLabel, groupObj);
+        groups.push(groupObj);
+      }
+      const roleName = cfg.name ? (cfg.name[lang] || cfg.name.id) : key;
+      groupMap.get(catLabel).options.push({ value: key, text: roleName });
+    }
+
+    let html = '';
+    groups.forEach(g => {
+      html += `<optgroup label="── ${escapeHtml(g.label)} ──">`;
+      g.options.forEach(opt => {
+        const sel = opt.value === currentVal ? ' selected' : '';
+        html += `<option value="${escapeHtml(opt.value)}"${sel}>${escapeHtml(opt.text)}</option>`;
+      });
+      html += `</optgroup>`;
+    });
+
+    const customLabel = lang === 'id'
+      ? '✦ Kustom: Tentukan Posisi & Kriteria Mandiri...'
+      : '✦ Custom: Define Your Own Role & Criteria...';
+    const customGroupLabel = lang === 'id' ? 'Posisi Khusus / Lainnya' : 'Custom / Other Roles';
+    const customSel = currentVal === 'custom' ? ' selected' : '';
+    html += `<optgroup label="── ${customGroupLabel} ──">
+      <option value="custom"${customSel}>${customLabel}</option>
+    </optgroup>`;
+
+    DOM.roleSelect.innerHTML = html;
+    DOM.roleSelect.value = currentVal;
+  }
+
+  function updateStandardUI(lang) {
+    if (!DOM.standardBadge || !DOM.standardDescriptionTxt) return;
+    if (state.screeningStandard === 'id') {
+      DOM.standardBadge.textContent = lang === 'id' ? '🇮🇩 Standar Nasional (Indonesia)' : '🇮🇩 National Standard (Indonesia)';
+      DOM.standardDescriptionTxt.textContent = lang === 'id'
+        ? 'Mengevaluasi format 1-kolom Indonesia, EYD/PUEBI, sertifikasi nasional, dan kualifikasi lokal.'
+        : 'Evaluates Indonesian 1-column standard, EYD/PUEBI conventions, national certifications, and local requirements.';
+    } else {
+      DOM.standardBadge.textContent = lang === 'id' ? '🌐 Standar Internasional (Global MNC)' : '🌐 International Standard (Global MNC)';
+      DOM.standardDescriptionTxt.textContent = lang === 'id'
+        ? 'Mengevaluasi kepatuhan ketat US/Global (tanpa foto/usia/status demi anti-bias EEOC), action verbs bahasa Inggris, dan sistem Workday/Greenhouse.'
+        : 'Evaluates strict US/Global compliance (no photo/age/status for EEOC anti-bias), English action verbs, and Workday/Greenhouse ATS systems.';
+    }
+  }
+
   function applyLanguage(lang) {
     state.language = lang;
     localStorage.setItem('screenora_lang', lang);
 
     if (lang === 'id') {
-      DOM.langIdBtn.className = 'px-2.5 py-1 rounded-md transition-all bg-dark-surface dark:bg-dark-surface text-dark-textPri dark:text-dark-textPri shadow-sm font-semibold';
-      DOM.langEnBtn.className = 'px-2.5 py-1 rounded-md transition-all text-dark-textSec dark:text-dark-textSec hover:text-dark-textPri font-medium';
+      if (DOM.langIdBtn) DOM.langIdBtn.className = 'px-2.5 py-1 rounded-md transition-all bg-dark-surface dark:bg-dark-surface text-dark-textPri dark:text-dark-textPri shadow-sm font-semibold';
+      if (DOM.langEnBtn) DOM.langEnBtn.className = 'px-2.5 py-1 rounded-md transition-all text-dark-textSec dark:text-dark-textSec hover:text-dark-textPri font-medium';
     } else {
-      DOM.langEnBtn.className = 'px-2.5 py-1 rounded-md transition-all bg-dark-surface dark:bg-dark-surface text-dark-textPri dark:text-dark-textPri shadow-sm font-semibold';
-      DOM.langIdBtn.className = 'px-2.5 py-1 rounded-md transition-all text-dark-textSec dark:text-dark-textSec hover:text-dark-textPri font-medium';
+      if (DOM.langEnBtn) DOM.langEnBtn.className = 'px-2.5 py-1 rounded-md transition-all bg-dark-surface dark:bg-dark-surface text-dark-textPri dark:text-dark-textPri shadow-sm font-semibold';
+      if (DOM.langIdBtn) DOM.langIdBtn.className = 'px-2.5 py-1 rounded-md transition-all text-dark-textSec dark:text-dark-textSec hover:text-dark-textPri font-medium';
     }
 
     const dict = i18n[lang];
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       if (dict[key]) {
-        el.textContent = dict[key];
+        if (dict[key].includes('<') && dict[key].includes('>')) {
+          el.innerHTML = dict[key];
+        } else {
+          el.textContent = dict[key];
+        }
       }
     });
 
-    // Update role detail card texts for the new language
+    // Update input placeholders
+    if (DOM.rawCvText && dict.rawCvPlaceholder) {
+      DOM.rawCvText.placeholder = dict.rawCvPlaceholder;
+    }
+    if (DOM.customRoleTitleInput && dict.customRoleTitlePlaceholder) {
+      DOM.customRoleTitleInput.placeholder = dict.customRoleTitlePlaceholder;
+    }
+    if (DOM.customRoleKeywordsInput && dict.customKeywordsPlaceholder) {
+      DOM.customRoleKeywordsInput.placeholder = dict.customKeywordsPlaceholder;
+    }
+
+    // Update dynamic options and UI components
+    renderRoleSelectOptions(lang);
+    updateStandardUI(lang);
     updateRoleDetails(state.selectedRole);
 
     if (state.currentAnalysis) {
-      renderAnalysisResults(state.currentAnalysis);
+      const text = state.cvText || (DOM.rawCvText ? DOM.rawCvText.value.trim() : '');
+      if (text) {
+        state.currentAnalysis = analyzeResume(text, state.selectedRole);
+        renderAnalysisResults(state.currentAnalysis);
+      }
     }
   }
 
@@ -1909,8 +2200,7 @@ KEAHLIAN & KOMPETENSI
         DOM.stdGlobalBtn.className = 'py-2 px-2.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-1.5 bg-transparent border border-transparent';
         DOM.stdNasionalBtn.setAttribute('aria-checked', 'true');
         DOM.stdGlobalBtn.setAttribute('aria-checked', 'false');
-        if (DOM.standardBadge) DOM.standardBadge.textContent = '🇮🇩 Indonesia Standard';
-        if (DOM.standardDescriptionTxt) DOM.standardDescriptionTxt.textContent = 'Mengevaluasi format 1-kolom Indonesia, EYD/PUEBI, sertifikasi nasional, dan kualifikasi lokal.';
+        updateStandardUI(state.language);
       });
 
       DOM.stdGlobalBtn.addEventListener('click', () => {
@@ -1919,8 +2209,7 @@ KEAHLIAN & KOMPETENSI
         DOM.stdNasionalBtn.className = 'py-2 px-2.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-1.5 bg-transparent border border-transparent';
         DOM.stdGlobalBtn.setAttribute('aria-checked', 'true');
         DOM.stdNasionalBtn.setAttribute('aria-checked', 'false');
-        if (DOM.standardBadge) DOM.standardBadge.textContent = '🌐 Global MNC Standard';
-        if (DOM.standardDescriptionTxt) DOM.standardDescriptionTxt.textContent = 'Mengevaluasi kepatuhan ketat US/Global (tanpa foto/usia/status demi anti-bias EEOC), action verbs bahasa Inggris, dan sistem Workday/Greenhouse.';
+        updateStandardUI(state.language);
       });
     }
 

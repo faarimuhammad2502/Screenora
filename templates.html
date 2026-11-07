@@ -120,7 +120,7 @@
             <span class="font-heading font-extrabold text-base tracking-wider text-dark-textPri dark:text-dark-textPri">SCREENORA</span>
             <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-brand-emeraldBg text-brand-emerald border border-brand-emerald/30">Templates Hub</span>
           </div>
-          <span class="text-[11px] text-dark-textSec dark:text-dark-textSec hidden sm:block tracking-tight">Katalog Template Resume ATS Teruji</span>
+          <span class="text-[11px] text-dark-textSec dark:text-dark-textSec hidden sm:block tracking-tight" data-i18n="tplNavSubtitle">Katalog Template Resume ATS Teruji</span>
         </div>
       </a>
 
@@ -128,10 +128,8 @@
       <div class="flex items-center gap-2 sm:gap-3">
         
         <!-- Back to CV Screening Button -->
-        <a href="index.html" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-dark-well border border-dark-wellBorder text-dark-textPri hover:border-brand-emerald/50 hover:text-brand-emerald transition-all flex items-center gap-1.5 shadow-sm">
-          <span>←</span>
-          <span class="hidden sm:inline">Kembali ke</span>
-          <span>Skrining CV</span>
+        <a href="index.html" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-dark-well border border-dark-wellBorder text-dark-textPri hover:border-brand-emerald/50 hover:text-brand-emerald transition-all flex items-center gap-1.5 shadow-sm" data-i18n="tplBackBtn">
+          ← Kembali ke Skrining CV
         </a>
 
         <!-- Language Switcher -->
@@ -162,12 +160,12 @@
     <section class="mb-10 text-center max-w-3xl mx-auto">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-dark-well border border-dark-wellBorder text-dark-textSec text-[11px] font-mono uppercase tracking-wider mb-4 shadow-sm">
         <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
-        <span id="heroBadgeTxt">Koleksi Format Tervalidasi • Workday, Taleo, Greenhouse & BUMN</span>
+        <span id="heroBadgeTxt" data-i18n="tplHeroBadge">Koleksi Format Tervalidasi • Workday, Taleo, Greenhouse & BUMN</span>
       </div>
-      <h1 id="heroTitleTxt" class="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold tracking-tight text-dark-textPri leading-tight">
+      <h1 id="heroTitleTxt" data-i18n="tplHeroTitle" class="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold tracking-tight text-dark-textPri leading-tight">
         Katalog Template CV ATS Standar Nasional & Internasional
       </h1>
-      <p id="heroDescTxt" class="mt-4 text-sm sm:text-base text-dark-textSec leading-relaxed">
+      <p id="heroDescTxt" data-i18n="tplHeroDesc" class="mt-4 text-sm sm:text-base text-dark-textSec leading-relaxed">
         Setiap template di bawah ini dirancang dengan struktur 1-kolom resmi, formula XYZ terukur, dan margin proporsional. Dilengkapi pratinjau lembar resume nyata dan berkas Word (.docx) siap unduh.
       </p>
 
@@ -175,15 +173,15 @@
       <div class="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs text-dark-textSec">
         <span class="px-3 py-1 rounded-lg bg-dark-well border border-dark-wellBorder flex items-center gap-1.5">
           <svg class="w-3.5 h-3.5 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-          <span>Single-Column Hierarchy</span>
+          <span data-i18n="tplPill1">Single-Column Hierarchy</span>
         </span>
         <span class="px-3 py-1 rounded-lg bg-dark-well border border-dark-wellBorder flex items-center gap-1.5">
           <svg class="w-3.5 h-3.5 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-          <span>Formula XYZ & Action Verbs</span>
+          <span data-i18n="tplPill2">Formula XYZ & Action Verbs</span>
         </span>
         <span class="px-3 py-1 rounded-lg bg-dark-well border border-dark-wellBorder flex items-center gap-1.5">
           <svg class="w-3.5 h-3.5 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-          <span>Format Word (.docx) Asli</span>
+          <span data-i18n="tplPill3">Format Word (.docx) Asli</span>
         </span>
       </div>
     </section>
@@ -191,19 +189,19 @@
     <!-- SEGMENTED FILTER BAR (PROFESSIONAL GETLAYERS AI / LINEAR STANDARD) -->
     <div class="mb-10 flex justify-center">
       <div class="inline-flex p-1.5 rounded-2xl bg-dark-well border border-dark-wellBorder shadow-inner gap-1 max-w-full overflow-x-auto" id="filterBar" role="tablist">
-        <button class="filter-btn active px-4 py-2 rounded-xl text-xs font-heading font-semibold transition-all bg-dark-surface border border-brand-emerald/40 text-brand-emerald shadow-sm whitespace-nowrap" data-filter="all">
+        <button class="filter-btn active px-4 py-2 rounded-xl text-xs font-heading font-semibold transition-all bg-dark-surface border border-brand-emerald/40 text-brand-emerald shadow-sm whitespace-nowrap" data-filter="all" data-i18n="filterAll">
           Semua Template (6)
         </button>
-        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="nasional">
+        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="nasional" data-i18n="filterNasional">
           Standar Nasional (BUMN & Lokal)
         </button>
-        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="internasional">
+        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="internasional" data-i18n="filterInternasional">
           Standar Internasional (Global MNC)
         </button>
-        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="free">
+        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="free" data-i18n="filterFree">
           Akses Gratis
         </button>
-        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="pro">
+        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="pro" data-i18n="filterPro">
           Pro (Segera Hadir)
         </button>
       </div>
@@ -264,21 +262,21 @@
 
             <!-- Footer Badge inside Paper -->
             <div class="pt-2.5 mt-2.5 border-t border-slate-200 flex items-center justify-between text-[9px] text-slate-400 font-mono">
-              <span>Halaman 1 dari 1</span>
-              <span class="font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Format 1-Kolom BUMN</span>
+              <span data-i18n="c1PaperPage">Halaman 1 dari 1</span>
+              <span class="font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200" data-i18n="c1PaperBadge">Format 1-Kolom BUMN</span>
             </div>
 
             <!-- Hover overlay -->
             <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] opacity-0 group-hover/doc:opacity-100 transition-opacity flex items-center justify-center">
-              <span class="px-4 py-2 rounded-xl bg-brand-emerald text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5">
-                <span>👁 Pratinjau Dokumen Lengkap</span>
+              <span class="px-4 py-2 rounded-xl bg-brand-emerald text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5" data-i18n="hoverPreview">
+                👁 Pratinjau Dokumen Lengkap
               </span>
             </div>
           </div>
 
           <!-- Card Header & Metadata -->
           <div class="flex items-center justify-between pb-3 border-b border-dark-border mb-3">
-            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold">
+            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold" data-i18n="c1Meta">
               Standar BUMN & Nasional
             </span>
             <span class="text-[11px] font-mono font-semibold text-brand-emerald flex items-center gap-1.5">
@@ -287,8 +285,8 @@
             </span>
           </div>
 
-          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri">Classic Corporate Indonesia</h3>
-          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed">
+          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri" data-i18n="c1Title">Classic Corporate Indonesia</h3>
+          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed" data-i18n="c1Desc">
             Format 1-kolom konservatif resmi yang paling disukai rekruter BUMN, Perbankan, FMCG, dan korporat swasta besar. Struktur rapi dengan pembagian section baku.
           </p>
 
@@ -296,15 +294,15 @@
           <ul class="text-xs text-dark-textSec space-y-1.5 mb-5 border-t border-dark-border pt-3.5">
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Hierarki Font:</strong> Calibri / Arial (Bebas font glitch)</span>
+              <span data-i18n="c1Spec1"><strong>Hierarki Font:</strong> Calibri / Arial (Bebas font glitch)</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Section Baku:</strong> Profil, Pengalaman XYZ, Edukasi, Skill</span>
+              <span data-i18n="c1Spec2"><strong>Section Baku:</strong> Profil, Pengalaman XYZ, Edukasi, Skill</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Cocok untuk:</strong> HR, Finance, Operations, Sales, Legal</span>
+              <span data-i18n="c1Spec3"><strong>Cocok untuk:</strong> HR, Finance, Operations, Sales, Legal</span>
             </li>
           </ul>
         </div>
@@ -313,15 +311,15 @@
         <div class="space-y-2 pt-2 border-t border-dark-border/80">
           <button onclick="downloadTemplate('classic_corporate')" class="w-full py-2.5 px-4 bg-brand-emerald text-black rounded-xl text-xs font-heading font-bold uppercase tracking-wider hover:bg-brand-emeraldDark transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-emerald/10">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            <span>Unduh Format Word (.docx)</span>
+            <span data-i18n="btnDownloadDocx">Unduh Format Word (.docx)</span>
           </button>
           <div class="grid grid-cols-2 gap-2">
             <button onclick="copyTemplateText('classic_corporate')" class="py-2 px-3 bg-dark-well border border-dark-wellBorder text-dark-textPri rounded-lg text-[11px] font-medium hover:border-brand-emerald/50 transition-colors flex items-center justify-center gap-1.5">
               <svg class="w-3 h-3 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-              <span>Salin Teks</span>
+              <span data-i18n="btnCopyText">Salin Teks</span>
             </button>
             <button onclick="openPreviewModal('classic_corporate')" class="py-2 px-3 bg-dark-well border border-dark-wellBorder text-dark-textSec hover:text-dark-textPri rounded-lg text-[11px] font-medium hover:border-dark-border transition-colors flex items-center justify-center gap-1.5">
-              <span>Preview 👁</span>
+              <span data-i18n="btnPreview">Preview 👁</span>
             </button>
           </div>
         </div>
@@ -380,21 +378,21 @@
 
             <!-- Footer Badge inside Paper -->
             <div class="pt-2.5 mt-2.5 border-t border-slate-200 flex items-center justify-between text-[9px] text-slate-400 font-mono">
-              <span>Halaman 1 dari 1</span>
-              <span class="font-bold text-purple-800 bg-purple-50 px-2 py-0.5 rounded border border-purple-200">Edukasi & Proyek-First</span>
+              <span data-i18n="c2PaperPage">Halaman 1 dari 1</span>
+              <span class="font-bold text-purple-800 bg-purple-50 px-2 py-0.5 rounded border border-purple-200" data-i18n="c2PaperBadge">Edukasi & Proyek-First</span>
             </div>
 
             <!-- Hover overlay -->
             <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] opacity-0 group-hover/doc:opacity-100 transition-opacity flex items-center justify-center">
-              <span class="px-4 py-2 rounded-xl bg-brand-emerald text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5">
-                <span>👁 Pratinjau Dokumen Lengkap</span>
+              <span class="px-4 py-2 rounded-xl bg-brand-emerald text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5" data-i18n="hoverPreview">
+                👁 Pratinjau Dokumen Lengkap
               </span>
             </div>
           </div>
 
           <!-- Card Header & Metadata -->
           <div class="flex items-center justify-between pb-3 border-b border-dark-border mb-3">
-            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold">
+            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold" data-i18n="c2Meta">
               Fresh Graduate & Switcher
             </span>
             <span class="text-[11px] font-mono font-semibold text-brand-emerald flex items-center gap-1.5">
@@ -403,8 +401,8 @@
             </span>
           </div>
 
-          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri">Fresh Grad & Kampus Merdeka</h3>
-          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed">
+          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri" data-i18n="c2Title">Fresh Grad & Kampus Merdeka</h3>
+          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed" data-i18n="c2Desc">
             Format yang menonjolkan riwayat pendidikan, skripsi/penelitian, magang mandiri/MSIB, dan kepemimpinan organisasi untuk kandidat dengan jam terbang awal.
           </p>
 
@@ -412,15 +410,15 @@
           <ul class="text-xs text-dark-textSec space-y-1.5 mb-5 border-t border-dark-border pt-3.5">
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Hierarki:</strong> Riwayat Edukasi & Proyek ditempatkan di atas</span>
+              <span data-i18n="c2Spec1"><strong>Hierarki:</strong> Riwayat Edukasi & Proyek ditempatkan di atas</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Sorotan Khusus:</strong> Sertifikasi pelatihan, kursus, & tools</span>
+              <span data-i18n="c2Spec2"><strong>Sorotan Khusus:</strong> Sertifikasi pelatihan, kursus, & tools</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Cocok untuk:</strong> Lulusan Baru, Shadow Teacher, Guru, Intern</span>
+              <span data-i18n="c2Spec3"><strong>Cocok untuk:</strong> Lulusan Baru, Shadow Teacher, Guru, Intern</span>
             </li>
           </ul>
         </div>
@@ -429,15 +427,15 @@
         <div class="space-y-2 pt-2 border-t border-dark-border/80">
           <button onclick="downloadTemplate('fresh_graduate')" class="w-full py-2.5 px-4 bg-brand-emerald text-black rounded-xl text-xs font-heading font-bold uppercase tracking-wider hover:bg-brand-emeraldDark transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-emerald/10">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            <span>Unduh Format Word (.docx)</span>
+            <span data-i18n="btnDownloadDocx">Unduh Format Word (.docx)</span>
           </button>
           <div class="grid grid-cols-2 gap-2">
             <button onclick="copyTemplateText('fresh_graduate')" class="py-2 px-3 bg-dark-well border border-dark-wellBorder text-dark-textPri rounded-lg text-[11px] font-medium hover:border-brand-emerald/50 transition-colors flex items-center justify-center gap-1.5">
               <svg class="w-3 h-3 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-              <span>Salin Teks</span>
+              <span data-i18n="btnCopyText">Salin Teks</span>
             </button>
             <button onclick="openPreviewModal('fresh_graduate')" class="py-2 px-3 bg-dark-well border border-dark-wellBorder text-dark-textSec hover:text-dark-textPri rounded-lg text-[11px] font-medium hover:border-dark-border transition-colors flex items-center justify-center gap-1.5">
-              <span>Preview 👁</span>
+              <span data-i18n="btnPreview">Preview 👁</span>
             </button>
           </div>
         </div>
@@ -487,13 +485,13 @@
 
             <!-- Footer Badge inside Paper -->
             <div class="pt-2.5 mt-2.5 border-t border-slate-200 flex items-center justify-between text-[9px] text-slate-400 font-mono">
-              <span>Halaman 1 dari 2</span>
-              <span class="font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Director & P&L Standard</span>
+              <span data-i18n="c3PaperPage">Halaman 1 dari 2</span>
+              <span class="font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200" data-i18n="c3PaperBadge">Director & P&L Standard</span>
             </div>
 
             <!-- Hover overlay -->
             <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] opacity-0 group-hover/doc:opacity-100 transition-opacity flex items-center justify-center">
-              <span class="px-4 py-2 rounded-xl bg-brand-amber text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5">
+              <span class="px-4 py-2 rounded-xl bg-brand-amber text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5" data-i18n="hoverPreview">
                 <span>🔒 Segera Hadir (Fitur Pro)</span>
               </span>
             </div>
@@ -501,17 +499,17 @@
 
           <!-- Card Header & Metadata -->
           <div class="flex items-center justify-between pb-3 border-b border-dark-border mb-3">
-            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold">
+            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold" data-i18n="c3Meta">
               Eksekutif & Manajerial
             </span>
             <span class="text-[11px] font-mono font-semibold text-brand-amber flex items-center gap-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span>
-              <span>Fitur Pro</span>
+              <span data-i18n="cardProBadge">Fitur Pro</span>
             </span>
           </div>
 
-          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri">Executive & P&L Leadership</h3>
-          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed">
+          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri" data-i18n="c3Title">Executive & P&L Leadership</h3>
+          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed" data-i18n="c3Desc">
             Struktur 2-halaman berdensitas tinggi untuk Head of Department, General Manager, dan Direktur yang butuh menonjolkan tanggung jawab anggaran dan tim besar.
           </p>
 
@@ -519,15 +517,15 @@
           <ul class="text-xs text-dark-textSec space-y-1.5 mb-5 border-t border-dark-border pt-3.5">
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber shrink-0"></span>
-              <span><strong>Fokus:</strong> Metrik P&L, Revenue Growth, & Skalabilitas Tim</span>
+              <span data-i18n="c3Spec1"><strong>Fokus:</strong> Metrik P&L, Revenue Growth, & Skalabilitas Tim</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber shrink-0"></span>
-              <span><strong>Format:</strong> Executive Summary + Core Competencies Matrix</span>
+              <span data-i18n="c3Spec2"><strong>Format:</strong> Executive Summary + Core Competencies Matrix</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber shrink-0"></span>
-              <span><strong>Cocok untuk:</strong> VP, Director, GM, Senior Lead</span>
+              <span data-i18n="c3Spec3"><strong>Cocok untuk:</strong> VP, Director, GM, Senior Lead</span>
             </li>
           </ul>
         </div>
@@ -535,7 +533,7 @@
         <div class="pt-2 border-t border-dark-border/80">
           <button onclick="openComingSoonModal('Executive & P&L Leadership')" class="w-full py-2.5 px-4 bg-dark-well border border-brand-amber/40 text-brand-amber rounded-xl text-xs font-heading font-semibold uppercase tracking-wider hover:bg-brand-amber/10 transition-all flex items-center justify-center gap-2">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-            <span>Segera Hadir (Sedang Disiapkan)</span>
+            <span data-i18n="btnComingSoon">Segera Hadir (Sedang Disiapkan)</span>
           </button>
         </div>
       </article>
@@ -586,21 +584,21 @@
 
             <!-- Footer Badge inside Paper -->
             <div class="pt-2.5 mt-2.5 border-t border-slate-200 flex items-center justify-between text-[9px] text-slate-400 font-mono">
-              <span>Page 1 of 1</span>
-              <span class="font-bold text-sky-800 bg-sky-50 px-2 py-0.5 rounded border border-sky-200">Workday & Greenhouse Compliant</span>
+              <span data-i18n="c4PaperPage">Page 1 of 1</span>
+              <span class="font-bold text-sky-800 bg-sky-50 px-2 py-0.5 rounded border border-sky-200" data-i18n="c4PaperBadge">Workday & Greenhouse Compliant</span>
             </div>
 
             <!-- Hover overlay -->
             <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] opacity-0 group-hover/doc:opacity-100 transition-opacity flex items-center justify-center">
-              <span class="px-4 py-2 rounded-xl bg-brand-emerald text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5">
-                <span>👁 Pratinjau Dokumen Lengkap</span>
+              <span class="px-4 py-2 rounded-xl bg-brand-emerald text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5" data-i18n="hoverPreview">
+                👁 Pratinjau Dokumen Lengkap
               </span>
             </div>
           </div>
 
           <!-- Card Header & Metadata -->
           <div class="flex items-center justify-between pb-3 border-b border-dark-border mb-3">
-            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold">
+            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold" data-i18n="c4Meta">
               Global Tech & Remote
             </span>
             <span class="text-[11px] font-mono font-semibold text-brand-emerald flex items-center gap-1.5">
@@ -609,8 +607,8 @@
             </span>
           </div>
 
-          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri">Global Tech & Software Engineer</h3>
-          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed">
+          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri" data-i18n="c4Title">Global Tech & Software Engineer</h3>
+          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed" data-i18n="c4Desc">
             Standar US & EU remote work. 0% data pribadi sensitif (bebas foto/usia demi kepatuhan anti-bias EEOC), dengan tautan GitHub, serta kategorisasi Tech Stack.
           </p>
 
@@ -618,15 +616,15 @@
           <ul class="text-xs text-dark-textSec space-y-1.5 mb-5 border-t border-dark-border pt-3.5">
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Bahasa:</strong> English (Action Verbs: Architected, Engineered)</span>
+              <span data-i18n="c4Spec1"><strong>Bahasa:</strong> English (Action Verbs: Architected, Engineered)</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Skills Matrix:</strong> Languages, Frameworks, Cloud, Databases</span>
+              <span data-i18n="c4Spec2"><strong>Skills Matrix:</strong> Languages, Frameworks, Cloud, Databases</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Cocok untuk:</strong> Fullstack, Backend, DevOps, Data Engineer</span>
+              <span data-i18n="c4Spec3"><strong>Cocok untuk:</strong> Fullstack, Backend, DevOps, Data Engineer</span>
             </li>
           </ul>
         </div>
@@ -635,15 +633,15 @@
         <div class="space-y-2 pt-2 border-t border-dark-border/80">
           <button onclick="downloadTemplate('global_tech')" class="w-full py-2.5 px-4 bg-brand-emerald text-black rounded-xl text-xs font-heading font-bold uppercase tracking-wider hover:bg-brand-emeraldDark transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-emerald/10">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            <span>Download Word Format (.docx)</span>
+            <span data-i18n="btnDownloadDocx">Download Word Format (.docx)</span>
           </button>
           <div class="grid grid-cols-2 gap-2">
             <button onclick="copyTemplateText('global_tech')" class="py-2 px-3 bg-dark-well border border-dark-wellBorder text-dark-textPri rounded-lg text-[11px] font-medium hover:border-brand-emerald/50 transition-colors flex items-center justify-center gap-1.5">
               <svg class="w-3 h-3 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-              <span>Copy Text</span>
+              <span data-i18n="btnCopyText">Copy Text</span>
             </button>
             <button onclick="openPreviewModal('global_tech')" class="py-2 px-3 bg-dark-well border border-dark-wellBorder text-dark-textSec hover:text-dark-textPri rounded-lg text-[11px] font-medium hover:border-dark-border transition-colors flex items-center justify-center gap-1.5">
-              <span>View Preview 👁</span>
+              <span data-i18n="btnPreview">Preview 👁</span>
             </button>
           </div>
         </div>
@@ -695,21 +693,21 @@
 
             <!-- Footer Badge inside Paper -->
             <div class="pt-2.5 mt-2.5 border-t border-slate-200 flex items-center justify-between text-[9px] text-slate-400 font-mono">
-              <span>Page 1 of 1</span>
-              <span class="font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">Metrics & ARR Focused</span>
+              <span data-i18n="c5PaperPage">Page 1 of 1</span>
+              <span class="font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200" data-i18n="c5PaperBadge">Metrics & ARR Focused</span>
             </div>
 
             <!-- Hover overlay -->
             <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] opacity-0 group-hover/doc:opacity-100 transition-opacity flex items-center justify-center">
-              <span class="px-4 py-2 rounded-xl bg-brand-emerald text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5">
-                <span>👁 Pratinjau Dokumen Lengkap</span>
+              <span class="px-4 py-2 rounded-xl bg-brand-emerald text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5" data-i18n="hoverPreview">
+                👁 Pratinjau Dokumen Lengkap
               </span>
             </div>
           </div>
 
           <!-- Card Header & Metadata -->
           <div class="flex items-center justify-between pb-3 border-b border-dark-border mb-3">
-            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold">
+            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold" data-i18n="c5Meta">
               Global Product & Ops
             </span>
             <span class="text-[11px] font-mono font-semibold text-brand-emerald flex items-center gap-1.5">
@@ -718,8 +716,8 @@
             </span>
           </div>
 
-          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri">International Product & Operations</h3>
-          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed">
+          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri" data-i18n="c5Title">International Product & Operations</h3>
+          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed" data-i18n="c5Desc">
             Format yang diformulasikan untuk Product Manager, Business Analyst, dan Growth Lead. Padat metrik kuantitatif (MRR, retention, conversion, CAC).
           </p>
 
@@ -727,15 +725,15 @@
           <ul class="text-xs text-dark-textSec space-y-1.5 mb-5 border-t border-dark-border pt-3.5">
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Bahasa:</strong> English (Action Verbs: Spearheaded, Scaled)</span>
+              <span data-i18n="c5Spec1"><strong>Bahasa:</strong> English (Action Verbs: Spearheaded, Scaled)</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Fokus:</strong> User discovery, product roadmaps, data analytics</span>
+              <span data-i18n="c5Spec2"><strong>Fokus:</strong> User discovery, product roadmaps, data analytics</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
-              <span><strong>Cocok untuk:</strong> PM, Business Analyst, Strategy & Ops</span>
+              <span data-i18n="c5Spec3"><strong>Cocok untuk:</strong> PM, Business Analyst, Strategy & Ops</span>
             </li>
           </ul>
         </div>
@@ -744,15 +742,15 @@
         <div class="space-y-2 pt-2 border-t border-dark-border/80">
           <button onclick="downloadTemplate('global_product')" class="w-full py-2.5 px-4 bg-brand-emerald text-black rounded-xl text-xs font-heading font-bold uppercase tracking-wider hover:bg-brand-emeraldDark transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-emerald/10">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-            <span>Download Word Format (.docx)</span>
+            <span data-i18n="btnDownloadDocx">Download Word Format (.docx)</span>
           </button>
           <div class="grid grid-cols-2 gap-2">
             <button onclick="copyTemplateText('global_product')" class="py-2 px-3 bg-dark-well border border-dark-wellBorder text-dark-textPri rounded-lg text-[11px] font-medium hover:border-brand-emerald/50 transition-colors flex items-center justify-center gap-1.5">
               <svg class="w-3 h-3 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-              <span>Copy Text</span>
+              <span data-i18n="btnCopyText">Copy Text</span>
             </button>
             <button onclick="openPreviewModal('global_product')" class="py-2 px-3 bg-dark-well border border-dark-wellBorder text-dark-textSec hover:text-dark-textPri rounded-lg text-[11px] font-medium hover:border-dark-border transition-colors flex items-center justify-center gap-1.5">
-              <span>View Preview 👁</span>
+              <span data-i18n="btnPreview">Preview 👁</span>
             </button>
           </div>
         </div>
@@ -802,13 +800,13 @@
 
             <!-- Footer Badge inside Paper -->
             <div class="pt-2.5 mt-2.5 border-t border-slate-200 flex items-center justify-between text-[9px] text-slate-400 font-mono">
-              <span>Page 1 of 1</span>
-              <span class="font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Elite 1-Page Layout</span>
+              <span data-i18n="c6PaperPage">Page 1 of 1</span>
+              <span class="font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded border border-amber-200" data-i18n="c6PaperBadge">Elite 1-Page Layout</span>
             </div>
 
             <!-- Hover overlay -->
             <div class="absolute inset-0 bg-slate-950/60 backdrop-blur-[2px] opacity-0 group-hover/doc:opacity-100 transition-opacity flex items-center justify-center">
-              <span class="px-4 py-2 rounded-xl bg-brand-amber text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5">
+              <span class="px-4 py-2 rounded-xl bg-brand-amber text-black text-xs font-heading font-bold shadow-xl flex items-center gap-1.5" data-i18n="hoverPreview">
                 <span>🔒 Segera Hadir (Fitur Pro)</span>
               </span>
             </div>
@@ -816,17 +814,17 @@
 
           <!-- Card Header & Metadata -->
           <div class="flex items-center justify-between pb-3 border-b border-dark-border mb-3">
-            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold">
+            <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold" data-i18n="c6Meta">
               Silicon Valley & Venture
             </span>
             <span class="text-[11px] font-mono font-semibold text-brand-amber flex items-center gap-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span>
-              <span>Fitur Pro</span>
+              <span data-i18n="cardProBadge">Fitur Pro</span>
             </span>
           </div>
 
-          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri">Silicon Valley Startup Elite</h3>
-          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed">
+          <h3 class="text-base sm:text-lg font-heading font-bold text-dark-textPri" data-i18n="c6Title">Silicon Valley Startup Elite</h3>
+          <p class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed" data-i18n="c6Desc">
             Layout 1-halaman ultra-padat dengan teknik penulisan high-signal low-noise untuk kandidat senior di ekosistem startup Seri A hingga Pra-IPO.
           </p>
 
@@ -834,15 +832,15 @@
           <ul class="text-xs text-dark-textSec space-y-1.5 mb-5 border-t border-dark-border pt-3.5">
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber shrink-0"></span>
-              <span><strong>Format:</strong> 1-Page High-Density Silicon Valley Standard</span>
+              <span data-i18n="c6Spec1"><strong>Format:</strong> 1-Page High-Density Silicon Valley Standard</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber shrink-0"></span>
-              <span><strong>Fokus:</strong> Seed-to-Scale, 0-to-1 building, high ownership</span>
+              <span data-i18n="c6Spec2"><strong>Fokus:</strong> Seed-to-Scale, 0-to-1 building, high ownership</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber shrink-0"></span>
-              <span><strong>Cocok untuk:</strong> Staff Engineer, Growth Architect, Founding Ops</span>
+              <span data-i18n="c6Spec3"><strong>Cocok untuk:</strong> Staff Engineer, Growth Architect, Founding Ops</span>
             </li>
           </ul>
         </div>
@@ -850,7 +848,7 @@
         <div class="pt-2 border-t border-dark-border/80">
           <button onclick="openComingSoonModal('Silicon Valley Startup Elite')" class="w-full py-2.5 px-4 bg-dark-well border border-brand-amber/40 text-brand-amber rounded-xl text-xs font-heading font-semibold uppercase tracking-wider hover:bg-brand-amber/10 transition-all flex items-center justify-center gap-2">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-            <span>Segera Hadir (Sedang Disiapkan)</span>
+            <span data-i18n="btnComingSoon">Segera Hadir (Sedang Disiapkan)</span>
           </button>
         </div>
       </article>
@@ -862,13 +860,13 @@
          ===================================================================== -->
     <section class="mt-16 bg-dark-well border border-dark-wellBorder rounded-2xl p-6 sm:p-8 shadow-xl">
       <div class="max-w-3xl">
-        <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-brand-emeraldBg text-brand-emerald border border-brand-emerald/30">
+        <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2.5 py-0.5 rounded bg-brand-emeraldBg text-brand-emerald border border-brand-emerald/30" data-i18n="guideBadge">
           PANDUAN PRAKTISI REKRUTER
         </span>
-        <h2 class="text-xl sm:text-2xl font-heading font-extrabold text-dark-textPri mt-2 mb-3">
+        <h2 class="text-xl sm:text-2xl font-heading font-extrabold text-dark-textPri mt-2 mb-3" data-i18n="guideTitle">
           Perbedaan Kritis CV ATS Indonesia vs Internasional
         </h2>
-        <p class="text-xs sm:text-sm text-dark-textSec leading-relaxed">
+        <p class="text-xs sm:text-sm text-dark-textSec leading-relaxed" data-i18n="guideSub">
           Banyak pelamar salah kaprah menyamakan seluruh CV ATS. Rekruter korporat lokal dan global memiliki kepatuhan sistem yang sangat berbeda.
         </p>
       </div>
@@ -879,20 +877,20 @@
         <div class="bg-dark-surface border border-dark-border rounded-xl p-5 space-y-3.5">
           <div class="flex items-center gap-2 font-heading font-bold text-dark-textPri text-sm border-b border-dark-border pb-2.5">
             <span class="text-emerald-400">●</span>
-            <span>Standar Nasional (BUMN & Swasta Lokal)</span>
+            <span data-i18n="guideIdTitle">Standar Nasional (BUMN & Swasta Lokal)</span>
           </div>
           <ul class="space-y-2.5 leading-relaxed">
             <li class="flex items-start gap-2.5">
               <span class="text-brand-emerald font-bold shrink-0">✓</span>
-              <span><strong>Domisili Kota Wajib:</strong> Cantumkan kota tinggal (misal: <em>Jakarta Timur, DKI Jakarta</em>) karena sering menjadi filter awal logistik penempatan kerja.</span>
+              <span data-i18n="guideIdPoint1"><strong>Domisili Kota Wajib:</strong> Cantumkan kota tinggal (misal: <em>Jakarta Timur, DKI Jakarta</em>) karena sering menjadi filter awal logistik penempatan kerja.</span>
             </li>
             <li class="flex items-start gap-2.5">
               <span class="text-brand-emerald font-bold shrink-0">✓</span>
-              <span><strong>Gelar & IPK:</strong> Untuk BUMN dan perbankan, penulisan gelar formal (S.Psi., S.Kom.) dan IPK masih menjadi syarat administratif filter awal.</span>
+              <span data-i18n="guideIdPoint2"><strong>Gelar & IPK:</strong> Untuk BUMN dan perbankan, penulisan gelar formal (S.Psi., S.Kom.) dan IPK masih menjadi syarat administratif filter awal.</span>
             </li>
             <li class="flex items-start gap-2.5">
               <span class="text-brand-emerald font-bold shrink-0">✓</span>
-              <span><strong>Sertifikasi Nasional:</strong> Sertifikasi BNSP, Brevet Pajak, atau sertifikasi lokal sangat dihargai dan perlu ditulis lengkap dengan nomor lisensi.</span>
+              <span data-i18n="guideIdPoint3"><strong>Sertifikasi Nasional:</strong> Sertifikasi BNSP, Brevet Pajak, atau sertifikasi lokal sangat dihargai dan perlu ditulis lengkap dengan nomor lisensi.</span>
             </li>
           </ul>
         </div>
@@ -901,20 +899,20 @@
         <div class="bg-dark-surface border border-dark-border rounded-xl p-5 space-y-3.5">
           <div class="flex items-center gap-2 font-heading font-bold text-dark-textPri text-sm border-b border-dark-border pb-2.5">
             <span class="text-sky-400">●</span>
-            <span>Standar Internasional (US, EU & Global Remote)</span>
+            <span data-i18n="guideIntlTitle">Standar Internasional (US, EU & Global Remote)</span>
           </div>
           <ul class="space-y-2.5 leading-relaxed">
             <li class="flex items-start gap-2.5">
               <span class="text-brand-emerald font-bold shrink-0">✓</span>
-              <span><strong>Anti-Bias EEOC (Strict):</strong> Dilarang memasukkan foto, tanggal lahir, usia, status perkawinan, atau agama. Pelanggaran ini memicu diskualifikasi otomatis sistem ATS global.</span>
+              <span data-i18n="guideIntlPoint1"><strong>Anti-Bias EEOC (Strict):</strong> Dilarang memasukkan foto, tanggal lahir, usia, status perkawinan, atau agama. Pelanggaran ini memicu diskualifikasi otomatis sistem ATS global.</span>
             </li>
             <li class="flex items-start gap-2.5">
               <span class="text-brand-emerald font-bold shrink-0">✓</span>
-              <span><strong>Action Verbs Lampau:</strong> Setiap butir wajib diawali kata kerja berdaya tinggi (e.g., <em>Spearheaded, Accelerated, Formulated, Built</em>) bukan kalimat tugas rutin.</span>
+              <span data-i18n="guideIntlPoint2"><strong>Action Verbs Lampau:</strong> Setiap butir wajib diawali kata kerja berdaya tinggi (e.g., <em>Spearheaded, Accelerated, Formulated, Built</em>) bukan kalimat tugas rutin.</span>
             </li>
             <li class="flex items-start gap-2.5">
               <span class="text-brand-emerald font-bold shrink-0">✓</span>
-              <span><strong>Standar 1 Halaman:</strong> Di pasar AS/Eropa, kandidat di bawah 7 tahun pengalaman wajib memadatkan resume menjadi tepat 1 halaman (<em>single-page rule</em>).</span>
+              <span data-i18n="guideIntlPoint3"><strong>Standar 1 Halaman:</strong> Di pasar AS/Eropa, kandidat di bawah 7 tahun pengalaman wajib memadatkan resume menjadi tepat 1 halaman (<em>single-page rule</em>).</span>
             </li>
           </ul>
         </div>
@@ -935,10 +933,10 @@
 
       <div class="flex items-center gap-2 mb-1.5">
         <span class="w-2 h-2 rounded-full bg-brand-emerald"></span>
-        <span id="previewTag" class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">STANDAR FORMAT ATS</span>
+        <span id="previewTag" class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald" data-i18n="tplModalTag">STANDAR FORMAT ATS</span>
       </div>
-      <h3 id="previewTitle" class="text-xl font-heading font-bold text-dark-textPri">Pratinjau Struktur Template</h3>
-      <p id="previewSubtitle" class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed">
+      <h3 id="previewTitle" class="text-xl font-heading font-bold text-dark-textPri" data-i18n="tplModalTitle">Pratinjau Struktur Template</h3>
+      <p id="previewSubtitle" class="text-xs text-dark-textSec mt-1 mb-4 leading-relaxed" data-i18n="tplModalSubtitle">
         Salin teks struktur ini ke Google Docs / Word Anda atau unduh langsung dalam berkas .docx siap edit.
       </p>
 
@@ -951,11 +949,11 @@
       <div class="flex flex-col sm:flex-row items-center gap-3">
         <button id="previewDownloadBtn" class="w-full sm:flex-1 py-3 px-4 bg-brand-emerald text-black rounded-xl text-xs font-heading font-bold uppercase tracking-wider hover:bg-brand-emeraldDark transition-all text-center flex items-center justify-center gap-2 shadow-lg shadow-brand-emerald/10">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
-          <span>Unduh Berkas .docx</span>
+          <span data-i18n="tplModalDownload">Unduh Berkas .docx</span>
         </button>
         <button id="previewCopyBtn" class="w-full sm:w-auto py-3 px-5 bg-dark-well border border-dark-wellBorder text-dark-textPri hover:border-brand-emerald/50 rounded-xl text-xs font-heading font-semibold uppercase tracking-wider transition-colors flex items-center justify-center gap-2">
           <svg class="w-4 h-4 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-          <span>Salin Teks Bersih</span>
+          <span data-i18n="tplModalCopy">Salin Teks Bersih</span>
         </button>
       </div>
 
@@ -974,20 +972,20 @@
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
       </div>
 
-      <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-brand-amber/15 text-brand-amber border border-brand-amber/30">
+      <span class="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-brand-amber/15 text-brand-amber border border-brand-amber/30" data-i18n="tplCsBadge">
         FITUR LANJUTAN • SEGERA HADIR
       </span>
-      <h3 id="comingSoonTitle" class="text-lg font-heading font-bold text-dark-textPri mt-2 mb-2">Template Sedang Disiapkan</h3>
-      <p class="text-xs text-dark-textSec leading-relaxed mb-6">
+      <h3 id="comingSoonTitle" class="text-lg font-heading font-bold text-dark-textPri mt-2 mb-2" data-i18n="tplCsTitle">Template Sedang Disiapkan</h3>
+      <p class="text-xs text-dark-textSec leading-relaxed mb-6" data-i18n="tplCsDesc">
         Format ini sedang difinalisasi agar memenuhi regulasi terbaru rekruter. Punya permintaan format industri khusus atau ingin berkonsultasi langsung dengan Faari?
       </p>
 
       <a href="mailto:faarimuhammad25@gmail.com?subject=Permintaan%20Format%20Template%20ATS%20Screenora&body=Halo%20Faari%2C%0A%0ASaya%20tertarik%20dengan%20template%20ATS%20dan%20ingin%20mengusulkan%20format%20untuk%20industri%20berikut%3A%0A%0A" class="w-full py-3 px-4 bg-brand-emerald text-black rounded-xl text-xs font-heading font-bold uppercase tracking-wider hover:bg-brand-emeraldDark transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-emerald/10 mb-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-        <span>Kirim Masukan via Email ke Faari</span>
+        <span data-i18n="tplCsEmailBtn">Kirim Masukan via Email ke Faari</span>
       </a>
 
-      <button onclick="closeComingSoonModal()" class="w-full py-2.5 text-xs text-dark-textSec hover:text-dark-textPri font-medium">
+      <button onclick="closeComingSoonModal()" class="w-full py-2.5 text-xs text-dark-textSec hover:text-dark-textPri font-medium" data-i18n="tplCsClose">
         Tutup
       </button>
 
@@ -1004,15 +1002,15 @@
         <span>•</span>
         <span class="font-normal text-dark-textSec">Resume Intelligence Platform</span>
       </div>
-      <p class="max-w-2xl mx-auto text-[11px] text-dark-textMuted leading-relaxed">
+      <p class="max-w-2xl mx-auto text-[11px] text-dark-textMuted leading-relaxed" data-i18n="tplFooterDesc">
         Seluruh template disusun berdasarkan standar algoritma parser ATS industri terbuka (Workday, Taleo, Greenhouse, Lever). Bebas digunakan tanpa biaya lisensi.
       </p>
       <div class="pt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[11px] text-dark-textSec">
-        <span>Pertanyaan & Masukan: <a href="mailto:faarimuhammad25@gmail.com" class="text-brand-emerald hover:underline font-medium">faarimuhammad25@gmail.com</a></span>
+        <span><span data-i18n="tplFooterInquiry">Pertanyaan & Masukan:</span> <a href="mailto:faarimuhammad25@gmail.com" class="text-brand-emerald hover:underline font-medium">faarimuhammad25@gmail.com</a></span>
         <span class="hidden sm:inline">•</span>
         <span>WhatsApp: <a href="https://wa.me/6285892344722?text=Halo%20Faari%2C%20saya%20pengguna%20Screenora%20ingin%20tanya%20seputar%20Template%20ATS..." target="_blank" rel="noopener noreferrer" class="text-brand-emerald hover:underline font-medium">+62 858-9234-4722</a></span>
       </div>
-      <p class="text-[10px] text-dark-textMuted pt-1">
+      <p class="text-[10px] text-dark-textMuted pt-1" data-i18n="tplFooterCopyright">
         © 2026 Screenora. Built for High-Impact Job Seekers & Modern HR Teams by Faari.
       </p>
     </div>

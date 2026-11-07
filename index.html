@@ -211,12 +211,12 @@
 
       <!-- Navigation Links -->
       <nav class="hidden md:flex items-center gap-2">
-        <a href="index.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-dark-well border border-brand-emerald/30 text-brand-emerald" aria-current="page">
+        <a href="index.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-dark-well border border-brand-emerald/30 text-brand-emerald" aria-current="page" data-i18n="navScan">
           Skrining CV
         </a>
         <a href="templates.html" class="px-3 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-well border border-transparent hover:border-dark-wellBorder transition-all flex items-center gap-1.5">
-          <span>Template ATS</span>
-          <span class="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-brand-emeraldBg text-brand-emerald border border-brand-emerald/30">Baru</span>
+          <span data-i18n="navTemplates">Template ATS</span>
+          <span class="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-brand-emeraldBg text-brand-emerald border border-brand-emerald/30" data-i18n="badgeNew">Baru</span>
         </a>
       </nav>
 
@@ -367,14 +367,14 @@
             <div class="p-3 rounded-xl bg-dark-well border border-dark-wellBorder space-y-2">
               <div class="flex items-center justify-between">
                 <label class="block text-[11px] text-dark-textSec font-medium" data-i18n="standardSelectLabel">Standar Pasar Kerja ATS:</label>
-                <span class="text-[10px] font-mono text-brand-emerald" id="standardBadge">🇮🇩 Indonesia Standard</span>
+                <span class="text-[10px] font-mono text-brand-emerald" id="standardBadge">🇮🇩 Standar Nasional (Indonesia)</span>
               </div>
               <div class="grid grid-cols-2 gap-2" role="radiogroup">
                 <button type="button" id="stdNasionalBtn" class="py-2 px-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 bg-dark-surface text-brand-emerald border border-brand-emerald/30 shadow-sm" aria-checked="true">
-                  <span>🇮🇩 Nasional (BUMN/Lokal)</span>
+                  <span data-i18n="stdNasionalLabel">🇮🇩 Nasional (BUMN/Lokal)</span>
                 </button>
                 <button type="button" id="stdGlobalBtn" class="py-2 px-2.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-1.5 bg-transparent border border-transparent" aria-checked="false">
-                  <span>🌐 Internasional (MNC)</span>
+                  <span data-i18n="stdGlobalLabel">🌐 Internasional (MNC)</span>
                 </button>
               </div>
               <p id="standardDescriptionTxt" class="text-[10px] text-dark-textMuted leading-relaxed">
@@ -462,13 +462,13 @@
             <div id="roleDetailCard" class="p-4 bg-dark-well dark:bg-dark-well border border-dark-wellBorder dark:border-dark-wellBorder rounded-xl space-y-2.5 transition-all">
               <div class="flex items-center justify-between">
                 <span id="roleCategoryBadge" class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald px-2 py-0.5 rounded bg-brand-emeraldBg border border-brand-emerald/30">HR & Organisasi</span>
-                <span class="text-[11px] text-dark-textMuted font-mono">Standar ATS Korporat</span>
+                <span class="text-[11px] text-dark-textMuted font-mono" data-i18n="roleAtsStandard">Standar ATS Korporat</span>
               </div>
               <h4 id="roleDetailTitle" class="text-xs font-bold text-dark-textPri">HR Generalist & Talent Acquisition</h4>
               <p id="roleDetailDesc" class="text-[11px] text-dark-textSec leading-relaxed">Fokus pengujian: Metodologi wawancara STAR, people metrics, sourcing terstruktur, retensi talenta, dan kepatuhan administrasi SDM.</p>
               
               <div class="pt-2 border-t border-dark-border">
-                <span class="text-[10px] text-dark-textMuted uppercase font-semibold tracking-wider block mb-1.5">Kata Kunci Esensial ATS:</span>
+                <span class="text-[10px] text-dark-textMuted uppercase font-semibold tracking-wider block mb-1.5" data-i18n="roleEssentialKeywords">Kata Kunci Esensial ATS:</span>
                 <div id="roleKeywordPills" class="flex flex-wrap gap-1.5">
                   <!-- Dynamically rendered pills -->
                 </div>
@@ -480,25 +480,25 @@
               <div class="flex items-center justify-between">
                 <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald flex items-center gap-1.5">
                   <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
-                  Panduan Template Posisi Kustom
+                  <span data-i18n="customGuideTitle">Panduan Template Posisi Kustom</span>
                 </span>
-                <span class="text-[10px] text-dark-textMuted">1-Klik Isi Cepat</span>
+                <span class="text-[10px] text-dark-textMuted" data-i18n="customQuickFillSub">1-Klik Isi Cepat</span>
               </div>
 
               <!-- Quick Template Archetype Selector -->
               <div>
-                <label class="block text-[10px] text-dark-textMuted mb-1.5 font-medium">Pilih Template Awal (Klik untuk Muat Otomatis):</label>
+                <label class="block text-[10px] text-dark-textMuted mb-1.5 font-medium" data-i18n="customArchetypeLabel">Pilih Template Awal (Klik untuk Muat Otomatis):</label>
                 <div class="grid grid-cols-2 gap-1.5" id="customArchetypeContainer">
-                  <button type="button" class="custom-archetype-btn text-left p-2 rounded-lg bg-dark-surface border border-dark-border hover:border-brand-emerald/50 text-[11px] font-medium text-dark-textPri transition-all" data-template="growth">
+                  <button type="button" class="custom-archetype-btn text-left p-2 rounded-lg bg-dark-surface border border-dark-border hover:border-brand-emerald/50 text-[11px] font-medium text-dark-textPri transition-all" data-template="growth" data-i18n="archGrowth">
                     Growth & Komersial
                   </button>
-                  <button type="button" class="custom-archetype-btn text-left p-2 rounded-lg bg-dark-surface border border-dark-border hover:border-brand-emerald/50 text-[11px] font-medium text-dark-textPri transition-all" data-template="tech">
+                  <button type="button" class="custom-archetype-btn text-left p-2 rounded-lg bg-dark-surface border border-dark-border hover:border-brand-emerald/50 text-[11px] font-medium text-dark-textPri transition-all" data-template="tech" data-i18n="archTech">
                     Engineering & Teknis
                   </button>
-                  <button type="button" class="custom-archetype-btn text-left p-2 rounded-lg bg-dark-surface border border-dark-border hover:border-brand-emerald/50 text-[11px] font-medium text-dark-textPri transition-all" data-template="ops">
+                  <button type="button" class="custom-archetype-btn text-left p-2 rounded-lg bg-dark-surface border border-dark-border hover:border-brand-emerald/50 text-[11px] font-medium text-dark-textPri transition-all" data-template="ops" data-i18n="archOps">
                     Operasional & People
                   </button>
-                  <button type="button" class="custom-archetype-btn text-left p-2 rounded-lg bg-dark-surface border border-dark-border hover:border-brand-emerald/50 text-[11px] font-medium text-dark-textPri transition-all" data-template="research">
+                  <button type="button" class="custom-archetype-btn text-left p-2 rounded-lg bg-dark-surface border border-dark-border hover:border-brand-emerald/50 text-[11px] font-medium text-dark-textPri transition-all" data-template="research" data-i18n="archResearch">
                     Riset & Analitika
                   </button>
                 </div>
@@ -506,24 +506,24 @@
 
               <!-- Job Title Input -->
               <div>
-                <label for="customRoleTitleInput" class="block text-[11px] text-dark-textSec mb-1 font-medium">Nama Jabatan Target:</label>
+                <label for="customRoleTitleInput" class="block text-[11px] text-dark-textSec mb-1 font-medium" data-i18n="customRoleTitleLabel">Nama Jabatan Target:</label>
                 <input type="text" id="customRoleTitleInput" class="w-full bg-dark-surface border border-dark-border rounded-lg px-3 py-2 text-xs text-dark-textPri placeholder-dark-textMuted focus:outline-none focus:border-brand-emerald transition-colors" placeholder="Contoh: Senior Growth Marketing Specialist">
-                <span class="text-[10px] text-dark-textMuted mt-1 block">Format: [Tingkat] + [Fungsi] + [Bidang Spesifik]</span>
+                <span class="text-[10px] text-dark-textMuted mt-1 block" data-i18n="customRoleTitleHint">Format: [Tingkat] + [Fungsi] + [Bidang Spesifik]</span>
               </div>
 
               <!-- Keywords Input -->
               <div>
-                <label for="customRoleKeywordsInput" class="block text-[11px] text-dark-textSec mb-1 font-medium">Kata Kunci / Keahlian Wajib Diuji (Pisahkan koma):</label>
+                <label for="customRoleKeywordsInput" class="block text-[11px] text-dark-textSec mb-1 font-medium" data-i18n="customKeywordsLabel">Kata Kunci / Keahlian Wajib Diuji (Pisahkan koma):</label>
                 <input type="text" id="customRoleKeywordsInput" class="w-full bg-dark-surface border border-dark-border rounded-lg px-3 py-2 text-xs text-dark-textPri placeholder-dark-textMuted focus:outline-none focus:border-brand-emerald transition-colors" placeholder="misal: SQL, Tableau, ROI, Customer Journey, B2B">
               </div>
 
               <!-- Seniority Level Selector -->
               <div>
-                <label class="block text-[10px] text-dark-textMuted mb-1.5 font-medium">Ekspektasi Tingkat Pengalaman:</label>
+                <label class="block text-[10px] text-dark-textMuted mb-1.5 font-medium" data-i18n="customSeniorityLabel">Ekspektasi Tingkat Pengalaman:</label>
                 <div class="flex items-center gap-1.5" id="customSeniorityPills">
-                  <button type="button" class="seniority-pill flex-1 py-1.5 px-2 rounded-lg text-[10px] font-medium text-center border bg-dark-surface border-dark-border text-dark-textSec hover:text-dark-textPri transition-all" data-level="entry">Entry (0-2 thn)</button>
-                  <button type="button" class="seniority-pill flex-1 py-1.5 px-2 rounded-lg text-[10px] font-medium text-center border active bg-brand-emeraldBg border-brand-emerald/40 text-brand-emerald transition-all font-semibold" data-level="mid">Mid (2-5 thn)</button>
-                  <button type="button" class="seniority-pill flex-1 py-1.5 px-2 rounded-lg text-[10px] font-medium text-center border bg-dark-surface border-dark-border text-dark-textSec hover:text-dark-textPri transition-all" data-level="senior">Senior (5+ thn)</button>
+                  <button type="button" class="seniority-pill flex-1 py-1.5 px-2 rounded-lg text-[10px] font-medium text-center border bg-dark-surface border-dark-border text-dark-textSec hover:text-dark-textPri transition-all" data-level="entry" data-i18n="seniorityEntry">Entry (0-2 thn)</button>
+                  <button type="button" class="seniority-pill flex-1 py-1.5 px-2 rounded-lg text-[10px] font-medium text-center border active bg-brand-emeraldBg border-brand-emerald/40 text-brand-emerald transition-all font-semibold" data-level="mid" data-i18n="seniorityMid">Mid (2-5 thn)</button>
+                  <button type="button" class="seniority-pill flex-1 py-1.5 px-2 rounded-lg text-[10px] font-medium text-center border bg-dark-surface border-dark-border text-dark-textSec hover:text-dark-textPri transition-all" data-level="senior" data-i18n="senioritySenior">Senior (5+ thn)</button>
                 </div>
               </div>
 
@@ -672,11 +672,11 @@
               
               <!-- Subtle Scale Legend -->
               <div class="inline-flex items-center gap-2 text-[10.5px] text-dark-textMuted font-mono">
-                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>≥80% Shortlist</span>
+                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span><span data-i18n="scaleShortlist">≥80% Shortlist</span></span>
                 <span>•</span>
-                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>65–79% Cadangan</span>
+                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span data-i18n="scaleReserve">65–79% Cadangan</span></span>
                 <span>•</span>
-                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span>&lt;65% Rawan</span>
+                <span class="inline-flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-rose-400"></span><span data-i18n="scaleRisk">&lt;65% Rawan</span></span>
               </div>
             </div>
 
@@ -685,7 +685,7 @@
             </p>
 
             <div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder text-xs text-dark-textPri flex items-start gap-2.5">
-              <span class="px-2 py-0.5 rounded-md bg-brand-amber/10 border border-brand-amber/30 text-[10px] font-mono font-bold text-brand-amber uppercase tracking-wider shrink-0 mt-0.5">Rekomendasi</span>
+              <span class="px-2 py-0.5 rounded-md bg-brand-amber/10 border border-brand-amber/30 text-[10px] font-mono font-bold text-brand-amber uppercase tracking-wider shrink-0 mt-0.5" data-i18n="recBadge">Rekomendasi</span>
               <span id="recruiterAdviceTxt">Rekomendasi Rekruter: Prioritas pemanggilan wawancara tahap pertama. Perlu verifikasi pemahaman praktis HRIS pada sesi tanya-jawab.</span>
             </div>
           </div>
@@ -768,7 +768,7 @@
             </p>
             <button id="copyMissingKeywordsBtn" type="button" class="w-full sm:w-auto px-3.5 py-2 rounded-xl border border-slate-300 dark:border-dark-wellBorder hover:border-brand-emerald/40 bg-slate-100 dark:bg-dark-well text-slate-800 dark:text-dark-textSec hover:text-slate-950 dark:hover:text-dark-textPri text-xs font-heading font-semibold flex items-center justify-center gap-1.5 transition-all shrink-0">
               <svg class="w-3.5 h-3.5 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/></svg>
-              <span>Salin Kata Kunci</span>
+              <span data-i18n="copyKeywordsBtn">Salin Kata Kunci</span>
             </button>
           </div>
         </div>
@@ -784,7 +784,7 @@
             </span>
             <div>
               <h3 class="text-xs font-heading font-bold uppercase tracking-wider text-dark-textPri" data-i18n="rewriteHead">Optimasi Kalimat Berdampak (Formula XYZ)</h3>
-              <p class="text-[11px] text-slate-600 dark:text-dark-textMuted font-mono">Standar Google: Accomplished [X], measured by [Y], by doing [Z]</p>
+              <p class="text-[11px] text-slate-600 dark:text-dark-textMuted font-mono" data-i18n="rewriteSubheader">Standar Google: Accomplished [X], measured by [Y], by doing [Z]</p>
             </div>
           </div>
         </div>
@@ -795,7 +795,7 @@
             <div class="space-y-2">
               <div class="flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-rose-600 dark:bg-rose-400"></span>
-                <span id="rewriteBeforeTitle" class="text-[11px] font-heading font-bold uppercase tracking-wider text-rose-800 dark:text-rose-400">Draft Kalimat Asli</span>
+                <span id="rewriteBeforeTitle" class="text-[11px] font-heading font-bold uppercase tracking-wider text-rose-800 dark:text-rose-400" data-i18n="rewriteBeforeTitle">Draft Kalimat Asli</span>
               </div>
               <p id="rewriteBeforeTxt" class="text-xs sm:text-[13px] text-slate-900 dark:text-slate-300 font-sans italic leading-relaxed bg-white dark:bg-[#131722] p-3.5 rounded-lg border border-rose-200 dark:border-dark-border shadow-sm">
                 "Bertanggung jawab membantu proses rekrutmen karyawan baru dan mengurus administrasi HR."
@@ -803,7 +803,7 @@
             </div>
             <p id="rewriteBeforeSub" class="text-[10.5px] text-rose-700 dark:text-rose-400/80 font-semibold flex items-center gap-1.5 pt-1">
               <span class="text-xs">✕</span>
-              <span>Kalimat pasif, tanpa metrik hasil, dan tidak membuktikan kapasitas kerja nyata.</span>
+              <span data-i18n="rewriteBeforeSub">Kalimat pasif, tanpa metrik hasil, dan tidak membuktikan kapasitas kerja nyata.</span>
             </p>
           </div>
 
@@ -813,7 +813,7 @@
               <div class="flex items-center justify-between">
                 <div class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full bg-emerald-600 dark:bg-emerald-400"></span>
-                  <span id="rewriteAfterTitle" class="text-[11px] font-heading font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400">Rekomendasi Formula XYZ (Siap Salin)</span>
+                  <span id="rewriteAfterTitle" class="text-[11px] font-heading font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400" data-i18n="rewriteAfterTitle">Rekomendasi Formula XYZ (Siap Salin)</span>
                 </div>
                 <button id="copyRewriteBtn" class="text-[11px] text-emerald-800 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-emerald-300 font-heading font-bold flex items-center gap-1 transition-colors" data-i18n="copyBtn">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
@@ -826,7 +826,7 @@
             </div>
             <p id="rewriteAfterSub" class="text-[10.5px] text-emerald-800 dark:text-emerald-400 font-semibold flex items-center gap-1.5 pt-1">
               <span class="text-xs">✓</span>
-              <span>Berbasis dampak: Verba aksi berdaya tinggi (Z) + Metrik efisiensi terukur (Y) + Hasil bisnis (X).</span>
+              <span data-i18n="rewriteAfterSub">Berbasis dampak: Verba aksi berdaya tinggi (Z) + Metrik efisiensi terukur (Y) + Hasil bisnis (X).</span>
             </p>
           </div>
         </div>
@@ -835,7 +835,7 @@
         <div class="p-4 bg-amber-50/50 dark:bg-dark-well rounded-xl border border-amber-200 dark:border-dark-wellBorder space-y-2">
           <p class="text-[11px] text-amber-900 dark:text-dark-textMuted font-mono font-bold uppercase tracking-wider flex items-center gap-2">
             <svg class="w-3.5 h-3.5 text-amber-600 dark:text-brand-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-            <span>Simulasi Pertanyaan Wawancara (Teknik STAR) Berdasarkan Celah Ini:</span>
+            <span data-i18n="starQuestionHeader">Simulasi Pertanyaan Wawancara (Teknik STAR) Berdasarkan Celah Ini:</span>
           </p>
           <p id="starQuestionTxt" class="text-xs sm:text-[13px] text-slate-900 dark:text-dark-textSec italic font-medium pl-5 border-l-2 border-amber-500 dark:border-brand-amber/40 leading-relaxed">
             "Ceritakan situasi nyata ketika Anda harus memodifikasi pendekatan kerja Anda untuk mencapai target tertentu. Tindakan spesifik apa yang Anda ambil, dan bagaimana cara Anda mengukur keberhasilannya?"
@@ -850,13 +850,13 @@
           <div class="space-y-1">
             <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-amber/15 text-brand-amber border border-brand-amber/30 text-[10px] font-mono font-bold uppercase tracking-wider whitespace-nowrap">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span>
-              <span>Fitur Lanjutan • Segera Hadir</span>
+              <span data-i18n="proBadge">Fitur Lanjutan • Segera Hadir</span>
             </div>
             <h2 class="text-base sm:text-lg font-heading font-bold text-dark-textPri" data-i18n="proBannerTitle">
               Laporan Lengkap & Sesi Konsultasi Privat (Segera Hadir)
             </h2>
           </div>
-          <span class="text-[11px] font-mono text-brand-emerald px-2.5 py-1 rounded-lg bg-brand-emeraldBg border border-brand-emerald/30 whitespace-nowrap self-start md:self-center">
+          <span class="text-[11px] font-mono text-brand-emerald px-2.5 py-1 rounded-lg bg-brand-emeraldBg border border-brand-emerald/30 whitespace-nowrap self-start md:self-center" data-i18n="proFreeBadge">
             ✓ Skrining 100% Gratis
           </span>
         </div>
@@ -870,15 +870,15 @@
           <div class="flex flex-wrap sm:flex-nowrap items-center gap-2.5 shrink-0">
             <a href="templates.html" class="w-full sm:w-auto px-4 py-2.5 rounded-xl font-heading font-semibold text-xs bg-brand-emerald text-black hover:bg-brand-emeraldDark transition-all shadow-md shadow-brand-emerald/10 whitespace-nowrap flex items-center justify-center gap-2">
               <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-              <span>Katalog Template ATS (.docx)</span>
+              <span data-i18n="btnCatalog">Katalog Template ATS (.docx)</span>
             </a>
             <button id="openProModalBtn" class="w-full sm:w-auto px-3.5 py-2.5 rounded-xl font-heading font-medium text-xs bg-dark-surface border border-dark-border text-dark-textSec hover:text-dark-textPri hover:border-brand-amber/50 transition-all whitespace-nowrap flex items-center justify-center gap-2">
               <svg class="w-3.5 h-3.5 text-brand-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              <span>Buka Laporan (Segera Hadir)</span>
+              <span data-i18n="btnUnlockReport">Buka Laporan (Segera Hadir)</span>
             </button>
             <button id="openConsultModalBtn" class="w-full sm:w-auto px-3.5 py-2.5 rounded-xl font-heading font-medium text-xs bg-dark-surface border border-dark-border text-dark-textSec hover:text-dark-textPri hover:border-brand-emerald/50 transition-all whitespace-nowrap flex items-center justify-center gap-2">
               <svg class="w-3.5 h-3.5 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-              <span>Email Faari</span>
+              <span data-i18n="btnEmailFaari">Email Faari</span>
             </button>
           </div>
         </div>
@@ -893,20 +893,20 @@
       <div class="text-center mb-8">
         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-dark-well border border-dark-wellBorder text-dark-textSec text-[11px] font-mono uppercase tracking-wider mb-2.5 shadow-sm">
           <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
-          <span>Pusat Pengetahuan Karir & Standar ATS</span>
+          <span data-i18n="faqBadge">Pusat Pengetahuan Karir & Standar ATS</span>
         </div>
-        <h2 class="text-xl sm:text-2xl font-heading font-extrabold text-dark-textPri mt-1">Pertanyaan Umum Seputar Skrining CV & Rekrutmen</h2>
-        <p class="text-xs text-dark-textSec mt-1.5">Standar penyaringan Applicant Tracking System dan psikologi penyeleksian HR korporat.</p>
+        <h2 class="text-xl sm:text-2xl font-heading font-extrabold text-dark-textPri mt-1" data-i18n="faqHeading">Pertanyaan Umum Seputar Skrining CV & Rekrutmen</h2>
+        <p class="text-xs text-dark-textSec mt-1.5" data-i18n="faqSub">Standar penyaringan Applicant Tracking System dan psikologi penyeleksian HR korporat.</p>
       </div>
 
       <div class="space-y-3" id="faqAccordion">
         <!-- FAQ Item 1 -->
         <div class="bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-xl overflow-hidden transition-all">
           <button type="button" class="faq-toggle-btn w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-heading font-semibold text-xs sm:text-sm text-dark-textPri hover:text-brand-emerald transition-colors" aria-expanded="false">
-            <span>Apa itu Formula XYZ dan mengapa rekruter multinasional mewajibkannya?</span>
+            <span data-i18n="faqQ1">Apa itu Formula XYZ dan mengapa rekruter multinasional mewajibkannya?</span>
             <span class="faq-icon w-5 h-5 rounded-full bg-dark-well border border-dark-wellBorder flex items-center justify-center text-xs text-dark-textSec shrink-0 transition-transform duration-300">+</span>
           </button>
-          <div class="faq-answer hidden px-4 sm:px-5 pb-5 text-xs text-dark-textSec leading-relaxed border-t border-dark-border/40 pt-3">
+          <div class="faq-answer hidden px-4 sm:px-5 pb-5 text-xs text-dark-textSec leading-relaxed border-t border-dark-border/40 pt-3" data-i18n="faqA1">
             Formula XYZ adalah kerangka penulisan prestasi kerja yang dirumuskan oleh eksekutif Google: <em>"Accomplished [X] as measured by [Y], by doing [Z]"</em> (Mencapai hasil X yang diukur dengan metrik Y, melalui tindakan konkret Z). Berdasarkan psikologi industri HR, rekruter hanya meluangkan 6–8 detik untuk memindai CV. Kalimat pasif seperti <em>"Bertanggung jawab mengelola penjualan"</em> tidak membuktikan keberhasilan, sedangkan formula XYZ membuktikan kapasitas problem-solving dan dampak bisnis yang nyata.
           </div>
         </div>
@@ -914,10 +914,10 @@
         <!-- FAQ Item 2 -->
         <div class="bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-xl overflow-hidden transition-all">
           <button type="button" class="faq-toggle-btn w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-heading font-semibold text-xs sm:text-sm text-dark-textPri hover:text-brand-emerald transition-colors" aria-expanded="false">
-            <span>Bagaimana Screenora menjamin keamanan dan privasi berkas CV saya?</span>
+            <span data-i18n="faqQ2">Bagaimana Screenora menjamin keamanan dan privasi berkas CV saya?</span>
             <span class="faq-icon w-5 h-5 rounded-full bg-dark-well border border-dark-wellBorder flex items-center justify-center text-xs text-dark-textSec shrink-0 transition-transform duration-300">+</span>
           </button>
-          <div class="faq-answer hidden px-4 sm:px-5 pb-5 text-xs text-dark-textSec leading-relaxed border-t border-dark-border/40 pt-3">
+          <div class="faq-answer hidden px-4 sm:px-5 pb-5 text-xs text-dark-textSec leading-relaxed border-t border-dark-border/40 pt-3" data-i18n="faqA2">
             Screenora beroperasi dengan prinsip <strong>Zero-Data Retention (100% Client-Side)</strong>. Saat Anda mengunggah PDF atau menempel teks, pustaka ekstraksi (PDF.js) bekerja langsung di dalam memori peramban (browser) laptop atau ponsel Anda. Tidak ada data pribadi, riwayat karir, kontak, atau dokumen yang dikirimkan maupun disimpan ke server basis data eksternal.
           </div>
         </div>
@@ -925,10 +925,10 @@
         <!-- FAQ Item 3 -->
         <div class="bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-xl overflow-hidden transition-all">
           <button type="button" class="faq-toggle-btn w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-heading font-semibold text-xs sm:text-sm text-dark-textPri hover:text-brand-emerald transition-colors" aria-expanded="false">
-            <span>Apakah format CV bahasa Indonesia ramah sistem Applicant Tracking System (ATS)?</span>
+            <span data-i18n="faqQ3">Apakah format CV bahasa Indonesia ramah sistem Applicant Tracking System (ATS)?</span>
             <span class="faq-icon w-5 h-5 rounded-full bg-dark-well border border-dark-wellBorder flex items-center justify-center text-xs text-dark-textSec shrink-0 transition-transform duration-300">+</span>
           </button>
-          <div class="faq-answer hidden px-4 sm:px-5 pb-5 text-xs text-dark-textSec leading-relaxed border-t border-dark-border/40 pt-3">
+          <div class="faq-answer hidden px-4 sm:px-5 pb-5 text-xs text-dark-textSec leading-relaxed border-t border-dark-border/40 pt-3" data-i18n="faqA3">
             Ya! Sistem ATS modern (seperti Workday, Taleo, SAP SuccessFactors, atau sistem lokal) memproses teks digital apa pun bahasanya. Faktor penggugur utama pelamar di filter ATS bukanlah bahasa Indonesia atau Inggris, melainkan: berkas berformat gambar hasil scan yang tidak bisa di-parse teksnya, ketiadaan kata kunci teknis mutlak, atau tidak adanya struktur heading baku (Pendidikan, Pengalaman, Keahlian).
           </div>
         </div>
@@ -936,10 +936,10 @@
         <!-- FAQ Item 4 -->
         <div class="bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-xl overflow-hidden transition-all">
           <button type="button" class="faq-toggle-btn w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-heading font-semibold text-xs sm:text-sm text-dark-textPri hover:text-brand-emerald transition-colors" aria-expanded="false">
-            <span>Apa yang harus saya lakukan jika hasil evaluasi CV berada di Tier 3 (&lt;65%)?</span>
+            <span data-i18n="faqQ4">Apa yang harus saya lakukan jika hasil evaluasi CV berada di Tier 3 (&lt;65%)?</span>
             <span class="faq-icon w-5 h-5 rounded-full bg-dark-well border border-dark-wellBorder flex items-center justify-center text-xs text-dark-textSec shrink-0 transition-transform duration-300">+</span>
           </button>
-          <div class="faq-answer hidden px-4 sm:px-5 pb-5 text-xs text-dark-textSec leading-relaxed border-t border-dark-border/40 pt-3">
+          <div class="faq-answer hidden px-4 sm:px-5 pb-5 text-xs text-dark-textSec leading-relaxed border-t border-dark-border/40 pt-3" data-i18n="faqA4">
             Jangan berkecil hati. Skor Tier 3 biasanya berarti kata kunci inti posisi tersebut belum tertulis eksplisit atau poin pekerjaan Anda masih berupa kalimat deskripsi tugas umum. Langkah perbaikannya: (1) Klik tombol <em>Salin Kata Kunci</em> pada kartu celah kualifikasi dan sisipkan istilah tersebut ke bagian keahlian/pengalaman; (2) Masukkan angka metrik konkret (persentase peningkatan, durasi, nominal, atau jumlah proyek); (3) Lakukan pemindaian ulang di Screenora hingga skor mencapai Tier 1 (&ge;80%).
           </div>
         </div>
@@ -947,10 +947,10 @@
         <!-- FAQ Item 5 -->
         <div class="bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-xl overflow-hidden transition-all">
           <button type="button" class="faq-toggle-btn w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-heading font-semibold text-xs sm:text-sm text-dark-textPri hover:text-brand-emerald transition-colors" aria-expanded="false">
-            <span>Bagaimana format sesi Konsultasi 1-on-1 bersama praktisi HR?</span>
+            <span data-i18n="faqQ5">Bagaimana format sesi Konsultasi 1-on-1 bersama praktisi HR?</span>
             <span class="faq-icon w-5 h-5 rounded-full bg-dark-well border border-dark-wellBorder flex items-center justify-center text-xs text-dark-textSec shrink-0 transition-transform duration-300">+</span>
           </button>
-          <div class="faq-answer hidden px-4 sm:px-5 pb-5 text-xs text-dark-textSec leading-relaxed border-t border-dark-border/40 pt-3">
+          <div class="faq-answer hidden px-4 sm:px-5 pb-5 text-xs text-dark-textSec leading-relaxed border-t border-dark-border/40 pt-3" data-i18n="faqA5">
             Sesi konsultasi privat berdurasi 45 menit yang dilakukan secara interaktif via Google Meet atau WhatsApp Call bersama Muhammad Faari Akbar (S1 Psikologi & Praktisi Talent Management). Dalam sesi ini, CV Anda akan dibedah baris per baris, profil LinkedIn dioptimalkan untuk menarik recruiter inbound, serta simulasi langsung menjawab pertanyaan wawancara kritis menggunakan teknik STAR (Situation, Task, Action, Result).
           </div>
         </div>
@@ -970,7 +970,7 @@
 
       <div class="flex items-center gap-2 mb-1.5">
         <span class="w-2 h-2 rounded-full bg-brand-amber animate-pulse"></span>
-        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-amber">COMING SOON • TAHAP PERSIAPAN</span>
+        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-amber" data-i18n="qrisModalBadge">COMING SOON • TAHAP PERSIAPAN</span>
       </div>
       <h3 class="text-lg font-heading font-extrabold text-dark-textPri" data-i18n="qrisModalTitle">Laporan Diagnostik 10 Halaman & Format ATS</h3>
       <p class="text-xs text-dark-textSec mt-1 mb-5" data-i18n="qrisModalSubtitle">Fitur generator laporan komprehensif dan integrasi pembayaran QRIS resmi sedang dalam proses persiapan oleh Faari.</p>
@@ -983,41 +983,41 @@
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           </div>
           <div class="space-y-1">
-            <h4 class="text-xs font-bold text-dark-textPri">100% Gratis untuk Skrining CV</h4>
-            <p class="text-[11px] text-dark-textSec leading-relaxed">
+            <h4 class="text-xs font-bold text-dark-textPri" data-i18n="qrisFreeNoticeHead">100% Gratis untuk Skrining CV</h4>
+            <p class="text-[11px] text-dark-textSec leading-relaxed" data-i18n="qrisFreeNoticeBody">
               Seluruh pemindaian skor, deteksi kata kunci kompetensi, perbaikan formula XYZ, dan latihan pertanyaan STAR di Screenora saat ini dapat Anda gunakan <strong>100% Gratis</strong> tanpa biaya.
             </p>
           </div>
         </div>
 
         <div class="space-y-2 text-xs text-dark-textSec">
-          <p class="font-semibold text-dark-textPri text-[11px]">Rencana Fitur yang Akan Datang:</p>
+          <p class="font-semibold text-dark-textPri text-[11px]" data-i18n="qrisUpcomingTitle">Rencana Fitur yang Akan Datang:</p>
           <ul class="space-y-1.5 text-[11px]">
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span>
-              <span>Bedah mendalam seluruh butir kalimat pengalaman kerja formula XYZ.</span>
+              <span data-i18n="qrisUpcoming1">Bedah mendalam seluruh butir kalimat pengalaman kerja formula XYZ.</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span>
-              <span>Daftar lengkap 25+ kata kunci ATS industri spesifik.</span>
+              <span data-i18n="qrisUpcoming2">Daftar lengkap 25+ kata kunci ATS industri spesifik.</span>
             </li>
             <li class="flex items-center gap-2">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span>
-              <span>Unduh template dokumen Word (.docx) standar format ATS siap pakai.</span>
+              <span data-i18n="qrisUpcoming3">Unduh template dokumen Word (.docx) standar format ATS siap pakai.</span>
             </li>
           </ul>
         </div>
 
         <a href="mailto:faarimuhammad25@gmail.com?subject=Masukan%20Fitur%20Screenora%20%2F%20Laporan%20Lengkap&body=Halo%20Faari%2C%0A%0ASaya%20tertarik%20dengan%20fitur%20Laporan%20Lengkap%20dan%20ingin%20memberikan%20masukan%20format%20yang%20saya%20butuhkan%3A%0A%0A" class="w-full py-3 px-4 bg-brand-emerald text-black rounded-xl text-xs font-heading font-bold uppercase tracking-wider hover:bg-brand-emeraldDark transition-all text-center flex items-center justify-center gap-2 shadow-lg shadow-brand-emerald/10">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          <span>Kirim Masukan via Email</span>
+          <span data-i18n="qrisFeedbackBtn">Kirim Masukan via Email</span>
         </a>
 
       </div>
 
       <div class="mt-4 text-center text-[11px] text-dark-textMuted flex items-center justify-center gap-2">
         <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
-        <span>Kontak Pembuat: faarimuhammad25@gmail.com</span>
+        <span data-i18n="qrisCreatorContact">Kontak Pembuat: faarimuhammad25@gmail.com</span>
       </div>
 
     </div>
@@ -1034,7 +1034,7 @@
 
       <div class="flex items-center gap-2 mb-1.5">
         <span class="w-2 h-2 rounded-full bg-brand-amber"></span>
-        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-amber">DISKUSI, MASUKAN & KONSULTASI • SEGERA HADIR</span>
+        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-amber" data-i18n="consultModalBadge">DISKUSI, MASUKAN & KONSULTASI • SEGERA HADIR</span>
       </div>
       <h3 class="text-lg font-heading font-extrabold text-dark-textPri" data-i18n="consultModalTitle">Pusat Diskusi, Masukan & Konsultasi Karir</h3>
       <p class="text-xs text-dark-textSec mt-1 mb-5" data-i18n="consultModalSubtitle">Sesi mentoring privat tatap muka saat ini sedang disiapkan. Seluruh fitur pemindaian dasar Screenora 100% Gratis. Untuk pertanyaan, kritik, atau masukan pengembangan, silakan hubungi kami via email.</p>
@@ -1044,15 +1044,15 @@
         
         <div class="flex items-center justify-between border-b border-dark-border pb-3">
           <div>
-            <span class="text-[10px] font-bold uppercase tracking-wider text-dark-textMuted">Status Akses Screenora</span>
-            <p class="text-xl font-heading font-extrabold text-brand-emerald mt-0.5">100% Gratis</p>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-dark-textMuted" data-i18n="consultStatusLabel">Status Akses Screenora</span>
+            <p class="text-xl font-heading font-extrabold text-brand-emerald mt-0.5" data-i18n="consultStatusValue">100% Gratis</p>
           </div>
-          <span class="text-[11px] font-semibold text-brand-amber px-2.5 py-1 rounded bg-brand-amber/10 border border-brand-amber/30">Mentoring Segera Hadir</span>
+          <span class="text-[11px] font-semibold text-brand-amber px-2.5 py-1 rounded bg-brand-amber/10 border border-brand-amber/30" data-i18n="consultStatusBadge">Mentoring Segera Hadir</span>
         </div>
 
         <div class="space-y-2">
-          <p class="text-xs font-semibold text-dark-textPri">Punya Pertanyaan, Saran, atau Masukan?</p>
-          <p class="text-xs text-dark-textSec leading-relaxed">
+          <p class="text-xs font-semibold text-dark-textPri" data-i18n="consultSectionQ">Punya Pertanyaan, Saran, atau Masukan?</p>
+          <p class="text-xs text-dark-textSec leading-relaxed" data-i18n="consultSectionDesc">
             Faari (kreator Screenora) sangat menyambut feedback, kritik membangun, ide fitur baru, maupun pertanyaan seputar hasil evaluasi CV Anda. Kirimkan pesan langsung melalui email atau WhatsApp.
           </p>
         </div>
@@ -1060,13 +1060,13 @@
         <!-- Primary Action: Email -->
         <a href="mailto:faarimuhammad25@gmail.com?subject=Tanya%20%2F%20Masukan%20Screenora&body=Halo%20Faari%2C%0A%0ASaya%20telah%20mencoba%20Screenora%20dan%20ingin%20memberikan%20masukan%20%2F%20bertanya%20mengenai%3A%0A%0A" class="w-full py-3 px-4 bg-brand-emerald text-black rounded-xl text-xs font-heading font-bold uppercase tracking-wider hover:bg-brand-emeraldDark transition-all text-center flex items-center justify-center gap-2 shadow-lg shadow-brand-emerald/10">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-          <span>Kirim Email ke faarimuhammad25@gmail.com</span>
+          <span data-i18n="consultEmailBtn">Kirim Email ke faarimuhammad25@gmail.com</span>
         </a>
 
         <!-- Secondary Action: WhatsApp -->
         <a id="consultWhatsAppBtn" href="https://wa.me/6285892344722?text=Halo%20Faari%2C%20saya%20telah%20mencoba%20Screenora.%20Saya%20ingin%20tanya%20lebih%20lanjut%20dan%20memberikan%20masukan%2Fsaran.%20Terima%20kasih!" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 bg-dark-surface border border-dark-border text-dark-textPri rounded-xl text-xs font-heading font-semibold uppercase tracking-wider hover:border-brand-emerald/50 hover:text-brand-emerald transition-all text-center flex items-center justify-center gap-2">
           <svg class="w-3.5 h-3.5 text-brand-emerald" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.275.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824zm-3.423-14.416c-6.627 0-12 5.373-12 12 0 2.155.57 4.178 1.564 5.926l-1.636 5.974 6.136-1.61c1.706.932 3.666 1.464 5.753 1.464 6.627 0 12-5.373 12-12 0-6.627-5.373-12-12-12z"/></svg>
-          <span>Chat Singkat via WhatsApp</span>
+          <span data-i18n="consultWhatsAppBtnText">Chat Singkat via WhatsApp</span>
         </a>
 
       </div>
@@ -1093,7 +1093,7 @@
         Screenora adalah alat simulasi dan diagnostik persiapan karir independen berbasis algoritma heuristik, tidak berafiliasi atau menjamin penerimaan kerja di instansi, BUMN, maupun perusahaan mana pun.
       </p>
       <div class="pt-2 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-[11px] text-dark-textSec">
-        <span>Pertanyaan & Masukan: <a href="mailto:faarimuhammad25@gmail.com" class="text-brand-emerald hover:underline font-medium">faarimuhammad25@gmail.com</a></span>
+        <span><span data-i18n="footerInquiry">Pertanyaan & Masukan:</span> <a href="mailto:faarimuhammad25@gmail.com" class="text-brand-emerald hover:underline font-medium">faarimuhammad25@gmail.com</a></span>
         <span class="hidden sm:inline">•</span>
         <span>WhatsApp: <a href="https://wa.me/6285892344722?text=Halo%20Faari%2C%20saya%20pengguna%20Screenora..." target="_blank" rel="noopener noreferrer" class="text-brand-emerald hover:underline font-medium">+62 858-9234-4722</a></span>
       </div>
