@@ -209,9 +209,61 @@ html:not(.dark) select#roleSelect {
   opacity: 1;
 }
 
-/* Mobile responsiveness polish */
+/* ==========================================================================
+   SKELETON SHIMMER LOADING ANIMATION (MODERN AI GLASSMORPHIC PULSE)
+   ========================================================================== */
+@keyframes skeletonShimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.03) 20%,
+    rgba(16, 185, 129, 0.12) 50%,
+    rgba(255, 255, 255, 0.03) 80%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.8s infinite ease-in-out;
+}
+
+html:not(.dark) .skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 0.04) 20%,
+    rgba(16, 185, 129, 0.14) 50%,
+    rgba(0, 0, 0, 0.04) 80%
+  );
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.8s infinite ease-in-out;
+}
+
+/* ==========================================================================
+   MOBILE & TABLET TOUCH & RESPONSIVENESS POLISH
+   ========================================================================== */
 @media (max-width: 640px) {
   #dropzone {
     padding: 1.5rem 1rem;
+    min-height: 190px;
+  }
+
+  .custom-archetype-btn {
+    padding: 0.625rem 0.5rem;
+    font-size: 0.6875rem;
+  }
+
+  .seniority-pill {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.5625rem;
+  }
+
+  /* Prevent iOS Safari 100vh modal jump */
+  #qrisModalOverlay, #consultModalOverlay {
+    padding: 0.75rem;
   }
 }

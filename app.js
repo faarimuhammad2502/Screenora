@@ -1167,6 +1167,7 @@ KEAHLIAN & KOMPETENSI
     btnIcon: document.getElementById('btnIcon'),
     btnLabel: document.getElementById('btnLabel'),
     inputView: document.getElementById('inputView'),
+    skeletonLoadingView: document.getElementById('skeletonLoadingView'),
     resultsView: document.getElementById('resultsView'),
     backToInputBtn: document.getElementById('backToInputBtn'),
     resDocName: document.getElementById('resDocName'),
@@ -1715,16 +1716,28 @@ KEAHLIAN & KOMPETENSI
     DOM.btnLabel.textContent = state.language === 'id' ? 'Memproses Matriks ATS...' : 'Evaluating Resume Matrix...';
     showToast(state.language === 'id' ? i18n.id.toastAnalyzing : i18n.en.toastAnalyzing);
 
+    // Transition immediately to Skeleton Shimmer Loading Dashboard
+    DOM.inputView.classList.add('hidden');
+    DOM.resultsView.classList.add('hidden');
+    if (DOM.skeletonLoadingView) {
+      DOM.skeletonLoadingView.classList.remove('hidden');
+      window.scrollTo({ top: DOM.skeletonLoadingView.offsetTop - 80, behavior: 'smooth' });
+    }
+
     setTimeout(() => {
       const analysis = analyzeResume(textToAnalyze, state.selectedRole);
       state.currentAnalysis = analysis;
+
+      if (DOM.skeletonLoadingView) {
+        DOM.skeletonLoadingView.classList.add('hidden');
+      }
 
       DOM.runAnalysisBtn.disabled = false;
       DOM.btnIcon.innerHTML = `<svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>`;
       DOM.btnLabel.textContent = state.language === 'id' ? i18n.id.runBtnLabel : i18n.en.runBtnLabel;
 
       renderAnalysisResults(analysis);
-    }, 1100);
+    }, 1250);
   }
 
   // --------------------------------------------------------------------------
@@ -1825,6 +1838,7 @@ KEAHLIAN & KOMPETENSI
     DOM.runAnalysisBtn.addEventListener('click', runScreening);
 
     DOM.backToInputBtn.addEventListener('click', () => {
+      if (DOM.skeletonLoadingView) DOM.skeletonLoadingView.classList.add('hidden');
       DOM.resultsView.classList.add('hidden');
       DOM.inputView.classList.remove('hidden');
       window.scrollTo({ top: DOM.inputView.offsetTop - 80, behavior: 'smooth' });
