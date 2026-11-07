@@ -27,6 +27,7 @@
     theme: localStorage.getItem('screenora_theme') || 'dark',
     language: localStorage.getItem('screenora_lang') || 'id',
     activeTab: 'upload', // 'upload' | 'paste'
+    screeningStandard: 'id', // 'id' (Standar Nasional Indonesia) | 'global' (Standar Internasional)
     selectedRole: 'hr',  // standard key | 'custom'
     customSeniority: 'mid', // 'entry' | 'mid' | 'senior'
     uploadedFile: null,
@@ -1147,6 +1148,12 @@ KEAHLIAN & KOMPETENSI
     rawCvText: document.getElementById('rawCvText'),
     loadSampleCvBtn: document.getElementById('loadSampleCvBtn'),
 
+    // Market Standard Switcher Elements
+    stdNasionalBtn: document.getElementById('stdNasionalBtn'),
+    stdGlobalBtn: document.getElementById('stdGlobalBtn'),
+    standardBadge: document.getElementById('standardBadge'),
+    standardDescriptionTxt: document.getElementById('standardDescriptionTxt'),
+
     // Role Dropdown & Detail Card Elements
     roleSelect: document.getElementById('roleSelect'),
     roleDetailCard: document.getElementById('roleDetailCard'),
@@ -1598,6 +1605,34 @@ KEAHLIAN & KOMPETENSI
 
     // Gaps calculation
     const gaps = [];
+
+    // Check Market Standard: Global vs Nasional
+    const isGlobal = (state.screeningStandard === 'global');
+    if (isGlobal) {
+      // 1. Personal demographic bias check (EEOC compliance for global ATS)
+      const biasPatterns = /\b(foto|photo|pas foto|tgl lahir|tanggal lahir|date of birth|dob|tempat.*lahir|agama|religion|islam|kristen|katolik|hindu|buddha|menikah|lajang|single|married|status pernikahan|marital status|usia\s*:\s*\d+|umur\s*:\s*\d+)\b/i;
+      if (biasPatterns.test(text)) {
+        gaps.push(lang === 'id'
+          ? 'Peringatan Regulasi Global (EEOC): Terdeteksi data demografis pribadi (foto/tanggal lahir/status/agama). Standar internasional mewajibkan menghapus info ini untuk mencegah bias rekrutmen.'
+          : 'EEOC Anti-Bias Compliance Alert: Personal demographic signals (photo/DOB/marital status/religion) detected. Global ATS standards require omitting personal demographics.');
+      }
+      // 2. English action verbs check
+      const hasGlobalVerbs = /\b(spearheaded|architected|orchestrated|engineered|accelerated|streamlined|formulated|implemented|optimized|delivered|scaled|designed|led)\b/i.test(text);
+      if (!hasGlobalVerbs) {
+        gaps.push(lang === 'id'
+          ? 'Minim Action Verbs Lampau (Global Standard): Resume internasional wajib mengawali setiap butir kalimat dengan kata kerja aktif lampau (e.g., Led, Built, Spearheaded).'
+          : 'Missing Past-Tense Action Verbs: Global ATS resumes require high-impact past-tense action verbs (e.g., Spearheaded, Orchestrated, Engineered).');
+      }
+    } else {
+      // Standar Nasional Indonesia
+      const hasKotaDomisili = /\b(jakarta|bandung|surabaya|semarang|yogyakarta|jogja|medan|bekasi|tangerang|depok|bogor|malang|denpasar|makassar|palembang|batam|solo|riau|lampung)\b/i.test(lower);
+      if (!hasKotaDomisili) {
+        gaps.push(lang === 'id'
+          ? 'Domisili Kota Belum Tercantum: Rekruter korporat & BUMN lokal umumnya menyaring pelamar berdasarkan ketersediaan lokasi domisili (misal: "Jakarta Timur, DKI Jakarta").'
+          : 'City Residence Unspecified: Local Indonesian recruiters frequently filter candidates based on residential location logistics.');
+      }
+    }
+
     if (missingKeywords.length > 0) {
       const topMissing = missingKeywords.slice(0, 3).map(k => `"${k}"`).join(', ');
       gaps.push(lang === 'id' ? `Kata kunci penting posisi ini belum tercantum eksplisit: ${topMissing}.` : `Critical industry terms absent from text: ${topMissing}.`);
@@ -1620,6 +1655,7 @@ KEAHLIAN & KOMPETENSI
       tierBadge,
       narrative,
       advice,
+      screeningStandard: state.screeningStandard,
       strengths: strengths.slice(0, 4),
       gaps: gaps.slice(0, 3),
       missingKeywords: missingKeywords.length > 0 ? missingKeywords : targetKeywords.slice(0, 6),
@@ -1638,7 +1674,8 @@ KEAHLIAN & KOMPETENSI
     const lang = state.language;
 
     DOM.resDocName.textContent = (lang === 'id' ? 'Hasil Evaluasi: ' : 'Evaluation: ') + res.documentName;
-    DOM.resRoleName.textContent = '• ' + (lang === 'id' ? 'Posisi: ' : 'Target: ') + res.roleTitle;
+    const stdLabel = res.screeningStandard === 'global' ? '🌐 Global MNC' : '🇮🇩 Standar Nasional';
+    DOM.resRoleName.textContent = '• ' + (lang === 'id' ? 'Posisi: ' : 'Target: ') + res.roleTitle + ' (' + stdLabel + ')';
 
     let currentCount = 0;
     const targetScore = res.score;
@@ -1812,6 +1849,29 @@ KEAHLIAN & KOMPETENSI
       updateRoleDetails('hr');
       showToast(state.language === 'id' ? i18n.id.toastSampleLoaded : i18n.en.toastSampleLoaded);
     });
+
+    // Market Standard Switcher Click Handlers (Indonesia vs Internasional)
+    if (DOM.stdNasionalBtn && DOM.stdGlobalBtn) {
+      DOM.stdNasionalBtn.addEventListener('click', () => {
+        state.screeningStandard = 'id';
+        DOM.stdNasionalBtn.className = 'py-2 px-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 bg-dark-surface text-brand-emerald border border-brand-emerald/30 shadow-sm';
+        DOM.stdGlobalBtn.className = 'py-2 px-2.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-1.5 bg-transparent border border-transparent';
+        DOM.stdNasionalBtn.setAttribute('aria-checked', 'true');
+        DOM.stdGlobalBtn.setAttribute('aria-checked', 'false');
+        if (DOM.standardBadge) DOM.standardBadge.textContent = '🇮🇩 Indonesia Standard';
+        if (DOM.standardDescriptionTxt) DOM.standardDescriptionTxt.textContent = 'Mengevaluasi format 1-kolom Indonesia, EYD/PUEBI, sertifikasi nasional, dan kualifikasi lokal.';
+      });
+
+      DOM.stdGlobalBtn.addEventListener('click', () => {
+        state.screeningStandard = 'global';
+        DOM.stdGlobalBtn.className = 'py-2 px-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 bg-dark-surface text-brand-emerald border border-brand-emerald/30 shadow-sm';
+        DOM.stdNasionalBtn.className = 'py-2 px-2.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-1.5 bg-transparent border border-transparent';
+        DOM.stdGlobalBtn.setAttribute('aria-checked', 'true');
+        DOM.stdNasionalBtn.setAttribute('aria-checked', 'false');
+        if (DOM.standardBadge) DOM.standardBadge.textContent = '🌐 Global MNC Standard';
+        if (DOM.standardDescriptionTxt) DOM.standardDescriptionTxt.textContent = 'Mengevaluasi kepatuhan ketat US/Global (tanpa foto/usia/status demi anti-bias EEOC), action verbs bahasa Inggris, dan sistem Workday/Greenhouse.';
+      });
+    }
 
     // Role Dropdown Change Handler
     if (DOM.roleSelect) {
