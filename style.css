@@ -1,0 +1,189 @@
+/* ==========================================================================
+   SCREENORA — OFFICIAL STYLESHEET
+   Design System: Swiss Editorial & High-Contrast Obsidian / Gallery White
+   ========================================================================== */
+
+/* Base Resets & Smooth Transitions */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #1E232E;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #2E3646;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 4px;
+}
+
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: #9CA3AF;
+}
+
+/* ==========================================================================
+   LIGHT MODE OVERRIDES
+   Ensures 100% harmonious contrast in light theme
+   ========================================================================== */
+html:not(.dark) body {
+  background-color: #F8F9FB !important;
+  color: #0A0D14 !important;
+}
+
+html:not(.dark) header {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+  border-color: #E2E6ED !important;
+}
+
+html:not(.dark) .bg-dark-surface {
+  background-color: #FFFFFF !important;
+  border-color: #E2E6ED !important;
+}
+
+html:not(.dark) .bg-dark-well {
+  background-color: #F1F3F7 !important;
+  border-color: #DEE2EA !important;
+}
+
+html:not(.dark) .border-dark-border {
+  border-color: #E2E6ED !important;
+}
+
+html:not(.dark) .border-dark-wellBorder {
+  border-color: #DEE2EA !important;
+}
+
+html:not(.dark) .text-dark-textPri {
+  color: #0A0D14 !important;
+}
+
+html:not(.dark) .text-dark-textSec {
+  color: #5F6675 !important;
+}
+
+html:not(.dark) .text-dark-textMuted {
+  color: #8C95A6 !important;
+}
+
+html:not(.dark) #navLogoIcon {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+}
+
+html:not(.dark) #navLogoIcon svg rect {
+  fill: #0A0D14;
+}
+
+html:not(.dark) #navLogoIcon svg rect[fill="#10B981"] {
+  fill: #059669;
+}
+
+html:not(.dark) .role-pill.active-role {
+  background-color: #EBF0FA !important;
+  border-color: #C5D3E8 !important;
+}
+
+html:not(.dark) .role-pill:not(.active-role) {
+  background-color: #FAFAFC !important;
+  border-color: #E2E6ED !important;
+}
+
+html:not(.dark) #runAnalysisBtn {
+  background-color: #0A0D14 !important;
+  color: #FFFFFF !important;
+}
+
+html:not(.dark) #runAnalysisBtn:hover {
+  background-color: #1E232E !important;
+}
+
+html:not(.dark) #qrisModalOverlay .bg-dark-surface,
+html:not(.dark) #consultModalOverlay .bg-dark-surface,
+html:not(.dark) #proModalOverlay .bg-dark-surface {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+}
+
+html:not(.dark) #qrisModalOverlay .bg-dark-well,
+html:not(.dark) #consultModalOverlay .bg-dark-well,
+html:not(.dark) #proModalOverlay .bg-dark-well {
+  background-color: #F8F9FB !important;
+  border-color: #E2E6ED !important;
+}
+
+/* ==========================================================================
+   ROLE PILL ACTIVE STATES
+   ========================================================================== */
+.dark .role-pill.active-role {
+  background-color: #1C2230 !important;
+  border-color: #3B465C !important;
+}
+
+.dark .role-pill.active-role p:first-child {
+  color: #F8FAFC !important;
+}
+
+.dark .role-pill:not(.active-role) {
+  background-color: #141720 !important;
+  border-color: #1E232E !important;
+}
+
+.role-pill {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Dropzone Hover Effects */
+#dropzone.dragover {
+  border-color: #10B981 !important;
+  background-color: rgba(16, 185, 129, 0.05) !important;
+  transform: scale(1.005);
+}
+
+/* Gauge Animation */
+@keyframes pulseGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(16, 185, 129, 0.4);
+  }
+}
+
+.gauge-glow {
+  animation: pulseGlow 3s infinite ease-in-out;
+}
+
+/* Toast Animations */
+#toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Mobile responsiveness polish */
+@media (max-width: 640px) {
+  #dropzone {
+    padding: 1.5rem 1rem;
+  }
+}

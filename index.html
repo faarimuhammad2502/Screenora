@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Screenora — AI Resume Intelligence & ATS Diagnostic</title>
+  <meta name="description" content="Platform skrining CV cerdas berbasis AI dan psikologi industri. Evaluasi skor kelolosan ATS, deteksi celah kualifikasi, dan optimasi kalimat formula XYZ secara instan.">
+  
+  <!-- Favicon Official: The Architectural 'S' Monogram -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23060709' stroke='%232A3140' stroke-width='1.5'/%3E%3Crect x='7' y='6' width='18' height='5' rx='2.5' fill='%23F8FAFC'/%3E%3Crect x='5' y='8' width='5' height='10' rx='2.5' fill='%23F8FAFC'/%3E%3Crect x='6' y='14' width='20' height='4' rx='2' fill='%2310B981'/%3E%3Crect x='22' y='15' width='5' height='10' rx='2.5' fill='%23F8FAFC'/%3E%3Crect x='7' y='21' width='18' height='5' rx='2.5' fill='%23F8FAFC'/%3E%3C/svg%3E">
+
+  <!-- Fonts: Google Fonts (Inter & Plus Jakarta Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Plus Jakarta Sans', 'sans-serif'],
+            heading: ['Plus Jakarta Sans', 'Inter', 'sans-serif'],
+          },
+          colors: {
+            dark: {
+              bg: '#0A0B0E',
+              surface: '#111319',
+              border: '#1E232E',
+              well: '#161A22',
+              wellBorder: '#262D3B',
+              textPri: '#F8FAFC',
+              textSec: '#858B98',
+              textMuted: '#525866',
+            },
+            light: {
+              bg: '#F8F9FB',
+              surface: '#FFFFFF',
+              border: '#E2E6ED',
+              well: '#F1F3F7',
+              wellBorder: '#DEE2EA',
+              textPri: '#0A0D14',
+              textSec: '#5F6675',
+              textMuted: '#949CAE',
+            },
+            brand: {
+              emerald: '#10B981',
+              emeraldDark: '#059669',
+              emeraldBg: '#13211B',
+              emeraldBgLight: '#E6F7F0',
+              amber: '#F59E0B',
+              amberDark: '#D97706',
+              amberBg: '#241D12',
+              red: '#EF4444',
+              redBg: '#261416'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- PDF.js CDN for Client-Side in-browser PDF parsing -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script>
+    if (window.pdfjsLib) {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    }
+  </script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-dark-bg text-dark-textPri dark:bg-dark-bg dark:text-dark-textPri antialiased transition-colors duration-300 min-h-screen flex flex-col font-sans selection:bg-brand-emerald selection:text-black">
+
+  <!-- =====================================================================
+       TOP NAVIGATION BAR
+       ===================================================================== -->
+  <header class="sticky top-0 z-40 w-full backdrop-blur-md bg-dark-surface/90 dark:bg-dark-surface/90 border-b border-dark-border dark:border-dark-border transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      
+      <!-- Brand Logo Lockup -->
+      <a href="#" class="flex items-center gap-3 group" id="logoHomeBtn" aria-label="Screenora Home">
+        <div class="w-8 h-8 rounded-lg bg-[#060709] dark:bg-[#060709] border border-[#2A3140] dark:border-[#2A3140] flex items-center justify-center relative shadow-sm transition-transform group-hover:scale-105" id="navLogoIcon">
+          <svg class="w-5 h-5" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="7" y="6" width="18" height="5" rx="2.5" class="fill-dark-textPri dark:fill-dark-textPri" />
+            <rect x="5" y="8" width="5" height="10" rx="2.5" class="fill-dark-textPri dark:fill-dark-textPri" />
+            <rect x="6" y="14" width="20" height="4" rx="2" fill="#10B981" />
+            <rect x="22" y="15" width="5" height="10" rx="2.5" class="fill-dark-textPri dark:fill-dark-textPri" />
+            <rect x="7" y="21" width="18" height="5" rx="2.5" class="fill-dark-textPri dark:fill-dark-textPri" />
+          </svg>
+        </div>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2.5">
+            <span class="font-heading font-extrabold text-base tracking-wider text-dark-textPri dark:text-dark-textPri">SCREENORA</span>
+            <span class="hidden md:inline-block text-[11px] font-mono text-dark-textMuted tracking-wider pl-2.5 border-l border-dark-border">Diagnostic Studio</span>
+          </div>
+          <span class="text-[11px] text-dark-textSec dark:text-dark-textSec hidden sm:block tracking-tight" data-i18n="navSubtitle">AI Resume Intelligence & ATS Diagnostic</span>
+        </div>
+      </a>
+
+      <!-- Right Controls: Language, Theme, & Privacy -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        
+        <!-- Language Switcher -->
+        <div class="flex items-center bg-dark-well dark:bg-dark-well border border-dark-wellBorder dark:border-dark-wellBorder rounded-lg p-0.5 text-xs font-medium">
+          <button id="langIdBtn" class="px-2.5 py-1 rounded-md transition-all bg-dark-surface dark:bg-dark-surface text-dark-textPri dark:text-dark-textPri shadow-sm font-semibold" aria-label="Ganti ke Bahasa Indonesia">ID</button>
+          <button id="langEnBtn" class="px-2.5 py-1 rounded-md transition-all text-dark-textSec dark:text-dark-textSec hover:text-dark-textPri" aria-label="Switch to English">EN</button>
+        </div>
+
+        <!-- Theme Switcher -->
+        <button id="themeToggleBtn" class="flex items-center gap-2 px-3 py-1.5 bg-dark-well dark:bg-dark-well border border-dark-wellBorder dark:border-dark-wellBorder rounded-lg text-xs font-medium text-dark-textPri dark:text-dark-textPri hover:border-brand-emerald/50 transition-all" aria-label="Toggle Theme">
+          <span id="themeIcon" class="w-3.5 h-3.5 flex items-center justify-center">
+            <svg class="w-3.5 h-3.5 text-dark-textSec" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+            </svg>
+          </span>
+          <span id="themeLabel">Dark</span>
+        </button>
+
+        <!-- Privacy Status Badge -->
+        <div class="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-dark-well dark:bg-dark-well border border-dark-wellBorder dark:border-dark-wellBorder text-dark-textSec rounded-lg text-xs font-medium transition-colors hover:border-dark-border" title="File diproses secara lokal di browser Anda">
+          <svg class="w-3.5 h-3.5 text-brand-emerald" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+          <span data-i18n="privacyBadge" class="text-dark-textPri text-[11px] font-medium">Lokal & Terenkripsi</span>
+        </div>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       MAIN CONTAINER
+       ===================================================================== -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
+
+    <!-- HERO HEADER SECTION -->
+    <section class="mb-10 text-center max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-dark-well border border-dark-wellBorder text-dark-textSec text-[11px] font-mono uppercase tracking-wider mb-4 shadow-sm">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+        <span data-i18n="heroBadge" class="text-dark-textPri font-medium">ATS Diagnostic & Behavioral Screening</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-extrabold tracking-tight text-dark-textPri dark:text-dark-textPri leading-tight" data-i18n="heroTitle">
+        Ketahui Skor Kelolosan CV & Celah ATS Sebelum Melamar
+      </h1>
+      <p class="mt-4 text-sm sm:text-base text-dark-textSec dark:text-dark-textSec leading-relaxed" data-i18n="heroDesc">
+        Pemindaian teks lokal mendeteksi keberadaan kata kunci kompetensi, struktur kalimat berbobot formula XYZ, dan parameter kelolosan rekruter dalam 3 detik tanpa mengunggah data Anda ke server asing.
+      </p>
+
+      <!-- Quick Sample Loader -->
+      <div class="mt-4 flex items-center justify-center gap-2 text-xs text-dark-textMuted">
+        <span data-i18n="samplePrompt">Ingin coba langsung tanpa berkas?</span>
+        <button id="loadSampleCvBtn" class="text-brand-emerald underline font-medium hover:text-brand-emeraldDark transition-colors" data-i18n="sampleBtn">
+          Muat Sampel Profil HR / Analyst
+        </button>
+      </div>
+    </section>
+
+    <!-- ===================================================================
+         VIEW 1: INPUT CONSOLE (UPLOAD & ROLE SETUP)
+         =================================================================== -->
+    <section id="inputView" class="grid grid-cols-1 lg:grid-cols-12 gap-6 transition-opacity duration-300">
+      
+      <!-- LEFT COLUMN: FILE DROPZONE & TEXT INPUT (7 COLS) -->
+      <div class="lg:col-span-7 bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-2xl p-6 sm:p-7 shadow-xl flex flex-col justify-between">
+        <div>
+          <!-- Tab Header -->
+          <div class="flex items-center justify-between pb-4 border-b border-dark-border dark:border-dark-border mb-5">
+            <div class="flex items-center gap-2.5">
+              <span class="w-5 h-5 rounded-md bg-dark-well border border-dark-wellBorder text-[10px] font-mono font-bold text-brand-emerald flex items-center justify-center">01</span>
+              <span class="text-xs font-bold uppercase tracking-wider text-dark-textPri" data-i18n="step1Label">Dokumen CV Pelamar</span>
+            </div>
+            <div class="flex items-center gap-1 bg-dark-well dark:bg-dark-well p-1 rounded-lg border border-dark-wellBorder dark:border-dark-wellBorder text-xs">
+              <button id="tabUploadBtn" class="px-2.5 py-1 rounded bg-dark-surface dark:bg-dark-surface text-dark-textPri font-medium shadow-sm transition-all" data-i18n="tabUpload">Upload File</button>
+              <button id="tabPasteBtn" class="px-2.5 py-1 rounded text-dark-textSec hover:text-dark-textPri transition-all" data-i18n="tabPaste">Tempel Teks</button>
+            </div>
+          </div>
+
+          <!-- Upload Dropzone View -->
+          <div id="dropzoneContainer">
+            <div id="dropzone" class="group border-2 border-dashed border-dark-wellBorder dark:border-dark-wellBorder hover:border-brand-emerald/70 bg-dark-well dark:bg-dark-well rounded-xl p-8 text-center cursor-pointer transition-all flex flex-col items-center justify-center min-h-[220px]">
+              
+              <div class="w-12 h-12 rounded-xl bg-dark-surface dark:bg-dark-surface border border-dark-border flex items-center justify-center text-dark-textSec group-hover:text-brand-emerald group-hover:border-brand-emerald/40 transition-all mb-3.5 shadow-sm">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M9 13h6m-6 4h4m2 4H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+              </div>
+
+              <p class="text-sm font-semibold text-dark-textPri dark:text-dark-textPri" data-i18n="dropzonePrompt">Pilih atau Seret Berkas CV (PDF / DOCX)</p>
+              <p class="text-xs text-dark-textMuted mt-1" data-i18n="dropzoneLimit">Maksimal 5 MB • Teks digital (bukan hasil scan foto/gambar)</p>
+
+              <input type="file" id="cvFileInput" accept=".pdf,.docx,.txt" class="hidden">
+              
+              <button type="button" id="browseFileBtn" class="mt-4 px-4 py-1.5 bg-dark-surface dark:bg-dark-surface hover:bg-dark-border border border-dark-border rounded-lg text-xs font-medium text-dark-textPri transition-colors" data-i18n="browseBtn">
+                Jelajahi File
+              </button>
+            </div>
+
+            <!-- Uploaded File Badge Preview -->
+            <div id="filePreviewBadge" class="hidden mt-4 p-3.5 bg-brand-emeraldBg border border-brand-emerald/30 rounded-xl flex items-center justify-between">
+              <div class="flex items-center gap-3 overflow-hidden">
+                <div class="w-8 h-8 rounded-lg bg-brand-emerald text-black flex items-center justify-center font-bold text-xs">PDF</div>
+                <div class="truncate">
+                  <p id="fileNameTxt" class="text-xs font-semibold text-dark-textPri truncate">my_cv.pdf</p>
+                  <p id="fileMetaTxt" class="text-[11px] text-brand-emerald">1.2 MB • Teks terdeteksi</p>
+                </div>
+              </div>
+              <button id="removeFileBtn" class="text-dark-textMuted hover:text-brand-red text-xs p-1" title="Hapus Berkas">✕</button>
+            </div>
+          </div>
+
+          <!-- Paste Raw Text View (Initially Hidden) -->
+          <div id="pasteContainer" class="hidden">
+            <textarea id="rawCvText" rows="9" class="w-full bg-dark-well dark:bg-dark-well border border-dark-wellBorder dark:border-dark-wellBorder rounded-xl p-4 text-xs font-mono text-dark-textPri focus:outline-none focus:border-brand-emerald transition-colors resize-none" placeholder="Tempel ringkasan pengalaman kerja, riwayat pendidikan, dan keahlian CV Anda di sini..."></textarea>
+            <p class="text-[11px] text-dark-textMuted mt-1" data-i18n="pasteHint">Tips: Anda bisa langsung menyalin seluruh teks dari Google Docs atau file CV Anda.</p>
+          </div>
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-dark-border text-[11px] text-dark-textMuted flex items-center justify-between">
+          <span data-i18n="formatNotice">Didukung: PDF Teks, Word DOCX, TXT</span>
+          <span class="text-brand-emerald flex items-center gap-1.5" data-i18n="privacyNotice">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+            Zero-Data Retention (Client-Side)
+          </span>
+        </div>
+      </div>
+
+      <!-- RIGHT COLUMN: TARGET ROLE SELECTOR (5 COLS) -->
+      <div class="lg:col-span-5 bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-2xl p-6 sm:p-7 shadow-xl flex flex-col justify-between">
+        <div>
+          <!-- Header -->
+          <div class="flex items-center justify-between pb-4 border-b border-dark-border dark:border-dark-border mb-5">
+            <div class="flex items-center gap-2.5">
+              <span class="w-5 h-5 rounded-md bg-dark-well border border-dark-wellBorder text-[10px] font-mono font-bold text-brand-emerald flex items-center justify-center">02</span>
+              <span class="text-xs font-bold uppercase tracking-wider text-dark-textPri" data-i18n="step2Label">Posisi Pekerjaan Target</span>
+            </div>
+            <span class="text-[11px] text-dark-textMuted" data-i18n="step2Hint">Pilih Cepat / Kustom</span>
+          </div>
+
+          <!-- Role Options List -->
+          <div class="space-y-2.5" id="rolePresetContainer">
+            
+            <button type="button" class="role-pill w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between bg-dark-well border-dark-wellBorder hover:border-brand-emerald/40 active-role" data-role="hr">
+              <div>
+                <p class="text-xs font-semibold text-dark-textPri">HR Generalist & Talent Acquisition</p>
+                <p class="text-[11px] text-dark-textSec mt-0.5">S1 Psikologi/Manajemen, Sourcing, STAR Interview, People Analytics</p>
+              </div>
+              <span class="role-check w-5 h-5 rounded-full bg-brand-emerald/15 border border-brand-emerald/40 text-brand-emerald flex items-center justify-center shrink-0">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              </span>
+            </button>
+
+            <button type="button" class="role-pill w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between bg-dark-well border-dark-wellBorder hover:border-brand-emerald/40" data-role="ba">
+              <div>
+                <p class="text-xs font-semibold text-dark-textPri">Business Analyst</p>
+                <p class="text-[11px] text-dark-textSec mt-0.5">Analisis Data, SQL/Tableau, Requirement Gathering, KPI Tracking</p>
+              </div>
+              <span class="role-check w-5 h-5 rounded-full bg-brand-emerald/15 border border-brand-emerald/40 text-brand-emerald hidden items-center justify-center shrink-0">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              </span>
+            </button>
+
+            <button type="button" class="role-pill w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between bg-dark-well border-dark-wellBorder hover:border-brand-emerald/40" data-role="educator">
+              <div>
+                <p class="text-xs font-semibold text-dark-textPri">Shadow Teacher / Special Needs Educator</p>
+                <p class="text-[11px] text-dark-textSec mt-0.5">Behavior Modification, IEP, ADHD/ASD Support, Empathy & Mentoring</p>
+              </div>
+              <span class="role-check w-5 h-5 rounded-full bg-brand-emerald/15 border border-brand-emerald/40 text-brand-emerald hidden items-center justify-center shrink-0">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              </span>
+            </button>
+
+            <button type="button" class="role-pill w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between bg-dark-well border-dark-wellBorder hover:border-brand-emerald/40" data-role="developer">
+              <div>
+                <p class="text-xs font-semibold text-dark-textPri">Frontend & Web Developer</p>
+                <p class="text-[11px] text-dark-textSec mt-0.5">HTML/CSS/JS, React, Tailwind, UI/UX, Performance Optimization</p>
+              </div>
+              <span class="role-check w-5 h-5 rounded-full bg-brand-emerald/15 border border-brand-emerald/40 text-brand-emerald hidden items-center justify-center shrink-0">
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+              </span>
+            </button>
+
+          </div>
+
+          <!-- Custom Role Input -->
+          <div class="mt-4">
+            <label for="customRoleInput" class="block text-[11px] text-dark-textSec mb-1.5 font-medium" data-i18n="customRoleLabel">Atau ketik posisi kustom spesifik:</label>
+            <input type="text" id="customRoleInput" class="w-full bg-dark-well dark:bg-dark-well border border-dark-wellBorder dark:border-dark-wellBorder rounded-xl px-3.5 py-2.5 text-xs text-dark-textPri placeholder-dark-textMuted focus:outline-none focus:border-brand-emerald transition-colors" placeholder="Contoh: Digital Marketing Specialist, UI Designer...">
+          </div>
+        </div>
+
+        <!-- Big CTA Run Button -->
+        <div class="mt-6">
+          <button id="runAnalysisBtn" class="w-full py-3.5 px-4 rounded-xl font-heading font-bold text-xs tracking-wider uppercase bg-brand-emerald text-black hover:bg-brand-emeraldDark transition-all shadow-lg shadow-brand-emerald/10 flex items-center justify-center gap-2">
+            <span id="btnIcon" class="w-4 h-4 flex items-center justify-center">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+            </span>
+            <span id="btnLabel" data-i18n="runBtnLabel">Mulai Pemindaian Dokumen</span>
+          </button>
+          <p class="text-center text-[10px] text-dark-textMuted mt-2.5" data-i18n="btnSubtext">
+            Analisis Berbasis Psikologi HR • Standar ATS Korporat • Instan
+          </p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ===================================================================
+         VIEW 2: DIAGNOSTIC SCORECARD DASHBOARD (RESULTS)
+         Initially hidden, displayed upon analysis completion
+         =================================================================== -->
+    <section id="resultsView" class="hidden space-y-6 transition-opacity duration-300">
+      
+      <!-- Top Action Bar: Re-test & Target Meta -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-dark-border dark:border-dark-border">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-brand-emerald"></span>
+          <span class="text-xs font-semibold text-dark-textPri" id="resDocName">Hasil Evaluasi: Resume_Candidate_Profile.pdf</span>
+          <span class="text-[11px] text-dark-textMuted" id="resRoleName">• Posisi: HR Generalist</span>
+        </div>
+        <button id="backToInputBtn" class="text-xs font-medium text-dark-textSec hover:text-dark-textPri flex items-center gap-1.5 transition-colors self-start sm:self-auto">
+          <span>←</span>
+          <span data-i18n="retestBtn">Uji Dokumen atau Posisi Lain</span>
+        </button>
+      </div>
+
+      <!-- CARD 1: SCORE & TIER HERO GAUGE -->
+      <div class="bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-2xl p-6 sm:p-7 shadow-xl">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          
+          <!-- Score Number & Dynamic Bar (4 COLS) -->
+          <div class="lg:col-span-4 flex flex-col justify-center border-b lg:border-b-0 lg:border-r border-dark-border pb-6 lg:pb-0 lg:pr-6">
+            <div class="flex items-baseline gap-2">
+              <span id="scoreNumber" class="text-5xl sm:text-6xl font-heading font-extrabold text-brand-emerald tracking-tight">82</span>
+              <span class="text-base text-dark-textSec font-semibold">/ 100</span>
+            </div>
+
+            <!-- Dynamic Colored Progress Bar Track -->
+            <div class="w-full bg-dark-well rounded-full h-2.5 mt-3 overflow-hidden border border-dark-wellBorder">
+              <div id="progressBarFill" class="bg-brand-emerald h-full rounded-full transition-all duration-1000" style="width: 82%;"></div>
+            </div>
+
+            <div class="flex items-center justify-between text-[10px] text-dark-textMuted mt-2">
+              <span id="scoreTierLabel" class="font-bold text-brand-emerald uppercase tracking-wider">HIJAU (≥80%) : MATCH TINGGI</span>
+              <span id="scorePercentageTxt">82% Match</span>
+            </div>
+          </div>
+
+          <!-- Decision Tier Narrative & Scale (8 COLS) -->
+          <div class="lg:col-span-8 space-y-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <!-- Tier Badge -->
+              <span id="tierBadgePill" class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-emeraldBg border border-brand-emerald/40 text-brand-emerald text-xs font-bold uppercase tracking-wider">
+                <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+                <span>TIER 1 : SHORTLIST CANDIDATE (HIGH FIT)</span>
+              </span>
+              
+              <!-- Scale Legend -->
+              <span class="text-[10px] text-dark-textMuted hidden sm:inline-block">
+                Skala: Hijau (≥80% Shortlist) • Kuning (65-79% Cadangan) • Merah (&lt;65% Gugur)
+              </span>
+            </div>
+
+            <p id="tierNarrativeTxt" class="text-xs sm:text-sm text-dark-textSec leading-relaxed">
+              Dokumen memenuhi kualifikasi utama untuk peran yang dilamar. Struktur kompetensi, kata kunci industri, dan analitika data diakui relevan oleh sistem penyaringan ATS.
+            </p>
+
+            <div class="p-3 bg-dark-well rounded-xl border border-dark-wellBorder text-xs text-dark-textPri flex items-start gap-2.5">
+              <span class="px-1.5 py-0.5 rounded bg-brand-amber/10 border border-brand-amber/30 text-[10px] font-mono font-bold text-brand-amber uppercase tracking-wider shrink-0 mt-0.5">Note</span>
+              <span id="recruiterAdviceTxt">Rekomendasi Rekruter: Prioritas pemanggilan wawancara tahap pertama. Perlu verifikasi pemahaman praktis HRIS pada sesi tanya-jawab.</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- CARD 2 & 3: BENTO GRID STRENGTHS (GREEN) VS GAPS (YELLOW) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <!-- Strengths Card -->
+        <div class="bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-dark-border mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="w-5 h-5 rounded-md bg-dark-well border border-dark-wellBorder text-[10px] font-mono font-bold text-brand-emerald flex items-center justify-center">02</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-dark-textPri" data-i18n="strengthsHead">Kekuatan Kompetensi Terverifikasi</span>
+              </div>
+              <span id="strengthCountBadge" class="text-[10px] px-2 py-0.5 rounded bg-brand-emeraldBg text-brand-emerald border border-brand-emerald/30 font-semibold">4 Poin Kuat</span>
+            </div>
+            <ul id="strengthsList" class="space-y-3 text-xs text-dark-textPri leading-relaxed">
+              <!-- Dynamic Bullets -->
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
+                <span>Latar pendidikan S1 Psikologi sesuai syarat mutlak posisi.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
+                <span>Bukti portofolio analisis data bisnis & talent management.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
+                <span>Riwayat pendampingan terstruktur menunjukkan stabilitas kerja.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
+                <span>Penggunaan kata kerja aktif pada proyek bisnis terverifikasi.</span>
+              </li>
+            </ul>
+          </div>
+          <p class="text-[10px] text-dark-textMuted mt-4 pt-3 border-t border-dark-border" data-i18n="strengthFootnote">
+            Poin ini adalah nilai jual utama yang wajib ditekankan saat menjawab wawancara.
+          </p>
+        </div>
+
+        <!-- Gaps Card -->
+        <div class="bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between pb-3 border-b border-dark-border mb-4">
+              <div class="flex items-center gap-2.5">
+                <span class="w-5 h-5 rounded-md bg-dark-well border border-dark-wellBorder text-[10px] font-mono font-bold text-dark-textSec flex items-center justify-center">03</span>
+                <span class="text-xs font-bold uppercase tracking-wider text-dark-textPri" data-i18n="gapsHead">Celah Kualifikasi & Filter ATS</span>
+              </div>
+              <span id="gapCountBadge" class="text-[10px] px-2 py-0.5 rounded bg-dark-well border border-dark-wellBorder text-dark-textSec font-semibold">3 Celah</span>
+            </div>
+            <ul id="gapsList" class="space-y-3 text-xs text-dark-textSec leading-relaxed">
+              <!-- Dynamic Bullets -->
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-dark-textMuted mt-1.5 shrink-0"></span>
+                <span>Kata kunci software HRIS spesifik (misal: Talenta / Workday) belum tertulis eksplisit.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-dark-textMuted mt-1.5 shrink-0"></span>
+                <span>Sertifikasi kompetensi resmi belum tertera pada ringkasan profil utama.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="w-1.5 h-1.5 rounded-full bg-dark-textMuted mt-1.5 shrink-0"></span>
+                <span>Beberapa butir pengalaman kerja belum dilengkapi metrik angka hasil (%).</span>
+              </li>
+            </ul>
+          </div>
+          <p class="text-[10px] text-dark-textMuted mt-4 pt-3 border-t border-dark-border" data-i18n="gapFootnote">
+            Celah ini berpotensi menurunkan skor filter awal pada ATS korporasi multinasional.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- CARD 4: ACTIONABLE REWRITE (FORMULA XYZ) -->
+      <div class="bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-2xl p-6 shadow-xl space-y-4">
+        <div class="flex items-center justify-between pb-3 border-b border-dark-border">
+          <div class="flex items-center gap-2.5">
+            <span class="w-5 h-5 rounded-md bg-dark-well border border-dark-wellBorder text-[10px] font-mono font-bold text-brand-emerald flex items-center justify-center">04</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-dark-textPri" data-i18n="rewriteHead">Optimasi Kalimat Berdampak (Formula XYZ)</span>
+          </div>
+          <span class="text-[10px] text-dark-textMuted">Format Google: Accomplished [X], measured by [Y], by doing [Z]</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <!-- Before Box -->
+          <div class="p-4 rounded-xl bg-brand-redBg/30 border border-brand-red/30 space-y-2">
+            <div class="flex items-center gap-1.5">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-red"></span>
+              <span class="text-[10px] font-bold uppercase tracking-wider text-brand-red">Sebelum Optimasi (Kalimat Pasif Tanpa Metrik)</span>
+            </div>
+            <p id="rewriteBeforeTxt" class="text-xs text-dark-textSec font-mono">
+              "Bertanggung jawab mendampingi siswa dan membantu guru di ruang kelas."
+            </p>
+          </div>
+
+          <!-- After Box -->
+          <div class="p-4 rounded-xl bg-brand-emeraldBg/40 border border-brand-emerald/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+                <span class="text-[10px] font-bold uppercase tracking-wider text-brand-emerald">Sesudah Optimasi (Formula XYZ Berbasis Dampak)</span>
+              </div>
+              <button id="copyRewriteBtn" class="text-[10px] text-brand-emerald hover:underline font-semibold" data-i18n="copyBtn">Salin Teks</button>
+            </div>
+            <p id="rewriteAfterTxt" class="text-xs text-dark-textPri font-mono font-medium">
+              "Menerapkan intervensi perilaku individual terstruktur yang meningkatkan retensi fokus belajar siswa sebesar 35% dan menurunkan eskalasi emosi harian."
+            </p>
+          </div>
+        </div>
+
+        <!-- STAR Technique Interview Probing -->
+        <div class="pt-2">
+          <p class="text-[11px] text-dark-textMuted font-semibold uppercase tracking-wider mb-2">Panduan Pertanyaan Wawancara (Teknik STAR) untuk Celah Ini:</p>
+          <p id="starQuestionTxt" class="text-xs text-dark-textSec italic bg-dark-well p-3 rounded-lg border border-dark-wellBorder">
+            "Ceritakan situasi nyata ketika Anda harus memodifikasi pendekatan kerja Anda untuk mencapai target tertentu. Tindakan spesifik apa yang Anda ambil, dan bagaimana cara Anda mengukur keberhasilannya?"
+          </p>
+        </div>
+      </div>
+
+      <!-- CARD 5: UPGRADE PRO & CONSULTATION BANNER -->
+      <div class="bg-dark-well dark:bg-dark-well border border-brand-emerald/30 rounded-2xl p-6 sm:p-7 shadow-xl flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="space-y-1 text-center md:text-left">
+          <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-brand-emeraldBg text-brand-emerald border border-brand-emerald/20">Upgrade Akses Penuh</span>
+          <h2 class="text-base sm:text-lg font-heading font-bold text-dark-textPri" data-i18n="proBannerTitle">
+            Ingin Bedah Tuntas Seluruh Kalimat CV & Dapatkan Format ATS Baru?
+          </h2>
+          <p class="text-xs text-dark-textSec max-w-xl" data-i18n="proBannerDesc">
+            Dapatkan laporan komprehensif 10 halaman, bedah seluruh butir pengalaman, atau jadwalkan konsultasi 1-on-1 bersama praktisi HR bersertifikat.
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+          <button id="openProModalBtn" class="w-full sm:w-auto px-5 py-3 rounded-xl font-heading font-bold text-xs uppercase tracking-wider bg-brand-emerald text-black hover:bg-brand-emeraldDark transition-all shadow-lg shadow-brand-emerald/10 whitespace-nowrap">
+            Buka Laporan Lengkap (Rp 10.000)
+          </button>
+          <button id="openConsultModalBtn" class="w-full sm:w-auto px-5 py-3 rounded-xl font-heading font-bold text-xs uppercase tracking-wider bg-dark-surface border border-dark-border text-dark-textPri hover:border-brand-emerald/50 transition-all whitespace-nowrap">
+            Konsultasi 1-on-1 (Mulai 25.000)
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       MODAL 1: QRIS INSTANT REPORT PAYMENT (RP 10.000)
+       ===================================================================== -->
+  <div id="qrisModalOverlay" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
+    <div class="bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-2xl max-w-lg w-full p-6 sm:p-7 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+      
+      <!-- Close button -->
+      <button id="closeQrisModalBtn" class="absolute top-5 right-5 text-dark-textMuted hover:text-dark-textPri text-lg p-1.5 transition-colors" aria-label="Tutup Modal">✕</button>
+
+      <div class="flex items-center gap-2 mb-1.5">
+        <span class="w-2 h-2 rounded-full bg-brand-emerald"></span>
+        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">SCREENORA REPORT ACCESS</span>
+      </div>
+      <h3 class="text-lg font-heading font-extrabold text-dark-textPri" data-i18n="qrisModalTitle">Laporan Diagnostik 10 Halaman & Format ATS</h3>
+      <p class="text-xs text-dark-textSec mt-1 mb-5" data-i18n="qrisModalSubtitle">Akses instan bedah seluruh kalimat pengalaman, deteksi celah ATS lengkap, dan template siap pakai.</p>
+
+      <!-- Package Card & QRIS Code -->
+      <div class="bg-dark-well dark:bg-dark-well border border-dark-wellBorder dark:border-dark-wellBorder rounded-xl p-5 space-y-4">
+        
+        <div class="flex items-baseline justify-between border-b border-dark-border pb-3">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-dark-textMuted">Total Biaya Akses</span>
+            <p class="text-2xl font-heading font-extrabold text-brand-emerald mt-0.5">Rp 10.000</p>
+          </div>
+          <span class="text-[11px] font-semibold text-brand-emerald px-2 py-0.5 rounded bg-brand-emeraldBg border border-brand-emerald/30">Sekali Bayar</span>
+        </div>
+
+        <!-- Features list -->
+        <ul class="text-xs text-dark-textSec space-y-2">
+          <li class="flex items-start gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
+            <span>Bedah mendalam seluruh butir kalimat pengalaman kerja formula XYZ.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
+            <span>Daftar lengkap 25+ kata kunci ATS industri yang wajib ditambahkan.</span>
+          </li>
+          <li class="flex items-start gap-2">
+            <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
+            <span>Unduh file template dokumen resume standar ATS siap edit (.docx).</span>
+          </li>
+        </ul>
+
+        <!-- QRIS Visual Simulation -->
+        <div class="p-4 bg-white rounded-xl flex flex-col items-center justify-center border border-gray-200 text-center">
+          <div id="qrisVisualCode" class="w-32 h-32 bg-[#0F172A] p-2.5 rounded-lg flex flex-col items-center justify-center text-white">
+            <svg class="w-24 h-24 text-white" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-3 0h2v3h-2v-3zm2 3h3v3h-3v-3zm-2 2h2v3h-2v-3zm3 1h3v2h-3v-2zM5 5h4v4H5V5zm10 0h4v4h-4V5zM5 15h4v4H5v-4z"/>
+            </svg>
+          </div>
+          <p class="text-[10px] font-bold text-gray-800 mt-2.5 uppercase tracking-wider">QRIS STANDAR PEMBAYARAN NASIONAL</p>
+          <p class="text-[9px] text-gray-500 mt-0.5">BCA • GoPay • DANA • OVO • ShopeePay • LinkAja • Mobile Banking</p>
+        </div>
+
+        <button id="simulateQrisPayBtn" class="w-full py-3 px-4 bg-brand-emerald text-black rounded-xl text-xs font-heading font-bold uppercase tracking-wider hover:bg-brand-emeraldDark transition-all text-center shadow-lg shadow-brand-emerald/10">
+          Konfirmasi Pembayaran Selesai
+        </button>
+
+      </div>
+
+      <div class="mt-4 text-center text-[11px] text-dark-textMuted flex items-center justify-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+        <span>Akses instan langsung terbuka di layar Anda setelah verifikasi</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL 2: 1-ON-1 CONSULTATION BOOKING (MULAI RP 25.000)
+       ===================================================================== -->
+  <div id="consultModalOverlay" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 transition-opacity">
+    <div class="bg-dark-surface dark:bg-dark-surface border border-dark-border dark:border-dark-border rounded-2xl max-w-lg w-full p-6 sm:p-7 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+      
+      <!-- Close button -->
+      <button id="closeConsultModalBtn" class="absolute top-5 right-5 text-dark-textMuted hover:text-dark-textPri text-lg p-1.5 transition-colors" aria-label="Tutup Modal">✕</button>
+
+      <div class="flex items-center gap-2 mb-1.5">
+        <span class="w-2 h-2 rounded-full bg-brand-emerald"></span>
+        <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">SCREENORA MENTORSHIP</span>
+      </div>
+      <h3 class="text-lg font-heading font-extrabold text-dark-textPri" data-i18n="consultModalTitle">Konsultasi 1-on-1 bersama HR & Career Specialist</h3>
+      <p class="text-xs text-dark-textSec mt-1 mb-5" data-i18n="consultModalSubtitle">Sesi privat tatap muka daring untuk bedah portofolio, evaluasi kesiapan profil, dan latihan simulasi wawancara kerja nyata.</p>
+
+      <!-- Details Card -->
+      <div class="bg-dark-well dark:bg-dark-well border border-dark-wellBorder dark:border-dark-wellBorder rounded-xl p-5 space-y-4">
+        
+        <div class="flex items-baseline justify-between border-b border-dark-border pb-3">
+          <div>
+            <span class="text-[10px] font-bold uppercase tracking-wider text-dark-textMuted">Tarif Sesi Mentoring</span>
+            <p class="text-2xl font-heading font-extrabold text-dark-textPri mt-0.5">Mulai Rp 25.000</p>
+          </div>
+          <span class="text-[11px] font-semibold text-dark-textPri px-2 py-0.5 rounded bg-dark-surface border border-dark-border">Sesi Privat 45 Menit</span>
+        </div>
+
+        <div class="space-y-2">
+          <p class="text-xs font-semibold text-dark-textPri">Agenda & Manfaat Sesi:</p>
+          <ul class="text-xs text-dark-textSec space-y-2">
+            <li class="flex items-start gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
+              <span><strong>Bedah CV Baris per Baris:</strong> Evaluasi personaliti kerja & keselarasan kata kunci target industri.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
+              <span><strong>Simulasi Wawancara STAR:</strong> Latihan langsung menjawab pertanyaan jebakan rekruter.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
+              <span><strong>Penajaman Portofolio & LinkedIn:</strong> Rekomendasi headline, About section, dan formulasi pencapaian kerja.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald mt-1.5 shrink-0"></span>
+              <span><strong>Fleksibilitas Media:</strong> Sesi dapat dipilih via Google Meet atau WhatsApp Call sesuai kenyamanan Anda.</span>
+            </li>
+          </ul>
+        </div>
+
+        <a id="consultWhatsAppBtn" href="https://wa.me/?text=Halo%20HR%20Specialist%20Screenora,%20saya%20tertarik%20untuk%20menjadwalkan%20sesi%20Konsultasi%201-on-1%20Review%20CV%20dan%20Persiapan%20Wawancara." target="_blank" rel="noopener noreferrer" class="w-full py-3 px-4 bg-brand-emerald text-black rounded-xl text-xs font-heading font-bold uppercase tracking-wider hover:bg-brand-emeraldDark transition-all text-center flex items-center justify-center gap-2 shadow-lg shadow-brand-emerald/10">
+          <span>Jadwalkan Sesi via WhatsApp</span>
+        </a>
+
+      </div>
+
+      <div class="mt-4 text-center text-[11px] text-dark-textMuted flex items-center justify-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+        <span>Jadwal sesi fleksibel menyesuaikan waktu luang Anda (Senin - Minggu)</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       FOOTER
+       ===================================================================== -->
+  <footer class="mt-auto border-t border-dark-border dark:border-dark-border py-8 text-center text-xs text-dark-textMuted">
+    <div class="max-w-7xl mx-auto px-4 space-y-2">
+      <div class="flex items-center justify-center gap-2 font-heading font-bold text-dark-textPri">
+        <span>SCREENORA</span>
+        <span>•</span>
+        <span class="font-normal text-dark-textSec">Resume Intelligence Platform</span>
+      </div>
+      <p class="max-w-2xl mx-auto text-[11px] text-dark-textMuted leading-relaxed" data-i18n="legalDisclaimer">
+        Screenora adalah alat simulasi dan diagnostik persiapan karir independen berbasis algoritma heuristik, tidak berafiliasi atau menjamin penerimaan kerja di instansi, BUMN, maupun perusahaan mana pun.
+      </p>
+      <p class="text-[10px] text-dark-textMuted pt-2">
+        © 2026 Screenora. Built for High-Impact Job Seekers & Modern HR Teams.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 bg-dark-surface border border-brand-emerald/50 text-dark-textPri text-xs px-4 py-3 rounded-xl shadow-2xl transform translate-y-20 opacity-0 transition-all flex items-center gap-2">
+    <span class="w-4 h-4 rounded-full bg-brand-emerald/20 text-brand-emerald flex items-center justify-center shrink-0">
+      <svg class="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+    </span>
+    <span id="toastMsg">Notifikasi</span>
+  </div>
+
+  <!-- Main JavaScript App Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 480" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradients -->
+    <radialGradient id="bgGlow" cx="50%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#12251D" stop-opacity="0.85" />
+      <stop offset="45%" stop-color="#0A0D12" stop-opacity="0.95" />
+      <stop offset="100%" stop-color="#060709" stop-opacity="1" />
+    </radialGradient>
+    
+    <linearGradient id="emeraldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#34D399" />
+      <stop offset="100%" stop-color="#059669" />
+    </linearGradient>
+
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2E384D" />
+      <stop offset="100%" stop-color="#141820" />
+    </linearGradient>
+
+    <linearGradient id="cardBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#11151F" stop-opacity="0.9" />
+      <stop offset="100%" stop-color="#0B0E14" stop-opacity="0.9" />
+    </linearGradient>
+
+    <!-- Subtle Grid Pattern -->
+    <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#161C26" stroke-width="0.75" />
+    </pattern>
+  </defs>
+
+  <!-- Background Layer -->
+  <rect width="1200" height="480" fill="url(#bgGlow)" />
+  <rect width="1200" height="480" fill="url(#gridPattern)" opacity="0.65" />
+
+  <!-- Outer Border Frame -->
+  <rect x="1" y="1" width="1198" height="478" rx="0" fill="none" stroke="#1F2633" stroke-width="1.5" />
+
+  <!-- Center Decorative Glow -->
+  <circle cx="600" cy="180" r="160" fill="#10B981" opacity="0.12" filter="blur(60px)" />
+
+  <!-- =====================================================================
+       LOGO EMBLEM: The Architectural 'S' Monogram
+       ===================================================================== -->
+  <g transform="translate(560, 60)">
+    <!-- Icon Container Box -->
+    <rect x="0" y="0" width="80" height="80" rx="20" fill="#0A0D12" stroke="#2A3445" stroke-width="2" />
+    <rect x="1" y="1" width="78" height="78" rx="19" fill="none" stroke="url(#borderGrad)" stroke-width="1" />
+    
+    <!-- Monogram Geometric S (Scaled 2.5x from 32px base) -->
+    <g transform="translate(0, 0)">
+      <!-- Top Bar -->
+      <rect x="17.5" y="15" width="45" height="12.5" rx="6.25" fill="#F8FAFC" />
+      <!-- Left Vertical Bar -->
+      <rect x="12.5" y="20" width="12.5" height="25" rx="6.25" fill="#F8FAFC" />
+      <!-- Emerald Center Laser Slit -->
+      <rect x="15" y="35" width="50" height="10" rx="5" fill="url(#emeraldGrad)" />
+      <!-- Right Vertical Bar -->
+      <rect x="55" y="37.5" width="12.5" height="25" rx="6.25" fill="#F8FAFC" />
+      <!-- Bottom Bar -->
+      <rect x="17.5" y="52.5" width="45" height="12.5" rx="6.25" fill="#F8FAFC" />
+    </g>
+  </g>
+
+  <!-- =====================================================================
+       TYPOGRAPHY LOCKUP
+       ===================================================================== -->
+  <!-- Product Title -->
+  <text x="600" y="188" 
+        text-anchor="middle" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Plus Jakarta Sans', 'Inter', sans-serif" 
+        font-size="42" 
+        font-weight="800" 
+        letter-spacing="6" 
+        fill="#F8FAFC">
+    SCREENORA
+  </text>
+
+  <!-- Subtitle Category Eyebrow -->
+  <text x="600" y="222" 
+        text-anchor="middle" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Inter', monospace" 
+        font-size="13" 
+        font-weight="600" 
+        letter-spacing="3" 
+        fill="#10B981">
+    AI RESUME INTELLIGENCE &amp; ATS DIAGNOSTIC STUDIO
+  </text>
+
+  <!-- Tagline Prose -->
+  <text x="600" y="254" 
+        text-anchor="middle" 
+        font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" 
+        font-size="15" 
+        font-weight="400" 
+        fill="#858D9D">
+    Private, in-browser resume scoring, keyword gap diagnostics, and Google XYZ impact optimization.
+  </text>
+
+  <!-- =====================================================================
+       THREE VALUE PROPOSITION PILLARS (BENTO ROW)
+       ===================================================================== -->
+  <!-- Pillar 1: Client-Side Privacy -->
+  <g transform="translate(180, 310)">
+    <rect width="250" height="95" rx="14" fill="url(#cardBg)" stroke="#1F2735" stroke-width="1.2" />
+    <!-- Indicator Dot -->
+    <circle cx="28" cy="32" r="4" fill="#10B981" />
+    <text x="44" y="36" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="12" font-weight="700" fill="#F8FAFC" letter-spacing="0.5">
+      100% Client-Side Privacy
+    </text>
+    <text x="28" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="11" fill="#717A8C" width="200">
+      Zero external API calls.
+    </text>
+    <text x="28" y="76" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="11" fill="#717A8C" width="200">
+      PDFs parsed locally via PDF.js.
+    </text>
+  </g>
+
+  <!-- Pillar 2: ATS Scoring Engine -->
+  <g transform="translate(475, 310)">
+    <rect width="250" height="95" rx="14" fill="url(#cardBg)" stroke="#1F2735" stroke-width="1.2" />
+    <!-- Indicator Dot -->
+    <circle cx="28" cy="32" r="4" fill="#10B981" />
+    <text x="44" y="36" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="12" font-weight="700" fill="#F8FAFC" letter-spacing="0.5">
+      Enterprise ATS Heuristic
+    </text>
+    <text x="28" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="11" fill="#717A8C">
+      0-100% match scoring engine.
+    </text>
+    <text x="28" y="76" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="11" fill="#717A8C">
+      Tier 1 to Tier 3 triage logic.
+    </text>
+  </g>
+
+  <!-- Pillar 3: Formula XYZ Optimization -->
+  <g transform="translate(770, 310)">
+    <rect width="250" height="95" rx="14" fill="url(#cardBg)" stroke="#1F2735" stroke-width="1.2" />
+    <!-- Indicator Dot -->
+    <circle cx="28" cy="32" r="4" fill="#10B981" />
+    <text x="44" y="36" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="12" font-weight="700" fill="#F8FAFC" letter-spacing="0.5">
+      Google XYZ Formula
+    </text>
+    <text x="28" y="60" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="11" fill="#717A8C">
+      Accomplished [X] by [Y] doing [Z].
+    </text>
+    <text x="28" y="76" font-family="-apple-system, BlinkMacSystemFont, 'Inter', sans-serif" font-size="11" fill="#717A8C">
+      Interactive one-click copy.
+    </text>
+  </g>
+
+  <!-- Bottom Terminal Status Bar -->
+  <line x1="300" y1="440" x2="900" y2="440" stroke="#1B222E" stroke-width="1" />
+  <text x="600" y="460" text-anchor="middle" font-family="-apple-system, BlinkMacSystemFont, 'Inter', monospace" font-size="10.5" fill="#4B5363" letter-spacing="1">
+    VANILLA JS • TAILWIND CSS • ZERO DEPENDENCY BUILD • PRODUCTION-READY
+  </text>
+</svg>
