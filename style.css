@@ -284,6 +284,20 @@ html:not(.dark) #copyRewriteBtn:hover {
   color: #064E3B !important;
 }
 
+/* Secondary Rewrites Container in Light Mode */
+html:not(.dark) #secondaryRewritesHeading {
+  color: #0F172A !important;
+}
+
+html:not(.dark) .copy-secondary-rewrite-btn {
+  color: #047857 !important;
+  font-weight: 700 !important;
+}
+
+html:not(.dark) .copy-secondary-rewrite-btn:hover {
+  color: #064E3B !important;
+}
+
 /* STAR Interview Probing Quote in Light Mode */
 html:not(.dark) #starQuestionTxt {
   color: #0F172A !important;

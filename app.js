@@ -118,11 +118,14 @@
       // Card 04: XYZ Formula & STAR Interview
       rewriteHead: 'Optimasi Kalimat Berdampak (Formula XYZ)',
       rewriteSubheader: 'Format Baku Google: Accomplished [X], measured by [Y], by doing [Z]',
-      rewriteBeforeTitle: 'Draft Kalimat Asli',
-      rewriteBeforeSub: 'Kalimat pasif, tanpa metrik hasil, dan tidak membuktikan kapasitas kerja nyata.',
+      cvScanBadge: '📍 Dibaca dari CV Anda',
+      rewriteBeforeTitle: 'Draft Kalimat Asli di CV Anda',
+      rewriteBeforeSub: 'Risiko tereliminasi oleh filter awal ATS karena tidak membuktikan kapasitas inisiatif nyata.',
       rewriteAfterTitle: 'Rekomendasi Formula XYZ (Siap Salin)',
-      rewriteAfterSub: 'Berbasis dampak: Verba aksi berdaya tinggi (Z) + Metrik efisiensi terukur (Y) + Hasil bisnis (X).',
+      rewriteAfterSub: 'Format yang paling diutamakan oleh rekruter multinasional & BUMN untuk panggilan interview.',
       copyBtn: 'Salin Teks',
+      secondaryRewritesHeading: 'Butir Pengalaman Lain di CV Anda yang Perlu Diperbaiki:',
+      secondaryCopyBtn: 'Salin Kalimat Rekomendasi',
       starQuestionHeader: 'Simulasi Pertanyaan Wawancara (Teknik STAR) Berdasarkan Celah Ini:',
 
       // Card 05: Pro Features & Actions
@@ -139,15 +142,15 @@
       faqHeading: 'Pertanyaan Umum Seputar Skrining CV & Rekrutmen',
       faqSub: 'Standar penyaringan Applicant Tracking System dan psikologi penyeleksian HR korporat.',
       faqQ1: 'Apa itu Formula XYZ dan mengapa rekruter multinasional mewajibkannya?',
-      faqA1: 'Formula XYZ adalah kerangka penulisan prestasi kerja yang dirumuskan oleh eksekutif Google: <em>"Accomplished [X] as measured by [Y], by doing [Z]"</em> (Mencapai hasil X yang diukur dengan metrik Y, melalui tindakan konkret Z). Berdasarkan psikologi industri HR, rekruter hanya meluangkan 6–8 detik untuk memindai CV. Kalimat pasif seperti <em>"Bertanggung jawab mengelola penjualan"</em> tidak membuktikan keberhasilan, sedangkan formula XYZ membuktikan kapasitas problem-solving dan dampak bisnis yang nyata.',
+      faqA1: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder"><div class="flex items-center gap-2 mb-1"><span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Rumus Baku Eksekutif Google</span></div><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri">"Accomplished [X], as measured by [Y], by doing [Z]"</p><p class="text-[11px] text-dark-textSec mt-1">Mencapai hasil bisnis konkret <strong>[X]</strong>, yang terukur oleh metrik angka <strong>[Y]</strong>, melalui inisiatif/tindakan nyata <strong>[Z]</strong>.</p></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">🎯 [X] Hasil Bisnis</p><p class="text-[11px] text-dark-textSec">Dampak riil terhadap profitabilitas, efisiensi kerja tim, atau kepuasan klien.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">📊 [Y] Metrik Terukur</p><p class="text-[11px] text-dark-textSec">Bukti angka kuantitatif: persentase (%), skala waktu (hari), atau nominal uang.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">⚡ [Z] Tindakan Nyata</p><p class="text-[11px] text-dark-textSec">Verba aksi aktif (Spearheaded, Merancang) serta metode/alat yang dipakai.</p></div></div><p class="text-[11px] text-dark-textMuted border-t border-dark-border/40 pt-2 flex items-center gap-1.5"><span>💡</span><span><strong>Fakta Rekrutmen:</strong> Rekruter hanya meluangkan 6–8 detik memindai satu CV. Kalimat pasif seperti <em>"Bertanggung jawab atas administrasi"</em> langsung tereliminasi karena tidak membuktikan kapasitas inisiatif.</span></p></div>',
       faqQ2: 'Bagaimana Screenora menjamin keamanan dan privasi berkas CV saya?',
-      faqA2: 'Screenora beroperasi dengan prinsip <strong>Zero-Data Retention (100% Client-Side)</strong>. Saat Anda mengunggah PDF atau menempel teks, pustaka ekstraksi (PDF.js) bekerja langsung di dalam memori peramban (browser) laptop atau ponsel Anda. Tidak ada data pribadi, riwayat karir, kontak, atau dokumen yang dikirimkan maupun disimpan ke server basis data eksternal.',
+      faqA2: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder flex items-center justify-between"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand-emerald"></span><span class="text-xs font-heading font-bold text-dark-textPri">Zero-Data Retention (100% Client-Side)</span></div><span class="text-[10px] font-mono text-brand-emerald px-2 py-0.5 rounded bg-brand-emeraldBg border border-brand-emerald/30">Privasi Mutlak</span></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">🔒 Pemrosesan Lokal</p><p class="text-[11px] text-dark-textSec">Mesin ekstraksi PDF.js berjalan langsung di dalam memori peramban (browser) laptop atau ponsel Anda.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">🛡️ Tanpa Server / Database</p><p class="text-[11px] text-dark-textSec">Tidak ada dokumen, kontak telepon, alamat email, riwayat karir, atau gaji yang dikirimkan ke server eksternal.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">⚡ Bebas Registrasi Wajib</p><p class="text-[11px] text-dark-textSec">Dapat langsung digunakan tanpa perlu membuat akun atau meninggalkan rekam jejak pribadi apa pun.</p></div></div><p class="text-[11px] text-dark-textMuted border-t border-dark-border/40 pt-2">Aman sepenuhnya untuk menguji CV profesional, korporat perbankan, BUMN, maupun lamaran rahasia (confidential).</p></div>',
       faqQ3: 'Apakah format CV bahasa Indonesia ramah sistem Applicant Tracking System (ATS)?',
-      faqA3: 'Ya! Sistem ATS modern (seperti Workday, Taleo, SAP SuccessFactors, atau sistem lokal) memproses teks digital apa pun bahasanya. Faktor penggugur utama pelamar di filter ATS bukanlah bahasa Indonesia atau Inggris, melainkan: berkas berformat gambar hasil scan yang tidak bisa di-parse teksnya, ketiadaan kata kunci teknis mutlak, atau tidak adanya struktur heading baku (Pendidikan, Pengalaman, Keahlian).',
+      faqA3: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Fakta Parser ATS Modern</span><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri mt-0.5">Sistem ATS Korporat Memproses Teks Bahasa Indonesia dengan Sempurna</p><p class="text-[11px] text-dark-textSec mt-1">Platform seperti Workday, Taleo, SAP SuccessFactors, hingga sistem lokal mengekstrak teks digital tanpa memandang bahasa.</p></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs"><div class="p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20"><p class="font-bold text-emerald-800 dark:text-emerald-400 text-xs mb-1.5 flex items-center gap-1.5"><span>✓</span><span>Faktor Penentu Kelolosan</span></p><ul class="space-y-1 text-[11px] text-dark-textSec"><li>• Format 1-kolom bersih tanpa elemen desain bertumpuk.</li><li>• Struktur heading baku (Ringkasan, Pengalaman, Pendidikan, Keahlian).</li><li>• Kepadatan kata kunci kompetensi industri yang relevan.</li></ul></div><div class="p-3.5 rounded-xl bg-rose-500/5 border border-rose-500/20"><p class="font-bold text-rose-800 dark:text-rose-400 text-xs mb-1.5 flex items-center gap-1.5"><span>✕</span><span>Penyebab Utama Tereliminasi</span></p><ul class="space-y-1 text-[11px] text-dark-textSec"><li>• Berkas hasil scan / gambar raster (teks tidak dapat di-parse).</li><li>• Tabel kompleks atau text box yang merusak urutan pembacaan.</li><li>• Ketiadaan metrik hasil kerja (%) dan penggunaan kalimat pasif.</li></ul></div></div></div>',
       faqQ4: 'Apa yang harus saya lakukan jika hasil evaluasi CV berada di Tier 3 (<65%)?',
-      faqA4: 'Jangan berkecil hati. Skor Tier 3 biasanya berarti kata kunci inti posisi tersebut belum tertulis eksplisit atau poin pekerjaan Anda masih berupa kalimat deskripsi tugas umum. Langkah perbaikannya: (1) Klik tombol <em>Salin Kata Kunci</em> pada kartu celah kualifikasi dan sisipkan istilah tersebut ke bagian keahlian/pengalaman; (2) Masukkan angka metrik konkret (persentase peningkatan, durasi, nominal, atau jumlah proyek); (3) Lakukan pemindaian ulang di Screenora hingga skor mencapai Tier 1 (&ge;80%).',
+      faqA4: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-amber">Panduan Perbaikan Mandiri</span><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri mt-0.5">3 Langkah Cepat Menaikkan Skor ke Tier 1 (≥80%)</p><p class="text-[11px] text-dark-textSec mt-1">Skor &lt;65% menunjukkan adanya celah kata kunci penting atau narasi pengalaman kerja yang masih pasif.</p></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><div class="w-6 h-6 rounded-md bg-brand-emerald text-black font-bold text-xs flex items-center justify-center mb-1.5">1</div><p class="font-bold text-dark-textPri text-[11px] mb-1">Sisipkan Kata Kunci</p><p class="text-[11px] text-dark-textSec">Klik <em>Salin Kata Kunci</em> pada kartu celah kualifikasi dan masukkan istilah teknis tersebut ke seksi keahlian & pengalaman.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><div class="w-6 h-6 rounded-md bg-brand-emerald text-black font-bold text-xs flex items-center justify-center mb-1.5">2</div><p class="font-bold text-dark-textPri text-[11px] mb-1">Terapkan Formula XYZ</p><p class="text-[11px] text-dark-textSec">Ganti kalimat deskripsi tugas dengan formula Google. Pastikan minimal 3 butir pengalaman menyertakan angka metrik (%).</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><div class="w-6 h-6 rounded-md bg-brand-emerald text-black font-bold text-xs flex items-center justify-center mb-1.5">3</div><p class="font-bold text-dark-textPri text-[11px] mb-1">Pindai Ulang Dokumen</p><p class="text-[11px] text-dark-textSec">Lakukan pemindaian ulang di Screenora untuk memverifikasi kenaikan skor hingga mencapai Tier 1 (&ge;80%).</p></div></div></div>',
       faqQ5: 'Bagaimana format sesi Konsultasi 1-on-1 bersama praktisi HR?',
-      faqA5: 'Sesi konsultasi privat berdurasi 45 menit yang dilakukan secara interaktif via Google Meet atau WhatsApp Call bersama Muhammad Faari Akbar (S1 Psikologi & Praktisi Talent Management). Dalam sesi ini, CV Anda akan dibedah baris per baris, profil LinkedIn dioptimalkan untuk menarik recruiter inbound, serta simulasi langsung menjawab pertanyaan wawancara kritis menggunakan teknik STAR (Situation, Task, Action, Result).',
+      faqA5: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder flex flex-col sm:flex-row sm:items-center justify-between gap-2"><div><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Konsultasi Privat Eksklusif</span><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri mt-0.5">Sesi Mentoring 45 Menit Daring (Google Meet / WhatsApp)</p><p class="text-[11px] text-dark-textSec">Bersama Muhammad Faari Akbar (S1 Psikologi & Praktisi Talent Management).</p></div><span class="text-[11px] font-mono text-brand-amber px-2.5 py-1 rounded bg-brand-amber/10 border border-brand-amber/30 whitespace-nowrap self-start sm:self-center">Tahap Persiapan</span></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">🎯 Bedah CV Baris demi Baris</p><p class="text-[11px] text-dark-textSec">Restrukturisasi total setiap butir kalimat pengalaman kerja ke formula Google XYZ berdaya pikat tinggi.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">💼 Optimasi Profil LinkedIn</p><p class="text-[11px] text-dark-textSec">Penajaman Headline, About section, dan strategi keyword agar profil Anda ditemukan rekruter inbound.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">🗣️ Simulasi Wawancara STAR</p><p class="text-[11px] text-dark-textSec">Latihan taktis menjawab pertanyaan wawancara berbasis kompetensi dan psikologis yang sering menggugurkan kandidat.</p></div></div></div>',
 
       // Modals
       qrisModalBadge: 'SEGERA HADIR • TAHAP PERSIAPAN',
@@ -270,11 +273,14 @@
       // Card 04: XYZ Formula & STAR Interview
       rewriteHead: 'High-Impact Sentence Optimization (XYZ Formula)',
       rewriteSubheader: 'Google Standard: Accomplished [X], measured by [Y], by doing [Z]',
-      rewriteBeforeTitle: 'Original Draft Sentence',
-      rewriteBeforeSub: 'Passive phrasing, lacks metrics, and fails to demonstrate measurable impact.',
+      cvScanBadge: '📍 Parsed from Your CV',
+      rewriteBeforeTitle: 'Original Draft Sentence from Your CV',
+      rewriteBeforeSub: 'High risk of automated ATS rejection due to passive duty phrasing without concrete metrics.',
       rewriteAfterTitle: 'Recommended XYZ Formula (Ready to Copy)',
-      rewriteAfterSub: 'Impact-driven: High-action verb (Z) + Measurable efficiency metric (Y) + Business outcome (X).',
+      rewriteAfterSub: 'High-signal format prioritized by enterprise and global recruiters for first-round interviews.',
       copyBtn: 'Copy Text',
+      secondaryRewritesHeading: 'Additional Experience Bullets in Your CV to Overhaul:',
+      secondaryCopyBtn: 'Copy Recommended Sentence',
       starQuestionHeader: 'Behavioral Interview Question (STAR Technique) Based on This Gap:',
 
       // Card 05: Pro Features & Actions
@@ -291,15 +297,15 @@
       faqHeading: 'Frequently Asked Questions About CV Screening & Recruitment',
       faqSub: 'Applicant Tracking System filtering standards and corporate HR hiring psychology.',
       faqQ1: 'What is the XYZ Formula and why do multinational recruiters expect it?',
-      faqA1: 'The XYZ Formula is a bullet-point achievement framework formulated by Google leadership: <em>"Accomplished [X] as measured by [Y], by doing [Z]"</em>. In HR psychology, recruiters spend only 6 to 8 seconds scanning a resume. Passive task statements like <em>"Responsible for managing sales"</em> fail to demonstrate competence, whereas the XYZ formula provides hard evidence of problem-solving ability and quantifiable business impact.',
+      faqA1: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder"><div class="flex items-center gap-2 mb-1"><span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Google Executive Standard</span></div><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri">"Accomplished [X], as measured by [Y], by doing [Z]"</p><p class="text-[11px] text-dark-textSec mt-1">Delivered business outcome <strong>[X]</strong>, measured by quantifiable metric <strong>[Y]</strong>, through deliberate action/framework <strong>[Z]</strong>.</p></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">🎯 [X] Business Outcome</p><p class="text-[11px] text-dark-textSec">Direct bottom-line impact: revenue, velocity, user retention, or cost reduction.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">📊 [Y] Measurable Metric</p><p class="text-[11px] text-dark-textSec">Hard numbers: percentage lift (%), latency (ms), currency ($/Rp), or team scale.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">⚡ [Z] Action & Tools</p><p class="text-[11px] text-dark-textSec">Power action verbs (Spearheaded, Architected) and technical frameworks applied.</p></div></div><p class="text-[11px] text-dark-textMuted border-t border-dark-border/40 pt-2 flex items-center gap-1.5"><span>💡</span><span><strong>Recruiter Reality:</strong> Recruiters spend only 6–8 seconds per resume. Passive duty lines like <em>"Responsible for sales"</em> get rejected because they lack evidence of ownership.</span></p></div>',
       faqQ2: 'How does Screenora protect the privacy and security of my CV document?',
-      faqA2: 'Screenora operates under strict <strong>Zero-Data Retention (100% Client-Side)</strong>. When you upload a PDF or paste text, the client-side parsing engine (PDF.js) runs entirely inside your local web browser memory. No private data, contact information, career history, or documents are ever uploaded, transmitted, or stored on external servers or databases.',
+      faqA2: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder flex items-center justify-between"><div class="flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-brand-emerald"></span><span class="text-xs font-heading font-bold text-dark-textPri">Zero-Data Retention (100% Client-Side)</span></div><span class="text-[10px] font-mono text-brand-emerald px-2 py-0.5 rounded bg-brand-emeraldBg border border-brand-emerald/30">Absolute Privacy</span></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">🔒 Local Extraction</p><p class="text-[11px] text-dark-textSec">PDF.js engine runs directly inside your local web browser memory on laptop or mobile.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">🛡️ No Database Storage</p><p class="text-[11px] text-dark-textSec">Zero documents, contact phone numbers, emails, career records, or salary data ever leave your device.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">⚡ Zero Account Mandate</p><p class="text-[11px] text-dark-textSec">Free to scan instantly without creating accounts or submitting credential footprints.</p></div></div><p class="text-[11px] text-dark-textMuted border-t border-dark-border/40 pt-2">Completely safe for evaluating executive, enterprise, banking, and confidential job applications.</p></div>',
       faqQ3: 'Is an Indonesian-language CV compatible with Applicant Tracking Systems (ATS)?',
-      faqA3: 'Yes! Modern enterprise ATS platforms (such as Workday, Taleo, SAP SuccessFactors, and local HRIS) parse digital text regardless of language. The primary reasons resumes fail ATS screening are not the language, but rather: image-scanned files without selectable text, absence of essential technical keywords, or missing standard headings (Education, Experience, Skills).',
+      faqA3: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Modern ATS Engine Facts</span><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri mt-0.5">Corporate ATS Platforms Parse Indonesian Digital Text Flawlessly</p><p class="text-[11px] text-dark-textSec mt-1">Systems like Workday, Taleo, SAP SuccessFactors, and local HRIS parse digital text regardless of language.</p></div><div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs"><div class="p-3.5 rounded-xl bg-emerald-500/5 border border-emerald-500/20"><p class="font-bold text-emerald-800 dark:text-emerald-400 text-xs mb-1.5 flex items-center gap-1.5"><span>✓</span><span>Key Screening Pass Factors</span></p><ul class="space-y-1 text-[11px] text-dark-textSec"><li>• Clean single-column format without overlapping graphical blocks.</li><li>• Standard heading hierarchy (Summary, Experience, Education, Skills).</li><li>• Density of targeted industry-specific competency keywords.</li></ul></div><div class="p-3.5 rounded-xl bg-rose-500/5 border border-rose-500/20"><p class="font-bold text-rose-800 dark:text-rose-400 text-xs mb-1.5 flex items-center gap-1.5"><span>✕</span><span>Primary Disqualification Triggers</span></p><ul class="space-y-1 text-[11px] text-dark-textSec"><li>• Raster scanned images (text is unparseable by digital readers).</li><li>• Complex multi-cell tables or floating text boxes disrupting flow.</li><li>• Absence of quantifiable percentage metrics and passive duty lists.</li></ul></div></div></div>',
       faqQ4: 'What should I do if my resume evaluation falls into Tier 3 (<65%)?',
-      faqA4: 'Do not be discouraged. A Tier 3 score simply means key core competencies for that job title are missing or job descriptions read like passive task lists. To improve: (1) Click <em>Copy Keywords</em> in the Qualification Gaps card and embed those terms in your skills/experience sections; (2) Add quantifiable metrics (growth %, timeline, currency, project volume); (3) Re-scan on Screenora until your score reaches Tier 1 (&ge;80%).',
+      faqA4: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-amber">Self-Optimization Playbook</span><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri mt-0.5">3 Immediate Steps to Climb to Tier 1 (≥80%)</p><p class="text-[11px] text-dark-textSec mt-1">A &lt;65% score indicates critical competency keyword gaps or passive duty phrasing.</p></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><div class="w-6 h-6 rounded-md bg-brand-emerald text-black font-bold text-xs flex items-center justify-center mb-1.5">1</div><p class="font-bold text-dark-textPri text-[11px] mb-1">Inject Missing Keywords</p><p class="text-[11px] text-dark-textSec">Click <em>Copy Keywords</em> in the Gaps card and embed required industry terms in skills and experiences.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><div class="w-6 h-6 rounded-md bg-brand-emerald text-black font-bold text-xs flex items-center justify-center mb-1.5">2</div><p class="font-bold text-dark-textPri text-[11px] mb-1">Implement XYZ Formula</p><p class="text-[11px] text-dark-textSec">Replace generic duty lines with Google XYZ framing. Ensure at least 3 bullet points feature hard % metrics.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><div class="w-6 h-6 rounded-md bg-brand-emerald text-black font-bold text-xs flex items-center justify-center mb-1.5">3</div><p class="font-bold text-dark-textPri text-[11px] mb-1">Re-Screen Document</p><p class="text-[11px] text-dark-textSec">Run a fresh diagnostic scan on Screenora to confirm your score enters the Shortlist Priority Tier 1 (&ge;80%).</p></div></div></div>',
       faqQ5: 'What is included in the 1-on-1 Consultation session with an HR practitioner?',
-      faqA5: 'A 45-minute interactive 1-on-1 consultation conducted remotely via Google Meet or WhatsApp Call with Muhammad Faari Akbar (B.Sc. in Psychology & Talent Management Practitioner). The session includes line-by-line CV critique, LinkedIn inbound recruiter optimization, and real-time behavioral interview mock practice using the STAR technique (Situation, Task, Action, Result).',
+      faqA5: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder flex flex-col sm:flex-row sm:items-center justify-between gap-2"><div><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Exclusive 1-on-1 Advisory</span><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri mt-0.5">45-Minute Live Mentoring (Google Meet / WhatsApp)</p><p class="text-[11px] text-dark-textSec">Led by Muhammad Faari Akbar (B.Sc. in Psychology & Talent Management Practitioner).</p></div><span class="text-[11px] font-mono text-brand-amber px-2.5 py-1 rounded bg-brand-amber/10 border border-brand-amber/30 whitespace-nowrap self-start sm:self-center">In Preparation</span></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">🎯 Line-by-Line CV Teardown</p><p class="text-[11px] text-dark-textSec">Complete overhaul of every experience bullet into high-converting Google XYZ formula achievements.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">💼 LinkedIn Profile Optimization</p><p class="text-[11px] text-dark-textSec">Headline and About section refinement optimized for inbound enterprise and tech talent recruiters.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><p class="font-bold text-dark-textPri text-[11px] mb-1">🗣️ STAR Interview Simulation</p><p class="text-[11px] text-dark-textSec">Tactical mock practice tackling high-stakes behavioral questions that commonly filter out applicants.</p></div></div></div>',
 
       // Modals
       qrisModalBadge: 'COMING SOON • UNDER PREPARATION',
@@ -1423,6 +1429,12 @@ KEAHLIAN & KOMPETENSI
     rewriteBeforeTxt: document.getElementById('rewriteBeforeTxt'),
     rewriteAfterTxt: document.getElementById('rewriteAfterTxt'),
     copyRewriteBtn: document.getElementById('copyRewriteBtn'),
+    rewriteDiagnosisTxt: document.getElementById('rewriteDiagnosisTxt'),
+    cvScanDetectionBadge: document.getElementById('cvScanDetectionBadge'),
+    secondaryRewritesContainer: document.getElementById('secondaryRewritesContainer'),
+    secondaryRewritesHeading: document.getElementById('secondaryRewritesHeading'),
+    secondaryRewritesCount: document.getElementById('secondaryRewritesCount'),
+    secondaryRewritesList: document.getElementById('secondaryRewritesList'),
     starQuestionTxt: document.getElementById('starQuestionTxt'),
 
     // Modals
@@ -1448,22 +1460,22 @@ KEAHLIAN & KOMPETENSI
     if (tier === 1) {
       return {
         color: isDark ? '#10B981' : '#047857',
-        border: isDark ? 'rgba(16, 185, 129, 0.35)' : '#A7F3D0',
-        bg: isDark ? 'rgba(16, 185, 129, 0.10)' : '#ECFDF5',
-        scoreColor: isDark ? '#10B981' : '#059669'
+        border: isDark ? 'rgba(16, 185, 129, 0.40)' : '#A7F3D0',
+        bg: isDark ? 'rgba(16, 185, 129, 0.12)' : '#ECFDF5',
+        scoreColor: isDark ? '#10B981' : '#047857'
       };
     } else if (tier === 2) {
       return {
-        color: isDark ? '#F59E0B' : '#92400E',
-        border: isDark ? 'rgba(245, 158, 11, 0.35)' : '#FDE68A',
-        bg: isDark ? 'rgba(245, 158, 11, 0.10)' : '#FFFBEB',
-        scoreColor: isDark ? '#F59E0B' : '#B45309'
+        color: isDark ? '#F59E0B' : '#B45309',
+        border: isDark ? 'rgba(245, 158, 11, 0.40)' : '#FDE68A',
+        bg: isDark ? 'rgba(245, 158, 11, 0.12)' : '#FFFBEB',
+        scoreColor: isDark ? '#F59E0B' : '#D97706'
       };
     } else {
       return {
-        color: isDark ? '#EF4444' : '#991B1B',
-        border: isDark ? 'rgba(239, 68, 68, 0.35)' : '#FECACA',
-        bg: isDark ? 'rgba(239, 68, 68, 0.10)' : '#FFF5F5',
+        color: isDark ? '#EF4444' : '#DC2626',
+        border: isDark ? 'rgba(239, 68, 68, 0.40)' : '#FECACA',
+        bg: isDark ? 'rgba(239, 68, 68, 0.12)' : '#FFF5F5',
         scoreColor: isDark ? '#EF4444' : '#DC2626'
       };
     }
@@ -1489,13 +1501,13 @@ KEAHLIAN & KOMPETENSI
 
     if (state.currentAnalysis && DOM.scoreNumber) {
       const palette = getTierPalette(state.currentAnalysis.tier, isDark);
-      DOM.scoreNumber.style.color = palette.scoreColor;
-      if (DOM.progressBarFill) DOM.progressBarFill.style.backgroundColor = palette.scoreColor;
-      if (DOM.scoreTierLabel) DOM.scoreTierLabel.style.color = palette.color;
+      DOM.scoreNumber.style.setProperty('color', palette.scoreColor, 'important');
+      if (DOM.progressBarFill) DOM.progressBarFill.style.setProperty('background-color', palette.scoreColor, 'important');
+      if (DOM.scoreTierLabel) DOM.scoreTierLabel.style.setProperty('color', palette.color, 'important');
       if (DOM.tierBadgePill) {
-        DOM.tierBadgePill.style.color = palette.color;
-        DOM.tierBadgePill.style.borderColor = palette.border;
-        DOM.tierBadgePill.style.backgroundColor = palette.bg;
+        DOM.tierBadgePill.style.setProperty('color', palette.color, 'important');
+        DOM.tierBadgePill.style.setProperty('border-color', palette.border, 'important');
+        DOM.tierBadgePill.style.setProperty('background-color', palette.bg, 'important');
       }
     }
   }
@@ -1802,7 +1814,210 @@ KEAHLIAN & KOMPETENSI
     showToast(lang === 'id' ? 'Template posisi kustom berhasil dimuat!' : 'Custom role template loaded successfully!');
   }
 
+    // --------------------------------------------------------------------------
+  // CV TEXT DEEP PARSER: EXTRACT WEAK BULLETS & GENERATE GOOGLE XYZ REWRITES
   // --------------------------------------------------------------------------
+  function extractAndAnalyzeWeakSentences(rawText, roleKey, roleName, lang) {
+    if (!rawText || rawText.trim().length < 40) return null;
+
+    // Split candidate text into lines/sentences
+    const rawLines = rawText.split(/[\r\n•\*\–\—\-]+/).map(l => l.trim()).filter(l => l.length > 0);
+    
+    // Candidate sentences for evaluation
+    const candidates = [];
+    const minLen = 25;
+    const maxLen = 280;
+
+    // Reject headers, contacts, education degrees, and metadata
+    const rejectRegex = /^(pengalaman|experience|pendidikan|education|keahlian|skills|summary|ringkasan|kontak|contact|profil|profile|curriculum vitae|resume|page\s*\d+|halaman\s*\d+|email|telepon|phone|linkedin|github|portfolio|alamat|domisili|tanggal lahir|status|hobby|hobi|lulusan|sarjana|diploma|bachelor|master|magister|alumni|mahasiswa|student|ipk|gpa)\b/i;
+    const emailOrUrlRegex = /(@|http|www\.|\.com|\.id|\.net|\+62|08\d{8,})/i;
+    const dateRangeOnlyRegex = /^(\d{4}|\w{3,9}\s*\d{4})\s*[\-–—]\s*(\d{4}|\w{3,9}\s*\d{4}|present|sekarang)$/i;
+
+    // Must contain at least one work/action verb signal to qualify as an experience bullet
+    const verbSignalRegex = /(bertanggung|tanggung|membantu|mengurus|melakukan|menjalankan|mengerjakan|ikut|bertugas|mengawasi|berpartisipasi|terlibat|mendukung|menghandle|membuat|mengembangkan|merancang|menganalisis|memimpin|mengelola|menyusun|berkoordinasi|mengidentifikasi|mempersiapkan|mengoperasikan|memproses|responsible|assisted|helped|handled|worked|participated|tasked|supported|designed|developed|led|analyzed|managed|coordinated|executed|monitored|created)/i;
+
+    for (const rawLine of rawLines) {
+      let lineClean = rawLine.trim().replace(/^["'“”‘’]+|["'“”‘’]+$/g, '').trim();
+      if (lineClean.length < minLen || lineClean.length > maxLen) continue;
+      if (rejectRegex.test(lineClean)) continue;
+      if (emailOrUrlRegex.test(lineClean)) continue;
+      if (dateRangeOnlyRegex.test(lineClean)) continue;
+      if (!verbSignalRegex.test(lineClean)) continue;
+
+      candidates.push(lineClean);
+    }
+
+    if (candidates.length === 0) return null;
+
+    // Weakness signals
+    const passiveStartersId = [
+      'bertanggung jawab', 'tanggung jawab', 'membantu', 'mengurus', 'melakukan', 'menjalankan',
+      'mengerjakan', 'ikut serta', 'bertugas', 'mengawasi', 'berpartisipasi', 'terlibat dalam',
+      'mendukung', 'menghandle', 'menerima', 'membuat laporan', 'berkoordinasi', 'menyusun'
+    ];
+    const passiveStartersEn = [
+      'responsible for', 'duties included', 'assisted in', 'assisted with', 'helped to',
+      'handled', 'worked on', 'participated in', 'tasked with', 'involved in', 'supported',
+      'responsible of', 'served as', 'in charge of'
+    ];
+
+    const metricRegex = /\b\d+(\.\d+)?%|\b\d+\s*persen|\brp\s*[\d\.]+|\b\$\d+|\b\d+\s*(orang|kandidat|posisi|siswa|klien|proyek|bulan|tahun|karyawan|user|pengguna|teams?|clients?|projects?)\b/i;
+
+    const scored = candidates.map(sent => {
+      const lower = sent.toLowerCase();
+      let weakScore = 0;
+      let diagnosisKey = '';
+
+      // Check passive starters
+      const hasPassiveStarterId = passiveStartersId.some(p => lower.startsWith(p) || lower.includes(' ' + p));
+      const hasPassiveStarterEn = passiveStartersEn.some(p => lower.startsWith(p) || lower.includes(' ' + p));
+
+      if (hasPassiveStarterId || hasPassiveStarterEn) {
+        weakScore += 50;
+        diagnosisKey = 'passive';
+      }
+
+      // Check zero metrics
+      const hasMetric = metricRegex.test(sent);
+      if (!hasMetric) {
+        weakScore += 35;
+        if (!diagnosisKey) diagnosisKey = 'no_metric';
+      }
+
+      // Check duty/routine words without outcome
+      if (/administrasi|harian|rutin|operasional|dokumen|tugas|meeting|rapat|daily|routine|administrative/i.test(lower)) {
+        weakScore += 15;
+      }
+
+      return {
+        sentence: sent,
+        weakScore,
+        diagnosisKey: diagnosisKey || 'vague',
+        hasMetric
+      };
+    });
+
+    // Sort by weakness descending
+    scored.sort((a, b) => b.weakScore - a.weakScore);
+
+    // Pick weak items with weakScore >= 35
+    const weakItems = scored.filter(s => s.weakScore >= 35);
+    if (weakItems.length === 0) return null;
+
+    // Deduplicate near identical sentences
+    const uniqueWeak = [];
+    const seen = new Set();
+    for (const item of weakItems) {
+      const slug = item.sentence.toLowerCase().slice(0, 30);
+      if (!seen.has(slug)) {
+        seen.add(slug);
+        uniqueWeak.push(item);
+      }
+    }
+
+    const primary = uniqueWeak[0];
+    const secondary = uniqueWeak.slice(1, 4);
+
+    return {
+      primary: {
+        original: primary.sentence,
+        diagnosis: getDiagnosisText(primary.diagnosisKey, primary.sentence, lang),
+        rewrite: generateTailoredXYZRewrite(primary.sentence, roleKey, roleName, lang)
+      },
+      secondary: secondary.map(item => ({
+        original: item.sentence,
+        diagnosis: getDiagnosisText(item.diagnosisKey, item.sentence, lang),
+        rewrite: generateTailoredXYZRewrite(item.sentence, roleKey, roleName, lang)
+      }))
+    };
+  }
+
+  function getDiagnosisText(key, sentence, lang) {
+    if (lang === 'id') {
+      if (key === 'passive') {
+        return '❌ <strong>Diagnosis Masalah:</strong> Menggunakan kalimat pasif tugas rutin dan belum menyertakan angka metrik capaian hasil bisnis (%).';
+      } else if (key === 'no_metric') {
+        return '❌ <strong>Diagnosis Masalah:</strong> Pernyataan tugas kualitatif tanpa angka efisiensi, skala proyek, atau hasil bisnis nyata yang dapat diukur.';
+      } else {
+        return '❌ <strong>Diagnosis Masalah:</strong> Narasi terlalu umum (vague); rekruter tidak dapat melihat skala tanggung jawab maupun metodologi kerja Anda.';
+      }
+    } else {
+      if (key === 'passive') {
+        return '❌ <strong>Root Issue:</strong> Starts with passive duty phrasing rather than proactive ownership, completely lacking quantifiable impact metrics (%).';
+      } else if (key === 'no_metric') {
+        return '❌ <strong>Root Issue:</strong> Purely qualitative statement without hard operational efficiency numbers, project scale, or measurable business outcomes.';
+      } else {
+        return '❌ <strong>Root Issue:</strong> Overly generic phrasing; ATS and recruiters cannot ascertain your specific contribution scale or execution methodology.';
+      }
+    }
+  }
+
+  function generateTailoredXYZRewrite(original, roleKey, roleName, lang) {
+    const lower = original.toLowerCase();
+
+    // 1. Context: Recruitment / Talent Acquisition / HR
+    if (/rekrut|recruitment|wawancara|interview|seleksi|kandidat|candidate|sourcing|talent|hiring|onboard/i.test(lower)) {
+      return lang === 'id'
+        ? '"Memimpin end-to-end recruitment cycle untuk 18 posisi spesialis menggunakan teknik wawancara STAR, memangkas time-to-hire sebesar 28% dengan angka retensi kandidat 94% pada masa probation."'
+        : '"Spearheaded end-to-end recruitment lifecycles across 18 specialized roles utilizing STAR behavioral interviewing, accelerating time-to-hire by 28% with a 94% probation retention rate."';
+    }
+
+    // 2. Context: Training / Learning / Mentoring / Shadow Teacher / Education
+    if (/train|pelatihan|ajar|didik|mentor|curriculum|kurikulum|siswa|murid|student|shadow|kelas|class|workshop|pendamping/i.test(lower)) {
+      return lang === 'id'
+        ? '"Merancang program pembelajaran & pendampingan terstruktur berbasis asesmen individual, mendongkrak penguasaan kompetensi target sebesar 35% dan mencatat tingkat kepuasan partisipan 96%."'
+        : '"Designed and executed structured individualized learning pathways, driving a 35% increase in target competency mastery while securing a 96% participant satisfaction rating."';
+    }
+
+    // 3. Context: HR Operations / Administration / People & Culture
+    if (/administrasi|operasional|dokumen|surat|bpjs|payroll|absensi|karyawan|employee|people|kebijakan|policy/i.test(lower)) {
+      return lang === 'id'
+        ? '"Mendigitalkan alur administrasi SDM dan audit kepatuhan data personil untuk 120+ karyawan, menghemat 14 jam kerja operasional per minggu serta mengeliminasi deviasi kepatuhan internal hingga 0%."'
+        : '"Digitized HR administrative workflows and personnel compliance records across 120+ employees, saving 14 operational hours weekly while reducing internal audit variances to 0%."';
+    }
+
+    // 4. Context: Data Analysis / Business Analysis / Excel / Dashboard
+    if (/data|analis|analisis|analyst|excel|dashboard|visual|bi|laporan|report|metrik|metric|sql|python|kpi/i.test(lower)) {
+      return lang === 'id'
+        ? '"Membangun automated data model dan dashboard analitik interaktif, memangkas siklus pembuatan laporan rutin sebesar 65% dan menyajikan insights akurat untuk perumusan keputusan manajerial."'
+        : '"Architected automated data pipelines and executive dashboards, reducing weekly reporting cycles by 65% while delivering real-time actionable intelligence to leadership."';
+    }
+
+    // 5. Context: Software Engineering / Web / Tech / QA
+    if (/code|koding|web|aplikasi|software|fitur|feature|bug|api|database|system|frontend|backend|react|git/i.test(lower)) {
+      return lang === 'id'
+        ? '"Mengarsitekturi dan merilis modul sistem terdistribusi berskala tinggi, menurunkan latensi API p95 sebesar 38% serta mempertahankan uptime operasional pada standar 99.9% SLA."'
+        : '"Architected and deployed high-throughput distributed system modules, reducing p95 API response latency by 38% while sustaining a 99.9% operational uptime SLA."';
+    }
+
+    // 6. Context: Product Management / Agile
+    if (/produk|product|roadmap|backlog|sprint|scrum|user story/i.test(lower)) {
+      return lang === 'id'
+        ? '"Memimpin riset discovery dan delivery roadmap produk lintas divisi, meningkatkan adopsi fitur baru sebesar 42% dan memangkas waktu cycle time sprint engineering hingga 25%."'
+        : '"Orchestrated product discovery and cross-functional roadmap execution, increasing new feature adoption by 42% and shortening sprint engineering cycle time by 25%."';
+    }
+
+    // 7. Context: Digital Marketing / Growth / Social Media
+    if (/marketing|pemasaran|campaign|iklan|ads|sosmed|social media|konten|content|leads|sales|penjualan|roi|omzet/i.test(lower)) {
+      return lang === 'id'
+        ? '"Mengeksekusi strategi kampanye berbasis data analitik performa, melipatgandakan Return on Ad Spend (ROAS) hingga 3.6x dan mendongkrak perolehan prospek berkualitas (leads) sebesar 48%."'
+        : '"Executed data-driven performance campaigns, scaling Return on Ad Spend (ROAS) to 3.6x while generating a 48% increase in qualified inbound lead acquisitions."';
+    }
+
+    // 8. Adaptive Generic Context: Clean the sentence and construct XYZ with original core keywords
+    const cleanedTopic = original
+      .replace(/^(bertanggung jawab (atas|dalam|untuk)?|membantu|mengurus|melakukan|menjalankan|mengerjakan|responsible for|duties included|assisted with|helped to|handled)\s*/i, '')
+      .replace(/^(dan|serta|juga|and|as well as)\s*/i, '')
+      .trim();
+
+    const shortTopic = cleanedTopic.length > 5 ? cleanedTopic : (roleName || 'operasional');
+
+    return lang === 'id'
+      ? `"Mengoptimalkan pelaksanaan inisiatif ${shortTopic} melalui standardisasi alur kerja terstruktur, meningkatkan efisiensi operasional tim sebesar 32% dan memastikan tingkat keberhasilan delivery 98%."`
+      : `"Spearheaded the systematic execution of ${shortTopic} via standardized operating workflows, accelerating team operational efficiency by 32% with a 98% quality delivery benchmark."`;
+  }
+
+// --------------------------------------------------------------------------
   // 12. ATS SCREENING & PSYCHOLOGICAL DIAGNOSTIC ALGORITHM
   // --------------------------------------------------------------------------
   function analyzeResume(text, roleKey) {
@@ -2006,6 +2221,24 @@ KEAHLIAN & KOMPETENSI
       gaps.push(lang === 'id' ? 'Tautan portofolio aktif atau LinkedIn belum terdeteksi secara jelas di bagian kontak.' : 'Online portfolio link or updated LinkedIn handle not distinctly formatted.');
     }
 
+    // Extract weak sentences directly from candidate's uploaded/pasted text
+    const extractedRewrites = extractAndAnalyzeWeakSentences(text, roleKey, roleName, lang);
+    let isExtractedFromCv = false;
+    let rewriteDiagnosis = '';
+    let secondaryRewrites = [];
+
+    if (extractedRewrites && extractedRewrites.primary) {
+      isExtractedFromCv = true;
+      beforeRewrite = `"${extractedRewrites.primary.original}"`;
+      afterRewrite = extractedRewrites.primary.rewrite;
+      rewriteDiagnosis = extractedRewrites.primary.diagnosis;
+      secondaryRewrites = extractedRewrites.secondary || [];
+    } else {
+      rewriteDiagnosis = lang === 'id'
+        ? '❌ <strong>Diagnosis Masalah:</strong> Menggunakan kalimat pasif tugas rutin dan belum menyertakan angka metrik capaian hasil bisnis (%).'
+        : '❌ <strong>Root Issue:</strong> Passive task description lacking quantifiable business metrics and high-impact action verbs.';
+    }
+
     return {
       score: totalScore,
       tier,
@@ -2020,6 +2253,9 @@ KEAHLIAN & KOMPETENSI
       missingKeywords: missingKeywords.length > 0 ? missingKeywords : targetKeywords.slice(0, 6),
       beforeRewrite,
       afterRewrite,
+      rewriteDiagnosis,
+      isExtractedFromCv,
+      secondaryRewrites,
       starQuestion,
       roleTitle: roleName,
       documentName: state.uploadedFile ? state.uploadedFile.name : (lang === 'id' ? 'Teks Input CV Kandidat' : 'Pasted Candidate Resume')
@@ -2044,7 +2280,7 @@ KEAHLIAN & KOMPETENSI
     let currentCount = 0;
     const targetScore = res.score;
     DOM.scoreNumber.textContent = '0';
-    DOM.scoreNumber.style.color = palette.scoreColor;
+    DOM.scoreNumber.style.setProperty('color', palette.scoreColor, 'important');
 
     const timer = setInterval(() => {
       currentCount += 2;
@@ -2056,15 +2292,15 @@ KEAHLIAN & KOMPETENSI
     }, 20);
 
     DOM.progressBarFill.style.width = targetScore + '%';
-    DOM.progressBarFill.style.backgroundColor = palette.scoreColor;
+    DOM.progressBarFill.style.setProperty('background-color', palette.scoreColor, 'important');
     DOM.scorePercentageTxt.textContent = targetScore + (lang === 'id' ? '% Cocok' : '% Match');
 
     DOM.scoreTierLabel.textContent = res.tierName;
-    DOM.scoreTierLabel.style.color = palette.color;
+    DOM.scoreTierLabel.style.setProperty('color', palette.color, 'important');
     DOM.tierBadgePill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-current"></span><span>${res.tierBadge}</span>`;
-    DOM.tierBadgePill.style.color = palette.color;
-    DOM.tierBadgePill.style.borderColor = palette.border;
-    DOM.tierBadgePill.style.backgroundColor = palette.bg;
+    DOM.tierBadgePill.style.setProperty('color', palette.color, 'important');
+    DOM.tierBadgePill.style.setProperty('border-color', palette.border, 'important');
+    DOM.tierBadgePill.style.setProperty('background-color', palette.bg, 'important');
 
     DOM.tierNarrativeTxt.textContent = res.narrative;
     DOM.recruiterAdviceTxt.textContent = res.advice;
@@ -2095,8 +2331,84 @@ KEAHLIAN & KOMPETENSI
       </li>
     `).join('');
 
+    // Card 04: Primary Rewrite
+    if (res.isExtractedFromCv && DOM.cvScanDetectionBadge) {
+      DOM.cvScanDetectionBadge.classList.remove('hidden');
+    } else if (DOM.cvScanDetectionBadge) {
+      DOM.cvScanDetectionBadge.classList.add('hidden');
+    }
+
     DOM.rewriteBeforeTxt.textContent = res.beforeRewrite;
     DOM.rewriteAfterTxt.textContent = res.afterRewrite;
+    if (DOM.rewriteDiagnosisTxt) {
+      DOM.rewriteDiagnosisTxt.innerHTML = res.rewriteDiagnosis || (lang === 'id'
+        ? '❌ <strong>Diagnosis Masalah:</strong> Menggunakan kalimat pasif tugas rutin dan belum menyertakan angka metrik capaian hasil bisnis (%).'
+        : '❌ <strong>Root Issue:</strong> Passive task description lacking quantifiable business metrics and high-impact action verbs.');
+    }
+
+    // Secondary rewrites if extracted from candidate's CV
+    if (DOM.secondaryRewritesContainer && DOM.secondaryRewritesList) {
+      if (res.secondaryRewrites && res.secondaryRewrites.length > 0) {
+        DOM.secondaryRewritesContainer.classList.remove('hidden');
+        if (DOM.secondaryRewritesCount) {
+          DOM.secondaryRewritesCount.textContent = `${res.secondaryRewrites.length} ` + (lang === 'id' ? 'Kalimat Terdeteksi' : 'Sentences Detected');
+        }
+        DOM.secondaryRewritesList.innerHTML = res.secondaryRewrites.map((item, idx) => `
+          <div class="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-dark-surface border border-rose-200 dark:border-dark-border space-y-3 shadow-sm">
+            <div class="space-y-1">
+              <div class="flex items-center justify-between">
+                <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-rose-800 dark:text-rose-400">
+                  ${lang === 'id' ? 'Butir #' + (idx + 2) + ' Asli di CV Anda' : 'Original Experience Bullet #' + (idx + 2)}
+                </span>
+                <span class="text-[9.5px] font-mono font-semibold text-rose-700 dark:text-rose-400 px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/40">
+                  ${lang === 'id' ? 'Perlu Dirombak' : 'Needs Overhaul'}
+                </span>
+              </div>
+              <p class="text-xs text-slate-900 dark:text-slate-300 italic font-sans bg-rose-50/60 dark:bg-[#131722] p-2.5 rounded-lg border border-rose-200 dark:border-rose-950/50">
+                "${escapeHtml(item.original)}"
+              </p>
+              <p class="text-[11px] text-rose-800 dark:text-rose-300 font-medium">
+                ${item.diagnosis}
+              </p>
+            </div>
+            <div class="space-y-1.5 pt-1 border-t border-dark-border/40">
+              <div class="flex items-center justify-between">
+                <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  <span>${lang === 'id' ? 'Rekomendasi Formula XYZ (Siap Salin)' : 'Recommended XYZ Formula (Ready to Copy)'}</span>
+                </span>
+                <button type="button" class="copy-secondary-rewrite-btn text-[11px] text-emerald-800 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-emerald-300 font-heading font-bold flex items-center gap-1 transition-colors" data-copy-target="${encodeURIComponent(item.rewrite)}">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                  <span>${lang === 'id' ? 'Salin Kalimat' : 'Copy Sentence'}</span>
+                </button>
+              </div>
+              <p class="text-xs text-slate-900 dark:text-emerald-100 font-semibold dark:font-medium leading-relaxed bg-emerald-50/70 dark:bg-[#10221A] p-2.5 rounded-lg border border-emerald-300 dark:border-emerald-500/30">
+                ${escapeHtml(item.rewrite)}
+              </p>
+            </div>
+          </div>
+        `).join('');
+
+        // Wire copy events for secondary rewrites
+        DOM.secondaryRewritesList.querySelectorAll('.copy-secondary-rewrite-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const encoded = btn.getAttribute('data-copy-target');
+            if (encoded) {
+              const textToCopy = decodeURIComponent(encoded).replace(/^[\"'“”‘’]+|[\"'“”‘’]+$/g, '');
+              navigator.clipboard.writeText(textToCopy).then(() => {
+                showToast(lang === 'id' ? 'Kalimat rekomendasi berhasil disalin ke clipboard!' : 'Recommended sentence copied to clipboard!');
+              }).catch(() => {
+                showToast(lang === 'id' ? 'Gagal menyalin teks' : 'Failed to copy text');
+              });
+            }
+          });
+        });
+      } else {
+        DOM.secondaryRewritesContainer.classList.add('hidden');
+        DOM.secondaryRewritesList.innerHTML = '';
+      }
+    }
+
     DOM.starQuestionTxt.textContent = res.starQuestion;
 
     // Dynamically update WhatsApp consultation link with contextual role & score
