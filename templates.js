@@ -8,6 +8,15 @@
 (function () {
   'use strict';
 
+  const PAYMENT_CONFIG = {
+    amountText: 'Rp 25.000',
+    bcaVaNumber: '8801085892344722',
+    bcaVaDisplay: '8801 0858 9234 4722',
+    qrisImageUrl: '', // Isi path gambar QRIS (mis. 'qris.png') saat sudah siap
+    accessCode: 'SCREENORA25',
+    whatsappNumber: '6285892344722'
+  };
+
   // --------------------------------------------------------------------------
   // 1. TEMPLATE REPOSITORY (AUTHENTIC & PRACTICAL ATS STANDARDS)
   // --------------------------------------------------------------------------
@@ -388,7 +397,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       builderModalTitle: 'Live CV Builder (Standar ATS)',
       builderCopyBtn: 'Salin Teks',
       builderCheckAtsBtn: 'Cek Skor ATS →',
-      builderDownloadBtn: 'Unduh .doc',
+      builderDownloadBtn: 'Unduh .doc (Rp 25.000)',
       builderCopiedToast: 'Draf CV dari builder berhasil disalin ke clipboard!',
       builderLabelName: 'Nama Lengkap',
       builderLabelContact: 'Kontak, Domisili & LinkedIn',
@@ -396,7 +405,15 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       builderLabelExperience: 'Pengalaman Kerja / Magang (Formula XYZ)',
       builderLabelEducation: 'Pendidikan',
       builderLabelSkills: 'Keahlian & Sertifikasi',
-      builderPreviewLabel: 'Pratinjau Kertas A4 (Real-Time)'
+      builderPreviewLabel: 'Pratinjau Kertas A4 (Real-Time)',
+      payModalTitle: 'Unduh CV ATS Siap Lamar (Rp 25.000)',
+      payTabQris: 'QRIS (Semua E-Wallet & Bank)',
+      payTabBca: 'VA Bank BCA',
+      payQrisHint: 'Scan kode QRIS di atas menggunakan GoPay, OVO, DANA, ShopeePay, atau Mobile Banking (Nominal: Rp 25.000).',
+      confirmPayWaBtn: 'Konfirmasi Pembayaran via WhatsApp',
+      verifyPayBtn: 'Verifikasi & Unduh .doc',
+      payInvalidCodeToast: 'Kode akses tidak valid. Silakan konfirmasi pembayaran via WhatsApp terlebih dahulu.',
+      paySuccessToast: 'Akses terverifikasi! Mengunduh berkas CV .doc Anda...'
     },
     en: {
       tplNavHub: 'Templates Hub',
@@ -528,7 +545,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       builderModalTitle: 'Live CV Builder (ATS Standard)',
       builderCopyBtn: 'Copy Text',
       builderCheckAtsBtn: 'Check ATS Score →',
-      builderDownloadBtn: 'Download .doc',
+      builderDownloadBtn: 'Download .doc (Rp 25.000)',
       builderCopiedToast: 'CV draft from builder copied to clipboard!',
       builderLabelName: 'Full Name',
       builderLabelContact: 'Contact, Location & LinkedIn',
@@ -536,7 +553,15 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       builderLabelExperience: 'Work / Internship Experience (XYZ Formula)',
       builderLabelEducation: 'Education',
       builderLabelSkills: 'Skills & Certifications',
-      builderPreviewLabel: 'A4 Paper Preview (Real-Time)'
+      builderPreviewLabel: 'A4 Paper Preview (Real-Time)',
+      payModalTitle: 'Download ATS-Ready CV (Rp 25.000)',
+      payTabQris: 'QRIS (All E-Wallets & Banks)',
+      payTabBca: 'BCA Virtual Account',
+      payQrisHint: 'Scan the QRIS code above using GoPay, OVO, DANA, ShopeePay, or Mobile Banking (Amount: Rp 25.000).',
+      confirmPayWaBtn: 'Confirm Payment via WhatsApp',
+      verifyPayBtn: 'Verify & Download .doc',
+      payInvalidCodeToast: 'Invalid access code. Please confirm your payment via WhatsApp first.',
+      paySuccessToast: 'Access verified! Downloading your .doc CV file...'
     }
   };
 
@@ -554,7 +579,15 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     language: initialLang,
     activeFilter: 'all',
     currentActiveTemplate: null,
-    currentBuilderTemplate: 'classic_corporate'
+    currentBuilderTemplate: 'classic_corporate',
+    builderPaid: (() => {
+      try {
+        return sessionStorage.getItem('screenora_builder_paid') === '1';
+      } catch (_) {
+        return false;
+      }
+    })(),
+    payMethod: 'qris'
   };
 
   const DOM = {
@@ -588,6 +621,19 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     builderCopyBtn: document.getElementById('builderCopyBtn'),
     builderCheckAtsBtn: document.getElementById('builderCheckAtsBtn'),
     builderDownloadBtn: document.getElementById('builderDownloadBtn'),
+    builderPayModalOverlay: document.getElementById('builderPayModalOverlay'),
+    closePayModalBtn: document.getElementById('closePayModalBtn'),
+    payTabQrisBtn: document.getElementById('payTabQrisBtn'),
+    payTabBcaBtn: document.getElementById('payTabBcaBtn'),
+    payPanelQris: document.getElementById('payPanelQris'),
+    payPanelBca: document.getElementById('payPanelBca'),
+    builderQrisImg: document.getElementById('builderQrisImg'),
+    builderQrisPlaceholder: document.getElementById('builderQrisPlaceholder'),
+    payVaNumber: document.getElementById('payVaNumber'),
+    copyVaBcaBtn: document.getElementById('copyVaBcaBtn'),
+    confirmPayWaBtn: document.getElementById('confirmPayWaBtn'),
+    builderAccessCodeInput: document.getElementById('builderAccessCodeInput'),
+    verifyPayBtn: document.getElementById('verifyPayBtn'),
     toast: document.getElementById('toast'),
     toastMsg: document.getElementById('toastMsg')
   };
@@ -1083,6 +1129,80 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     }
   }
 
+  function setPayMethod(method) {
+    state.payMethod = method === 'bca' ? 'bca' : 'qris';
+    const isQris = state.payMethod === 'qris';
+
+    if (DOM.payPanelQris) {
+      DOM.payPanelQris.classList.toggle('hidden', !isQris);
+    }
+    if (DOM.payPanelBca) {
+      DOM.payPanelBca.classList.toggle('hidden', isQris);
+    }
+
+    const activeClasses = ['bg-emerald-500/15', 'text-emerald-400', 'border-emerald-500/40', 'font-semibold'];
+    const inactiveClasses = ['bg-transparent', 'text-slate-400', 'border-slate-700/60'];
+
+    if (DOM.payTabQrisBtn) {
+      DOM.payTabQrisBtn.setAttribute('aria-selected', isQris ? 'true' : 'false');
+      activeClasses.forEach((cls) => DOM.payTabQrisBtn.classList.toggle(cls, isQris));
+      inactiveClasses.forEach((cls) => DOM.payTabQrisBtn.classList.toggle(cls, !isQris));
+    }
+    if (DOM.payTabBcaBtn) {
+      DOM.payTabBcaBtn.setAttribute('aria-selected', !isQris ? 'true' : 'false');
+      activeClasses.forEach((cls) => DOM.payTabBcaBtn.classList.toggle(cls, !isQris));
+      inactiveClasses.forEach((cls) => DOM.payTabBcaBtn.classList.toggle(cls, isQris));
+    }
+  }
+
+  function openPayModal() {
+    if (DOM.payVaNumber) {
+      DOM.payVaNumber.textContent = PAYMENT_CONFIG.bcaVaDisplay;
+    }
+
+    const hasQrisImg = Boolean(PAYMENT_CONFIG.qrisImageUrl && PAYMENT_CONFIG.qrisImageUrl.trim());
+    if (DOM.builderQrisImg) {
+      if (hasQrisImg) {
+        DOM.builderQrisImg.src = PAYMENT_CONFIG.qrisImageUrl.trim();
+        DOM.builderQrisImg.classList.remove('hidden');
+      } else {
+        DOM.builderQrisImg.classList.add('hidden');
+      }
+    }
+    if (DOM.builderQrisPlaceholder) {
+      DOM.builderQrisPlaceholder.classList.toggle('hidden', hasQrisImg);
+    }
+
+    setPayMethod(state.payMethod || 'qris');
+
+    if (DOM.builderPayModalOverlay) {
+      DOM.builderPayModalOverlay.classList.remove('hidden');
+    }
+  }
+
+  function closePayModal() {
+    if (DOM.builderPayModalOverlay) {
+      DOM.builderPayModalOverlay.classList.add('hidden');
+    }
+  }
+
+  function downloadBuilderDoc(options) {
+    const silentToast = options && options.silentToast;
+    const text = assembleBuilderPlainText();
+    if (!text) {
+      showToast(state.language === 'id' ? 'Isi minimal satu bagian CV terlebih dahulu.' : 'Please fill in at least one CV section first.');
+      return false;
+    }
+    const name = (DOM.builderName && DOM.builderName.value.trim()) || 'CV_ATS';
+    const safeSlug = name.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'CV_ATS';
+    const fileName = `CV_ATS_${safeSlug}_Screenora.doc`;
+    exportPlainTextToWord(text, name, fileName);
+    if (!silentToast) {
+      showToast(state.language === 'id' ? `Berhasil mengunduh ${fileName}!` : `Downloaded ${fileName} successfully!`);
+    }
+    return true;
+  }
+
   function escapeHtml(str) {
     return str
       .replace(/&/g, '&amp;')
@@ -1145,6 +1265,14 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     if (DOM.closeBuilderModalBtn) {
       DOM.closeBuilderModalBtn.addEventListener('click', closeBuilderModal);
     }
+    if (DOM.builderPayModalOverlay) {
+      DOM.builderPayModalOverlay.addEventListener('click', (e) => {
+        if (e.target === DOM.builderPayModalOverlay) closePayModal();
+      });
+    }
+    if (DOM.closePayModalBtn) {
+      DOM.closePayModalBtn.addEventListener('click', closePayModal);
+    }
 
     // Live CV Builder form bindings
     [
@@ -1193,11 +1321,54 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
           showToast(state.language === 'id' ? 'Isi minimal satu bagian CV terlebih dahulu.' : 'Please fill in at least one CV section first.');
           return;
         }
-        const name = (DOM.builderName && DOM.builderName.value.trim()) || 'CV_ATS';
-        const safeSlug = name.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'CV_ATS';
-        const fileName = `CV_ATS_${safeSlug}_Screenora.doc`;
-        exportPlainTextToWord(text, name, fileName);
-        showToast(state.language === 'id' ? `Berhasil mengunduh ${fileName}!` : `Downloaded ${fileName} successfully!`);
+        if (state.builderPaid) {
+          downloadBuilderDoc();
+        } else {
+          openPayModal();
+        }
+      });
+    }
+
+    if (DOM.payTabQrisBtn) {
+      DOM.payTabQrisBtn.addEventListener('click', () => setPayMethod('qris'));
+    }
+    if (DOM.payTabBcaBtn) {
+      DOM.payTabBcaBtn.addEventListener('click', () => setPayMethod('bca'));
+    }
+    if (DOM.copyVaBcaBtn) {
+      DOM.copyVaBcaBtn.addEventListener('click', () => {
+        const msg = state.language === 'id' ? 'Nomor VA BCA berhasil disalin!' : 'BCA Virtual Account number copied!';
+        copyTextToClipboard(PAYMENT_CONFIG.bcaVaNumber, msg);
+      });
+    }
+    if (DOM.confirmPayWaBtn) {
+      DOM.confirmPayWaBtn.addEventListener('click', () => {
+        const methodLabel = state.payMethod === 'bca' ? 'VA Bank BCA' : 'QRIS';
+        const candidateName = (DOM.builderName && DOM.builderName.value.trim()) || '-';
+        const message = state.language === 'id'
+          ? `Halo Admin Screenora, saya sudah melakukan pembayaran untuk Unduh CV Builder (.doc).\n• Metode: ${methodLabel}\n• Nominal: ${PAYMENT_CONFIG.amountText}\n• Nama Kandidat: ${candidateName}\nMohon verifikasi dan kirimkan kode aksesnya. Terima kasih!`
+          : `Hello Screenora Admin, I have completed the payment for CV Builder Download (.doc).\n• Method: ${methodLabel}\n• Amount: ${PAYMENT_CONFIG.amountText}\n• Candidate Name: ${candidateName}\nPlease verify and send the access code. Thank you!`;
+        const waUrl = `https://wa.me/${PAYMENT_CONFIG.whatsappNumber}?text=${encodeURIComponent(message)}`;
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+      });
+    }
+    if (DOM.verifyPayBtn) {
+      DOM.verifyPayBtn.addEventListener('click', () => {
+        const dict = i18n[state.language] || i18n.id;
+        const inputCode = (DOM.builderAccessCodeInput && DOM.builderAccessCodeInput.value || '').trim().toUpperCase();
+        if (inputCode === PAYMENT_CONFIG.accessCode.trim().toUpperCase()) {
+          state.builderPaid = true;
+          try {
+            sessionStorage.setItem('screenora_builder_paid', '1');
+          } catch (_) {
+            // Ignore storage quota or privacy mode errors
+          }
+          closePayModal();
+          showToast(dict.paySuccessToast);
+          downloadBuilderDoc({ silentToast: true });
+        } else {
+          showToast(dict.payInvalidCodeToast);
+        }
       });
     }
 
@@ -1223,6 +1394,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
         closePreviewModal();
         closeComingSoonModal();
         closeBuilderModal();
+        closePayModal();
       }
     });
 
@@ -1235,6 +1407,9 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     window.closeComingSoonModal = closeComingSoonModal;
     window.openCvBuilder = openCvBuilder;
     window.closeBuilderModal = closeBuilderModal;
+    window.openPayModal = openPayModal;
+    window.closePayModal = closePayModal;
+    window.setPayMethod = setPayMethod;
   }
 
   // Run on DOM ready
