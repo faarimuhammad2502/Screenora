@@ -91,7 +91,7 @@
   </script>
 
   <!-- Custom Stylesheet with Cache Busting -->
-  <link rel="stylesheet" href="style.css?v=3.4.0">
+  <link rel="stylesheet" href="style.css?v=3.5.0">
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -147,8 +147,9 @@
         <a href="templates.html" class="px-3 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-well border border-transparent hover:border-dark-wellBorder transition-all" data-i18n="navTemplates">
           Template ATS
         </a>
-        <a href="builder.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-dark-well border border-brand-emerald/30 text-brand-emerald" aria-current="page" data-i18n="navBuilder">
-          Buat CV Instan
+        <a href="builder.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-dark-well border border-brand-emerald/30 text-brand-emerald inline-flex items-center gap-1.5" aria-current="page">
+          <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+          <span data-i18n="navBuilder">Buat CV Instan</span>
         </a>
       </nav>
 
@@ -179,8 +180,9 @@
       <a href="templates.html" class="px-2.5 py-1 rounded-md text-[11px] font-medium text-dark-textSec hover:text-dark-textPri bg-dark-well/60 border border-dark-wellBorder whitespace-nowrap" data-i18n="navTemplates">
         Template ATS
       </a>
-      <a href="builder.html" class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-dark-well border border-brand-emerald/40 text-brand-emerald whitespace-nowrap" aria-current="page" data-i18n="navBuilder">
-        Buat CV Instan
+      <a href="builder.html" class="px-2.5 py-1 rounded-md text-[11px] font-semibold bg-dark-well border border-brand-emerald/40 text-brand-emerald whitespace-nowrap inline-flex items-center gap-1" aria-current="page">
+        <svg class="w-3 h-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <span data-i18n="navBuilder">Buat CV Instan</span>
       </a>
     </div>
   </header>
@@ -195,6 +197,7 @@
       <div class="max-w-2xl">
         <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-dark-well border border-dark-wellBorder text-dark-textSec text-[11px] font-mono uppercase tracking-wider mb-3">
           <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald"></span>
+          <svg class="w-3 h-3 text-brand-emerald shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
           <span data-i18n="builderHeroBadge">Live ATS Workspace • Formula XYZ</span>
         </div>
         <h1 class="text-2xl sm:text-3xl font-heading font-extrabold tracking-tight text-dark-textPri leading-tight" data-i18n="builderPageTitle">
@@ -229,6 +232,7 @@
             <p class="text-[11px] text-dark-textMuted mt-0.5" data-i18n="builderTemplateHint">Pilih struktur dokumen sesuai target perusahaan</p>
           </div>
           <select id="builderTemplateSelect" aria-label="Pilih Template CV" class="w-full sm:w-64 bg-dark-well border border-dark-wellBorder text-dark-textPri text-xs font-medium rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-brand-emerald transition-colors cursor-pointer">
+            <option value="" selected data-i18n="builderBlankOption">Mulai dari Kosong (Blank)</option>
             <option value="classic_corporate">Classic Corporate &amp; BUMN</option>
             <option value="fresh_graduate">Fresh Graduate &amp; Magang</option>
             <option value="global_tech">Global Tech &amp; Engineering</option>
@@ -275,14 +279,14 @@
             <label for="builderName" class="block text-[11px] font-heading font-semibold uppercase tracking-wider text-dark-textSec mb-1.5" data-i18n="builderLabelName">
               Nama Lengkap &amp; Gelar
             </label>
-            <input id="builderName" type="text" placeholder="Contoh: Raka Pratama, S.E." class="w-full bg-dark-well border border-dark-wellBorder rounded-xl px-3.5 py-2.5 text-xs text-dark-textPri placeholder:text-dark-textMuted focus:outline-none focus:border-brand-emerald transition-colors">
+            <input id="builderName" type="text" value="" placeholder="Contoh: Raka Pratama, S.E." class="w-full bg-dark-well border border-dark-wellBorder rounded-xl px-3.5 py-2.5 text-xs text-dark-textPri placeholder:text-dark-textMuted focus:outline-none focus:border-brand-emerald transition-colors">
           </div>
 
           <div>
             <label for="builderContact" class="block text-[11px] font-heading font-semibold uppercase tracking-wider text-dark-textSec mb-1.5" data-i18n="builderLabelContact">
               Informasi Kontak
             </label>
-            <input id="builderContact" type="text" placeholder="Jakarta | email@domain.com | +62 812-xxxx-xxxx | linkedin.com/in/nama" class="w-full bg-dark-well border border-dark-wellBorder rounded-xl px-3.5 py-2.5 text-xs text-dark-textPri placeholder:text-dark-textMuted focus:outline-none focus:border-brand-emerald transition-colors">
+            <input id="builderContact" type="text" value="" placeholder="Jakarta | email@domain.com | +62 812-xxxx-xxxx | linkedin.com/in/nama" class="w-full bg-dark-well border border-dark-wellBorder rounded-xl px-3.5 py-2.5 text-xs text-dark-textPri placeholder:text-dark-textMuted focus:outline-none focus:border-brand-emerald transition-colors">
           </div>
 
           <div>
@@ -341,6 +345,28 @@
         <!-- Clean White A4 Word Paper Sheet -->
         <div class="bg-white text-slate-900 rounded-xl p-7 sm:p-9 shadow-xl border border-slate-200 min-h-[540px]">
           <div id="builderLivePreview"></div>
+        </div>
+
+        <!-- Inline ATS Score Result Panel -->
+        <div id="builderAtsScorePanel" class="hidden bg-dark-surface border border-dark-border rounded-2xl p-4 sm:p-5 shadow-lg space-y-3">
+          <div class="flex items-center justify-between gap-3 border-b border-dark-border pb-3">
+            <div class="flex items-center gap-2.5 min-w-0">
+              <span class="text-[11px] font-heading font-semibold uppercase tracking-wider text-dark-textSec" data-i18n="builderAtsPanelTitle">
+                Hasil Cek Skor ATS
+              </span>
+              <span id="builderAtsTierBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-semibold bg-dark-well border border-dark-wellBorder text-dark-textSec">
+                Tier 2
+              </span>
+            </div>
+            <span id="builderAtsScoreValue" class="text-2xl font-heading font-extrabold text-brand-emerald tabular-nums">
+              0%
+            </span>
+          </div>
+          <p id="builderAtsSummaryText" class="text-xs text-dark-textSec leading-relaxed"></p>
+          <button id="builderScoreDownloadBtn" type="button" class="w-full py-2.5 px-4 bg-brand-emerald text-black rounded-xl text-xs font-heading font-bold uppercase tracking-wider hover:bg-brand-emeraldDark transition-all flex items-center justify-center gap-2">
+            <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+            <span data-i18n="builderDownloadBtn">Unduh .doc (Rp 25.000)</span>
+          </button>
         </div>
 
         <!-- Action Bar -->
@@ -523,6 +549,6 @@
   </div>
 
   <!-- Live CV Builder Logic Script -->
-  <script src="builder.js?v=3.4.0" defer></script>
+  <script src="builder.js?v=3.5.0" defer></script>
 </body>
 </html>

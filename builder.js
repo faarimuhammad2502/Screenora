@@ -283,6 +283,7 @@ CERTIFICATIONS
       builderSubtitle: 'Lengkapi data di kiri, sisipkan preset pengalaman atau optimasi kalimat tugas menjadi Formula XYZ dalam 1 klik, lalu pantau pratinjau dokumen Word secara langsung.',
       builderPageDesc: 'Susun resume 1-kolom berstandar rekruter dari awal atau ubah kalimat tugas menjadi pencapaian Formula XYZ terukur dalam 1 klik.',
       builderPrivacyPill: '100% Lokal di Browser (Tanpa Server)',
+      builderBlankOption: 'Mulai dari Kosong (Blank)',
       builderTemplateLabel: 'Basis Template ATS:',
       builderLabelTemplate: 'Basis Template ATS',
       builderTemplateHint: 'Pilih struktur dokumen sesuai target perusahaan',
@@ -320,7 +321,8 @@ CERTIFICATIONS
       autoOptimizeToast: 'Kalimat pengalaman berhasil dikonversi ke Formula XYZ!',
       autoOptimizeNoLinesToast: 'Tambahkan minimal satu baris pengalaman kerja untuk dioptimasi.',
       presetAddedToast: 'Contoh pencapaian XYZ berhasil disisipkan!',
-      emptyCvToast: 'Isi minimal satu bagian CV terlebih dahulu.'
+      emptyCvToast: 'Isi minimal satu bagian CV terlebih dahulu.',
+      isMinimalText: 'Isi minimal 40 karakter pada CV Anda sebelum mengecek skor ATS.'
     },
     en: {
       navStudio: 'Diagnostic Studio',
@@ -340,6 +342,7 @@ CERTIFICATIONS
       builderSubtitle: 'Fill in your details on the left, insert role presets or convert duty lines into measurable XYZ bullets in 1 click, and preview your Word document live.',
       builderPageDesc: 'Build a recruiter-approved single-column resume from scratch or convert duty lines into measurable XYZ achievements in 1 click.',
       builderPrivacyPill: '100% Local in Browser (Zero Server)',
+      builderBlankOption: 'Start from Blank',
       builderTemplateLabel: 'ATS Template Base:',
       builderLabelTemplate: 'ATS Template Base',
       builderTemplateHint: 'Select a document structure tailored to your target company',
@@ -377,7 +380,8 @@ CERTIFICATIONS
       autoOptimizeToast: 'Experience bullets optimized into active XYZ Formula!',
       autoOptimizeNoLinesToast: 'Please add at least one experience line to optimize.',
       presetAddedToast: 'XYZ achievement preset inserted!',
-      emptyCvToast: 'Please fill in at least one CV section first.'
+      emptyCvToast: 'Please fill in at least one CV section first.',
+      isMinimalText: 'Please enter at least 40 characters in your resume before checking the ATS score.'
     }
   };
 
@@ -399,7 +403,7 @@ CERTIFICATIONS
   const state = {
     theme: localStorage.getItem('screenora_theme') || 'dark',
     language: initialLang,
-    currentBuilderTemplate: TEMPLATES[urlTemplate] ? urlTemplate : 'classic_corporate',
+    currentBuilderTemplate: (urlTemplate && TEMPLATES[urlTemplate]) ? urlTemplate : '',
     builderPaid: (() => {
       try {
         return sessionStorage.getItem('screenora_builder_paid') === '1';
@@ -429,6 +433,10 @@ CERTIFICATIONS
     builderCopyBtn: document.getElementById('builderCopyBtn'),
     builderCheckAtsBtn: document.getElementById('builderCheckAtsBtn'),
     builderDownloadBtn: document.getElementById('builderDownloadBtn'),
+    builderAtsScorePanel: document.getElementById('builderAtsScorePanel'),
+    builderAtsScoreValue: document.getElementById('builderAtsScoreValue'),
+    builderAtsTierBadge: document.getElementById('builderAtsTierBadge'),
+    builderAtsSummaryText: document.getElementById('builderAtsSummaryText'),
     builderPayModalOverlay: document.getElementById('builderPayModalOverlay'),
     closePayModalBtn: document.getElementById('closePayModalBtn'),
     payTabQrisBtn: document.getElementById('payTabQrisBtn'),
@@ -867,25 +875,273 @@ CERTIFICATIONS
   }
 
   // --------------------------------------------------------------------------
-  // 8. TEMPLATE LOADING, CLIPBOARD & PAYMENT GATE
+  // 8. TEMPLATE LOADING, IN-PAGE ATS SCORER, CLIPBOARD & PAYMENT GATE
   // --------------------------------------------------------------------------
-  function loadTemplateIntoBuilder(templateKey) {
-    const resolvedKey = TEMPLATES[templateKey] ? templateKey : 'classic_corporate';
-    state.currentBuilderTemplate = resolvedKey;
+  function ensureBlankTemplateOption() {
+    if (!DOM.builderTemplateSelect) return;
+    if (!DOM.builderTemplateSelect.querySelector('option[value=""]')) {
+      const blankOpt = document.createElement('option');
+      blankOpt.value = '';
+      blankOpt.setAttribute('data-i18n', 'builderBlankOption');
+      const dict = i18n[state.language] || i18n.id;
+      blankOpt.textContent = dict.builderBlankOption;
+      DOM.builderTemplateSelect.insertBefore(blankOpt, DOM.builderTemplateSelect.firstChild);
+    }
+  }
 
+  function resetBuilderFields() {
+    state.currentBuilderTemplate = '';
     if (DOM.builderTemplateSelect) {
-      DOM.builderTemplateSelect.value = resolvedKey;
+      DOM.builderTemplateSelect.value = '';
+    }
+    if (DOM.builderName) DOM.builderName.value = '';
+    if (DOM.builderContact) DOM.builderContact.value = '';
+    if (DOM.builderSummary) DOM.builderSummary.value = '';
+    if (DOM.builderExperience) DOM.builderExperience.value = '';
+    if (DOM.builderEducation) DOM.builderEducation.value = '';
+    if (DOM.builderSkills) DOM.builderSkills.value = '';
+    if (DOM.builderAtsScorePanel) {
+      DOM.builderAtsScorePanel.classList.add('hidden');
+    }
+    renderBuilderLivePreview();
+  }
+
+  function loadTemplateIntoBuilder(templateKey) {
+    if (!templateKey || !TEMPLATES[templateKey]) {
+      resetBuilderFields();
+      return;
     }
 
-    const fields = parseTemplateToBuilderFields(resolvedKey);
+    state.currentBuilderTemplate = templateKey;
+
+    if (DOM.builderTemplateSelect) {
+      DOM.builderTemplateSelect.value = templateKey;
+    }
+
+    const fields = parseTemplateToBuilderFields(templateKey);
     if (DOM.builderName) DOM.builderName.value = fields.name;
     if (DOM.builderContact) DOM.builderContact.value = fields.contact;
     if (DOM.builderSummary) DOM.builderSummary.value = fields.summary;
     if (DOM.builderExperience) DOM.builderExperience.value = fields.experience;
     if (DOM.builderEducation) DOM.builderEducation.value = fields.education;
     if (DOM.builderSkills) DOM.builderSkills.value = fields.skills;
+    if (DOM.builderAtsScorePanel) {
+      DOM.builderAtsScorePanel.classList.add('hidden');
+    }
 
     renderBuilderLivePreview();
+  }
+
+  function evaluateBuilderAtsScore(plainText) {
+    const lang = state.language === 'en' ? 'en' : 'id';
+    const isId = lang === 'id';
+
+    const nameVal = (DOM.builderName && DOM.builderName.value.trim()) || '';
+    const contactVal = (DOM.builderContact && DOM.builderContact.value.trim()) || '';
+    const summaryVal = (DOM.builderSummary && DOM.builderSummary.value.trim()) || '';
+    const expVal = (DOM.builderExperience && DOM.builderExperience.value.trim()) || '';
+    const eduVal = (DOM.builderEducation && DOM.builderEducation.value.trim()) || '';
+    const skillsVal = (DOM.builderSkills && DOM.builderSkills.value.trim()) || '';
+
+    const missingSuggestions = [];
+    let sectionScore = 0;
+
+    // 1. Kelengkapan 5 bagian CV (maks 35 poin, 7 poin/bagian)
+    if (nameVal && contactVal) {
+      sectionScore += 7;
+    } else if (nameVal || contactVal) {
+      sectionScore += 3.5;
+      missingSuggestions.push(
+        isId
+          ? 'Lengkapi Nama Lengkap & Kontak (email, HP, LinkedIn).'
+          : 'Complete both Full Name and Contact details (email, phone, LinkedIn).'
+      );
+    } else {
+      missingSuggestions.push(
+        isId
+          ? 'Tambahkan Identitas & Kontak di bagian atas CV.'
+          : 'Add your Identity & Contact details at the top of your resume.'
+      );
+    }
+
+    if (summaryVal.length >= 40) {
+      sectionScore += 7;
+    } else if (summaryVal.length > 0) {
+      sectionScore += 3.5;
+      missingSuggestions.push(
+        isId
+          ? 'Perkuat Ringkasan Profesional (2-3 kalimat berisi pengalaman & nilai jual utama).'
+          : 'Expand your Professional Summary (2-3 sentences highlighting years of experience and impact).'
+      );
+    } else {
+      missingSuggestions.push(
+        isId
+          ? 'Isi bagian Ringkasan Profesional agar ATS langsung menangkap profil Anda.'
+          : 'Add a Professional Summary so ATS immediately captures your target profile.'
+      );
+    }
+
+    if (expVal.length >= 50) {
+      sectionScore += 7;
+    } else if (expVal.length > 0) {
+      sectionScore += 3.5;
+      missingSuggestions.push(
+        isId
+          ? 'Perjelas Pengalaman Kerja dengan poin pencapaian terukur.'
+          : 'Expand Work Experience with structured achievement bullets.'
+      );
+    } else {
+      missingSuggestions.push(
+        isId
+          ? 'Tambahkan Pengalaman Kerja/Magang atau sisipkan Preset Pengalaman 1-Klik.'
+          : 'Add Work/Internship Experience or insert a 1-Click Role Preset.'
+      );
+    }
+
+    if (eduVal.length >= 15) {
+      sectionScore += 7;
+    } else if (eduVal.length > 0) {
+      sectionScore += 3.5;
+    } else {
+      missingSuggestions.push(
+        isId
+          ? 'Lengkapi Riwayat Pendidikan (institusi, jurusan, dan tahun lulus).'
+          : 'Fill in Education History (institution, degree, and graduation year).'
+      );
+    }
+
+    if (skillsVal.length >= 15) {
+      sectionScore += 7;
+    } else if (skillsVal.length > 0) {
+      sectionScore += 3.5;
+    } else {
+      missingSuggestions.push(
+        isId
+          ? 'Tambahkan Keahlian Teknis, Tools, atau Sertifikasi yang relevan.'
+          : 'Add relevant Technical Skills, Tools, or Certifications.'
+      );
+    }
+
+    // 2. Kata kerja aksi aktif ID/EN (maks 20 poin)
+    const actionVerbRegex = /\b(memimpin|mengelola|merancang|membangun|mengoptimalkan|memangkas|meningkatkan|mengembangkan|menganalisis|mengoordinasikan|menginisiasi|mengotomatiskan|mengeksekusi|memfasilitasi|menyusun|mengimplementasikan|mendongkrak|menekan|menyelenggarakan|menjalin|led|spearheaded|architected|engineered|built|designed|reduced|slashed|boosted|increased|optimized|analyzed|launched|streamlined|managed|executed|delivered|coordinated|automated|implemented|accelerated|mentored|authored|conducted)\b/gi;
+    const verbMatches = plainText.match(actionVerbRegex) || [];
+    const uniqueVerbs = new Set(verbMatches.map((v) => v.toLowerCase()));
+    const verbScore = Math.min(20, Math.round((uniqueVerbs.size / 6) * 20));
+    if (uniqueVerbs.size < 3) {
+      missingSuggestions.push(
+        isId
+          ? 'Gunakan lebih banyak kata kerja aksi aktif (atau klik "Optimasi Otomatis ke Formula XYZ").'
+          : 'Use stronger active action verbs (or click "Auto-Optimize to XYZ Formula").'
+      );
+    }
+
+    // 3. Metrik angka terukur %, Rp, $, x, jumlah unit (maks 25 poin)
+    const metricRegex = /(\d+(?:[.,]\d+)?%|\d+\+|Rp\s?\d[\d.,]*|\$\s?\d[\d.,]*[KMB]?|\d+(?:[.,]\d+)?x\b|\b\d+(?:[.,]\d+)?\s?(?:hari|bulan|tahun|jam|minggu|poin|orang|kandidat|klien|siswa|karyawan|transaksi|fitur|proyek|posisi|mahasiswa|peserta|perusahaan|days|hours|weeks|months|years|points|users|clients|engineers|squads|transactions|projects|roles|interviews))/gi;
+    const metricMatches = plainText.match(metricRegex) || [];
+    const metricScore = Math.min(25, metricMatches.length * 5);
+    if (metricMatches.length < 2) {
+      missingSuggestions.push(
+        isId
+          ? 'Sertakan minimal 2-3 metrik angka terukur (%, Rp, atau jumlah pencapaian).'
+          : 'Include at least 2-3 quantifiable metrics (%, $, or numerical outcomes).'
+      );
+    }
+
+    // 4. Kepadatan kata kunci profesional & kedalaman konten (maks 20 poin)
+    const words = plainText.trim().split(/\s+/).filter(Boolean);
+    const wordScore = words.length >= 160 ? 10 : (words.length >= 80 ? 6 : 3);
+    const keywordRegex = /\b(recruitment|talent|hris|kpi|sql|python|react|typescript|javascript|excel|tableau|power bi|scrum|agile|prd|seo|roas|cac|b2b|saas|audit|psak|api|ci\/cd|aws|docker|kubernetes|strategi|analisis|manajemen|operasional|kolaborasi|sertifikasi|kompetensi|rekrutmen|evaluasi|akurasi|efisiensi|strategy|analysis|management|operations|certification|competency|accuracy|efficiency|analytics|leadership|stakeholder|onboarding|compliance|dashboard)\b/gi;
+    const kwMatches = plainText.match(keywordRegex) || [];
+    const uniqueKw = new Set(kwMatches.map((k) => k.toLowerCase()));
+    const kwScore = Math.min(10, Math.round((uniqueKw.size / 6) * 10));
+    if (uniqueKw.size < 3) {
+      missingSuggestions.push(
+        isId
+          ? 'Perkaya kata kunci industri/tools spesifik pada Ringkasan dan Keahlian.'
+          : 'Enrich industry-specific tools and competency keywords in Summary and Skills.'
+      );
+    }
+
+    const rawScore = sectionScore + verbScore + metricScore + wordScore + kwScore;
+    const score = Math.max(45, Math.min(95, Math.round(rawScore)));
+
+    let tier = 3;
+    let tierLabel = isId ? 'Tier 3 • Risiko Tinggi' : 'Tier 3 • High Risk';
+    let tierClass = 'bg-rose-500/15 text-rose-400 border-rose-500/40';
+    if (score >= 80) {
+      tier = 1;
+      tierLabel = isId ? 'Tier 1 • Prioritas Shortlist' : 'Tier 1 • Shortlist Priority';
+      tierClass = 'bg-emerald-500/15 text-emerald-400 border-emerald-500/40';
+    } else if (score >= 65) {
+      tier = 2;
+      tierLabel = isId ? 'Tier 2 • Kandidat Cadangan' : 'Tier 2 • Backup Pool';
+      tierClass = 'bg-amber-500/15 text-amber-400 border-amber-500/40';
+    }
+
+    let summaryText = '';
+    if (missingSuggestions.length > 0) {
+      const prefix = isId ? 'Saran peningkatan: ' : 'Improvement tips: ';
+      summaryText = prefix + missingSuggestions.slice(0, 3).join(' ');
+    } else {
+      summaryText = isId
+        ? 'Struktur 5 bagian lengkap dengan kata kerja aktif, metrik terukur, dan kata kunci ATS yang kuat. Siap diunduh!'
+        : 'All 5 sections are complete with strong action verbs, measurable metrics, and ATS keywords. Ready to download!';
+    }
+
+    return {
+      score,
+      tier,
+      tierLabel,
+      tierClass,
+      summaryText
+    };
+  }
+
+  function ensureBuilderAtsScorePanel() {
+    if (DOM.builderAtsScorePanel) return DOM.builderAtsScorePanel;
+    if (!DOM.builderCopyBtn) return null;
+
+    const actionBar = DOM.builderCopyBtn.parentElement;
+    if (!actionBar || !actionBar.parentElement) return null;
+
+    const panel = document.createElement('div');
+    panel.id = 'builderAtsScorePanel';
+    panel.className = 'hidden bg-dark-surface border border-dark-border rounded-2xl p-4 space-y-2 shadow-lg';
+    panel.innerHTML = `
+      <div class="flex flex-wrap items-center justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+          <span class="text-[11px] font-heading font-semibold uppercase tracking-wider text-dark-textSec">ATS Readiness Score</span>
+          <span id="builderAtsScoreValue" class="text-lg font-heading font-bold text-brand-emerald">0%</span>
+        </div>
+        <span id="builderAtsTierBadge" class="px-2.5 py-0.5 rounded-full border text-[11px] font-mono font-semibold"></span>
+      </div>
+      <p id="builderAtsSummaryText" class="text-xs text-dark-textSec leading-relaxed"></p>
+    `;
+
+    actionBar.parentElement.insertBefore(panel, actionBar);
+    DOM.builderAtsScorePanel = panel;
+    DOM.builderAtsScoreValue = panel.querySelector('#builderAtsScoreValue');
+    DOM.builderAtsTierBadge = panel.querySelector('#builderAtsTierBadge');
+    DOM.builderAtsSummaryText = panel.querySelector('#builderAtsSummaryText');
+    return panel;
+  }
+
+  function renderBuilderAtsScore(result) {
+    const panel = ensureBuilderAtsScorePanel();
+    if (DOM.builderAtsScoreValue) {
+      DOM.builderAtsScoreValue.textContent = `${result.score}%`;
+    }
+    if (DOM.builderAtsTierBadge) {
+      DOM.builderAtsTierBadge.textContent = result.tierLabel;
+      DOM.builderAtsTierBadge.className = `px-2.5 py-0.5 rounded-full border text-[11px] font-mono font-semibold ${result.tierClass}`;
+    }
+    if (DOM.builderAtsSummaryText) {
+      DOM.builderAtsSummaryText.textContent = result.summaryText;
+    }
+    if (panel) {
+      panel.classList.remove('hidden');
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
   }
 
   function copyTextToClipboard(text, successMsg) {
@@ -995,8 +1251,14 @@ CERTIFICATIONS
   // --------------------------------------------------------------------------
   function init() {
     applyTheme(state.theme);
+    ensureBlankTemplateOption();
     setLanguage(state.language);
-    loadTemplateIntoBuilder(state.currentBuilderTemplate);
+
+    if (urlTemplate && TEMPLATES[urlTemplate]) {
+      loadTemplateIntoBuilder(urlTemplate);
+    } else {
+      resetBuilderFields();
+    }
 
     if (DOM.themeToggleBtn) {
       DOM.themeToggleBtn.addEventListener('click', toggleTheme);
@@ -1068,33 +1330,36 @@ CERTIFICATIONS
       DOM.builderCheckAtsBtn.addEventListener('click', () => {
         const dict = i18n[state.language] || i18n.id;
         const text = assembleBuilderPlainText();
-        if (!text) {
-          showToast(dict.emptyCvToast);
+        if (!text || text.trim().length < 40) {
+          showToast(dict.isMinimalText);
           return;
         }
-        try {
-          sessionStorage.setItem('screenora_builder_draft', text);
-        } catch (_) {
-          // Ignore storage quota or privacy mode errors
-        }
-        window.location.href = 'index.html?from=builder';
+        const atsResult = evaluateBuilderAtsScore(text);
+        renderBuilderAtsScore(atsResult);
       });
     }
 
+    const handleBuilderDownloadClick = () => {
+      const dict = i18n[state.language] || i18n.id;
+      const text = assembleBuilderPlainText();
+      if (!text) {
+        showToast(dict.emptyCvToast);
+        return;
+      }
+      if (state.builderPaid) {
+        downloadBuilderDoc();
+      } else {
+        openPayModal();
+      }
+    };
+
     if (DOM.builderDownloadBtn) {
-      DOM.builderDownloadBtn.addEventListener('click', () => {
-        const dict = i18n[state.language] || i18n.id;
-        const text = assembleBuilderPlainText();
-        if (!text) {
-          showToast(dict.emptyCvToast);
-          return;
-        }
-        if (state.builderPaid) {
-          downloadBuilderDoc();
-        } else {
-          openPayModal();
-        }
-      });
+      DOM.builderDownloadBtn.addEventListener('click', handleBuilderDownloadClick);
+    }
+
+    const builderScoreDownloadBtn = document.getElementById('builderScoreDownloadBtn');
+    if (builderScoreDownloadBtn) {
+      builderScoreDownloadBtn.addEventListener('click', handleBuilderDownloadClick);
     }
 
     if (DOM.builderPayModalOverlay) {
