@@ -3292,17 +3292,24 @@ KEAHLIAN & KOMPETENSI
 
     DOM.removeFileBtn.addEventListener('click', clearUploadedFile);
 
-    // Sample Profile Load
-    DOM.loadSampleCvBtn.addEventListener('click', () => {
-      state.cvText = SAMPLE_PROFILE_TEXT;
-      DOM.rawCvText.value = SAMPLE_PROFILE_TEXT;
-      setTab('paste');
-      if (DOM.roleSelect) {
-        DOM.roleSelect.value = 'hr';
-      }
-      updateRoleDetails('hr');
-      showToast(state.language === 'id' ? i18n.id.toastSampleLoaded : i18n.en.toastSampleLoaded);
-    });
+    // Sample Profile Load (1-click instant demo)
+    if (DOM.loadSampleCvBtn) {
+      DOM.loadSampleCvBtn.addEventListener('click', () => {
+        if (DOM.resultsView) DOM.resultsView.classList.add('hidden');
+        if (DOM.compareResultsView) DOM.compareResultsView.classList.add('hidden');
+        if (DOM.inputView) DOM.inputView.classList.remove('hidden');
+        setInputMode('single');
+        state.cvText = SAMPLE_PROFILE_TEXT;
+        if (DOM.rawCvText) DOM.rawCvText.value = SAMPLE_PROFILE_TEXT;
+        setTab('paste');
+        if (DOM.roleSelect) {
+          DOM.roleSelect.value = 'hr';
+        }
+        updateRoleDetails('hr');
+        showToast(state.language === 'id' ? i18n.id.toastSampleLoaded : i18n.en.toastSampleLoaded);
+        runScreening();
+      });
+    }
 
     // Market Standard Switcher Click Handlers (Indonesia vs Internasional)
     if (DOM.stdNasionalBtn && DOM.stdGlobalBtn) {
@@ -3750,7 +3757,34 @@ KEAHLIAN & KOMPETENSI
     applyLanguage(state.language);
     setupEventListeners();
     updateRoleDetails(state.selectedRole);
-    restoreSessionState();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let builderDraft = null;
+    try {
+      builderDraft = sessionStorage.getItem('screenora_builder_draft');
+    } catch (_) {
+      builderDraft = null;
+    }
+
+    if (urlParams.get('from') === 'builder' && builderDraft && builderDraft.trim()) {
+      clearSessionState();
+      state.cvText = builderDraft;
+      if (DOM.rawCvText) DOM.rawCvText.value = builderDraft;
+      setInputMode('single');
+      setTab('paste');
+      try {
+        sessionStorage.removeItem('screenora_builder_draft');
+      } catch (_) {
+        // Ignore storage errors silently
+      }
+      showToast(
+        state.language === 'id'
+          ? 'Draf CV dari Live Builder berhasil dimuat dan siap di-scan!'
+          : 'CV draft from Live Builder loaded and ready to scan!'
+      );
+    } else {
+      restoreSessionState();
+    }
   }
 
   if (document.readyState === 'loading') {

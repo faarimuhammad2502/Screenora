@@ -379,10 +379,24 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       tplFooterInquiry: 'Pertanyaan & Masukan:',
       tplFooterCopyright: '© 2026 Screenora. Built for High-Impact Job Seekers & Modern HR Teams by Faari.',
 
-      // Toasts
+      // Toasts & Builder
       toastDownloaded: 'Template berhasil diunduh!',
       toastCopied: 'Format teks template berhasil disalin ke clipboard!',
-      toastCopyFailed: 'Gagal menyalin teks secara otomatis.'
+      toastCopyFailed: 'Gagal menyalin teks secara otomatis.',
+      btnBuildInstant: 'Buat CV Instan',
+      btnBuildFromPreview: 'Edit di Live Builder',
+      builderModalTitle: 'Live CV Builder (Standar ATS)',
+      builderCopyBtn: 'Salin Teks',
+      builderCheckAtsBtn: 'Cek Skor ATS →',
+      builderDownloadBtn: 'Unduh .doc',
+      builderCopiedToast: 'Draf CV dari builder berhasil disalin ke clipboard!',
+      builderLabelName: 'Nama Lengkap',
+      builderLabelContact: 'Kontak, Domisili & LinkedIn',
+      builderLabelSummary: 'Ringkasan Profil',
+      builderLabelExperience: 'Pengalaman Kerja / Magang (Formula XYZ)',
+      builderLabelEducation: 'Pendidikan',
+      builderLabelSkills: 'Keahlian & Sertifikasi',
+      builderPreviewLabel: 'Pratinjau Kertas A4 (Real-Time)'
     },
     en: {
       tplNavHub: 'Templates Hub',
@@ -505,10 +519,24 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       tplFooterInquiry: 'Inquiries & Feedback:',
       tplFooterCopyright: '© 2026 Screenora. Built for High-Impact Job Seekers & Modern HR Teams by Faari.',
 
-      // Toasts
+      // Toasts & Builder
       toastDownloaded: 'Template downloaded successfully!',
       toastCopied: 'Template text copied to clipboard!',
-      toastCopyFailed: 'Failed to copy text automatically.'
+      toastCopyFailed: 'Failed to copy text automatically.',
+      btnBuildInstant: 'Build Instant CV',
+      btnBuildFromPreview: 'Edit in Live Builder',
+      builderModalTitle: 'Live CV Builder (ATS Standard)',
+      builderCopyBtn: 'Copy Text',
+      builderCheckAtsBtn: 'Check ATS Score →',
+      builderDownloadBtn: 'Download .doc',
+      builderCopiedToast: 'CV draft from builder copied to clipboard!',
+      builderLabelName: 'Full Name',
+      builderLabelContact: 'Contact, Location & LinkedIn',
+      builderLabelSummary: 'Professional Summary',
+      builderLabelExperience: 'Work / Internship Experience (XYZ Formula)',
+      builderLabelEducation: 'Education',
+      builderLabelSkills: 'Skills & Certifications',
+      builderPreviewLabel: 'A4 Paper Preview (Real-Time)'
     }
   };
 
@@ -525,7 +553,8 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     theme: localStorage.getItem('screenora_theme') || 'dark',
     language: initialLang,
     activeFilter: 'all',
-    currentActiveTemplate: null
+    currentActiveTemplate: null,
+    currentBuilderTemplate: 'classic_corporate'
   };
 
   const DOM = {
@@ -543,8 +572,22 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     previewTextContent: document.getElementById('previewTextContent'),
     previewDownloadBtn: document.getElementById('previewDownloadBtn'),
     previewCopyBtn: document.getElementById('previewCopyBtn'),
+    previewToBuilderBtn: document.getElementById('previewToBuilderBtn'),
     comingSoonModalOverlay: document.getElementById('comingSoonModalOverlay'),
     comingSoonTitle: document.getElementById('comingSoonTitle'),
+    builderModalOverlay: document.getElementById('builderModalOverlay'),
+    closeBuilderModalBtn: document.getElementById('closeBuilderModalBtn'),
+    builderTemplateSelect: document.getElementById('builderTemplateSelect'),
+    builderName: document.getElementById('builderName'),
+    builderContact: document.getElementById('builderContact'),
+    builderSummary: document.getElementById('builderSummary'),
+    builderExperience: document.getElementById('builderExperience'),
+    builderEducation: document.getElementById('builderEducation'),
+    builderSkills: document.getElementById('builderSkills'),
+    builderLivePreview: document.getElementById('builderLivePreview'),
+    builderCopyBtn: document.getElementById('builderCopyBtn'),
+    builderCheckAtsBtn: document.getElementById('builderCheckAtsBtn'),
+    builderDownloadBtn: document.getElementById('builderDownloadBtn'),
     toast: document.getElementById('toast'),
     toastMsg: document.getElementById('toastMsg')
   };
@@ -663,22 +706,28 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   // --------------------------------------------------------------------------
   // 7. DOWNLOAD ENGINE (GENERATE CLEAN NATIVE WORD DOCUMENT)
   // --------------------------------------------------------------------------
-  function downloadTemplate(templateKey) {
-    const tmpl = TEMPLATES[templateKey];
-    if (!tmpl) {
-      showToast(state.language === 'id' ? 'Template tidak ditemukan.' : 'Template not found.');
-      return;
-    }
+  function isSectionHeaderLine(trimmed) {
+    return (
+      trimmed === trimmed.toUpperCase() &&
+      trimmed.length > 3 &&
+      !trimmed.startsWith('- ') &&
+      !trimmed.includes('|') &&
+      !trimmed.includes('@')
+    );
+  }
+
+  function exportPlainTextToWord(plainText, docTitle, fileName) {
+    if (!plainText || !plainText.trim()) return;
 
     // Convert plain text into formatted Word-compatible HTML document with standard 1-inch margins
-    const lines = tmpl.plainText.split('\n');
+    const lines = plainText.split('\n');
     let htmlBody = '';
 
     lines.forEach((line, idx) => {
       const trimmed = line.trim();
       if (!trimmed) {
         htmlBody += '<p style="margin: 0; line-height: 1.2;">&nbsp;</p>';
-      } else if (trimmed === trimmed.toUpperCase() && trimmed.length > 3 && !trimmed.includes('|') && !trimmed.includes('@')) {
+      } else if (isSectionHeaderLine(trimmed)) {
         // Section Header (RINGKASAN, PENGALAMAN, etc.)
         htmlBody += `<h3 style="margin-top: 14pt; margin-bottom: 4pt; font-size: 11pt; font-family: Calibri, Arial, sans-serif; font-weight: bold; color: #0F172A; text-transform: uppercase; border-bottom: 1px solid #94A3B8; padding-bottom: 2pt;">${escapeHtml(trimmed)}</h3>`;
       } else if (trimmed.startsWith('- ')) {
@@ -703,7 +752,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
       <head>
         <meta charset='utf-8'>
-        <title>${escapeHtml(tmpl.title)}</title>
+        <title>${escapeHtml(docTitle || 'CV ATS')}</title>
         <!--[if gte mso 9]>
         <xml>
           <w:WordDocument>
@@ -740,32 +789,45 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = tmpl.filename;
+    a.download = fileName || 'CV_ATS_Screenora.doc';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
+  }
 
+  function downloadTemplate(templateKey) {
+    const tmpl = TEMPLATES[templateKey];
+    if (!tmpl) {
+      showToast(state.language === 'id' ? 'Template tidak ditemukan.' : 'Template not found.');
+      return;
+    }
+
+    exportPlainTextToWord(tmpl.plainText, tmpl.title, tmpl.filename);
     showToast(state.language === 'id' ? `Template ${tmpl.title} berhasil diunduh!` : `Template ${tmpl.title} downloaded successfully!`);
   }
 
   // --------------------------------------------------------------------------
   // 8. COPY PLAIN TEXT ENGINE
   // --------------------------------------------------------------------------
-  function copyTemplateText(templateKey) {
-    const tmpl = TEMPLATES[templateKey];
-    if (!tmpl) return;
-
+  function copyTextToClipboard(text, successMsg) {
+    const msg = successMsg || (state.language === 'id' ? i18n.id.toastCopied : i18n.en.toastCopied);
     if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(tmpl.plainText).then(() => {
-        showToast(state.language === 'id' ? i18n.id.toastCopied : i18n.en.toastCopied);
-      }).catch(() => fallbackCopy(tmpl.plainText));
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(msg);
+      }).catch(() => fallbackCopy(text, msg));
     } else {
-      fallbackCopy(tmpl.plainText);
+      fallbackCopy(text, msg);
     }
   }
 
-  function fallbackCopy(text) {
+  function copyTemplateText(templateKey) {
+    const tmpl = TEMPLATES[templateKey];
+    if (!tmpl) return;
+    copyTextToClipboard(tmpl.plainText);
+  }
+
+  function fallbackCopy(text, successMsg) {
     const textArea = document.createElement('textarea');
     textArea.value = text;
     textArea.style.position = 'fixed';
@@ -775,7 +837,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     textArea.select();
     try {
       document.execCommand('copy');
-      showToast(state.language === 'id' ? i18n.id.toastCopied : i18n.en.toastCopied);
+      showToast(successMsg || (state.language === 'id' ? i18n.id.toastCopied : i18n.en.toastCopied));
     } catch (e) {
       showToast(state.language === 'id' ? i18n.id.toastCopyFailed : i18n.en.toastCopyFailed);
     }
@@ -836,6 +898,191 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     }
   }
 
+  // --------------------------------------------------------------------------
+  // 9B. LIVE CV BUILDER ENGINE
+  // --------------------------------------------------------------------------
+  function classifySectionHeader(headerUpper) {
+    if (/^(RINGKASAN|SUMMARY|PROFESSIONAL SUMMARY|EXECUTIVE SUMMARY|PROFIL)/.test(headerUpper)) {
+      return 'summary';
+    }
+    if (/^(PENGALAMAN|EXPERIENCE|PROFESSIONAL EXPERIENCE|VENTURE EXPERIENCE)/.test(headerUpper)) {
+      return 'experience';
+    }
+    if (/^(RIWAYAT PENDIDIKAN|PENDIDIKAN|EDUCATION)/.test(headerUpper)) {
+      return 'education';
+    }
+    if (/^(KEAHLIAN|SKILLS|TECHNICAL SKILLS|CORE COMPETENCIES|CORE EXPERTISE|CERTIFICATIONS|SERTIFIKASI|KEY PROJECTS)/.test(headerUpper)) {
+      return 'skills';
+    }
+    return null;
+  }
+
+  function parseTemplateToBuilderFields(templateKey) {
+    const tmpl = TEMPLATES[templateKey] || TEMPLATES.classic_corporate;
+    const result = {
+      name: '',
+      contact: '',
+      summary: '',
+      experience: '',
+      education: '',
+      skills: ''
+    };
+    if (!tmpl || !tmpl.plainText) return result;
+
+    const lines = tmpl.plainText.split('\n');
+    const contactLines = [];
+    const buckets = {
+      summary: [],
+      experience: [],
+      education: [],
+      skills: []
+    };
+
+    let currentSection = null;
+    let firstSectionSeen = false;
+
+    lines.forEach((line, idx) => {
+      const trimmed = line.trim();
+      if (idx === 0) {
+        result.name = trimmed;
+        return;
+      }
+
+      if (trimmed && isSectionHeaderLine(trimmed)) {
+        const mapped = classifySectionHeader(trimmed.toUpperCase());
+        if (mapped) {
+          firstSectionSeen = true;
+          // Preserve sub-header if this bucket already has content (e.g., PENGALAMAN ORGANISASI or CERTIFICATIONS)
+          if (buckets[mapped].length > 0) {
+            buckets[mapped].push('', trimmed);
+          }
+          currentSection = mapped;
+          return;
+        }
+      }
+
+      if (!firstSectionSeen) {
+        if (trimmed) contactLines.push(trimmed);
+        return;
+      }
+
+      if (currentSection && buckets[currentSection]) {
+        buckets[currentSection].push(line);
+      }
+    });
+
+    result.contact = contactLines.join('\n').trim();
+    result.summary = buckets.summary.join('\n').trim();
+    result.experience = buckets.experience.join('\n').trim();
+    result.education = buckets.education.join('\n').trim();
+    result.skills = buckets.skills.join('\n').trim();
+    return result;
+  }
+
+  function assembleBuilderPlainText() {
+    const name = DOM.builderName ? DOM.builderName.value.trim() : '';
+    const contact = DOM.builderContact ? DOM.builderContact.value.trim() : '';
+    const summary = DOM.builderSummary ? DOM.builderSummary.value.trim() : '';
+    const experience = DOM.builderExperience ? DOM.builderExperience.value.trim() : '';
+    const education = DOM.builderEducation ? DOM.builderEducation.value.trim() : '';
+    const skills = DOM.builderSkills ? DOM.builderSkills.value.trim() : '';
+
+    const isIntlTemplate = ['global_tech', 'global_product', 'silicon_valley'].includes(state.currentBuilderTemplate);
+    const useEnLabels = isIntlTemplate || (!TEMPLATES[state.currentBuilderTemplate] && state.language === 'en');
+
+    const headers = useEnLabels
+      ? {
+          summary: 'PROFESSIONAL SUMMARY',
+          experience: 'PROFESSIONAL EXPERIENCE',
+          education: 'EDUCATION',
+          skills: 'SKILLS & CERTIFICATIONS'
+        }
+      : {
+          summary: 'RINGKASAN PROFESIONAL',
+          experience: 'PENGALAMAN KERJA',
+          education: 'RIWAYAT PENDIDIKAN',
+          skills: 'KEAHLIAN & SERTIFIKASI'
+        };
+
+    const blocks = [];
+    const headerLines = [];
+    if (name) headerLines.push(name);
+    if (contact) headerLines.push(contact);
+    if (headerLines.length > 0) blocks.push(headerLines.join('\n'));
+
+    if (summary) blocks.push(`${headers.summary}\n${summary}`);
+    if (experience) blocks.push(`${headers.experience}\n${experience}`);
+    if (education) blocks.push(`${headers.education}\n${education}`);
+    if (skills) blocks.push(`${headers.skills}\n${skills}`);
+
+    return blocks.join('\n\n').trim();
+  }
+
+  function renderBuilderLivePreview() {
+    if (!DOM.builderLivePreview) return;
+
+    const text = assembleBuilderPlainText();
+    if (!text) {
+      const emptyMsg = state.language === 'id'
+        ? 'Isi form di sebelah kiri untuk melihat pratinjau CV standar ATS secara real-time...'
+        : 'Fill out the form on the left to see a real-time ATS resume preview...';
+      DOM.builderLivePreview.innerHTML = `<p style="color:#64748b;font-size:12px;font-style:italic;">${escapeHtml(emptyMsg)}</p>`;
+      return;
+    }
+
+    const lines = text.split('\n');
+    let html = '';
+    lines.forEach((line, idx) => {
+      const trimmed = line.trim();
+      if (!trimmed) {
+        html += '<div style="height:6px;"></div>';
+      } else if (isSectionHeaderLine(trimmed)) {
+        html += `<h3 style="margin-top:12px;margin-bottom:4px;font-size:11px;font-weight:700;color:#0f172a;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid #cbd5e1;padding-bottom:2px;">${escapeHtml(trimmed)}</h3>`;
+      } else if (trimmed.startsWith('- ')) {
+        html += `<p style="margin:2px 0 2px 14px;text-indent:-10px;font-size:10.5px;line-height:1.4;color:#334155;">&bull; ${escapeHtml(trimmed.substring(2))}</p>`;
+      } else if (idx === 0) {
+        html += `<h1 style="margin:0 0 2px 0;font-size:16px;font-weight:800;color:#0f172a;letter-spacing:-0.01em;">${escapeHtml(trimmed)}</h1>`;
+      } else if (idx === 1) {
+        html += `<p style="margin:0 0 8px 0;font-size:10px;color:#475569;">${escapeHtml(trimmed)}</p>`;
+      } else if (trimmed.includes(' | ') || trimmed.includes(' — ')) {
+        html += `<p style="margin:6px 0 2px 0;font-size:10.5px;font-weight:700;color:#1e293b;">${escapeHtml(trimmed)}</p>`;
+      } else {
+        html += `<p style="margin:2px 0;font-size:10.5px;line-height:1.45;color:#334155;">${escapeHtml(trimmed)}</p>`;
+      }
+    });
+
+    DOM.builderLivePreview.innerHTML = html;
+  }
+
+  function openCvBuilder(templateKey = 'classic_corporate') {
+    const resolvedKey = TEMPLATES[templateKey] ? templateKey : 'classic_corporate';
+    state.currentBuilderTemplate = resolvedKey;
+
+    if (DOM.builderTemplateSelect) {
+      DOM.builderTemplateSelect.value = resolvedKey;
+    }
+
+    const fields = parseTemplateToBuilderFields(resolvedKey);
+    if (DOM.builderName) DOM.builderName.value = fields.name;
+    if (DOM.builderContact) DOM.builderContact.value = fields.contact;
+    if (DOM.builderSummary) DOM.builderSummary.value = fields.summary;
+    if (DOM.builderExperience) DOM.builderExperience.value = fields.experience;
+    if (DOM.builderEducation) DOM.builderEducation.value = fields.education;
+    if (DOM.builderSkills) DOM.builderSkills.value = fields.skills;
+
+    renderBuilderLivePreview();
+
+    if (DOM.builderModalOverlay) {
+      DOM.builderModalOverlay.classList.remove('hidden');
+    }
+  }
+
+  function closeBuilderModal() {
+    if (DOM.builderModalOverlay) {
+      DOM.builderModalOverlay.classList.add('hidden');
+    }
+  }
+
   function escapeHtml(str) {
     return str
       .replace(/&/g, '&amp;')
@@ -890,12 +1137,92 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
         if (e.target === DOM.comingSoonModalOverlay) closeComingSoonModal();
       });
     }
+    if (DOM.builderModalOverlay) {
+      DOM.builderModalOverlay.addEventListener('click', (e) => {
+        if (e.target === DOM.builderModalOverlay) closeBuilderModal();
+      });
+    }
+    if (DOM.closeBuilderModalBtn) {
+      DOM.closeBuilderModalBtn.addEventListener('click', closeBuilderModal);
+    }
+
+    // Live CV Builder form bindings
+    [
+      DOM.builderName,
+      DOM.builderContact,
+      DOM.builderSummary,
+      DOM.builderExperience,
+      DOM.builderEducation,
+      DOM.builderSkills
+    ].forEach((inputEl) => {
+      if (inputEl) {
+        inputEl.addEventListener('input', renderBuilderLivePreview);
+      }
+    });
+
+    if (DOM.builderTemplateSelect) {
+      DOM.builderTemplateSelect.addEventListener('change', (e) => {
+        openCvBuilder(e.target.value);
+      });
+    }
+
+    if (DOM.previewToBuilderBtn) {
+      DOM.previewToBuilderBtn.addEventListener('click', () => {
+        const targetKey = state.currentActiveTemplate || 'classic_corporate';
+        closePreviewModal();
+        openCvBuilder(targetKey);
+      });
+    }
+
+    if (DOM.builderCopyBtn) {
+      DOM.builderCopyBtn.addEventListener('click', () => {
+        const text = assembleBuilderPlainText();
+        if (!text) {
+          showToast(state.language === 'id' ? 'Isi minimal satu bagian CV terlebih dahulu.' : 'Please fill in at least one CV section first.');
+          return;
+        }
+        const dict = i18n[state.language] || i18n.id;
+        copyTextToClipboard(text, dict.builderCopiedToast);
+      });
+    }
+
+    if (DOM.builderDownloadBtn) {
+      DOM.builderDownloadBtn.addEventListener('click', () => {
+        const text = assembleBuilderPlainText();
+        if (!text) {
+          showToast(state.language === 'id' ? 'Isi minimal satu bagian CV terlebih dahulu.' : 'Please fill in at least one CV section first.');
+          return;
+        }
+        const name = (DOM.builderName && DOM.builderName.value.trim()) || 'CV_ATS';
+        const safeSlug = name.replace(/[^a-zA-Z0-9]+/g, '_').replace(/^_+|_+$/g, '') || 'CV_ATS';
+        const fileName = `CV_ATS_${safeSlug}_Screenora.doc`;
+        exportPlainTextToWord(text, name, fileName);
+        showToast(state.language === 'id' ? `Berhasil mengunduh ${fileName}!` : `Downloaded ${fileName} successfully!`);
+      });
+    }
+
+    if (DOM.builderCheckAtsBtn) {
+      DOM.builderCheckAtsBtn.addEventListener('click', () => {
+        const text = assembleBuilderPlainText();
+        if (!text) {
+          showToast(state.language === 'id' ? 'Isi minimal satu bagian CV terlebih dahulu.' : 'Please fill in at least one CV section first.');
+          return;
+        }
+        try {
+          sessionStorage.setItem('screenora_builder_draft', text);
+        } catch (_) {
+          // Ignore storage quota or privacy mode errors
+        }
+        window.location.href = 'index.html?from=builder';
+      });
+    }
 
     // Close active modals on Escape key for keyboard accessibility
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         closePreviewModal();
         closeComingSoonModal();
+        closeBuilderModal();
       }
     });
 
@@ -906,6 +1233,8 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     window.closePreviewModal = closePreviewModal;
     window.openComingSoonModal = openComingSoonModal;
     window.closeComingSoonModal = closeComingSoonModal;
+    window.openCvBuilder = openCvBuilder;
+    window.closeBuilderModal = closeBuilderModal;
   }
 
   // Run on DOM ready
