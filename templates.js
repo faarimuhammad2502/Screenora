@@ -270,6 +270,10 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     id: {
       tplNavHub: 'Pusat Template',
       tplNavSubtitle: 'Katalog Template Resume ATS Teruji',
+      navScan: 'Skrining CV',
+      navTemplates: 'Template ATS',
+      navBuilder: 'Buat CV Instan',
+      badgeNew: 'Baru',
       tplBackBtn: '← Kembali ke Skrining CV',
       tplHeroBadge: 'Koleksi Format Tervalidasi • Workday, Taleo, Greenhouse & BUMN',
       tplHeroTitle: 'Katalog Template CV ATS Standar Nasional & Internasional',
@@ -418,6 +422,10 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     en: {
       tplNavHub: 'Templates Hub',
       tplNavSubtitle: 'Tested ATS Resume Template Catalog',
+      navScan: 'CV Screening',
+      navTemplates: 'ATS Templates',
+      navBuilder: 'Instant CV Builder',
+      badgeNew: 'New',
       tplBackBtn: '← Back to CV Screening',
       tplHeroBadge: 'Validated Format Collection • Workday, Taleo, Greenhouse & SOE',
       tplHeroTitle: 'ATS Resume Template Catalog — National & International Standards',
@@ -602,6 +610,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     previewTag: document.getElementById('previewTag'),
     previewTitle: document.getElementById('previewTitle'),
     previewSubtitle: document.getElementById('previewSubtitle'),
+    previewModalContent: document.getElementById('previewModalContent'),
     previewTextContent: document.getElementById('previewTextContent'),
     previewDownloadBtn: document.getElementById('previewDownloadBtn'),
     previewCopyBtn: document.getElementById('previewCopyBtn'),
@@ -762,10 +771,9 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     );
   }
 
-  function exportPlainTextToWord(plainText, docTitle, fileName) {
-    if (!plainText || !plainText.trim()) return;
+  function renderPlainTextAsWordHtml(plainText) {
+    if (!plainText || !plainText.trim()) return '';
 
-    // Convert plain text into formatted Word-compatible HTML document with standard 1-inch margins
     const lines = plainText.split('\n');
     let htmlBody = '';
 
@@ -793,6 +801,15 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
         htmlBody += `<p style="margin: 3pt 0; font-size: 10pt; font-family: Calibri, Arial, sans-serif; line-height: 1.4; color: #334155;">${escapeHtml(trimmed)}</p>`;
       }
     });
+
+    return htmlBody;
+  }
+
+  function exportPlainTextToWord(plainText, docTitle, fileName) {
+    if (!plainText || !plainText.trim()) return;
+
+    // Convert plain text into formatted Word-compatible HTML document with standard 1-inch margins
+    const htmlBody = renderPlainTextAsWordHtml(plainText);
 
     const fullDocumentContent = `
       <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
@@ -912,7 +929,10 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     if (DOM.previewTag) DOM.previewTag.textContent = meta ? meta.tag : tmpl.tag;
     if (DOM.previewTitle) DOM.previewTitle.textContent = (meta && dict[meta.titleKey]) ? dict[meta.titleKey] : tmpl.title;
     if (DOM.previewSubtitle) DOM.previewSubtitle.textContent = (meta && dict[meta.descKey]) ? dict[meta.descKey] : tmpl.description;
-    if (DOM.previewTextContent) DOM.previewTextContent.textContent = tmpl.plainText;
+    const previewContainer = DOM.previewModalContent || DOM.previewTextContent;
+    if (previewContainer) {
+      previewContainer.innerHTML = `<div style="background:#ffffff;color:#1E293B;font-family:Calibri,Arial,sans-serif;padding:24px 28px;border-radius:8px;border:1px solid #e2e8f0;box-shadow:0 4px 16px rgba(0,0,0,0.08);">${renderPlainTextAsWordHtml(tmpl.plainText)}</div>`;
+    }
 
     if (DOM.previewDownloadBtn) {
       DOM.previewDownloadBtn.onclick = () => downloadTemplate(templateKey);
@@ -1296,9 +1316,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
 
     if (DOM.previewToBuilderBtn) {
       DOM.previewToBuilderBtn.addEventListener('click', () => {
-        const targetKey = state.currentActiveTemplate || 'classic_corporate';
-        closePreviewModal();
-        openCvBuilder(targetKey);
+        window.location.href = 'builder.html?template=' + encodeURIComponent(state.currentActiveTemplate || 'classic_corporate');
       });
     }
 

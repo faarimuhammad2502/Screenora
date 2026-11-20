@@ -60,7 +60,25 @@
       privacyBadge: 'Lokal & Terenkripsi',
       navScan: 'Skrining CV',
       navTemplates: 'Template ATS',
+      navBuilder: 'Buat CV Instan',
       badgeNew: 'Baru',
+
+      // Ecosystem / Services Hub Section
+      ecoEyebrow: 'EKOSISTEM SCREENORA',
+      ecoTitle: 'Ekosistem Layanan Screenora',
+      ecoSubtitle: 'Alur lengkap dari audit kelolosan ATS, penyusunan CV baru, hingga konsultasi karir.',
+      ecoCard1Title: 'Skrining & Skor ATS',
+      ecoCard1Desc: 'Uji kecocokan kata kunci, struktur CV, dan deteksi celah kualifikasi terhadap lowongan target dalam 3 detik.',
+      ecoCard1Cta: 'Mulai Skrining',
+      ecoCard2Title: 'Template CV ATS',
+      ecoCard2Desc: 'Koleksi format 1-kolom standar BUMN, startup, dan perusahaan global yang siap diunduh ke Word (.docx).',
+      ecoCard2Cta: 'Lihat Katalog',
+      ecoCard3Title: 'Buat CV Instan',
+      ecoCard3Desc: 'Editor CV real-time dengan pratinjau kertas A4, chip pengalaman 1-klik, dan optimasi otomatis Formula XYZ.',
+      ecoCard3Cta: 'Buka Live Builder',
+      ecoCard4Title: 'Perbaikan Kalimat & Konsultasi CV',
+      ecoCard4Desc: 'Diskusi langsung seputar hasil evaluasi CV, penajaman kalimat dampak, dan persiapan wawancara STAR.',
+      ecoCard4Cta: 'Hubungi & Konsultasi',
 
       // Hero Section
       heroBadge: 'Diagnostik ATS & Pemindaian Psikologi HR',
@@ -253,7 +271,25 @@
       privacyBadge: 'Local & Encrypted',
       navScan: 'CV Screening',
       navTemplates: 'ATS Templates',
+      navBuilder: 'Instant CV Builder',
       badgeNew: 'New',
+
+      // Ecosystem / Services Hub Section
+      ecoEyebrow: 'SCREENORA ECOSYSTEM',
+      ecoTitle: 'Screenora Career Services Ecosystem',
+      ecoSubtitle: 'A complete workflow from ATS pass-rate auditing and instant resume building to career consultation.',
+      ecoCard1Title: 'ATS Screening & Scoring',
+      ecoCard1Desc: 'Test keyword alignment, resume structure, and qualification gaps against target roles in 3 seconds.',
+      ecoCard1Cta: 'Start Screening',
+      ecoCard2Title: 'ATS CV Templates',
+      ecoCard2Desc: 'Curated single-column formats for national SOEs, startups, and global enterprises ready for Word (.docx).',
+      ecoCard2Cta: 'Browse Catalog',
+      ecoCard3Title: 'Instant CV Builder',
+      ecoCard3Desc: 'Real-time CV editor with A4 paper preview, 1-click experience presets, and automatic XYZ Formula optimization.',
+      ecoCard3Cta: 'Open Live Builder',
+      ecoCard4Title: 'Bullet Rewrite & CV Consultation',
+      ecoCard4Desc: 'Direct discussion on CV evaluation results, impact bullet sharpening, and STAR interview preparation.',
+      ecoCard4Cta: 'Contact & Consult',
 
       // Hero Section
       heroBadge: 'ATS Diagnostic & HR Behavioral Screening',
@@ -1535,6 +1571,7 @@ KEAHLIAN & KOMPETENSI
     closeConsultModalBtn: document.getElementById('closeConsultModalBtn'),
     openProModalBtn: document.getElementById('openProModalBtn'),
     openConsultModalBtn: document.getElementById('openConsultModalBtn'),
+    openConsultModalBtn2: document.getElementById('openConsultModalBtn2'),
     consultWhatsAppBtn: document.getElementById('consultWhatsAppBtn'),
     copyMissingKeywordsBtn: document.getElementById('copyMissingKeywordsBtn'),
 
@@ -3472,6 +3509,9 @@ KEAHLIAN & KOMPETENSI
 
     if (DOM.openConsultModalBtn) {
       DOM.openConsultModalBtn.addEventListener('click', openConsultModal);
+    }
+    if (DOM.openConsultModalBtn2) {
+      DOM.openConsultModalBtn2.addEventListener('click', openConsultModal);
     }
     if (DOM.closeConsultModalBtn) {
       DOM.closeConsultModalBtn.addEventListener('click', closeConsultModal);

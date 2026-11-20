@@ -106,7 +106,7 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
   <!-- Custom Stylesheet with Cache Busting -->
-  <link rel="stylesheet" href="style.css?v=3.1.0">
+  <link rel="stylesheet" href="style.css?v=3.4.0">
 
   <!-- JSON-LD Structured Data (Schema.org WebApplication & Organization) -->
   <script type="application/ld+json">
@@ -227,6 +227,9 @@
         </a>
         <a href="templates.html" class="px-3 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-well border border-transparent hover:border-dark-wellBorder transition-all flex items-center gap-1.5">
           <span data-i18n="navTemplates">Template ATS</span>
+        </a>
+        <a href="builder.html" class="px-3 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-well border border-transparent hover:border-dark-wellBorder transition-all flex items-center gap-1.5">
+          <span data-i18n="navBuilder">Buat CV Instan</span>
           <span class="text-[9px] font-mono font-bold px-1.5 py-0.2 rounded bg-brand-emeraldBg text-brand-emerald border border-brand-emerald/30" data-i18n="badgeNew">Baru</span>
         </a>
       </nav>
@@ -234,10 +237,13 @@
       <!-- Right Controls: Mobile Nav, Language, Theme, & Privacy -->
       <div class="flex items-center gap-2 sm:gap-3">
         
-        <!-- Mobile Templates Link -->
-        <a href="templates.html" class="md:hidden px-2.5 py-1.5 rounded-lg text-[11px] font-semibold bg-dark-well dark:bg-dark-well border border-dark-wellBorder dark:border-dark-wellBorder text-dark-textPri dark:text-dark-textPri hover:border-brand-emerald/50 hover:text-brand-emerald transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0" aria-label="Template ATS">
-          <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
+        <!-- Mobile Quick Nav Links -->
+        <a href="templates.html" class="md:hidden px-2.5 py-1.5 rounded-lg text-[11px] font-semibold bg-dark-well dark:bg-dark-well border border-dark-wellBorder dark:border-dark-wellBorder text-dark-textPri dark:text-dark-textPri hover:border-brand-emerald/50 hover:text-brand-emerald transition-all flex items-center gap-1 whitespace-nowrap shrink-0" aria-label="Template ATS">
           <span data-i18n="navTemplates">Template ATS</span>
+        </a>
+        <a href="builder.html" class="md:hidden px-2.5 py-1.5 rounded-lg text-[11px] font-semibold bg-dark-well dark:bg-dark-well border border-brand-emerald/30 text-brand-emerald hover:border-brand-emerald transition-all flex items-center gap-1 whitespace-nowrap shrink-0" aria-label="Buat CV Instan">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-emerald shrink-0"></span>
+          <span data-i18n="navBuilder">Buat CV Instan</span>
         </a>
 
         <!-- Language Switcher -->
@@ -1470,6 +1476,111 @@
   </div>
 
   <!-- =====================================================================
+       EKOSISTEM LAYANAN SCREENORA (4 KARTU BENTO GRID)
+       ===================================================================== -->
+  <section id="ecosystemSection" class="no-print max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
+    <div class="border-t border-dark-border pt-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-5">
+        <div>
+          <span class="text-[10px] font-mono font-bold uppercase tracking-widest text-brand-emerald" data-i18n="ecoEyebrow">EKOSISTEM SCREENORA</span>
+          <h2 class="font-heading text-lg sm:text-xl font-bold text-dark-textPri tracking-tight mt-0.5" data-i18n="ecoTitle">
+            Ekosistem Layanan Screenora
+          </h2>
+        </div>
+        <p class="text-xs text-dark-textSec max-w-md" data-i18n="ecoSubtitle">
+          Alur lengkap dari audit kelolosan ATS, penyusunan CV baru, hingga konsultasi karir.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <!-- Card 1: Skrining & Skor ATS -->
+        <a href="#inputView" class="group bg-dark-surface border border-dark-border hover:border-brand-emerald/50 rounded-2xl p-5 flex flex-col justify-between transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-8 h-8 rounded-lg bg-dark-well border border-dark-wellBorder flex items-center justify-center text-brand-emerald">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              </span>
+              <span class="text-[10px] font-mono text-dark-textMuted">01</span>
+            </div>
+            <h3 class="font-heading text-sm font-bold text-dark-textPri group-hover:text-brand-emerald transition-colors" data-i18n="ecoCard1Title">
+              Skrining &amp; Skor ATS
+            </h3>
+            <p class="mt-1.5 text-xs text-dark-textSec leading-relaxed" data-i18n="ecoCard1Desc">
+              Uji kecocokan kata kunci, struktur CV, dan deteksi celah kualifikasi terhadap lowongan target dalam 3 detik.
+            </p>
+          </div>
+          <span class="mt-4 inline-flex items-center gap-1 text-[11px] font-heading font-semibold text-dark-textPri group-hover:text-brand-emerald transition-colors">
+            <span data-i18n="ecoCard1Cta">Mulai Skrining</span> →
+          </span>
+        </a>
+
+        <!-- Card 2: Template CV ATS -->
+        <a href="templates.html" class="group bg-dark-surface border border-dark-border hover:border-brand-emerald/50 rounded-2xl p-5 flex flex-col justify-between transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-8 h-8 rounded-lg bg-dark-well border border-dark-wellBorder flex items-center justify-center text-brand-emerald">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+              </span>
+              <span class="text-[10px] font-mono text-dark-textMuted">02</span>
+            </div>
+            <h3 class="font-heading text-sm font-bold text-dark-textPri group-hover:text-brand-emerald transition-colors" data-i18n="ecoCard2Title">
+              Template CV ATS
+            </h3>
+            <p class="mt-1.5 text-xs text-dark-textSec leading-relaxed" data-i18n="ecoCard2Desc">
+              Koleksi format 1-kolom standar BUMN, startup, dan perusahaan global yang siap diunduh ke Word (.docx).
+            </p>
+          </div>
+          <span class="mt-4 inline-flex items-center gap-1 text-[11px] font-heading font-semibold text-dark-textPri group-hover:text-brand-emerald transition-colors">
+            <span data-i18n="ecoCard2Cta">Lihat Katalog</span> →
+          </span>
+        </a>
+
+        <!-- Card 3: Buat CV Instan -->
+        <a href="builder.html" class="group bg-dark-surface border border-dark-border hover:border-brand-emerald/50 rounded-2xl p-5 flex flex-col justify-between transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-8 h-8 rounded-lg bg-dark-well border border-dark-wellBorder flex items-center justify-center text-brand-emerald">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              </span>
+              <span class="text-[10px] font-mono text-dark-textMuted">03</span>
+            </div>
+            <h3 class="font-heading text-sm font-bold text-dark-textPri group-hover:text-brand-emerald transition-colors" data-i18n="ecoCard3Title">
+              Buat CV Instan
+            </h3>
+            <p class="mt-1.5 text-xs text-dark-textSec leading-relaxed" data-i18n="ecoCard3Desc">
+              Editor CV real-time dengan pratinjau kertas A4, chip pengalaman 1-klik, dan optimasi otomatis Formula XYZ.
+            </p>
+          </div>
+          <span class="mt-4 inline-flex items-center gap-1 text-[11px] font-heading font-semibold text-dark-textPri group-hover:text-brand-emerald transition-colors">
+            <span data-i18n="ecoCard3Cta">Buka Live Builder</span> →
+          </span>
+        </a>
+
+        <!-- Card 4: Perbaikan Kalimat & Konsultasi CV -->
+        <button id="openConsultModalBtn2" type="button" onclick="const b=document.getElementById('openConsultModalBtn'); if(b){b.click();} else {document.getElementById('consultModalOverlay')?.classList.remove('hidden');}" class="text-left group bg-dark-surface border border-dark-border hover:border-brand-emerald/50 rounded-2xl p-5 flex flex-col justify-between transition-all cursor-pointer">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="w-8 h-8 rounded-lg bg-dark-well border border-dark-wellBorder flex items-center justify-center text-brand-emerald">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+              </span>
+              <span class="text-[10px] font-mono text-dark-textMuted">04</span>
+            </div>
+            <h3 class="font-heading text-sm font-bold text-dark-textPri group-hover:text-brand-emerald transition-colors" data-i18n="ecoCard4Title">
+              Perbaikan Kalimat &amp; Konsultasi CV
+            </h3>
+            <p class="mt-1.5 text-xs text-dark-textSec leading-relaxed" data-i18n="ecoCard4Desc">
+              Diskusi langsung seputar hasil evaluasi CV, penajaman kalimat dampak, dan persiapan wawancara STAR.
+            </p>
+          </div>
+          <span class="mt-4 inline-flex items-center gap-1 text-[11px] font-heading font-semibold text-dark-textPri group-hover:text-brand-emerald transition-colors">
+            <span data-i18n="ecoCard4Cta">Hubungi &amp; Konsultasi</span> →
+          </span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================================
        FEEDBACK SECTION
        ===================================================================== -->
   <section id="feedbackSection" class="no-print max-w-4xl mx-auto px-4 sm:px-6 pb-12">
@@ -1560,6 +1671,6 @@
   </div>
 
   <!-- Main JavaScript App Logic (Deferred for High Performance) -->
-  <script src="app.js?v=3.1.0" defer></script>
+  <script src="app.js?v=3.4.0" defer></script>
 </body>
 </html>
