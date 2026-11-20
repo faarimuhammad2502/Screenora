@@ -20,12 +20,21 @@
 (function () {
   'use strict';
 
+  // Optional external endpoint (e.g., Formspree / Google Apps Script) for feedback form
+  const FEEDBACK_ENDPOINT = '';
+
   // --------------------------------------------------------------------------
   // 1. APPLICATION STATE
   // --------------------------------------------------------------------------
+  const urlLang = new URLSearchParams(window.location.search).get('lang');
+  const storedLang = localStorage.getItem('screenora_lang');
+  const initialLang = (urlLang === 'id' || urlLang === 'en')
+    ? urlLang
+    : ((storedLang === 'id' || storedLang === 'en') ? storedLang : 'id');
+
   const state = {
     theme: localStorage.getItem('screenora_theme') || 'dark',
-    language: localStorage.getItem('screenora_lang') || 'id',
+    language: initialLang,
     activeTab: 'upload', // 'upload' | 'paste'
     screeningStandard: 'id', // 'id' (Standar Nasional Indonesia) | 'global' (Standar Internasional)
     selectedRole: 'hr',  // standard key | 'custom'
@@ -33,7 +42,11 @@
     uploadedFile: null,
     cvText: '',
     currentAnalysis: null,
-    isAnalyzing: false
+    isAnalyzing: false,
+    inputMode: 'single', // 'single' | 'compare'
+    compareFileA: null,
+    compareFileB: null,
+    currentComparison: null
   };
 
   // --------------------------------------------------------------------------
@@ -72,8 +85,8 @@
       step2Label: 'Posisi Pekerjaan Target',
       step2Hint: 'Pilih Cepat / Kustom',
       standardSelectLabel: 'Standar Pasar Kerja ATS:',
-      stdNasionalLabel: '🇮🇩 Nasional (BUMN/Lokal)',
-      stdGlobalLabel: '🌐 Internasional (MNC)',
+      stdNasionalLabel: 'ID • Nasional (BUMN/Lokal)',
+      stdGlobalLabel: 'Global • Internasional (MNC)',
       roleSelectLabel: 'Pilih Posisi Standar / Kustom:',
       roleAtsStandard: 'Standar ATS Korporat',
       roleEssentialKeywords: 'Kata Kunci Esensial ATS:',
@@ -105,6 +118,8 @@
 
       // Results Header & Scorecard
       retestBtn: 'Uji Dokumen atau Posisi Lain',
+      exportPdfBtn: 'Simpan PDF',
+      copySummaryBtn: 'Salin Ringkasan',
       scaleShortlist: '≥80% Prioritas Utama',
       scaleReserve: '65–79% Kelompok Cadangan',
       scaleRisk: '<65% Risiko Gugur',
@@ -120,9 +135,11 @@
       rewriteSubheader: 'Format Baku Google: Accomplished [X], measured by [Y], by doing [Z]',
       cvScanBadge: '📍 Dibaca dari CV Anda',
       rewriteBeforeTitle: 'Draft Kalimat Asli di CV Anda',
+      needsFixBadge: 'Perlu Diperbaiki',
       rewriteBeforeSub: 'Risiko tereliminasi oleh filter awal ATS karena tidak membuktikan kapasitas inisiatif nyata.',
       rewriteAfterTitle: 'Rekomendasi Formula XYZ (Siap Salin)',
       rewriteAfterSub: 'Format yang paling diutamakan oleh rekruter multinasional & BUMN untuk panggilan interview.',
+      formulaBreakdown: '<span class="font-semibold text-slate-800 dark:text-dark-textPri">Bedah Formula:</span> [Z] Verba aktif &amp; metode + [Y] Metrik efisiensi terukur + [X] Hasil dampak bisnis.',
       copyBtn: 'Salin Teks',
       secondaryRewritesHeading: 'Butir Pengalaman Lain di CV Anda yang Perlu Diperbaiki:',
       secondaryCopyBtn: 'Salin Kalimat Rekomendasi',
@@ -185,7 +202,6 @@
       toastSampleLoaded: 'Sampel profil kandidat berhasil dimuat!',
       toastNoText: 'Silakan unggah berkas CV atau tempel teks riwayat Anda terlebih dahulu.',
       toastAnalyzing: 'Memindai teks dan menghitung matriks kompetensi...',
-      toastPaymentSuccess: 'Simulasi Berhasil! Laporan diagnostik 10-halaman Anda siap diunduh.',
       toastTemplateLoaded: 'Template posisi kustom berhasil dimuat!',
       toastKeywordsCopied: 'Kata kunci celah berhasil disalin ke clipboard!',
       tier1Label: 'Kecocokan Tinggi (≥80%)',
@@ -193,7 +209,42 @@
       tier3Label: 'Perlu Optimasi (<65%)',
       tier1Badge: 'Kualifikasi Tinggi • Prioritas Utama',
       tier2Badge: 'Kualifikasi Cukup • Kelompok Cadangan',
-      tier3Badge: 'Perlu Optimasi • Risiko Gugur ATS'
+      tier3Badge: 'Perlu Optimasi • Risiko Gugur ATS',
+
+      // P1 Compare 2 CVs Mode
+      modeSingleBtn: 'Skrining Tunggal',
+      modeCompareBtn: 'Bandingkan 2 CV',
+      comparePanelTitle: 'Komparasi 2 CV (Head-to-Head)',
+      comparePanelSub: 'Bandingkan dua kandidat secara objektif untuk posisi yang sama dalam satu tampilan.',
+      compareCandidateA: 'Kandidat A',
+      compareCandidateB: 'Kandidat B',
+      compareClearBtn: 'Bersihkan',
+      runCompareBtn: 'Bandingkan Kedua CV',
+      compareResultsTitle: 'Hasil Komparasi Head-to-Head',
+      backFromCompareBtn: 'Kembali ke Input Komparasi',
+      compareVerdictLabel: 'Ringkasan Pemenang & Rekomendasi Rekruter',
+      compareKeywordsHead: 'Kekuatan & Kata Kunci Cocok',
+      compareBulletsHead: 'Kalimat Kuat vs Lemah',
+      compareGapsHead: 'Celah Utama',
+      compareUploadPrompt: 'Unggah PDF / DOCX / TXT',
+      compareToastNeedBoth: 'Harap unggah atau tempel teks kedua CV (Kandidat A & B) minimal 40 karakter.',
+
+      // Feedback Section
+      feedbackTitle: 'Kotak Kritik & Masukan',
+      feedbackSubtitle: 'Punya ide fitur, laporan bug, atau saran untuk Screenora? Kirim langsung ke kreator.',
+      feedbackNameLabel: 'Nama / Peran (Opsional)',
+      feedbackNamePh: 'Nama / Peran Anda (opsional)',
+      feedbackCategoryLabel: 'Kategori Masukan',
+      feedbackCatFeature: 'Saran Fitur',
+      feedbackCatBug: 'Laporan Bug',
+      feedbackCatUi: 'Tampilan / UI',
+      feedbackCatAccuracy: 'Akurasi Skor & Rekomendasi',
+      feedbackMsgLabel: 'Pesan / Kritik / Masukan',
+      feedbackMsgPh: 'Tulis kritik, saran, atau kendala yang Anda temukan di Screenora...',
+      sendFeedbackEmailBtn: 'Kirim via Email',
+      sendFeedbackWaBtn: 'Kirim via WhatsApp',
+      feedbackEmptyWarn: 'Harap isi pesan masukan Anda terlebih dahulu.',
+      feedbackSentToast: 'Terima kasih! Masukan Anda siap dikirim.'
     },
     en: {
       // Top Navigation
@@ -227,8 +278,8 @@
       step2Label: 'Target Job Role',
       step2Hint: 'Quick Select / Custom',
       standardSelectLabel: 'ATS Job Market Standard:',
-      stdNasionalLabel: '🇮🇩 National (Local / SOE)',
-      stdGlobalLabel: '🌐 International (Global MNC)',
+      stdNasionalLabel: 'ID • National (Local)',
+      stdGlobalLabel: 'Global • International (MNC)',
       roleSelectLabel: 'Select Standard or Custom Role:',
       roleAtsStandard: 'Enterprise ATS Standard',
       roleEssentialKeywords: 'Essential ATS Keywords:',
@@ -260,6 +311,8 @@
 
       // Results Header & Scorecard
       retestBtn: 'Test Another Document or Role',
+      exportPdfBtn: 'Save PDF',
+      copySummaryBtn: 'Copy Summary',
       scaleShortlist: '≥80% Shortlist Priority',
       scaleReserve: '65–79% Backup Pool',
       scaleRisk: '<65% At Risk',
@@ -275,9 +328,11 @@
       rewriteSubheader: 'Google Standard: Accomplished [X], measured by [Y], by doing [Z]',
       cvScanBadge: '📍 Parsed from Your CV',
       rewriteBeforeTitle: 'Original Draft Sentence from Your CV',
+      needsFixBadge: 'Needs Fix',
       rewriteBeforeSub: 'High risk of automated ATS rejection due to passive duty phrasing without concrete metrics.',
       rewriteAfterTitle: 'Recommended XYZ Formula (Ready to Copy)',
       rewriteAfterSub: 'High-signal format prioritized by enterprise and global recruiters for first-round interviews.',
+      formulaBreakdown: '<span class="font-semibold text-slate-800 dark:text-dark-textPri">Formula Breakdown:</span> [Z] Active verb &amp; method + [Y] Quantifiable metric + [X] Business impact outcome.',
       copyBtn: 'Copy Text',
       secondaryRewritesHeading: 'Additional Experience Bullets in Your CV to Overhaul:',
       secondaryCopyBtn: 'Copy Recommended Sentence',
@@ -340,7 +395,6 @@
       toastSampleLoaded: 'Candidate sample profile loaded successfully!',
       toastNoText: 'Please upload a CV file or paste your resume text first.',
       toastAnalyzing: 'Scanning resume text and evaluating competency matrix...',
-      toastPaymentSuccess: 'Simulation Successful! Your 10-page report is ready for download.',
       toastTemplateLoaded: 'Custom role template loaded successfully!',
       toastKeywordsCopied: 'Qualification gap keywords copied to clipboard!',
       tier1Label: 'High Match (≥80%)',
@@ -348,7 +402,42 @@
       tier3Label: 'Needs Optimization (<65%)',
       tier1Badge: 'High Qualification • Shortlist Priority',
       tier2Badge: 'Moderate Match • Candidate Pool',
-      tier3Badge: 'Optimization Needed • ATS Risk'
+      tier3Badge: 'Optimization Needed • ATS Risk',
+
+      // P1 Compare 2 CVs Mode
+      modeSingleBtn: 'Single Screening',
+      modeCompareBtn: 'Compare 2 CVs',
+      comparePanelTitle: 'Compare 2 CVs (Head-to-Head)',
+      comparePanelSub: 'Objectively compare two candidates for the exact same role side-by-side.',
+      compareCandidateA: 'Candidate A',
+      compareCandidateB: 'Candidate B',
+      compareClearBtn: 'Clear',
+      runCompareBtn: 'Compare Both CVs',
+      compareResultsTitle: 'Head-to-Head Comparison Results',
+      backFromCompareBtn: 'Back to Compare Input',
+      compareVerdictLabel: 'Winner Summary & Recruiter Verdict',
+      compareKeywordsHead: 'Strengths & Matched Keywords',
+      compareBulletsHead: 'Strong vs Weak Bullets',
+      compareGapsHead: 'Key Gaps',
+      compareUploadPrompt: 'Upload PDF / DOCX / TXT',
+      compareToastNeedBoth: 'Please upload or paste both CV texts (Candidate A & B, min. 40 characters).',
+
+      // Feedback Section
+      feedbackTitle: 'Feedback & Suggestions Box',
+      feedbackSubtitle: 'Have a feature idea, bug report, or suggestion for Screenora? Send it directly to the creator.',
+      feedbackNameLabel: 'Name / Role (Optional)',
+      feedbackNamePh: 'Your Name / Role (optional)',
+      feedbackCategoryLabel: 'Category',
+      feedbackCatFeature: 'Feature Suggestion',
+      feedbackCatBug: 'Bug Report',
+      feedbackCatUi: 'UI / Layout',
+      feedbackCatAccuracy: 'Score & Rewrite Accuracy',
+      feedbackMsgLabel: 'Message / Feedback',
+      feedbackMsgPh: 'Share your feedback, suggestions, or issues you encountered in Screenora...',
+      sendFeedbackEmailBtn: 'Send via Email',
+      sendFeedbackWaBtn: 'Send via WhatsApp',
+      feedbackEmptyWarn: 'Please write your feedback message first.',
+      feedbackSentToast: 'Thank you! Your feedback is ready to send.'
     }
   };
 
@@ -1413,6 +1502,8 @@ KEAHLIAN & KOMPETENSI
     skeletonLoadingView: document.getElementById('skeletonLoadingView'),
     resultsView: document.getElementById('resultsView'),
     backToInputBtn: document.getElementById('backToInputBtn'),
+    exportPdfBtn: document.getElementById('exportPdfBtn'),
+    copySummaryBtn: document.getElementById('copySummaryBtn'),
     resDocName: document.getElementById('resDocName'),
     resRoleName: document.getElementById('resRoleName'),
     scoreNumber: document.getElementById('scoreNumber'),
@@ -1440,7 +1531,6 @@ KEAHLIAN & KOMPETENSI
     // Modals
     qrisModalOverlay: document.getElementById('qrisModalOverlay'),
     closeQrisModalBtn: document.getElementById('closeQrisModalBtn'),
-    simulateQrisPayBtn: document.getElementById('simulateQrisPayBtn'),
     consultModalOverlay: document.getElementById('consultModalOverlay'),
     closeConsultModalBtn: document.getElementById('closeConsultModalBtn'),
     openProModalBtn: document.getElementById('openProModalBtn'),
@@ -1450,7 +1540,44 @@ KEAHLIAN & KOMPETENSI
 
     // Toast
     toast: document.getElementById('toast'),
-    toastMsg: document.getElementById('toastMsg')
+    toastMsg: document.getElementById('toastMsg'),
+
+    // P1 Compare 2 CVs Mode Elements
+    modeSingleBtn: document.getElementById('modeSingleBtn'),
+    modeCompareBtn: document.getElementById('modeCompareBtn'),
+    singleInputPanel: document.getElementById('singleInputPanel'),
+    singleActionBar: document.getElementById('singleActionBar'),
+    compareInputPanel: document.getElementById('compareInputPanel'),
+    compareFileA: document.getElementById('compareFileA'),
+    compareFileB: document.getElementById('compareFileB'),
+    compareFileNameA: document.getElementById('compareFileNameA'),
+    compareFileNameB: document.getElementById('compareFileNameB'),
+    compareTextA: document.getElementById('compareTextA'),
+    compareTextB: document.getElementById('compareTextB'),
+    compareClearA: document.getElementById('compareClearA'),
+    compareClearB: document.getElementById('compareClearB'),
+    runCompareBtn: document.getElementById('runCompareBtn'),
+    compareResultsView: document.getElementById('compareResultsView'),
+    compareVerdictBadge: document.getElementById('compareVerdictBadge'),
+    compareVerdictText: document.getElementById('compareVerdictText'),
+    compareScoreA: document.getElementById('compareScoreA'),
+    compareScoreB: document.getElementById('compareScoreB'),
+    compareTierA: document.getElementById('compareTierA'),
+    compareTierB: document.getElementById('compareTierB'),
+    compareKeywordsA: document.getElementById('compareKeywordsA'),
+    compareKeywordsB: document.getElementById('compareKeywordsB'),
+    compareBulletsA: document.getElementById('compareBulletsA'),
+    compareBulletsB: document.getElementById('compareBulletsB'),
+    compareGapsA: document.getElementById('compareGapsA'),
+    compareGapsB: document.getElementById('compareGapsB'),
+    backFromCompareBtn: document.getElementById('backFromCompareBtn'),
+
+    // Feedback Section Elements
+    feedbackName: document.getElementById('feedbackName'),
+    feedbackCategory: document.getElementById('feedbackCategory'),
+    feedbackMessage: document.getElementById('feedbackMessage'),
+    sendFeedbackEmailBtn: document.getElementById('sendFeedbackEmailBtn'),
+    sendFeedbackWaBtn: document.getElementById('sendFeedbackWaBtn')
   };
 
   // --------------------------------------------------------------------------
@@ -1558,8 +1685,8 @@ KEAHLIAN & KOMPETENSI
     });
 
     const customLabel = lang === 'id'
-      ? '✦ Kustom: Tentukan Posisi & Kriteria Mandiri...'
-      : '✦ Custom: Define Your Own Role & Criteria...';
+      ? 'Kustom: Tentukan Posisi & Kriteria Mandiri...'
+      : 'Custom: Define Your Own Role & Criteria...';
     const customGroupLabel = lang === 'id' ? 'Posisi Khusus / Lainnya' : 'Custom / Other Roles';
     const customSel = currentVal === 'custom' ? ' selected' : '';
     html += `<optgroup label="── ${customGroupLabel} ──">
@@ -1573,12 +1700,12 @@ KEAHLIAN & KOMPETENSI
   function updateStandardUI(lang) {
     if (!DOM.standardBadge || !DOM.standardDescriptionTxt) return;
     if (state.screeningStandard === 'id') {
-      DOM.standardBadge.textContent = lang === 'id' ? '🇮🇩 Standar Nasional (Indonesia)' : '🇮🇩 National Standard (Indonesia)';
+      DOM.standardBadge.textContent = lang === 'id' ? 'ID • Standar Nasional (Indonesia)' : 'ID • National Standard (Indonesia)';
       DOM.standardDescriptionTxt.textContent = lang === 'id'
         ? 'Mengevaluasi format 1-kolom Indonesia, EYD/PUEBI, sertifikasi nasional, dan kualifikasi lokal.'
         : 'Evaluates Indonesian 1-column standard, EYD/PUEBI conventions, national certifications, and local requirements.';
     } else {
-      DOM.standardBadge.textContent = lang === 'id' ? '🌐 Standar Internasional (Global MNC)' : '🌐 International Standard (Global MNC)';
+      DOM.standardBadge.textContent = lang === 'id' ? 'Global • Standar Internasional (MNC)' : 'Global • International Standard (MNC)';
       DOM.standardDescriptionTxt.textContent = lang === 'id'
         ? 'Mengevaluasi kepatuhan ketat US/Global (tanpa foto/usia/status demi anti-bias EEOC), action verbs bahasa Inggris, dan sistem Workday/Greenhouse.'
         : 'Evaluates strict US/Global compliance (no photo/age/status for EEOC anti-bias), English action verbs, and Workday/Greenhouse ATS systems.';
@@ -1588,6 +1715,7 @@ KEAHLIAN & KOMPETENSI
   function applyLanguage(lang) {
     state.language = lang;
     localStorage.setItem('screenora_lang', lang);
+    document.documentElement.lang = lang;
 
     if (lang === 'id') {
       if (DOM.langIdBtn) DOM.langIdBtn.className = 'px-2.5 py-1 rounded-md transition-all bg-dark-surface dark:bg-dark-surface text-dark-textPri dark:text-dark-textPri shadow-sm font-semibold';
@@ -1609,6 +1737,13 @@ KEAHLIAN & KOMPETENSI
       }
     });
 
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (dict[key]) {
+        el.placeholder = dict[key];
+      }
+    });
+
     // Update input placeholders
     if (DOM.rawCvText && dict.rawCvPlaceholder) {
       DOM.rawCvText.placeholder = dict.rawCvPlaceholder;
@@ -1618,6 +1753,12 @@ KEAHLIAN & KOMPETENSI
     }
     if (DOM.customRoleKeywordsInput && dict.customKeywordsPlaceholder) {
       DOM.customRoleKeywordsInput.placeholder = dict.customKeywordsPlaceholder;
+    }
+    if (DOM.compareFileNameA && !state.compareFileA) {
+      DOM.compareFileNameA.textContent = dict.compareUploadPrompt;
+    }
+    if (DOM.compareFileNameB && !state.compareFileB) {
+      DOM.compareFileNameB.textContent = dict.compareUploadPrompt;
     }
 
     // Update dynamic options and UI components
@@ -1630,6 +1771,20 @@ KEAHLIAN & KOMPETENSI
       if (text) {
         state.currentAnalysis = analyzeResume(text, state.selectedRole);
         renderAnalysisResults(state.currentAnalysis);
+      }
+    }
+
+    if (state.currentComparison && DOM.compareResultsView && !DOM.compareResultsView.classList.contains('hidden')) {
+      const textA = DOM.compareTextA ? DOM.compareTextA.value.trim() : '';
+      const textB = DOM.compareTextB ? DOM.compareTextB.value.trim() : '';
+      if (textA.length >= 40 && textB.length >= 40) {
+        state.currentComparison = {
+          ...state.currentComparison,
+          resA: analyzeResume(textA, state.selectedRole),
+          resB: analyzeResume(textB, state.selectedRole),
+          roleKey: state.selectedRole
+        };
+        renderComparisonResults(state.currentComparison);
       }
     }
   }
@@ -1673,6 +1828,112 @@ KEAHLIAN & KOMPETENSI
   // --------------------------------------------------------------------------
   // 10. CLIENT-SIDE FILE EXTRACTION (PDF / DOCX / TXT)
   // --------------------------------------------------------------------------
+  async function extractTextFromFile(file) {
+    if (!file) {
+      throw new Error(state.language === 'id' ? 'Berkas tidak ditemukan.' : 'No file provided.');
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      throw new Error(state.language === 'id' ? 'Ukuran file melebihi batas 5 MB.' : 'File size exceeds 5 MB limit.');
+    }
+
+    const fileExtension = file.name.split('.').pop().toLowerCase();
+    let extractedText = '';
+
+    if (fileExtension === 'pdf') {
+      if (!window.pdfjsLib) {
+        throw new Error('PDF.js engine is not ready.');
+      }
+      if (!window.pdfjsLib.GlobalWorkerOptions.workerSrc) {
+        window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+      }
+      const arrayBuffer = await file.arrayBuffer();
+      const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      const pages = await Promise.all(
+        Array.from({ length: pdf.numPages }, (_, idx) =>
+          pdf.getPage(idx + 1).then(page =>
+            page.getTextContent().then(content => {
+              const lines = [];
+              let currentLine = [];
+              let lastY = null;
+
+              for (const item of content.items) {
+                const y = Array.isArray(item.transform) ? item.transform[5] : null;
+                const yChanged = lastY !== null && y !== null && Math.abs(y - lastY) > 3;
+
+                if (yChanged && currentLine.length > 0) {
+                  lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
+                  currentLine = [];
+                }
+
+                if (item.str) {
+                  currentLine.push(item.str);
+                }
+
+                if (item.hasEOL && currentLine.length > 0) {
+                  lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
+                  currentLine = [];
+                  lastY = null;
+                } else if (y !== null) {
+                  lastY = y;
+                }
+              }
+
+              if (currentLine.length > 0) {
+                lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
+              }
+
+              return lines.filter(Boolean).join('\n');
+            })
+          )
+        )
+      );
+
+      extractedText = pages.join('\n\n');
+    } else if (fileExtension === 'docx') {
+      if (!window.JSZip) {
+        throw new Error('DOCX parser engine is not ready.');
+      }
+      const arrayBuffer = await file.arrayBuffer();
+      const zip = await window.JSZip.loadAsync(arrayBuffer);
+      const docXmlFile = zip.file('word/document.xml');
+      if (!docXmlFile) {
+        throw new Error('Invalid DOCX structure: word/document.xml not found.');
+      }
+      const xmlStr = await docXmlFile.async('string');
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(xmlStr, 'application/xml');
+      const paragraphs = Array.from(xmlDoc.getElementsByTagName('w:p'));
+      const lines = paragraphs
+        .map(p =>
+          Array.from(p.getElementsByTagName('w:t'))
+            .map(node => node.textContent || '')
+            .join('')
+            .trim()
+        )
+        .filter(Boolean);
+      extractedText = lines.join('\n');
+    } else if (fileExtension === 'doc') {
+      throw new Error(
+        state.language === 'id'
+          ? 'Format .doc lama tidak didukung. Simpan sebagai .docx/.pdf atau gunakan tab Tempel Teks.'
+          : 'Legacy .doc format is not supported. Save as .docx/.pdf or use Paste Text.'
+      );
+    } else {
+      extractedText = await file.text();
+    }
+
+    if (!extractedText || extractedText.trim().length < 40) {
+      throw new Error(
+        state.language === 'id'
+          ? 'Teks terlalu pendek atau file adalah gambar hasil scan.'
+          : 'Extracted text is too short or file is a scanned image.'
+      );
+    }
+
+    return extractedText;
+  }
+
   async function processFile(file) {
     if (!file) return;
 
@@ -1681,46 +1942,13 @@ KEAHLIAN & KOMPETENSI
       return;
     }
 
-    const fileName = file.name;
-    const fileExtension = fileName.split('.').pop().toLowerCase();
-    let extractedText = '';
-
-    DOM.fileNameTxt.textContent = fileName;
+    DOM.fileNameTxt.textContent = file.name;
     DOM.fileMetaTxt.textContent = (file.size / (1024 * 1024)).toFixed(1) + ' MB • Mengekstrak teks...';
     DOM.filePreviewBadge.classList.remove('hidden');
     DOM.dropzone.classList.add('hidden');
 
     try {
-      if (fileExtension === 'pdf') {
-        if (!window.pdfjsLib) {
-          throw new Error('PDF.js engine is not ready.');
-        }
-        if (!window.pdfjsLib.GlobalWorkerOptions.workerSrc) {
-          window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-        }
-        const arrayBuffer = await file.arrayBuffer();
-        const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-        const pageTextPromises = [];
-
-        for (let i = 1; i <= pdf.numPages; i++) {
-          pageTextPromises.push(
-            pdf.getPage(i).then(page =>
-              page.getTextContent().then(content =>
-                content.items.map(item => item.str).join(' ')
-              )
-            )
-          );
-        }
-
-        const pages = await Promise.all(pageTextPromises);
-        extractedText = pages.join('\n\n');
-      } else {
-        extractedText = await file.text();
-      }
-
-      if (!extractedText || extractedText.trim().length < 40) {
-        throw new Error('Teks terlalu pendek atau file adalah gambar hasil scan.');
-      }
+      const extractedText = await extractTextFromFile(file);
 
       state.uploadedFile = file;
       state.cvText = extractedText;
@@ -1735,12 +1963,68 @@ KEAHLIAN & KOMPETENSI
     }
   }
 
+  async function handleCompareFileUpload(slot, file) {
+    if (!file) return;
+    const isA = slot === 'A';
+    const nameEl = isA ? DOM.compareFileNameA : DOM.compareFileNameB;
+    const textEl = isA ? DOM.compareTextA : DOM.compareTextB;
+    const fileInputEl = isA ? DOM.compareFileA : DOM.compareFileB;
+
+    if (file.size > 5 * 1024 * 1024) {
+      showToast(state.language === 'id' ? 'Ukuran file melebihi batas 5 MB.' : 'File size exceeds 5 MB limit.');
+      if (fileInputEl) fileInputEl.value = '';
+      return;
+    }
+
+    if (nameEl) {
+      nameEl.textContent = state.language === 'id'
+        ? `${file.name} (Mengekstrak...)`
+        : `${file.name} (Extracting...)`;
+    }
+
+    try {
+      const extractedText = await extractTextFromFile(file);
+      if (isA) {
+        state.compareFileA = file;
+      } else {
+        state.compareFileB = file;
+      }
+      if (textEl) textEl.value = extractedText;
+      if (nameEl) nameEl.textContent = `${file.name} (${extractedText.length} ${state.language === 'id' ? 'karakter' : 'chars'})`;
+      showToast(state.language === 'id' ? `Berkas Kandidat ${slot} berhasil diproses.` : `Candidate ${slot} document parsed successfully.`);
+    } catch (err) {
+      console.warn(`Compare file ${slot} error:`, err);
+      if (nameEl) {
+        nameEl.textContent = state.language === 'id' ? 'Gagal ekstrak — tempel teks manual' : 'Extraction failed — paste text manually';
+      }
+      showToast(err && err.message ? err.message : (state.language === 'id' ? 'Gagal membaca berkas. Silakan tempel teks.' : 'Could not parse file. Please paste text.'));
+    }
+  }
+
+  function clearCompareSlot(slot) {
+    const isA = slot === 'A';
+    const defaultPrompt = state.language === 'id' ? 'Unggah PDF / DOCX / TXT' : 'Upload PDF / DOCX / TXT';
+    if (isA) {
+      state.compareFileA = null;
+      if (DOM.compareFileA) DOM.compareFileA.value = '';
+      if (DOM.compareFileNameA) DOM.compareFileNameA.textContent = defaultPrompt;
+      if (DOM.compareTextA) DOM.compareTextA.value = '';
+    } else {
+      state.compareFileB = null;
+      if (DOM.compareFileB) DOM.compareFileB.value = '';
+      if (DOM.compareFileNameB) DOM.compareFileNameB.textContent = defaultPrompt;
+      if (DOM.compareTextB) DOM.compareTextB.value = '';
+    }
+  }
+
   function clearUploadedFile() {
     state.uploadedFile = null;
     state.cvText = '';
-    DOM.cvFileInput.value = '';
-    DOM.filePreviewBadge.classList.add('hidden');
-    DOM.dropzone.classList.remove('hidden');
+    if (DOM.rawCvText) DOM.rawCvText.value = '';
+    if (DOM.cvFileInput) DOM.cvFileInput.value = '';
+    if (DOM.filePreviewBadge) DOM.filePreviewBadge.classList.add('hidden');
+    if (DOM.dropzone) DOM.dropzone.classList.remove('hidden');
+    clearSessionState();
   }
 
   // --------------------------------------------------------------------------
@@ -1780,7 +2064,7 @@ KEAHLIAN & KOMPETENSI
     if (DOM.roleKeywordPills) {
       DOM.roleKeywordPills.innerHTML = config.topKeywords.map(kw => `
         <span class="px-2 py-0.5 rounded-md text-[10px] font-mono bg-dark-surface border border-dark-border text-dark-textSec">
-          ${kw}
+          ${escapeHtml(kw)}
         </span>
       `).join('');
     }
@@ -1815,29 +2099,169 @@ KEAHLIAN & KOMPETENSI
   }
 
     // --------------------------------------------------------------------------
-  // CV TEXT DEEP PARSER: EXTRACT WEAK BULLETS & GENERATE GOOGLE XYZ REWRITES
+  // CV TEXT DEEP PARSER: STRONG/WEAK SENTENCES & GOOGLE XYZ REWRITES
   // --------------------------------------------------------------------------
+  function cleanCopyableSentence(text) {
+    return String(text || '')
+      .trim()
+      .replace(/^["'“”‘’\s]+|["'“”‘’\s]+$/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  async function copyTextToClipboard(rawText, triggerBtn, lang) {
+    const rawStr = String(rawText || '');
+    const isMultiLine = rawStr.includes('\n') && rawStr.split('\n').length > 2;
+    const textToCopy = isMultiLine ? rawStr.trim() : cleanCopyableSentence(rawStr);
+    if (!textToCopy) return;
+
+    let copied = false;
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(textToCopy);
+        copied = true;
+      }
+    } catch (_) {
+      copied = false;
+    }
+
+    if (!copied) {
+      const ta = document.createElement('textarea');
+      ta.value = textToCopy;
+      ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed';
+      ta.style.top = '-9999px';
+      ta.style.left = '-9999px';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        copied = document.execCommand('copy');
+      } catch (_) {
+        copied = false;
+      }
+      document.body.removeChild(ta);
+    }
+
+    if (copied) {
+      const isSummary = triggerBtn && DOM.copySummaryBtn && triggerBtn === DOM.copySummaryBtn;
+      showToast(
+        isSummary
+          ? (lang === 'id' ? 'Ringkasan evaluasi ATS berhasil disalin ke clipboard!' : 'ATS evaluation summary copied to clipboard!')
+          : (lang === 'id' ? 'Kalimat rekomendasi berhasil disalin ke clipboard!' : 'Recommended sentence copied to clipboard!')
+      );
+      if (triggerBtn) {
+        const labelEl = triggerBtn.querySelector('span');
+        if (labelEl) {
+          if (!triggerBtn.dataset.origLabel) {
+            triggerBtn.dataset.origLabel = labelEl.textContent;
+          }
+          labelEl.textContent = lang === 'id' ? '✓ Tersalin' : '✓ Copied';
+          clearTimeout(triggerBtn._copyTimer);
+          triggerBtn._copyTimer = setTimeout(() => {
+            labelEl.textContent = triggerBtn.dataset.origLabel;
+          }, 1800);
+        }
+      }
+    } else {
+      showToast(lang === 'id' ? 'Gagal menyalin teks secara otomatis.' : 'Failed to copy text automatically.');
+    }
+  }
+
+  function formatExecutiveSummary(res, lang) {
+    if (!res) return '';
+    const isId = lang === 'id';
+    const stdLabel = res.screeningStandard === 'global'
+      ? (isId ? 'Global • Internasional (MNC)' : 'Global • International (MNC)')
+      : (isId ? 'ID • Nasional (BUMN/Lokal)' : 'ID • National (Local)');
+
+    const strengths = (res.strengths || []).slice(0, 4).map((s, i) => `${i + 1}. ${s}`).join('\n');
+    const gaps = (res.gaps || []).map((g, i) => `${i + 1}. ${g}`).join('\n');
+    const xyzRewrite = cleanCopyableSentence(res.afterRewrite || '');
+    const starQ = cleanCopyableSentence(res.starQuestion || '');
+
+    if (isId) {
+      return [
+        'RINGKASAN EVALUASI ATS — SCREENORA',
+        '====================================',
+        `Posisi Target  : ${res.roleTitle || '-'}`,
+        `Standar Pasar  : ${stdLabel}`,
+        `Skor ATS       : ${res.score}% (${res.tierName || '-'})`,
+        `Status         : ${res.tierBadge || '-'}`,
+        '',
+        'KEKUATAN KOMPETENSI:',
+        strengths || '-',
+        '',
+        'CELAH UTAMA & FILTER ATS:',
+        gaps || '-',
+        '',
+        'REKOMENDASI FORMULA XYZ:',
+        xyzRewrite || '-',
+        '',
+        'PERTANYAAN WAWANCARA (STAR):',
+        starQ || '-'
+      ].join('\n');
+    }
+
+    return [
+      'ATS EVALUATION SUMMARY — SCREENORA',
+      '===================================',
+      `Target Role    : ${res.roleTitle || '-'}`,
+      `Market Std     : ${stdLabel}`,
+      `ATS Score      : ${res.score}% (${res.tierName || '-'})`,
+      `Decision Tier  : ${res.tierBadge || '-'}`,
+      '',
+      'VERIFIED STRENGTHS:',
+      strengths || '-',
+      '',
+      'PRIMARY ATS GAPS:',
+      gaps || '-',
+      '',
+      'RECOMMENDED XYZ FORMULA:',
+      xyzRewrite || '-',
+      '',
+      'STAR INTERVIEW QUESTION:',
+      starQ || '-'
+    ].join('\n');
+  }
+
+  function extractCoreTopic(original) {
+    let cleaned = String(original || '')
+      .replace(/^[\s•\*\▪\▫\◦\-\–\—\d\.]+/, '')
+      .replace(/^(saya\s+)?(bertanggung jawab (atas|dalam|untuk|terhadap)?|ditugaskan (untuk)?|dipercaya (untuk)?|membantu|mengurus|melakukan|menjalankan|mengerjakan|ikut serta (dalam)?|bertugas (untuk)?|mengawasi|berpartisipasi (dalam)?|terlibat (dalam)?|mendukung|menghandle|menangani|menyiapkan|membuat|mencatat|menginput|berperan sebagai|responsible for|duties included|in charge of|assisted (in|with)?|helped (to|with)?|handled|worked on|participated in|tasked with|involved in|supported|served as)\s+/i, '')
+      .replace(/^(untuk|dalam|atas|dan|serta|juga|to|in|on|with|and|as well as)\s+/i, '')
+      .replace(/[.\s]+$/, '')
+      .trim();
+
+    if (cleaned.length > 78) {
+      cleaned = cleaned.slice(0, 75).replace(/\s+\S*$/, '').trim();
+    }
+    return cleaned;
+  }
+
   function extractAndAnalyzeWeakSentences(rawText, roleKey, roleName, lang) {
     if (!rawText || rawText.trim().length < 40) return null;
 
-    // Split candidate text into lines/sentences
-    const rawLines = rawText.split(/[\r\n•\*\–\—\-]+/).map(l => l.trim()).filter(l => l.length > 0);
-    
-    // Candidate sentences for evaluation
+    // Split by newlines or inline bullet symbols (without breaking hyphenated words like end-to-end)
+    const rawLines = rawText
+      .split(/\r?\n|\s+[•▪▫◦●]\s+/)
+      .map(l => l.replace(/^\s*(?:[•\*\▪\▫\◦●\-\–\—]|\d+[\.\)])\s+/, '').trim())
+      .filter(l => l.length > 0);
+
     const candidates = [];
-    const minLen = 25;
-    const maxLen = 280;
+    const minLen = 22;
+    const maxLen = 300;
 
     // Reject headers, contacts, education degrees, and metadata
     const rejectRegex = /^(pengalaman|experience|pendidikan|education|keahlian|skills|summary|ringkasan|kontak|contact|profil|profile|curriculum vitae|resume|page\s*\d+|halaman\s*\d+|email|telepon|phone|linkedin|github|portfolio|alamat|domisili|tanggal lahir|status|hobby|hobi|lulusan|sarjana|diploma|bachelor|master|magister|alumni|mahasiswa|student|ipk|gpa)\b/i;
-    const emailOrUrlRegex = /(@|http|www\.|\.com|\.id|\.net|\+62|08\d{8,})/i;
+    const emailOrUrlRegex = /(@|https?:\/\/|www\.|\.com\b|\.id\b|\.net\b|\+62\s*\d|08\d{8,})/i;
     const dateRangeOnlyRegex = /^(\d{4}|\w{3,9}\s*\d{4})\s*[\-–—]\s*(\d{4}|\w{3,9}\s*\d{4}|present|sekarang)$/i;
 
-    // Must contain at least one work/action verb signal to qualify as an experience bullet
-    const verbSignalRegex = /(bertanggung|tanggung|membantu|mengurus|melakukan|menjalankan|mengerjakan|ikut|bertugas|mengawasi|berpartisipasi|terlibat|mendukung|menghandle|membuat|mengembangkan|merancang|menganalisis|memimpin|mengelola|menyusun|berkoordinasi|mengidentifikasi|mempersiapkan|mengoperasikan|memproses|responsible|assisted|helped|handled|worked|participated|tasked|supported|designed|developed|led|analyzed|managed|coordinated|executed|monitored|created)/i;
+    // Work/action verb signal to qualify as an experience bullet
+    const verbSignalRegex = /(bertanggung|tanggung|ditugaskan|dipercaya|membantu|mengurus|melakukan|menjalankan|mengerjakan|ikut|bertugas|mengawasi|berpartisipasi|terlibat|mendukung|menghandle|menangani|membuat|mengembangkan|merancang|menganalisis|memimpin|mengelola|mengoptimalkan|meningkatkan|memangkas|mengotomatisasi|meluncurkan|menyusun|berkoordinasi|mengidentifikasi|mempersiapkan|menyiapkan|mengoperasikan|memproses|mencatat|menginput|melayani|responsible|assisted|helped|handled|worked|participated|tasked|supported|designed|developed|led|analyzed|managed|coordinated|executed|monitored|created|optimized|increased|reduced|spearheaded|orchestrated|architected|engineered|streamlined|launched|delivered|built)/i;
 
     for (const rawLine of rawLines) {
-      let lineClean = rawLine.trim().replace(/^["'“”‘’]+|["'“”‘’]+$/g, '').trim();
+      const lineClean = rawLine.trim().replace(/^["'“”‘’]+|["'“”‘’]+$/g, '').trim();
       if (lineClean.length < minLen || lineClean.length > maxLen) continue;
       if (rejectRegex.test(lineClean)) continue;
       if (emailOrUrlRegex.test(lineClean)) continue;
@@ -1849,172 +2273,313 @@ KEAHLIAN & KOMPETENSI
 
     if (candidates.length === 0) return null;
 
-    // Weakness signals
     const passiveStartersId = [
-      'bertanggung jawab', 'tanggung jawab', 'membantu', 'mengurus', 'melakukan', 'menjalankan',
-      'mengerjakan', 'ikut serta', 'bertugas', 'mengawasi', 'berpartisipasi', 'terlibat dalam',
-      'mendukung', 'menghandle', 'menerima', 'membuat laporan', 'berkoordinasi', 'menyusun'
+      'bertanggung jawab', 'tanggung jawab', 'ditugaskan', 'dipercaya', 'membantu', 'mengurus',
+      'melakukan', 'menjalankan', 'mengerjakan', 'ikut serta', 'bertugas', 'mengawasi',
+      'berpartisipasi', 'terlibat dalam', 'mendukung', 'menghandle', 'menangani', 'menerima',
+      'membuat laporan', 'berkoordinasi', 'menyusun', 'menyiapkan', 'mencatat', 'menginput',
+      'melayani', 'menjaga', 'berperan sebagai'
     ];
     const passiveStartersEn = [
       'responsible for', 'duties included', 'assisted in', 'assisted with', 'helped to',
-      'handled', 'worked on', 'participated in', 'tasked with', 'involved in', 'supported',
-      'responsible of', 'served as', 'in charge of'
+      'helped with', 'handled', 'worked on', 'participated in', 'tasked with', 'involved in',
+      'supported', 'responsible of', 'served as', 'in charge of', 'maintained'
     ];
+    const strongActionStartersRegex = /^(memimpin|merancang|membangun|mengarsitekturi|mengoptimalkan|meningkatkan|memangkas|mereduksi|mengembangkan|menganalisis|mengotomatisasi|meluncurkan|mengeksekusi|mendigitalkan|menginisiasi|spearheaded|architected|orchestrated|engineered|accelerated|streamlined|formulated|implemented|optimized|delivered|scaled|designed|led|built|launched|automated|reduced|increased|drove)\b/i;
 
-    const metricRegex = /\b\d+(\.\d+)?%|\b\d+\s*persen|\brp\s*[\d\.]+|\b\$\d+|\b\d+\s*(orang|kandidat|posisi|siswa|klien|proyek|bulan|tahun|karyawan|user|pengguna|teams?|clients?|projects?)\b/i;
+    const metricRegex = /\b\d+(?:[.,]\d+)?\s*(?:%|persen|x\b|kali\b)|(?:rp|idr|\$)\s*\d+(?:[.,]\d+)?\s*(?:rb|ribu|jt|juta|m|k|b)?\b|\b\d+(?:[.,]\d+)?\s*(?:rb|ribu|jt|juta)\b|\b\d+(?:\.\d+)?\/\d+\b|\b\d+\+?\s*(?:orang|kandidat|posisi|siswa|murid|klien|pelanggan|proyek|bulan|tahun|minggu|hari|jam|karyawan|user|pengguna|dokumen|laporan|tiket|teams?|clients?|projects?|users?|hours?|days?|weeks?|tickets?|roles?)\b/i;
 
-    const scored = candidates.map(sent => {
+    const strongSentences = [];
+    const scoredWeak = [];
+
+    for (const sent of candidates) {
       const lower = sent.toLowerCase();
       let weakScore = 0;
       let diagnosisKey = '';
 
-      // Check passive starters
-      const hasPassiveStarterId = passiveStartersId.some(p => lower.startsWith(p) || lower.includes(' ' + p));
-      const hasPassiveStarterEn = passiveStartersEn.some(p => lower.startsWith(p) || lower.includes(' ' + p));
+      const hasStrongStarter = strongActionStartersRegex.test(lower);
+      const matchedPassive = [...passiveStartersId, ...passiveStartersEn].filter(
+        p => lower.startsWith(p) || lower.includes(' ' + p)
+      );
+      const hasPassiveStarter = matchedPassive.length > 0;
+      const routineMatch = lower.match(/\b(administrasi|harian|rutin|operasional|dokumen|tugas|meeting|rapat|daily|routine|administrative)\b/i);
 
-      if (hasPassiveStarterId || hasPassiveStarterEn) {
-        weakScore += 50;
-        diagnosisKey = 'passive';
+      const hasMetric = metricRegex.test(sent);
+
+      if (hasStrongStarter && hasMetric && !hasPassiveStarter) {
+        strongSentences.push(sent);
+        continue;
       }
 
-      // Check zero metrics
-      const hasMetric = metricRegex.test(sent);
+      if (hasPassiveStarter && !hasStrongStarter) {
+        weakScore += 50;
+        diagnosisKey = 'passive';
+      } else if (!hasStrongStarter) {
+        weakScore += 20;
+      }
+
       if (!hasMetric) {
         weakScore += 35;
         if (!diagnosisKey) diagnosisKey = 'no_metric';
       }
 
-      // Check duty/routine words without outcome
-      if (/administrasi|harian|rutin|operasional|dokumen|tugas|meeting|rapat|daily|routine|administrative/i.test(lower)) {
+      if (routineMatch) {
         weakScore += 15;
       }
 
+      const weakPhrases = [...matchedPassive];
+      if (routineMatch && !weakPhrases.includes(routineMatch[0])) {
+        weakPhrases.push(routineMatch[0]);
+      }
+
+      if (weakScore >= 35) {
+        scoredWeak.push({
+          sentence: sent,
+          weakScore,
+          diagnosisKey: diagnosisKey || 'vague',
+          hasMetric,
+          hasStrongStarter,
+          weakPhrases
+        });
+      } else if (hasMetric) {
+        strongSentences.push(sent);
+      }
+    }
+
+    if (scoredWeak.length === 0) {
       return {
-        sentence: sent,
-        weakScore,
-        diagnosisKey: diagnosisKey || 'vague',
-        hasMetric
+        strongCount: strongSentences.length,
+        weakCount: 0,
+        strongSample: strongSentences[0] || null,
+        primary: null,
+        secondary: []
       };
-    });
+    }
 
     // Sort by weakness descending
-    scored.sort((a, b) => b.weakScore - a.weakScore);
-
-    // Pick weak items with weakScore >= 35
-    const weakItems = scored.filter(s => s.weakScore >= 35);
-    if (weakItems.length === 0) return null;
+    scoredWeak.sort((a, b) => b.weakScore - a.weakScore);
 
     // Deduplicate near identical sentences
     const uniqueWeak = [];
     const seen = new Set();
-    for (const item of weakItems) {
-      const slug = item.sentence.toLowerCase().slice(0, 30);
+    for (const item of scoredWeak) {
+      const slug = item.sentence.toLowerCase().slice(0, 32);
       if (!seen.has(slug)) {
         seen.add(slug);
         uniqueWeak.push(item);
       }
     }
 
-    const primary = uniqueWeak[0];
-    const secondary = uniqueWeak.slice(1, 4);
+    const usedRewrites = new Set();
+    const buildUniqueRewrite = (sent, idx) => {
+      let candidate = generateTailoredXYZRewrite(sent, roleKey, roleName, lang, idx);
+      if (usedRewrites.has(candidate)) {
+        candidate = generateTailoredXYZRewrite(sent, roleKey, roleName, lang, idx + 10);
+      }
+      usedRewrites.add(candidate);
+      return candidate;
+    };
+
+    const primaryItem = uniqueWeak[0];
+    const secondaryItems = uniqueWeak.slice(1, 4);
 
     return {
+      strongCount: strongSentences.length,
+      weakCount: uniqueWeak.length,
+      strongSample: strongSentences[0] || null,
       primary: {
-        original: primary.sentence,
-        diagnosis: getDiagnosisText(primary.diagnosisKey, primary.sentence, lang),
-        rewrite: generateTailoredXYZRewrite(primary.sentence, roleKey, roleName, lang)
+        original: primaryItem.sentence,
+        highlightedOriginal: formatHighlightedOriginal(primaryItem.sentence, primaryItem.weakPhrases),
+        diagnosis: getDiagnosisText(primaryItem, lang),
+        rewrite: buildUniqueRewrite(primaryItem.sentence, 0)
       },
-      secondary: secondary.map(item => ({
+      secondary: secondaryItems.map((item, idx) => ({
         original: item.sentence,
-        diagnosis: getDiagnosisText(item.diagnosisKey, item.sentence, lang),
-        rewrite: generateTailoredXYZRewrite(item.sentence, roleKey, roleName, lang)
+        highlightedOriginal: formatHighlightedOriginal(item.sentence, item.weakPhrases),
+        diagnosis: getDiagnosisText(item, lang),
+        rewrite: buildUniqueRewrite(item.sentence, idx + 1)
       }))
     };
   }
 
-  function getDiagnosisText(key, sentence, lang) {
+  function formatHighlightedOriginal(sentence, weakPhrases = []) {
+    let html = escapeHtml(sentence);
+    if (!weakPhrases || weakPhrases.length === 0) return html;
+
+    // Sort longest first to avoid nested partial replacements
+    const sorted = [...new Set(weakPhrases)].sort((a, b) => b.length - a.length).slice(0, 3);
+    for (const phrase of sorted) {
+      const escapedPhrase = escapeHtml(phrase).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`(${escapedPhrase})`, 'i');
+      html = html.replace(
+        regex,
+        '<span class="underline decoration-rose-500/80 decoration-2 underline-offset-4 font-semibold text-slate-950 dark:text-white">$1</span>'
+      );
+    }
+    return html;
+  }
+
+  function getDiagnosisText(item, lang) {
+    const phrases = (item && item.weakPhrases ? item.weakPhrases : []).slice(0, 2);
+    const hasMetric = item ? item.hasMetric : false;
+    const hasStrong = item ? item.hasStrongStarter : false;
+
     if (lang === 'id') {
-      if (key === 'passive') {
-        return '❌ <strong>Diagnosis Masalah:</strong> Menggunakan kalimat pasif tugas rutin dan belum menyertakan angka metrik capaian hasil bisnis (%).';
-      } else if (key === 'no_metric') {
-        return '❌ <strong>Diagnosis Masalah:</strong> Pernyataan tugas kualitatif tanpa angka efisiensi, skala proyek, atau hasil bisnis nyata yang dapat diukur.';
-      } else {
-        return '❌ <strong>Diagnosis Masalah:</strong> Narasi terlalu umum (vague); rekruter tidak dapat melihat skala tanggung jawab maupun metodologi kerja Anda.';
+      const issues = [];
+      const fixes = [];
+
+      if (phrases.length > 0) {
+        const quoted = phrases.map(p => `"${escapeHtml(p)}"`).join(', ');
+        issues.push(`frasa pasif/rutin (${quoted})`);
+        fixes.push('ganti dengan kata kerja aksi aktif (mis. Memimpin, Merancang, Mengoptimalkan)');
+      } else if (!hasStrong) {
+        issues.push('awalan kalimat belum memakai kata kerja aktif yang kuat');
+        fixes.push('awali langsung dengan verba aksi berdampak');
       }
+
+      if (!hasMetric) {
+        issues.push('belum ada angka metrik hasil');
+        fixes.push('tambahkan %, jumlah orang/proyek, atau waktu yang dihemat');
+      }
+
+      if (issues.length === 0) {
+        issues.push('narasi masih terlalu umum');
+        fixes.push('perjelas skala tanggung jawab dan metode kerjanya');
+      }
+
+      return `<strong>Bagian Salah:</strong> ${issues.join(' &amp; ')}. <br class="sm:hidden"><strong>Harus Diperbaiki:</strong> ${fixes.join(', ')}.`;
     } else {
-      if (key === 'passive') {
-        return '❌ <strong>Root Issue:</strong> Starts with passive duty phrasing rather than proactive ownership, completely lacking quantifiable impact metrics (%).';
-      } else if (key === 'no_metric') {
-        return '❌ <strong>Root Issue:</strong> Purely qualitative statement without hard operational efficiency numbers, project scale, or measurable business outcomes.';
-      } else {
-        return '❌ <strong>Root Issue:</strong> Overly generic phrasing; ATS and recruiters cannot ascertain your specific contribution scale or execution methodology.';
+      const issues = [];
+      const fixes = [];
+
+      if (phrases.length > 0) {
+        const quoted = phrases.map(p => `"${escapeHtml(p)}"`).join(', ');
+        issues.push(`passive/routine phrasing (${quoted})`);
+        fixes.push('replace with a strong action verb (e.g., Spearheaded, Designed, Optimized)');
+      } else if (!hasStrong) {
+        issues.push('missing a high-impact action verb opener');
+        fixes.push('lead with an active ownership verb');
       }
+
+      if (!hasMetric) {
+        issues.push('no quantifiable impact metric');
+        fixes.push('inject %, volume, or time/cost saved');
+      }
+
+      if (issues.length === 0) {
+        issues.push('overly generic phrasing');
+        fixes.push('specify execution scope and measurable outcome');
+      }
+
+      return `<strong>What's Wrong:</strong> ${issues.join(' &amp; ')}. <br class="sm:hidden"><strong>Fix Required:</strong> ${fixes.join(', ')}.`;
     }
   }
 
-  function generateTailoredXYZRewrite(original, roleKey, roleName, lang) {
+  function generateTailoredXYZRewrite(original, roleKey, roleName, lang, variantIndex = 0) {
     const lower = original.toLowerCase();
+    const coreTopic = extractCoreTopic(original);
+    const hasTopic = coreTopic.length >= 8;
+
+    // Pick deterministic variant when multiple bullets fall into the same domain
+    const pick = (arr) => arr[variantIndex % arr.length];
 
     // 1. Context: Recruitment / Talent Acquisition / HR
-    if (/rekrut|recruitment|wawancara|interview|seleksi|kandidat|candidate|sourcing|talent|hiring|onboard/i.test(lower)) {
-      return lang === 'id'
-        ? '"Memimpin end-to-end recruitment cycle untuk 18 posisi spesialis menggunakan teknik wawancara STAR, memangkas time-to-hire sebesar 28% dengan angka retensi kandidat 94% pada masa probation."'
-        : '"Spearheaded end-to-end recruitment lifecycles across 18 specialized roles utilizing STAR behavioral interviewing, accelerating time-to-hire by 28% with a 94% probation retention rate."';
+    if (/rekrut|recruitment|wawancara|interview|seleksi|kandidat|candidate|sourcing|talent|hiring|onboard|cv\b/i.test(lower)) {
+      return pick(lang === 'id' ? [
+        'Memimpin end-to-end recruitment cycle untuk 18 posisi spesialis menggunakan wawancara berbasis STAR, memangkas time-to-hire sebesar 28% dengan retensi masa probation 94%.',
+        'Mengoptimalkan proses sourcing dan screening kandidat lintas kanal rekrutmen, mempercepat pipeline kandidat berkualitas sebesar 35% dan memenuhi 100% target SLA hiring kuartalan.'
+      ] : [
+        'Spearheaded end-to-end recruitment lifecycles across 18 specialized roles utilizing STAR behavioral interviewing, accelerating time-to-hire by 28% with a 94% probation retention rate.',
+        'Streamlined multi-channel candidate sourcing and structured ATS screening, expanding qualified talent pipelines by 35% while achieving 100% quarterly hiring SLA targets.'
+      ]);
     }
 
     // 2. Context: Training / Learning / Mentoring / Shadow Teacher / Education
     if (/train|pelatihan|ajar|didik|mentor|curriculum|kurikulum|siswa|murid|student|shadow|kelas|class|workshop|pendamping/i.test(lower)) {
-      return lang === 'id'
-        ? '"Merancang program pembelajaran & pendampingan terstruktur berbasis asesmen individual, mendongkrak penguasaan kompetensi target sebesar 35% dan mencatat tingkat kepuasan partisipan 96%."'
-        : '"Designed and executed structured individualized learning pathways, driving a 35% increase in target competency mastery while securing a 96% participant satisfaction rating."';
+      return pick(lang === 'id' ? [
+        'Merancang program pembelajaran dan pendampingan terstruktur berbasis asesmen individual, mendongkrak penguasaan kompetensi target sebesar 35% dengan tingkat kepuasan 96%.',
+        'Mengimplementasikan modul evaluasi perkembangan dan bimbingan berkala bagi 30+ peserta didik, meningkatkan kemandirian belajar dan ketercapaian target kurikulum sebesar 40%.'
+      ] : [
+        'Designed and executed structured individualized learning pathways, driving a 35% increase in target competency mastery while securing a 96% participant satisfaction rating.',
+        'Implemented personalized progress-tracking rubrics across 30+ learners, boosting curriculum milestone completion rates by 40% within one academic term.'
+      ]);
     }
 
-    // 3. Context: HR Operations / Administration / People & Culture
-    if (/administrasi|operasional|dokumen|surat|bpjs|payroll|absensi|karyawan|employee|people|kebijakan|policy/i.test(lower)) {
-      return lang === 'id'
-        ? '"Mendigitalkan alur administrasi SDM dan audit kepatuhan data personil untuk 120+ karyawan, menghemat 14 jam kerja operasional per minggu serta mengeliminasi deviasi kepatuhan internal hingga 0%."'
-        : '"Digitized HR administrative workflows and personnel compliance records across 120+ employees, saving 14 operational hours weekly while reducing internal audit variances to 0%."';
+    // 3. Context: HR Operations / Administration / Legal / Compliance
+    if (/administrasi|operasional|dokumen|surat|bpjs|payroll|absensi|karyawan|employee|people|kebijakan|policy|arsip|kontrak|legal/i.test(lower)) {
+      return pick(lang === 'id' ? [
+        'Mendigitalkan alur administrasi SDM dan audit kepatuhan data personil untuk 120+ karyawan, menghemat 14 jam kerja operasional per minggu serta menekan deviasi kepatuhan hingga 0%.',
+        'Menstandardisasi sistem pengarsipan dokumen dan pemrosesan kontrak internal, memangkas waktu penelusuran berkas sebesar 50% dan memastikan ketepatan jadwal payroll 100%.'
+      ] : [
+        'Digitized HR administrative workflows and personnel compliance records across 120+ employees, saving 14 operational hours weekly while reducing internal audit variances to 0%.',
+        'Standardized digital document indexing and contract lifecycle tracking, cutting record retrieval time by 50% and maintaining 100% on-time payroll compliance.'
+      ]);
     }
 
-    // 4. Context: Data Analysis / Business Analysis / Excel / Dashboard
-    if (/data|analis|analisis|analyst|excel|dashboard|visual|bi|laporan|report|metrik|metric|sql|python|kpi/i.test(lower)) {
-      return lang === 'id'
-        ? '"Membangun automated data model dan dashboard analitik interaktif, memangkas siklus pembuatan laporan rutin sebesar 65% dan menyajikan insights akurat untuk perumusan keputusan manajerial."'
-        : '"Architected automated data pipelines and executive dashboards, reducing weekly reporting cycles by 65% while delivering real-time actionable intelligence to leadership."';
+    // 4. Context: Finance / Accounting / Tax / Budget
+    if (/keuangan|finance|akuntansi|accounting|pajak|tax|invoice|tagihan|anggaran|budget|jurnal|rekonsiliasi|audit/i.test(lower)) {
+      return pick(lang === 'id' ? [
+        'Mengotomatisasi proses rekonsiliasi transaksi dan pelaporan keuangan bulanan, memangkas waktu tutup buku (closing) sebesar 40% dengan tingkat akurasi audit 99.8%.',
+        'Mengelola kontrol anggaran operasional dan verifikasi invoice vendor bernilai Rp500jt+, menekan pemborosan biaya sebesar 15% tanpa mengganggu SLA pembayaran.'
+      ] : [
+        'Automated monthly financial reconciliation and general ledger workflows, accelerating month-end closing by 40% while sustaining 99.8% audit accuracy.',
+        'Managed operational budget controls and vendor invoice audits, reducing recurring overhead costs by 15% with 100% on-time settlement compliance.'
+      ]);
     }
 
-    // 5. Context: Software Engineering / Web / Tech / QA
-    if (/code|koding|web|aplikasi|software|fitur|feature|bug|api|database|system|frontend|backend|react|git/i.test(lower)) {
-      return lang === 'id'
-        ? '"Mengarsitekturi dan merilis modul sistem terdistribusi berskala tinggi, menurunkan latensi API p95 sebesar 38% serta mempertahankan uptime operasional pada standar 99.9% SLA."'
-        : '"Architected and deployed high-throughput distributed system modules, reducing p95 API response latency by 38% while sustaining a 99.9% operational uptime SLA."';
+    // 5. Context: Data Analysis / Business Analysis / Excel / Dashboard
+    if (/data|analis|analisis|analyst|excel|dashboard|visual|bi\b|laporan|report|metrik|metric|sql|python|kpi/i.test(lower)) {
+      return pick(lang === 'id' ? [
+        'Membangun automated data model dan dashboard analitik interaktif, memangkas siklus pembuatan laporan rutin sebesar 65% dan menyajikan insights akurat untuk keputusan manajerial.',
+        'Menganalisis tren performa operasional dari 50.000+ baris data menggunakan Excel/SQL, mengidentifikasi bottleneck utama yang berhasil meningkatkan efisiensi proses sebesar 24%.'
+      ] : [
+        'Architected automated data pipelines and executive dashboards, reducing weekly reporting cycles by 65% while delivering real-time actionable intelligence to leadership.',
+        'Analyzed operational datasets exceeding 50,000+ records via SQL and BI tooling, uncovering workflow bottlenecks that lifted process efficiency by 24%.'
+      ]);
     }
 
-    // 6. Context: Product Management / Agile
-    if (/produk|product|roadmap|backlog|sprint|scrum|user story/i.test(lower)) {
-      return lang === 'id'
-        ? '"Memimpin riset discovery dan delivery roadmap produk lintas divisi, meningkatkan adopsi fitur baru sebesar 42% dan memangkas waktu cycle time sprint engineering hingga 25%."'
-        : '"Orchestrated product discovery and cross-functional roadmap execution, increasing new feature adoption by 42% and shortening sprint engineering cycle time by 25%."';
+    // 6. Context: Software Engineering / Web / Tech / QA
+    if (/code|koding|web|aplikasi|software|fitur|feature|bug|api|database|system|frontend|backend|react|git|testing|qa\b/i.test(lower)) {
+      return pick(lang === 'id' ? [
+        'Mengarsitekturi dan merilis modul sistem berkinerja tinggi, menurunkan latensi API p95 sebesar 38% serta mempertahankan uptime operasional pada standar 99.9% SLA.',
+        'Mengotomatisasi skenario pengujian regresi dan refactoring komponen inti, memangkas bug produksi pasca-rilis sebesar 45% dan mempercepat siklus deployment tim sebesar 30%.'
+      ] : [
+        'Architected and deployed high-throughput system modules, reducing p95 API response latency by 38% while sustaining a 99.9% operational uptime SLA.',
+        'Automated end-to-end regression suites and refactored core UI/API bottlenecks, cutting post-release production defects by 45% and accelerating release velocity by 30%.'
+      ]);
     }
 
-    // 7. Context: Digital Marketing / Growth / Social Media
-    if (/marketing|pemasaran|campaign|iklan|ads|sosmed|social media|konten|content|leads|sales|penjualan|roi|omzet/i.test(lower)) {
-      return lang === 'id'
-        ? '"Mengeksekusi strategi kampanye berbasis data analitik performa, melipatgandakan Return on Ad Spend (ROAS) hingga 3.6x dan mendongkrak perolehan prospek berkualitas (leads) sebesar 48%."'
-        : '"Executed data-driven performance campaigns, scaling Return on Ad Spend (ROAS) to 3.6x while generating a 48% increase in qualified inbound lead acquisitions."';
+    // 7. Context: Product Management / Agile / Project
+    if (/produk|product|roadmap|backlog|sprint|scrum|user story|proyek|project|timeline|milestone/i.test(lower)) {
+      return pick(lang === 'id' ? [
+        'Memimpin riset discovery dan delivery roadmap produk lintas divisi, meningkatkan adopsi fitur baru sebesar 42% dan memangkas cycle time sprint engineering hingga 25%.',
+        'Mengkoordinasikan eksekusi 6+ proyek strategis lintas fungsi dengan metodologi Agile, mencapai tingkat ketepatan rilis (on-time delivery) 95% sesuai target bisnis.'
+      ] : [
+        'Orchestrated product discovery and cross-functional roadmap execution, increasing new feature adoption by 42% and shortening sprint engineering cycle time by 25%.',
+        'Directed 6+ cross-functional Agile delivery initiatives from scoping to launch, achieving a 95% on-time milestone completion rate.'
+      ]);
     }
 
-    // 8. Adaptive Generic Context: Clean the sentence and construct XYZ with original core keywords
-    const cleanedTopic = original
-      .replace(/^(bertanggung jawab (atas|dalam|untuk)?|membantu|mengurus|melakukan|menjalankan|mengerjakan|responsible for|duties included|assisted with|helped to|handled)\s*/i, '')
-      .replace(/^(dan|serta|juga|and|as well as)\s*/i, '')
-      .trim();
+    // 8. Context: Digital Marketing / Growth / Sales / Social Media
+    if (/marketing|pemasaran|campaign|iklan|ads|sosmed|social media|konten|content|leads|sales|penjualan|roi|omzet|pelanggan|customer|klien|client/i.test(lower)) {
+      return pick(lang === 'id' ? [
+        'Mengeksekusi strategi kampanye berbasis data analitik performa, melipatgandakan Return on Ad Spend (ROAS) hingga 3.6x dan mendongkrak perolehan prospek (leads) sebesar 48%.',
+        'Membangun strategi retensi dan komunikasi pelanggan terukur, meningkatkan tingkat konversi penjualan sebesar 27% dan menjaga skor kepuasan klien di angka 4.8/5.'
+      ] : [
+        'Executed data-driven performance campaigns, scaling Return on Ad Spend (ROAS) to 3.6x while generating a 48% increase in qualified inbound lead acquisitions.',
+        'Spearheaded structured client engagement and retention playbooks, lifting sales conversion rates by 27% while sustaining a 4.8/5 customer satisfaction score.'
+      ]);
+    }
 
-    const shortTopic = cleanedTopic.length > 5 ? cleanedTopic : (roleName || 'operasional');
-
-    return lang === 'id'
-      ? `"Mengoptimalkan pelaksanaan inisiatif ${shortTopic} melalui standardisasi alur kerja terstruktur, meningkatkan efisiensi operasional tim sebesar 32% dan memastikan tingkat keberhasilan delivery 98%."`
-      : `"Spearheaded the systematic execution of ${shortTopic} via standardized operating workflows, accelerating team operational efficiency by 32% with a 98% quality delivery benchmark."`;
+    // 9. Adaptive Context: Preserve candidate's actual core topic + role alignment
+    const topicLabel = hasTopic ? coreTopic : (roleName || (lang === 'id' ? 'operasional inti' : 'core operations'));
+    return pick(lang === 'id' ? [
+      `Mengoptimalkan pelaksanaan ${topicLabel} melalui standardisasi alur kerja terukur, meningkatkan efisiensi tim sebesar 32% dan menjaga tingkat ketepatan delivery 98%.`,
+      `Memimpin inisiatif ${topicLabel} bersama pemangku kepentingan terkait, memangkas waktu penyelesaian tugas sebesar 25% serta melampaui target KPI ${roleName || 'divisi'}.`
+    ] : [
+      `Spearheaded the systematic execution of ${topicLabel} via standardized workflows, accelerating team operational efficiency by 32% with a 98% quality delivery benchmark.`,
+      `Led cross-functional ${topicLabel} initiatives aligned with ${roleName || 'departmental'} KPIs, cutting turnaround time by 25% while exceeding quarterly quality targets.`
+    ]);
   }
 
 // --------------------------------------------------------------------------
@@ -2163,19 +2728,33 @@ KEAHLIAN & KOMPETENSI
         : 'Recruiter Advice: High risk of administrative rejection. Overhaul experience bullet points with active verbs and strict XYZ framing.';
     }
 
-    // Strengths calculation
+    // Extract strong & weak sentences directly from candidate's uploaded/pasted text
+    const extractedRewrites = extractAndAnalyzeWeakSentences(text, roleKey, roleName, lang);
+    const strongBulletCount = extractedRewrites ? (extractedRewrites.strongCount || 0) : 0;
+    const weakBulletCount = extractedRewrites ? (extractedRewrites.weakCount || 0) : 0;
+
+    // Strengths calculation (truthful, evidence-based)
     const strengths = [];
     if (matchedKeywords.length > 0) {
       const topMatched = matchedKeywords.slice(0, 3).map(k => `"${k}"`).join(', ');
       strengths.push(lang === 'id' ? `Kata kunci kompetensi spesifik terdeteksi kuat: ${topMatched}.` : `Core targeted keywords detected: ${topMatched}.`);
     }
+    if (strongBulletCount > 0) {
+      strengths.push(lang === 'id'
+        ? `Terdeteksi ${strongBulletCount} kalimat pengalaman kuat (menggunakan kata kerja aksi aktif + metrik angka terukur).`
+        : `Detected ${strongBulletCount} strong experience bullet(s) combining active action verbs with quantifiable metrics.`);
+    }
     if (metricMatches.length > 0) {
       strengths.push(lang === 'id' ? `Menyertakan ${metricMatches.length} bukti metrik pencapaian numerik konkret (angka/persentase).` : `Includes ${metricMatches.length} quantifiable metrics (numbers/percentages) proving business impact.`);
-    } else {
-      strengths.push(lang === 'id' ? 'Pemberian urutan pengalaman kerja terstruktur secara kronologis rapi.' : 'Chronological career progression organized systematically.');
+    } else if (sectionCount >= 2) {
+      strengths.push(lang === 'id' ? 'Struktur bagian CV utama (pengalaman/pendidikan/keahlian) tersusun sistematis dan mudah dipindai ATS.' : 'Core resume sections (experience/education/skills) are organized in an ATS-readable structure.');
     }
-    strengths.push(lang === 'id' ? 'Verba aksi aktif mendominasi narasi tanggung jawab profesional.' : 'Active action verbs drive professional responsibility descriptions.');
-    strengths.push(lang === 'id' ? 'Tata letak dan struktur ringkasan profil mudah dipindai oleh algoritma parsing.' : 'Clean, parse-friendly layout structure easily readable by ATS parsers.');
+    if (actionCount >= 2) {
+      strengths.push(lang === 'id' ? `Menggunakan ${actionCount} ragam verba aksi aktif untuk mendeskripsikan kontribusi kerja.` : `Utilizes ${actionCount} distinct active action verbs to frame professional contributions.`);
+    }
+    if (strengths.length === 0) {
+      strengths.push(lang === 'id' ? 'Teks digital berhasil diekstrak bersih dan terbaca oleh mesin pemindai ATS.' : 'Digital text extracted cleanly and is readable by standard ATS parsers.');
+    }
 
     // Gaps calculation
     const gaps = [];
@@ -2207,6 +2786,16 @@ KEAHLIAN & KOMPETENSI
       }
     }
 
+    if (weakBulletCount > 0) {
+      gaps.push(lang === 'id'
+        ? `Terdeteksi ${weakBulletCount} kalimat pengalaman lemah (pasif/tanpa metrik angka) yang perlu dirombak ke Formula XYZ.`
+        : `Detected ${weakBulletCount} weak experience bullet(s) (passive phrasing or zero metrics) that need XYZ rewriting.`);
+    }
+    if (actionCount < 2) {
+      gaps.push(lang === 'id'
+        ? 'Minim Verba Aksi Kuat: Awali poin pengalaman dengan kata kerja aktif seperti "Memimpin", "Merancang", atau "Mengoptimalkan" alih-alih "Membantu" atau "Bertanggung jawab".'
+        : 'Low Strong Action Verb Density: Start experience bullets with proactive verbs like "Spearheaded", "Designed", or "Optimized" instead of passive duty phrasing.');
+    }
     if (missingKeywords.length > 0) {
       const topMissing = missingKeywords.slice(0, 3).map(k => `"${k}"`).join(', ');
       gaps.push(lang === 'id' ? `Kata kunci penting posisi ini belum tercantum eksplisit: ${topMissing}.` : `Critical industry terms absent from text: ${topMissing}.`);
@@ -2221,22 +2810,24 @@ KEAHLIAN & KOMPETENSI
       gaps.push(lang === 'id' ? 'Tautan portofolio aktif atau LinkedIn belum terdeteksi secara jelas di bagian kontak.' : 'Online portfolio link or updated LinkedIn handle not distinctly formatted.');
     }
 
-    // Extract weak sentences directly from candidate's uploaded/pasted text
-    const extractedRewrites = extractAndAnalyzeWeakSentences(text, roleKey, roleName, lang);
     let isExtractedFromCv = false;
+    let beforeRewriteHtml = '';
     let rewriteDiagnosis = '';
     let secondaryRewrites = [];
 
     if (extractedRewrites && extractedRewrites.primary) {
       isExtractedFromCv = true;
-      beforeRewrite = `"${extractedRewrites.primary.original}"`;
+      beforeRewrite = extractedRewrites.primary.original;
+      beforeRewriteHtml = extractedRewrites.primary.highlightedOriginal;
       afterRewrite = extractedRewrites.primary.rewrite;
       rewriteDiagnosis = extractedRewrites.primary.diagnosis;
       secondaryRewrites = extractedRewrites.secondary || [];
     } else {
+      beforeRewriteHtml = escapeHtml(cleanCopyableSentence(beforeRewrite));
+      afterRewrite = cleanCopyableSentence(afterRewrite);
       rewriteDiagnosis = lang === 'id'
-        ? '❌ <strong>Diagnosis Masalah:</strong> Menggunakan kalimat pasif tugas rutin dan belum menyertakan angka metrik capaian hasil bisnis (%).'
-        : '❌ <strong>Root Issue:</strong> Passive task description lacking quantifiable business metrics and high-impact action verbs.';
+        ? '<strong>Bagian Salah:</strong> Frasa pasif tugas rutin &amp; belum ada angka metrik hasil. <strong>Harus Diperbaiki:</strong> Ganti dengan kata kerja aksi aktif dan tambahkan %, jumlah, atau waktu.'
+        : '<strong>What\'s Wrong:</strong> Passive duty phrasing &amp; zero impact metrics. <strong>Fix Required:</strong> Lead with an active verb and add %, volume, or time saved.';
     }
 
     return {
@@ -2250,8 +2841,15 @@ KEAHLIAN & KOMPETENSI
       screeningStandard: state.screeningStandard,
       strengths: strengths.slice(0, 4),
       gaps: gaps.slice(0, 3),
+      matchedKeywords,
+      targetKeywordsCount: targetKeywords.length,
+      strongBulletCount,
+      weakBulletCount,
+      metricCount: metricMatches.length,
+      actionCount,
       missingKeywords: missingKeywords.length > 0 ? missingKeywords : targetKeywords.slice(0, 6),
       beforeRewrite,
+      beforeRewriteHtml,
       afterRewrite,
       rewriteDiagnosis,
       isExtractedFromCv,
@@ -2265,7 +2863,7 @@ KEAHLIAN & KOMPETENSI
   // --------------------------------------------------------------------------
   // 13. RENDER RESULTS VIEW
   // --------------------------------------------------------------------------
-  function renderAnalysisResults(res) {
+  function renderAnalysisResults(res, options = {}) {
     const lang = state.language;
 
     DOM.resDocName.textContent = (lang === 'id' ? 'Hasil Evaluasi: ' : 'Evaluation: ') + res.documentName;
@@ -2338,12 +2936,12 @@ KEAHLIAN & KOMPETENSI
       DOM.cvScanDetectionBadge.classList.add('hidden');
     }
 
-    DOM.rewriteBeforeTxt.textContent = res.beforeRewrite;
+    DOM.rewriteBeforeTxt.innerHTML = res.beforeRewriteHtml || escapeHtml(res.beforeRewrite);
     DOM.rewriteAfterTxt.textContent = res.afterRewrite;
     if (DOM.rewriteDiagnosisTxt) {
       DOM.rewriteDiagnosisTxt.innerHTML = res.rewriteDiagnosis || (lang === 'id'
-        ? '❌ <strong>Diagnosis Masalah:</strong> Menggunakan kalimat pasif tugas rutin dan belum menyertakan angka metrik capaian hasil bisnis (%).'
-        : '❌ <strong>Root Issue:</strong> Passive task description lacking quantifiable business metrics and high-impact action verbs.');
+        ? '<strong>Bagian Salah:</strong> Kalimat pasif tugas rutin tanpa metrik dampak. <strong>Harus Diperbaiki:</strong> Ganti dengan kata kerja aktif dan tambahkan angka hasil (%).'
+        : '<strong>What\'s Wrong:</strong> Passive task description lacking metrics. <strong>Fix Required:</strong> Lead with an active verb and add measurable outcomes.');
     }
 
     // Secondary rewrites if extracted from candidate's CV
@@ -2354,35 +2952,35 @@ KEAHLIAN & KOMPETENSI
           DOM.secondaryRewritesCount.textContent = `${res.secondaryRewrites.length} ` + (lang === 'id' ? 'Kalimat Terdeteksi' : 'Sentences Detected');
         }
         DOM.secondaryRewritesList.innerHTML = res.secondaryRewrites.map((item, idx) => `
-          <div class="p-3.5 sm:p-4 rounded-xl bg-white dark:bg-dark-surface border border-rose-200 dark:border-dark-border space-y-3 shadow-sm">
-            <div class="space-y-1">
+          <div class="p-3.5 sm:p-4 rounded-xl bg-slate-50 dark:bg-dark-well border border-slate-300 dark:border-dark-wellBorder space-y-3">
+            <div class="space-y-1.5">
               <div class="flex items-center justify-between">
-                <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-rose-800 dark:text-rose-400">
+                <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                   ${lang === 'id' ? 'Butir #' + (idx + 2) + ' Asli di CV Anda' : 'Original Experience Bullet #' + (idx + 2)}
                 </span>
-                <span class="text-[9.5px] font-mono font-semibold text-rose-700 dark:text-rose-400 px-1.5 py-0.5 rounded bg-rose-50 dark:bg-rose-950/40 border border-rose-200 dark:border-rose-800/40">
-                  ${lang === 'id' ? 'Perlu Dirombak' : 'Needs Overhaul'}
+                <span class="text-[9.5px] font-mono font-semibold text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-dark-surface border border-slate-300 dark:border-dark-wellBorder">
+                  ${lang === 'id' ? 'Perlu Diperbaiki' : 'Needs Fix'}
                 </span>
               </div>
-              <p class="text-xs text-slate-900 dark:text-slate-300 italic font-sans bg-rose-50/60 dark:bg-[#131722] p-2.5 rounded-lg border border-rose-200 dark:border-rose-950/50">
-                "${escapeHtml(item.original)}"
+              <p class="text-xs text-slate-900 dark:text-slate-200 font-sans leading-relaxed bg-white dark:bg-dark-surface p-2.5 rounded-lg border border-slate-300 dark:border-dark-wellBorder">
+                ${item.highlightedOriginal || escapeHtml(item.original)}
               </p>
-              <p class="text-[11px] text-rose-800 dark:text-rose-300 font-medium">
+              <p class="text-[11px] text-slate-700 dark:text-slate-300 font-normal leading-relaxed bg-white dark:bg-dark-surface p-2 rounded-lg border border-slate-300 dark:border-dark-wellBorder border-l-2 border-l-slate-500 dark:border-l-slate-400">
                 ${item.diagnosis}
               </p>
             </div>
-            <div class="space-y-1.5 pt-1 border-t border-dark-border/40">
+            <div class="space-y-1.5 pt-2 border-t border-slate-300 dark:border-dark-wellBorder">
               <div class="flex items-center justify-between">
-                <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-emerald-800 dark:text-emerald-400 flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-white flex items-center gap-1.5">
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-800 dark:bg-slate-200"></span>
                   <span>${lang === 'id' ? 'Rekomendasi Formula XYZ (Siap Salin)' : 'Recommended XYZ Formula (Ready to Copy)'}</span>
                 </span>
-                <button type="button" class="copy-secondary-rewrite-btn text-[11px] text-emerald-800 dark:text-emerald-400 hover:text-emerald-950 dark:hover:text-emerald-300 font-heading font-bold flex items-center gap-1 transition-colors" data-copy-target="${encodeURIComponent(item.rewrite)}">
+                <button type="button" class="copy-secondary-rewrite-btn text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-heading font-bold flex items-center gap-1 transition-colors" data-copy-target="${encodeURIComponent(item.rewrite)}">
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                   <span>${lang === 'id' ? 'Salin Kalimat' : 'Copy Sentence'}</span>
                 </button>
               </div>
-              <p class="text-xs text-slate-900 dark:text-emerald-100 font-semibold dark:font-medium leading-relaxed bg-emerald-50/70 dark:bg-[#10221A] p-2.5 rounded-lg border border-emerald-300 dark:border-emerald-500/30">
+              <p class="text-xs text-slate-900 dark:text-white font-medium leading-relaxed bg-white dark:bg-dark-surface p-2.5 rounded-lg border border-slate-300 dark:border-dark-wellBorder border-l-2 border-l-slate-900 dark:border-l-white">
                 ${escapeHtml(item.rewrite)}
               </p>
             </div>
@@ -2394,12 +2992,7 @@ KEAHLIAN & KOMPETENSI
           btn.addEventListener('click', () => {
             const encoded = btn.getAttribute('data-copy-target');
             if (encoded) {
-              const textToCopy = decodeURIComponent(encoded).replace(/^[\"'“”‘’]+|[\"'“”‘’]+$/g, '');
-              navigator.clipboard.writeText(textToCopy).then(() => {
-                showToast(lang === 'id' ? 'Kalimat rekomendasi berhasil disalin ke clipboard!' : 'Recommended sentence copied to clipboard!');
-              }).catch(() => {
-                showToast(lang === 'id' ? 'Gagal menyalin teks' : 'Failed to copy text');
-              });
+              copyTextToClipboard(decodeURIComponent(encoded), btn, lang);
             }
           });
         });
@@ -2420,7 +3013,10 @@ KEAHLIAN & KOMPETENSI
 
     DOM.inputView.classList.add('hidden');
     DOM.resultsView.classList.remove('hidden');
-    window.scrollTo({ top: DOM.resultsView.offsetTop - 80, behavior: 'smooth' });
+    saveSessionState('results');
+    if (!options.skipScroll) {
+      window.scrollTo({ top: DOM.resultsView.offsetTop - 80, behavior: 'smooth' });
+    }
   }
 
   // --------------------------------------------------------------------------
@@ -2471,6 +3067,178 @@ KEAHLIAN & KOMPETENSI
 
       renderAnalysisResults(analysis);
     }, 1250);
+  }
+
+  // --------------------------------------------------------------------------
+  // 14B. P1 HEAD-TO-HEAD CV COMPARISON ENGINE (SIDE-BY-SIDE)
+  // --------------------------------------------------------------------------
+  function setInputMode(mode) {
+    state.inputMode = mode === 'compare' ? 'compare' : 'single';
+    const isCompare = state.inputMode === 'compare';
+
+    if (DOM.modeSingleBtn && DOM.modeCompareBtn) {
+      const activeClass = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm';
+      const inactiveClass = 'px-3 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
+      DOM.modeSingleBtn.className = isCompare ? inactiveClass : activeClass;
+      DOM.modeCompareBtn.className = isCompare ? activeClass : inactiveClass;
+      DOM.modeSingleBtn.setAttribute('aria-pressed', String(!isCompare));
+      DOM.modeCompareBtn.setAttribute('aria-pressed', String(isCompare));
+    }
+
+    if (DOM.singleInputPanel) {
+      DOM.singleInputPanel.classList.toggle('hidden', isCompare);
+    }
+    if (DOM.singleActionBar) {
+      DOM.singleActionBar.classList.toggle('hidden', isCompare);
+    }
+    if (DOM.compareInputPanel) {
+      DOM.compareInputPanel.classList.toggle('hidden', !isCompare);
+    }
+  }
+
+  function renderCompareCandidateCard(res, els, lang) {
+    if (els.scoreEl) {
+      els.scoreEl.textContent = `${res.score}%`;
+    }
+    if (els.tierEl) {
+      els.tierEl.textContent = res.tierName;
+    }
+    if (els.keywordsEl) {
+      const matched = res.matchedKeywords || [];
+      const total = res.targetKeywordsCount || 0;
+      const pillsHtml = matched.length > 0
+        ? matched.slice(0, 8).map(kw =>
+            `<span class="inline-block px-2 py-0.5 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-dark-well text-slate-800 dark:text-slate-200 border border-slate-300 dark:border-dark-wellBorder">${escapeHtml(kw)}</span>`
+          ).join(' ')
+        : `<span class="text-xs text-slate-500 dark:text-slate-400">${lang === 'id' ? 'Belum ada kata kunci target terdeteksi.' : 'No target keywords detected.'}</span>`;
+      els.keywordsEl.innerHTML = `
+        <div class="text-xs font-semibold text-slate-900 dark:text-white mb-1.5">
+          ${matched.length} / ${total} ${lang === 'id' ? 'kata kunci cocok' : 'keywords matched'}
+        </div>
+        <div class="flex flex-wrap gap-1.5">${pillsHtml}</div>
+      `;
+    }
+    if (els.bulletsEl) {
+      const strong = res.strongBulletCount || 0;
+      const weak = res.weakBulletCount || 0;
+      const metrics = res.metricCount || 0;
+      els.bulletsEl.innerHTML = `
+        <div class="grid grid-cols-3 gap-2 text-center">
+          <div class="p-2 rounded-lg bg-slate-50 dark:bg-dark-well border border-slate-200 dark:border-dark-border">
+            <div class="text-sm font-bold text-slate-900 dark:text-white">${strong}</div>
+            <div class="text-[10.5px] text-slate-600 dark:text-slate-400">${lang === 'id' ? 'Kalimat Kuat' : 'Strong'}</div>
+          </div>
+          <div class="p-2 rounded-lg bg-slate-50 dark:bg-dark-well border border-slate-200 dark:border-dark-border">
+            <div class="text-sm font-bold text-slate-900 dark:text-white">${weak}</div>
+            <div class="text-[10.5px] text-slate-600 dark:text-slate-400">${lang === 'id' ? 'Perlu XYZ' : 'Needs XYZ'}</div>
+          </div>
+          <div class="p-2 rounded-lg bg-slate-50 dark:bg-dark-well border border-slate-200 dark:border-dark-border">
+            <div class="text-sm font-bold text-slate-900 dark:text-white">${metrics}</div>
+            <div class="text-[10.5px] text-slate-600 dark:text-slate-400">${lang === 'id' ? 'Metrik Angka' : 'Metrics'}</div>
+          </div>
+        </div>
+      `;
+    }
+    if (els.gapsEl) {
+      const gaps = res.gaps || [];
+      if (gaps.length > 0) {
+        els.gapsEl.innerHTML = `<ul class="space-y-1.5 text-xs text-slate-700 dark:text-slate-300 list-disc pl-4">${gaps.map(g => `<li>${escapeHtml(g)}</li>`).join('')}</ul>`;
+      } else {
+        els.gapsEl.innerHTML = `<p class="text-xs text-slate-600 dark:text-slate-400">${lang === 'id' ? 'Tidak ada celah kritis terdeteksi.' : 'No critical gaps detected.'}</p>`;
+      }
+    }
+  }
+
+  function renderComparisonResults(comp, options = {}) {
+    if (!comp || !comp.resA || !comp.resB) return;
+    const lang = state.language;
+    const { resA, resB } = comp;
+    const diff = resA.score - resB.score;
+    const absDiff = Math.abs(diff);
+
+    const kwA = (resA.matchedKeywords || []).length;
+    const kwB = (resB.matchedKeywords || []).length;
+    const strongA = resA.strongBulletCount || 0;
+    const strongB = resB.strongBulletCount || 0;
+
+    let badgeText = '';
+    let verdictText = '';
+
+    if (absDiff <= 2) {
+      badgeText = lang === 'id' ? 'Kompetitif Seimbang' : 'Closely Matched';
+      verdictText = lang === 'id'
+        ? `Kandidat A (${resA.score}%) dan Kandidat B (${resB.score}%) berada pada level kesiapan ATS yang relatif seimbang untuk posisi ${resA.roleTitle}. Kandidat A unggul pada ${kwA} kata kunci & ${strongA} kalimat kuat, sementara Kandidat B mencatat ${kwB} kata kunci & ${strongB} kalimat kuat. Rekomendasi Rekruter: Lanjutkan keduanya ke tahap wawancara perilaku (STAR) untuk menguji kedalaman eksekusi.`
+        : `Candidate A (${resA.score}%) and Candidate B (${resB.score}%) are closely matched in ATS readiness for ${resA.roleTitle}. Candidate A holds ${kwA} matched keywords & ${strongA} strong bullets, while Candidate B shows ${kwB} keywords & ${strongB} strong bullets. Recruiter Verdict: Advance both to behavioral STAR interviews to differentiate hands-on execution.`;
+    } else if (diff > 0) {
+      badgeText = lang === 'id' ? `Kandidat A Unggul (+${absDiff} poin)` : `Candidate A Leads (+${absDiff} pts)`;
+      verdictText = lang === 'id'
+        ? `Kandidat A (${resA.score}%) lebih unggul ${absDiff} poin dibanding Kandidat B (${resB.score}%) untuk posisi ${resA.roleTitle}. Keunggulan utama terletak pada kecocokan kata kunci (${kwA} vs ${kwB}) serta kekuatan bukti kalimat pengalaman (${strongA} vs ${strongB} kalimat kuat ber-metrik). Rekomendasi Rekruter: Prioritaskan Kandidat A untuk panggilan wawancara tahap pertama.`
+        : `Candidate A (${resA.score}%) leads Candidate B (${resB.score}%) by ${absDiff} points for ${resA.roleTitle}. The edge comes from stronger keyword alignment (${kwA} vs ${kwB}) and quantified experience phrasing (${strongA} vs ${strongB} strong bullets). Recruiter Verdict: Prioritize Candidate A for first-round screening.`;
+    } else {
+      badgeText = lang === 'id' ? `Kandidat B Unggul (+${absDiff} poin)` : `Candidate B Leads (+${absDiff} pts)`;
+      verdictText = lang === 'id'
+        ? `Kandidat B (${resB.score}%) lebih unggul ${absDiff} poin dibanding Kandidat A (${resA.score}%) untuk posisi ${resB.roleTitle}. Keunggulan utama terlihat dari kepadatan kata kunci relevan (${kwB} vs ${kwA}) dan kualitas kalimat ber-metrik (${strongB} vs ${strongA} kalimat kuat). Rekomendasi Rekruter: Prioritaskan Kandidat B untuk panggilan wawancara tahap pertama.`
+        : `Candidate B (${resB.score}%) leads Candidate A (${resA.score}%) by ${absDiff} points for ${resB.roleTitle}. The advantage stems from higher targeted keyword coverage (${kwB} vs ${kwA}) and impact-driven bullet points (${strongB} vs ${strongA} strong bullets). Recruiter Verdict: Prioritize Candidate B for first-round screening.`;
+    }
+
+    if (DOM.compareVerdictBadge) DOM.compareVerdictBadge.textContent = badgeText;
+    if (DOM.compareVerdictText) DOM.compareVerdictText.textContent = verdictText;
+
+    renderCompareCandidateCard(resA, {
+      scoreEl: DOM.compareScoreA,
+      tierEl: DOM.compareTierA,
+      keywordsEl: DOM.compareKeywordsA,
+      bulletsEl: DOM.compareBulletsA,
+      gapsEl: DOM.compareGapsA
+    }, lang);
+
+    renderCompareCandidateCard(resB, {
+      scoreEl: DOM.compareScoreB,
+      tierEl: DOM.compareTierB,
+      keywordsEl: DOM.compareKeywordsB,
+      bulletsEl: DOM.compareBulletsB,
+      gapsEl: DOM.compareGapsB
+    }, lang);
+
+    if (DOM.inputView) DOM.inputView.classList.add('hidden');
+    if (DOM.compareInputPanel) DOM.compareInputPanel.classList.add('hidden');
+    if (DOM.resultsView) DOM.resultsView.classList.add('hidden');
+    if (DOM.compareResultsView) {
+      DOM.compareResultsView.classList.remove('hidden');
+      saveSessionState('compareResults');
+      if (!options.skipScroll) {
+        window.scrollTo({ top: DOM.compareResultsView.offsetTop - 80, behavior: 'smooth' });
+      }
+    }
+  }
+
+  function runComparison() {
+    const lang = state.language;
+    const textA = DOM.compareTextA ? DOM.compareTextA.value.trim() : '';
+    const textB = DOM.compareTextB ? DOM.compareTextB.value.trim() : '';
+
+    if (textA.length < 40 || textB.length < 40) {
+      showToast(lang === 'id' ? i18n.id.compareToastNeedBoth : i18n.en.compareToastNeedBoth);
+      if (textA.length < 40 && DOM.compareTextA) {
+        DOM.compareTextA.focus();
+      } else if (DOM.compareTextB) {
+        DOM.compareTextB.focus();
+      }
+      return;
+    }
+
+    const resA = analyzeResume(textA, state.selectedRole);
+    const resB = analyzeResume(textB, state.selectedRole);
+
+    state.currentComparison = {
+      resA,
+      resB,
+      roleKey: state.selectedRole,
+      nameA: state.compareFileA ? state.compareFileA.name : i18n[lang].compareCandidateA,
+      nameB: state.compareFileB ? state.compareFileB.name : i18n[lang].compareCandidateB
+    };
+
+    renderComparisonResults(state.currentComparison);
   }
 
   // --------------------------------------------------------------------------
@@ -2592,27 +3360,42 @@ KEAHLIAN & KOMPETENSI
     DOM.runAnalysisBtn.addEventListener('click', runScreening);
 
     DOM.backToInputBtn.addEventListener('click', () => {
+      clearSessionState();
       if (DOM.skeletonLoadingView) DOM.skeletonLoadingView.classList.add('hidden');
       DOM.resultsView.classList.add('hidden');
       DOM.inputView.classList.remove('hidden');
       window.scrollTo({ top: DOM.inputView.offsetTop - 80, behavior: 'smooth' });
     });
 
+    // Export PDF (Browser Print)
+    if (DOM.exportPdfBtn) {
+      DOM.exportPdfBtn.addEventListener('click', () => {
+        if (!state.currentAnalysis) {
+          showToast(state.language === 'id' ? 'Lakukan skrining CV terlebih dahulu.' : 'Please run a CV screening first.');
+          return;
+        }
+        window.print();
+      });
+    }
+
+    // Copy Executive Summary
+    if (DOM.copySummaryBtn) {
+      DOM.copySummaryBtn.addEventListener('click', () => {
+        if (!state.currentAnalysis) {
+          showToast(state.language === 'id' ? 'Lakukan skrining CV terlebih dahulu.' : 'Please run a CV screening first.');
+          return;
+        }
+        copyTextToClipboard(
+          formatExecutiveSummary(state.currentAnalysis, state.language),
+          DOM.copySummaryBtn,
+          state.language
+        );
+      });
+    }
+
     // Copy Actionable Rewrite
-    DOM.copyRewriteBtn.addEventListener('click', async () => {
-      const textToCopy = DOM.rewriteAfterTxt.textContent.trim();
-      try {
-        await navigator.clipboard.writeText(textToCopy);
-        showToast(state.language === 'id' ? i18n.id.toastCopied : i18n.en.toastCopied);
-      } catch (err) {
-        const ta = document.createElement('textarea');
-        ta.value = textToCopy;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        showToast(state.language === 'id' ? i18n.id.toastCopied : i18n.en.toastCopied);
-      }
+    DOM.copyRewriteBtn.addEventListener('click', () => {
+      copyTextToClipboard(DOM.rewriteAfterTxt.textContent, DOM.copyRewriteBtn, state.language);
     });
 
     // Copy Missing ATS Keywords Button
@@ -2692,30 +3475,282 @@ KEAHLIAN & KOMPETENSI
       });
     }
 
-    if (DOM.simulateQrisPayBtn) {
-      DOM.simulateQrisPayBtn.addEventListener('click', () => {
-        DOM.simulateQrisPayBtn.disabled = true;
-        DOM.simulateQrisPayBtn.textContent = 'Memverifikasi Pembayaran QRIS...';
+    // Close active modals on Escape key for keyboard accessibility
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeQrisModal();
+        closeConsultModal();
+      }
+    });
 
-        setTimeout(() => {
-          DOM.simulateQrisPayBtn.disabled = false;
-          DOM.simulateQrisPayBtn.textContent = 'Konfirmasi Pembayaran Selesai';
-          closeQrisModal();
-          showToast(state.language === 'id' ? i18n.id.toastPaymentSuccess : i18n.en.toastPaymentSuccess);
-        }, 1500);
+    // P1 Compare 2 CVs Mode Event Listeners (Null-guarded)
+    if (DOM.modeSingleBtn) {
+      DOM.modeSingleBtn.addEventListener('click', () => setInputMode('single'));
+    }
+    if (DOM.modeCompareBtn) {
+      DOM.modeCompareBtn.addEventListener('click', () => setInputMode('compare'));
+    }
+    if (DOM.compareFileA) {
+      DOM.compareFileA.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          handleCompareFileUpload('A', e.target.files[0]);
+        }
+      });
+    }
+    if (DOM.compareFileB) {
+      DOM.compareFileB.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          handleCompareFileUpload('B', e.target.files[0]);
+        }
+      });
+    }
+    if (DOM.compareClearA) {
+      DOM.compareClearA.addEventListener('click', () => clearCompareSlot('A'));
+    }
+    if (DOM.compareClearB) {
+      DOM.compareClearB.addEventListener('click', () => clearCompareSlot('B'));
+    }
+    if (DOM.runCompareBtn) {
+      DOM.runCompareBtn.addEventListener('click', runComparison);
+    }
+    if (DOM.backFromCompareBtn) {
+      DOM.backFromCompareBtn.addEventListener('click', () => {
+        clearSessionState();
+        if (DOM.compareResultsView) DOM.compareResultsView.classList.add('hidden');
+        if (DOM.inputView) {
+          DOM.inputView.classList.remove('hidden');
+        }
+        setInputMode('compare');
+        if (DOM.inputView) {
+          window.scrollTo({ top: DOM.inputView.offsetTop - 80, behavior: 'smooth' });
+        }
+      });
+    }
+
+    if (DOM.sendFeedbackEmailBtn) {
+      DOM.sendFeedbackEmailBtn.addEventListener('click', () => {
+        const payload = buildFeedbackPayload();
+        const dict = i18n[state.language] || i18n.id;
+        if (!payload.message) {
+          showToast(dict.feedbackEmptyWarn);
+          if (DOM.feedbackMessage) DOM.feedbackMessage.focus();
+          return;
+        }
+
+        const openMailtoFallback = () => {
+          const subject = `[Screenora Feedback - ${payload.category}] dari ${payload.name}`;
+          const bodyLines = [
+            `Nama: ${payload.name}`,
+            `Kategori: ${payload.category}`,
+            `Konteks: ${payload.context.page} | Tampilan: ${payload.context.view} | Posisi: ${payload.context.role} (${payload.context.standard.toUpperCase()}) | Bahasa: ${payload.context.lang.toUpperCase()}`,
+            '',
+            'Pesan:',
+            payload.message
+          ];
+          const mailtoUrl = `mailto:faarimuhammad25@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+          window.location.href = mailtoUrl;
+          showToast(dict.feedbackSentToast);
+          resetFeedbackForm();
+        };
+
+        if (FEEDBACK_ENDPOINT) {
+          fetch(FEEDBACK_ENDPOINT, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          })
+            .then(res => {
+              if (!res.ok) throw new Error(`HTTP ${res.status}`);
+              showToast(dict.feedbackSentToast);
+              resetFeedbackForm();
+            })
+            .catch(() => {
+              openMailtoFallback();
+            });
+        } else {
+          openMailtoFallback();
+        }
+      });
+    }
+
+    if (DOM.sendFeedbackWaBtn) {
+      DOM.sendFeedbackWaBtn.addEventListener('click', () => {
+        const payload = buildFeedbackPayload();
+        const dict = i18n[state.language] || i18n.id;
+        if (!payload.message) {
+          showToast(dict.feedbackEmptyWarn);
+          if (DOM.feedbackMessage) DOM.feedbackMessage.focus();
+          return;
+        }
+
+        const waText = [
+          '*Feedback Screenora*',
+          `Nama: ${payload.name}`,
+          `Kategori: ${payload.category}`,
+          `Konteks: ${payload.context.page} | Tampilan: ${payload.context.view} | Posisi: ${payload.context.role} (${payload.context.standard.toUpperCase()})`,
+          '',
+          payload.message
+        ].join('\n');
+        const waUrl = `https://wa.me/6285892344722?text=${encodeURIComponent(waText)}`;
+        window.open(waUrl, '_blank', 'noopener,noreferrer');
+        showToast(dict.feedbackSentToast);
+        resetFeedbackForm();
       });
     }
   }
 
+  function buildFeedbackPayload() {
+    const name = (DOM.feedbackName && DOM.feedbackName.value.trim()) || 'Pengguna Screenora';
+    const category = (DOM.feedbackCategory && DOM.feedbackCategory.value) || 'Umum';
+    const message = (DOM.feedbackMessage && DOM.feedbackMessage.value.trim()) || '';
+    const page = window.location.pathname.split('/').pop() || 'index.html';
+    const role = state.selectedRole === 'custom'
+      ? ((DOM.customRoleTitleInput && DOM.customRoleTitleInput.value.trim()) || 'custom')
+      : state.selectedRole;
+    const view = (DOM.resultsView && !DOM.resultsView.classList.contains('hidden'))
+      ? 'results'
+      : ((DOM.compareResultsView && !DOM.compareResultsView.classList.contains('hidden')) ? 'compareResults' : 'input');
+
+    return {
+      name,
+      category,
+      message,
+      context: {
+        page,
+        view,
+        role,
+        mode: state.inputMode,
+        standard: state.screeningStandard,
+        lang: state.language
+      }
+    };
+  }
+
+  function resetFeedbackForm() {
+    if (DOM.feedbackName) DOM.feedbackName.value = '';
+    if (DOM.feedbackMessage) DOM.feedbackMessage.value = '';
+  }
+
   // --------------------------------------------------------------------------
-  // 16. INITIALIZATION
+  // 16. SESSION PERSISTENCE (ZERO-DATA RETENTION IN SESSIONSTORAGE) & INIT
   // --------------------------------------------------------------------------
+  const SESSION_STORAGE_KEY = 'screenora_session_state';
+
+  function applyScreeningStandard(std) {
+    state.screeningStandard = std === 'global' ? 'global' : 'id';
+    const isGlobal = state.screeningStandard === 'global';
+    const activeCls = 'py-2 px-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 bg-dark-surface text-brand-emerald border border-brand-emerald/30 shadow-sm';
+    const inactiveCls = 'py-2 px-2.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-1.5 bg-transparent border border-transparent';
+
+    if (DOM.stdNasionalBtn && DOM.stdGlobalBtn) {
+      DOM.stdNasionalBtn.className = isGlobal ? inactiveCls : activeCls;
+      DOM.stdGlobalBtn.className = isGlobal ? activeCls : inactiveCls;
+      DOM.stdNasionalBtn.setAttribute('aria-checked', String(!isGlobal));
+      DOM.stdGlobalBtn.setAttribute('aria-checked', String(isGlobal));
+    }
+    updateStandardUI(state.language);
+  }
+
+  function saveSessionState(viewName) {
+    try {
+      const payload = {
+        view: viewName,
+        selectedRole: state.selectedRole,
+        screeningStandard: state.screeningStandard,
+        customSeniority: state.customSeniority,
+        customRoleTitle: DOM.customRoleTitleInput ? DOM.customRoleTitleInput.value : '',
+        customRoleKeywords: DOM.customRoleKeywordsInput ? DOM.customRoleKeywordsInput.value : ''
+      };
+
+      if (viewName === 'results') {
+        payload.cvText = state.cvText || (DOM.rawCvText ? DOM.rawCvText.value : '');
+        payload.currentAnalysis = state.currentAnalysis;
+      } else if (viewName === 'compareResults') {
+        payload.compareTextA = DOM.compareTextA ? DOM.compareTextA.value : '';
+        payload.compareTextB = DOM.compareTextB ? DOM.compareTextB.value : '';
+        payload.currentComparison = state.currentComparison;
+      }
+
+      sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(payload));
+    } catch (_) {
+      // Ignore storage quota or privacy mode errors silently
+    }
+  }
+
+  function clearSessionState() {
+    try {
+      sessionStorage.removeItem(SESSION_STORAGE_KEY);
+    } catch (_) {
+      // Ignore storage errors silently
+    }
+  }
+
+  function restoreSessionState() {
+    try {
+      const raw = sessionStorage.getItem(SESSION_STORAGE_KEY);
+      if (!raw) return;
+      const saved = JSON.parse(raw);
+      if (!saved || !saved.view) return;
+
+      if (saved.screeningStandard) {
+        applyScreeningStandard(saved.screeningStandard);
+      }
+      if (saved.customSeniority) {
+        state.customSeniority = saved.customSeniority;
+        if (DOM.customSeniorityPills) {
+          DOM.customSeniorityPills.forEach(p => {
+            const isMatch = p.getAttribute('data-level') === saved.customSeniority;
+            p.classList.toggle('active', isMatch);
+            p.classList.toggle('bg-brand-emeraldBg', isMatch);
+            p.classList.toggle('border-brand-emerald/40', isMatch);
+            p.classList.toggle('text-brand-emerald', isMatch);
+            p.classList.toggle('font-semibold', isMatch);
+            p.classList.toggle('bg-dark-surface', !isMatch);
+            p.classList.toggle('border-dark-border', !isMatch);
+            p.classList.toggle('text-dark-textSec', !isMatch);
+          });
+        }
+      }
+      if (saved.selectedRole) {
+        state.selectedRole = saved.selectedRole;
+        if (DOM.roleSelect) DOM.roleSelect.value = saved.selectedRole;
+        updateRoleDetails(saved.selectedRole);
+        if (saved.selectedRole === 'custom') {
+          if (DOM.customRoleTitleInput && typeof saved.customRoleTitle === 'string') {
+            DOM.customRoleTitleInput.value = saved.customRoleTitle;
+          }
+          if (DOM.customRoleKeywordsInput && typeof saved.customRoleKeywords === 'string') {
+            DOM.customRoleKeywordsInput.value = saved.customRoleKeywords;
+          }
+        }
+      }
+
+      if (saved.view === 'results' && saved.currentAnalysis) {
+        state.cvText = saved.cvText || '';
+        if (DOM.rawCvText) DOM.rawCvText.value = state.cvText;
+        state.currentAnalysis = saved.currentAnalysis;
+        renderAnalysisResults(state.currentAnalysis, { skipScroll: true });
+      } else if (saved.view === 'compareResults' && saved.currentComparison) {
+        if (DOM.compareTextA) DOM.compareTextA.value = saved.compareTextA || '';
+        if (DOM.compareTextB) DOM.compareTextB.value = saved.compareTextB || '';
+        state.currentComparison = saved.currentComparison;
+        setInputMode('compare');
+        renderComparisonResults(state.currentComparison, { skipScroll: true });
+      }
+    } catch (_) {
+      // Ignore corrupt session payload
+    }
+  }
+
   function init() {
     applyTheme(state.theme);
     applyLanguage(state.language);
     setupEventListeners();
     updateRoleDetails(state.selectedRole);
-    console.log('Screenora Engine initialized successfully (v1.0 Production with 35+ Roles).');
+    restoreSessionState();
   }
 
   if (document.readyState === 'loading') {
@@ -2723,5 +3758,9 @@ KEAHLIAN & KOMPETENSI
   } else {
     init();
   }
+
+  window.addEventListener('pageshow', (e) => {
+    if (e.persisted) restoreSessionState();
+  });
 
 })();

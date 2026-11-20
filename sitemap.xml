@@ -3,7 +3,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://screenora.vercel.app/</loc>
-    <lastmod>2026-11-07</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="id" href="https://screenora.vercel.app/?lang=id" />
@@ -12,7 +12,7 @@
   </url>
   <url>
     <loc>https://screenora.vercel.app/templates</loc>
-    <lastmod>2026-11-07</lastmod>
+    <lastmod>2026-11-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="id" href="https://screenora.vercel.app/templates?lang=id" />

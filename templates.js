@@ -279,9 +279,9 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       // Common card elements
       btnDownloadDocx: 'Unduh Format Word (.docx)',
       btnCopyText: 'Salin Teks',
-      btnPreview: 'Pratinjau 👁',
-      hoverPreview: '👁 Pratinjau Dokumen Lengkap',
-      hoverProComingSoon: '🔒 Segera Hadir (Fitur Pro)',
+      btnPreview: 'Pratinjau',
+      hoverPreview: 'Pratinjau Dokumen Lengkap',
+      hoverProComingSoon: 'Segera Hadir (Fitur Pro)',
       btnComingSoon: 'Segera Hadir (Sedang Disiapkan)',
       cardProBadge: 'Fitur Pro',
       match98: '98% Cocok ATS',
@@ -405,9 +405,9 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       // Common card elements
       btnDownloadDocx: 'Download Word Format (.docx)',
       btnCopyText: 'Copy Text',
-      btnPreview: 'Preview 👁',
-      hoverPreview: '👁 Full Document Preview',
-      hoverProComingSoon: '🔒 Coming Soon (Pro Feature)',
+      btnPreview: 'Preview',
+      hoverPreview: 'Full Document Preview',
+      hoverProComingSoon: 'Coming Soon (Pro Feature)',
       btnComingSoon: 'Coming Soon (In Progress)',
       cardProBadge: 'Pro Feature',
       match98: '98% ATS Match',
@@ -515,15 +515,22 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   // --------------------------------------------------------------------------
   // 3. STATE & INITIALIZATION
   // --------------------------------------------------------------------------
+  const urlLang = new URLSearchParams(window.location.search).get('lang');
+  const storedLang = localStorage.getItem('screenora_lang');
+  const initialLang = (urlLang === 'id' || urlLang === 'en')
+    ? urlLang
+    : ((storedLang === 'id' || storedLang === 'en') ? storedLang : 'id');
+
   const state = {
     theme: localStorage.getItem('screenora_theme') || 'dark',
-    language: localStorage.getItem('screenora_lang') || 'id',
+    language: initialLang,
     activeFilter: 'all',
     currentActiveTemplate: null
   };
 
   const DOM = {
     themeToggleBtn: document.getElementById('themeToggleBtn'),
+    themeIcon: document.getElementById('themeIcon'),
     themeLabel: document.getElementById('themeLabel'),
     langIdBtn: document.getElementById('langIdBtn'),
     langEnBtn: document.getElementById('langEnBtn'),
@@ -552,9 +559,15 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
 
     if (theme === 'dark') {
       htmlEl.classList.add('dark');
+      if (DOM.themeIcon) {
+        DOM.themeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-dark-textSec" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>`;
+      }
       if (DOM.themeLabel) DOM.themeLabel.textContent = 'Dark';
     } else {
       htmlEl.classList.remove('dark');
+      if (DOM.themeIcon) {
+        DOM.themeIcon.innerHTML = `<svg class="w-3.5 h-3.5 text-dark-textSec" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5" stroke-width="2"></circle><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path></svg>`;
+      }
       if (DOM.themeLabel) DOM.themeLabel.textContent = 'Light';
     }
   }
@@ -570,6 +583,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   function setLanguage(lang) {
     state.language = lang;
     localStorage.setItem('screenora_lang', lang);
+    document.documentElement.lang = lang;
 
     if (lang === 'id') {
       if (DOM.langIdBtn) {
@@ -660,7 +674,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     const lines = tmpl.plainText.split('\n');
     let htmlBody = '';
 
-    lines.forEach((line) => {
+    lines.forEach((line, idx) => {
       const trimmed = line.trim();
       if (!trimmed) {
         htmlBody += '<p style="margin: 0; line-height: 1.2;">&nbsp;</p>';
@@ -670,10 +684,10 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       } else if (trimmed.startsWith('- ')) {
         // Bullet point
         htmlBody += `<p style="margin: 2pt 0 2pt 18pt; text-indent: -12pt; font-size: 10pt; font-family: Calibri, Arial, sans-serif; line-height: 1.35; color: #334155;">&bull; ${escapeHtml(trimmed.substring(2))}</p>`;
-      } else if (lines.indexOf(line) === 0) {
+      } else if (idx === 0) {
         // Candidate Name (Title)
         htmlBody += `<h1 style="margin: 0 0 2pt 0; font-size: 18pt; font-family: Calibri, Arial, sans-serif; font-weight: bold; color: #0F172A; text-align: left;">${escapeHtml(trimmed)}</h1>`;
-      } else if (lines.indexOf(line) === 1) {
+      } else if (idx === 1) {
         // Contact details subtitle
         htmlBody += `<p style="margin: 0 0 10pt 0; font-size: 9.5pt; font-family: Calibri, Arial, sans-serif; color: #475569;">${escapeHtml(trimmed)}</p>`;
       } else if (trimmed.includes(' | ') || trimmed.includes(' — ')) {
@@ -689,7 +703,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
       <head>
         <meta charset='utf-8'>
-        <title>${tmpl.title}</title>
+        <title>${escapeHtml(tmpl.title)}</title>
         <!--[if gte mso 9]>
         <xml>
           <w:WordDocument>
@@ -876,6 +890,14 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
         if (e.target === DOM.comingSoonModalOverlay) closeComingSoonModal();
       });
     }
+
+    // Close active modals on Escape key for keyboard accessibility
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closePreviewModal();
+        closeComingSoonModal();
+      }
+    });
 
     // Expose functions to window for onclick attributes
     window.downloadTemplate = downloadTemplate;

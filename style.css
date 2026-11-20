@@ -254,34 +254,35 @@ html:not(.dark) #rewriteBeforeSub {
 }
 
 html:not(.dark) #rewriteAfterCard {
-  background-color: #F0FDF4 !important;
-  border-color: #A7F3D0 !important;
-  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.08) !important;
+  background-color: #F8FAFC !important;
+  border-color: #CBD5E1 !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
 }
 
 html:not(.dark) #rewriteAfterTitle {
-  color: #065F46 !important;
+  color: #0F172A !important;
   font-weight: 700 !important;
 }
 
 html:not(.dark) #rewriteAfterTxt {
   background-color: #FFFFFF !important;
-  border-color: #6EE7B7 !important;
+  border-color: #CBD5E1 !important;
+  border-left-color: #0F172A !important;
   color: #0F172A !important;
 }
 
 html:not(.dark) #rewriteAfterSub {
-  color: #047857 !important;
+  color: #334155 !important;
   font-weight: 600 !important;
 }
 
 html:not(.dark) #copyRewriteBtn {
-  color: #047857 !important;
+  color: #0F172A !important;
   font-weight: 700 !important;
 }
 
 html:not(.dark) #copyRewriteBtn:hover {
-  color: #064E3B !important;
+  color: #334155 !important;
 }
 
 /* Secondary Rewrites Container in Light Mode */
@@ -290,12 +291,35 @@ html:not(.dark) #secondaryRewritesHeading {
 }
 
 html:not(.dark) .copy-secondary-rewrite-btn {
-  color: #047857 !important;
+  color: #0F172A !important;
   font-weight: 700 !important;
 }
 
 html:not(.dark) .copy-secondary-rewrite-btn:hover {
-  color: #064E3B !important;
+  color: #334155 !important;
+}
+
+/* Compare 2 CV Mode & Results in Light Mode */
+html:not(.dark) #compareTextA,
+html:not(.dark) #compareTextB {
+  background-color: #FFFFFF !important;
+  border-color: #CBD5E1 !important;
+  color: #0F172A !important;
+}
+
+html:not(.dark) #compareTextA:focus,
+html:not(.dark) #compareTextB:focus {
+  border-color: #0F172A !important;
+}
+
+html:not(.dark) #runCompareBtn,
+html:not(.dark) #compareVerdictBadge {
+  background-color: #0F172A !important;
+  color: #FFFFFF !important;
+}
+
+html:not(.dark) #runCompareBtn:hover {
+  background-color: #1E293B !important;
 }
 
 /* STAR Interview Probing Quote in Light Mode */
@@ -677,4 +701,117 @@ html:not(.dark) .skeleton-shimmer {
 
 .faq-answer {
   transition: all 0.25s ease-in-out;
+}
+
+/* ==========================================================================
+   PRINT & PDF EXPORT STYLESHEET (A4 CLEAN EDITORIAL)
+   ========================================================================== */
+@page {
+  size: A4;
+  margin: 14mm 16mm;
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-shadow: none !important;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.45 !important;
+  }
+
+  header,
+  footer,
+  #inputView,
+  #qrisModalOverlay,
+  #consultModalOverlay,
+  #toast,
+  #backToInputBtn,
+  #exportPdfBtn,
+  #copySummaryBtn,
+  #copyRewriteBtn,
+  .copy-secondary-rewrite-btn,
+  .no-print {
+    display: none !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  #resultsView {
+    display: block !important;
+    opacity: 1 !important;
+    color: #0f172a !important;
+  }
+
+  #resultsView > div,
+  #resultsView .bg-dark-surface,
+  #resultsView .bg-dark-well,
+  #resultsView [class*="bg-dark-"] {
+    background-color: #ffffff !important;
+    border-color: #cbd5e1 !important;
+    color: #0f172a !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  #resultsView .bg-dark-well {
+    background-color: #f8fafc !important;
+  }
+
+  #resultsView .text-dark-textPri,
+  #resultsView h1,
+  #resultsView h2,
+  #resultsView h3,
+  #resultsView h4 {
+    color: #0f172a !important;
+  }
+
+  #resultsView .text-dark-textSec,
+  #resultsView .text-dark-textMuted,
+  #resultsView p,
+  #resultsView li {
+    color: #334155 !important;
+  }
+
+  #resultsView .text-brand-emerald {
+    color: #047857 !important;
+  }
+
+  #resultsView .bg-brand-emerald {
+    background-color: #10b981 !important;
+  }
+
+  #resultsView .border-dark-border,
+  #resultsView .border-dark-wellBorder {
+    border-color: #cbd5e1 !important;
+  }
+
+  #resultsView #rewriteBeforeCard {
+    background-color: #fff1f2 !important;
+    border-color: #fecdd3 !important;
+  }
+
+  #resultsView #rewriteAfterCard {
+    background-color: #f8fafc !important;
+    border-color: #cbd5e1 !important;
+  }
+
+  #compareInputPanel,
+  #backFromCompareBtn {
+    display: none !important;
+  }
 }
