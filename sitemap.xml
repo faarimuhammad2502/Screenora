@@ -21,12 +21,21 @@
   </url>
   <url>
     <loc>https://screenora-xi.vercel.app/templates</loc>
-    <lastmod>2026-11-18</lastmod>
+    <lastmod>2026-11-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="id" href="https://screenora-xi.vercel.app/templates?lang=id" />
     <xhtml:link rel="alternate" hreflang="en" href="https://screenora-xi.vercel.app/templates?lang=en" />
     <xhtml:link rel="alternate" hreflang="x-default" href="https://screenora-xi.vercel.app/templates" />
+  </url>
+  <url>
+    <loc>https://screenora-xi.vercel.app/templates-pro</loc>
+    <lastmod>2026-11-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="id" href="https://screenora-xi.vercel.app/templates-pro?lang=id" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://screenora-xi.vercel.app/templates-pro?lang=en" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://screenora-xi.vercel.app/templates-pro" />
   </url>
   <url>
     <loc>https://screenora-xi.vercel.app/builder</loc>

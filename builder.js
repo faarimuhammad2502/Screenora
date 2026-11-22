@@ -1184,12 +1184,14 @@ CERTIFICATIONS
     if (DOM.builderEditorCol) {
       DOM.builderEditorCol.classList.toggle('hidden', isPreview);
       DOM.builderEditorCol.classList.toggle('block', !isPreview);
-      DOM.builderEditorCol.classList.add('lg:block');
+      DOM.builderEditorCol.classList.remove('lg:block');
+      DOM.builderEditorCol.classList.add('md:block');
     }
     if (DOM.builderPreviewCol) {
       DOM.builderPreviewCol.classList.toggle('hidden', !isPreview);
-      DOM.builderPreviewCol.classList.toggle('block', isPreview);
-      DOM.builderPreviewCol.classList.add('lg:block');
+      DOM.builderPreviewCol.classList.toggle('flex', isPreview);
+      DOM.builderPreviewCol.classList.remove('lg:block');
+      DOM.builderPreviewCol.classList.add('md:flex');
     }
     const activeClasses = ['bg-dark-surface', 'text-dark-textPri', 'border-dark-border'];
     const inactiveClasses = ['text-dark-textSec', 'hover:text-dark-textPri', 'border-transparent'];

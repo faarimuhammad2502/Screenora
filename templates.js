@@ -282,8 +282,10 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       tplPill2: 'Formula XYZ & Verba Aksi',
       tplPill3: 'Format Word (.docx) Asli',
 
-      // Filter tabs
-      filterAll: 'Semua Template (6)',
+      // Page Switcher & Filter tabs
+      tplPageFreeTab: 'Template Gratis (4)',
+      tplPageProTab: 'Template Berbayar / Pro (2)',
+      filterAll: 'Semua Template',
       filterNasional: 'Standar Nasional (BUMN & Lokal)',
       filterInternasional: 'Standar Internasional (Global MNC)',
       filterFree: 'Akses Gratis',
@@ -435,8 +437,10 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       tplPill2: 'Formula XYZ & Action Verbs',
       tplPill3: 'Native Word (.docx) Format',
 
-      // Filter tabs
-      filterAll: 'All Templates (6)',
+      // Page Switcher & Filter tabs
+      tplPageFreeTab: 'Free Templates (4)',
+      tplPageProTab: 'Paid / Pro Templates (2)',
+      filterAll: 'All Templates',
       filterNasional: 'National Standard (SOE & Local)',
       filterInternasional: 'International Standard (Global MNC)',
       filterFree: 'Free Access',
@@ -705,7 +709,10 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       document.querySelectorAll('[data-i18n]').forEach((el) => {
         const key = el.getAttribute('data-i18n');
         if (dict[key]) {
-          if (dict[key].includes('<') && dict[key].includes('>')) {
+          if (key === 'filterAll') {
+            const cardCount = document.querySelectorAll('.template-card').length;
+            el.textContent = `${dict[key]} (${cardCount})`;
+          } else if (dict[key].includes('<') && dict[key].includes('>')) {
             el.innerHTML = dict[key];
           } else {
             el.textContent = dict[key];
