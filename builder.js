@@ -12,7 +12,6 @@
     bcaVaNumber: '8801085892344722',
     bcaVaDisplay: '8801 0858 9234 4722',
     qrisImageUrl: '',
-    accessCode: 'SCREENORA25',
     whatsappNumber: '6285892344722'
   };
 
@@ -404,11 +403,11 @@ CERTIFICATIONS
     theme: localStorage.getItem('screenora_theme') || 'dark',
     language: initialLang,
     currentBuilderTemplate: (urlTemplate && TEMPLATES[urlTemplate]) ? urlTemplate : '',
-    builderPaid: (() => {
+    payToken: (() => {
       try {
-        return sessionStorage.getItem('screenora_builder_paid') === '1';
+        return sessionStorage.getItem('screenora_pay_token') || '';
       } catch (_) {
-        return false;
+        return '';
       }
     })(),
     payMethod: 'qris'
@@ -1339,18 +1338,37 @@ CERTIFICATIONS
       });
     }
 
-    const handleBuilderDownloadClick = () => {
+    async function verifyWithServer(payload) {
+      const res = await fetch('/api/verify-download', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json().catch(() => ({}));
+      return { status: res.status, ok: res.ok && data.ok === true, data };
+    }
+
+    const handleBuilderDownloadClick = async () => {
       const dict = i18n[state.language] || i18n.id;
       const text = assembleBuilderPlainText();
       if (!text) {
         showToast(dict.emptyCvToast);
         return;
       }
-      if (state.builderPaid) {
-        downloadBuilderDoc();
-      } else {
-        openPayModal();
+      if (state.payToken) {
+        try {
+          const check = await verifyWithServer({ token: state.payToken });
+          if (check.ok) {
+            downloadBuilderDoc();
+            return;
+          }
+        } catch (_) {
+          // Fall through to payment modal if offline/expired
+        }
+        state.payToken = '';
+        try { sessionStorage.removeItem('screenora_pay_token'); } catch (_) {}
       }
+      openPayModal();
     };
 
     if (DOM.builderDownloadBtn) {
@@ -1394,21 +1412,35 @@ CERTIFICATIONS
       });
     }
     if (DOM.verifyPayBtn) {
-      DOM.verifyPayBtn.addEventListener('click', () => {
+      DOM.verifyPayBtn.addEventListener('click', async () => {
         const dict = i18n[state.language] || i18n.id;
         const inputCode = (DOM.builderAccessCodeInput && DOM.builderAccessCodeInput.value || '').trim().toUpperCase();
-        if (inputCode === PAYMENT_CONFIG.accessCode.trim().toUpperCase()) {
-          state.builderPaid = true;
-          try {
-            sessionStorage.setItem('screenora_builder_paid', '1');
-          } catch (_) {
-            // Ignore storage quota or privacy mode errors
-          }
-          closePayModal();
-          showToast(dict.paySuccessToast);
-          downloadBuilderDoc({ silentToast: true });
-        } else {
+        if (!inputCode) {
           showToast(dict.payInvalidCodeToast);
+          return;
+        }
+        DOM.verifyPayBtn.disabled = true;
+        try {
+          const result = await verifyWithServer({ code: inputCode });
+          if (result.ok && result.data.token) {
+            state.payToken = result.data.token;
+            try {
+              sessionStorage.setItem('screenora_pay_token', result.data.token);
+            } catch (_) {
+              // Ignore storage quota or privacy mode errors
+            }
+            closePayModal();
+            showToast(dict.paySuccessToast);
+            downloadBuilderDoc({ silentToast: true });
+          } else if (result.status === 429) {
+            showToast(state.language === 'id' ? 'Terlalu banyak percobaan. Tunggu 5 menit.' : 'Too many attempts. Please wait 5 minutes.');
+          } else {
+            showToast(dict.payInvalidCodeToast);
+          }
+        } catch (_) {
+          showToast(state.language === 'id' ? 'Verifikasi butuh koneksi server aktif (Vercel).' : 'Verification requires active server connection.');
+        } finally {
+          DOM.verifyPayBtn.disabled = false;
         }
       });
     }

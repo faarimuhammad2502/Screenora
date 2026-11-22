@@ -13,7 +13,6 @@
     bcaVaNumber: '8801085892344722',
     bcaVaDisplay: '8801 0858 9234 4722',
     qrisImageUrl: '', // Isi path gambar QRIS (mis. 'qris.png') saat sudah siap
-    accessCode: 'SCREENORA25',
     whatsappNumber: '6285892344722'
   };
 
@@ -1371,21 +1370,40 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       });
     }
     if (DOM.verifyPayBtn) {
-      DOM.verifyPayBtn.addEventListener('click', () => {
+      DOM.verifyPayBtn.addEventListener('click', async () => {
         const dict = i18n[state.language] || i18n.id;
         const inputCode = (DOM.builderAccessCodeInput && DOM.builderAccessCodeInput.value || '').trim().toUpperCase();
-        if (inputCode === PAYMENT_CONFIG.accessCode.trim().toUpperCase()) {
-          state.builderPaid = true;
-          try {
-            sessionStorage.setItem('screenora_builder_paid', '1');
-          } catch (_) {
-            // Ignore storage quota or privacy mode errors
-          }
-          closePayModal();
-          showToast(dict.paySuccessToast);
-          downloadBuilderDoc({ silentToast: true });
-        } else {
+        if (!inputCode) {
           showToast(dict.payInvalidCodeToast);
+          return;
+        }
+        DOM.verifyPayBtn.disabled = true;
+        try {
+          const res = await fetch('/api/verify-download', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: inputCode })
+          });
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && data.ok && data.token) {
+            state.builderPaid = true;
+            try {
+              sessionStorage.setItem('screenora_pay_token', data.token);
+            } catch (_) {
+              // Ignore storage quota or privacy mode errors
+            }
+            closePayModal();
+            showToast(dict.paySuccessToast);
+            downloadBuilderDoc({ silentToast: true });
+          } else if (res.status === 429) {
+            showToast(state.language === 'id' ? 'Terlalu banyak percobaan. Tunggu 5 menit.' : 'Too many attempts. Please wait 5 minutes.');
+          } else {
+            showToast(dict.payInvalidCodeToast);
+          }
+        } catch (_) {
+          showToast(state.language === 'id' ? 'Verifikasi butuh koneksi server aktif (Vercel).' : 'Verification requires active server connection.');
+        } finally {
+          DOM.verifyPayBtn.disabled = false;
         }
       });
     }
