@@ -270,6 +270,7 @@ CERTIFICATIONS
       navSubtitle: 'Pembuat CV Instan Berstandar ATS',
       builderNavSubtitle: 'Editor Resume ATS & Formula XYZ',
       privacyBadge: 'Lokal & Terenkripsi',
+      navHome: 'Beranda',
       navScan: 'Skrining CV',
       navTemplates: 'Template ATS',
       navBuilder: 'Buat CV Instan',
@@ -282,6 +283,11 @@ CERTIFICATIONS
       builderSubtitle: 'Lengkapi data di kiri, sisipkan preset pengalaman atau optimasi kalimat tugas menjadi Formula XYZ dalam 1 klik, lalu pantau pratinjau dokumen Word secara langsung.',
       builderPageDesc: 'Susun resume 1-kolom berstandar rekruter dari awal atau ubah kalimat tugas menjadi pencapaian Formula XYZ terukur dalam 1 klik.',
       builderPrivacyPill: '100% Lokal di Browser (Tanpa Server)',
+      builderTutorialTitle: 'Panduan Cepat 3 Langkah',
+      builderTutorialToggleOpen: 'Buka',
+      builderTutorialToggleClose: 'Tutup',
+      builderChooseTplTitle: 'Pilih Struktur Template (1-Klik)',
+      builderBlankBtn: 'Mulai dari Kosong',
       builderBlankOption: 'Mulai dari Kosong (Blank)',
       builderTemplateLabel: 'Basis Template ATS:',
       builderLabelTemplate: 'Basis Template ATS',
@@ -301,6 +307,7 @@ CERTIFICATIONS
       builderPreviewLabel: 'Pratinjau Dokumen Word (A4)',
       builderCopyBtn: 'Salin Teks',
       builderCheckAtsBtn: 'Cek Skor ATS',
+      builderAtsPanelTitle: 'Hasil Cek Skor ATS',
       builderDownloadBtn: 'Unduh .doc (Rp 25.000)',
       builderCopiedToast: 'Teks CV berhasil disalin ke clipboard!',
 
@@ -332,6 +339,7 @@ CERTIFICATIONS
       navSubtitle: 'Instant ATS-Ready Resume Builder',
       builderNavSubtitle: 'ATS Resume Editor & XYZ Formula',
       privacyBadge: 'Local & Encrypted',
+      navHome: 'Home',
       navScan: 'CV Screening',
       navTemplates: 'ATS Templates',
       navBuilder: 'Instant CV Builder',
@@ -344,6 +352,11 @@ CERTIFICATIONS
       builderSubtitle: 'Fill in your details on the left, insert role presets or convert duty lines into measurable XYZ bullets in 1 click, and preview your Word document live.',
       builderPageDesc: 'Build a recruiter-approved single-column resume from scratch or convert duty lines into measurable XYZ achievements in 1 click.',
       builderPrivacyPill: '100% Local in Browser (Zero Server)',
+      builderTutorialTitle: 'Quick 3-Step Guide',
+      builderTutorialToggleOpen: 'Open',
+      builderTutorialToggleClose: 'Close',
+      builderChooseTplTitle: 'Choose Template Structure (1-Click)',
+      builderBlankBtn: 'Start from Blank',
       builderBlankOption: 'Start from Blank',
       builderTemplateLabel: 'ATS Template Base:',
       builderLabelTemplate: 'ATS Template Base',
@@ -363,6 +376,7 @@ CERTIFICATIONS
       builderPreviewLabel: 'Live Word Document Preview (A4)',
       builderCopyBtn: 'Copy Text',
       builderCheckAtsBtn: 'Check ATS Score',
+      builderAtsPanelTitle: 'ATS Score Result',
       builderDownloadBtn: 'Download .doc (Rp 25.000)',
       builderCopiedToast: 'Resume text copied to clipboard!',
 
@@ -425,11 +439,16 @@ CERTIFICATIONS
     themeLabel: document.getElementById('themeLabel'),
     langIdBtn: document.getElementById('langIdBtn'),
     langEnBtn: document.getElementById('langEnBtn'),
+    builderTutorialToggle: document.getElementById('builderTutorialToggle'),
+    builderTutorialContent: document.getElementById('builderTutorialContent'),
+    builderTutorialChevron: document.getElementById('builderTutorialChevron'),
     mobileBuilderTabEditor: document.getElementById('mobileBuilderTabEditor'),
     mobileBuilderTabPreview: document.getElementById('mobileBuilderTabPreview'),
     builderEditorCol: document.getElementById('builderEditorCol'),
     builderPreviewCol: document.getElementById('builderPreviewCol'),
     builderTemplateSelect: document.getElementById('builderTemplateSelect'),
+    builderTemplateCards: document.getElementById('builderTemplateCards'),
+    builderBlankBtn: document.getElementById('builderBlankBtn'),
     builderName: document.getElementById('builderName'),
     builderContact: document.getElementById('builderContact'),
     builderSummary: document.getElementById('builderSummary'),
@@ -438,6 +457,7 @@ CERTIFICATIONS
     builderSkills: document.getElementById('builderSkills'),
     builderRolePresets: document.getElementById('builderRolePresets'),
     autoOptimizeBtn: document.getElementById('autoOptimizeBtn'),
+    builderOptimizeFeedback: document.getElementById('builderOptimizeFeedback'),
     builderLivePreview: document.getElementById('builderLivePreview'),
     builderCopyBtn: document.getElementById('builderCopyBtn'),
     builderCheckAtsBtn: document.getElementById('builderCheckAtsBtn'),
@@ -517,6 +537,13 @@ CERTIFICATIONS
         }
       }
     });
+
+    if (DOM.builderTutorialChevron && DOM.builderTutorialContent) {
+      const isHidden = DOM.builderTutorialContent.classList.contains('hidden');
+      DOM.builderTutorialChevron.textContent = isHidden
+        ? dict.builderTutorialToggleOpen
+        : dict.builderTutorialToggleClose;
+    }
 
     renderBuilderLivePreview();
   }
@@ -797,65 +824,180 @@ CERTIFICATIONS
     return hasMetric && startsStrong && !startsWeak;
   }
 
-  function convertLineToXyz(rawCore, lang) {
-    let topic = rawCore
-      .replace(/^[-•*]\s*/, '')
-      .replace(/^(bertanggung\s+jawab\s+(untuk|atas|dalam)|tugas\s+saya\s+(adalah|untuk)|membantu\s+(tim\s+)?(dalam\s+)?|mengerjakan|melakukan|membuat|mengurus|mengikuti|mendukung|menangani|turut\s+serta\s+(dalam\s+)?)/i, '')
-      .replace(/^(responsible\s+for|duties\s+included|helped\s+(with|to)?|assisted\s+(in|with)?|worked\s+on|handled|supported|participated\s+in|tasked\s+with)\s+/i, '')
-      .replace(/\.+$/, '')
+  function extractUserCorePhrase(line) {
+    const rawClean = String(line || '').replace(/^[-•*]\s*/, '').replace(/\.+$/, '').trim();
+    if (!rawClean) {
+      return { rawCore: '', actionVerb: '', objectPhrase: '', hasOwnMetric: false };
+    }
+
+    const strippedWeak = rawClean
+      .replace(/^(bertanggung\s+jawab\s+(untuk|atas|dalam)|tugas\s+saya\s+(adalah|untuk)|membantu\s+(tim\s+)?(dalam\s+)?|turut\s+serta\s+(dalam\s+)?|mengikuti|mendukung|melakukan|mengerjakan|mengurus|menangani)\s+/i, '')
+      .replace(/^(responsible\s+for|duties\s+included|helped\s+(with|to)?|assisted\s+(in|with)?|worked\s+on|handled|supported|participated\s+in|tasked\s+with|did)\s+/i, '')
       .trim();
 
-    if (!topic) topic = rawCore.replace(/^[-•*]\s*/, '').replace(/\.+$/, '').trim();
-    const cleanTopic = topic.charAt(0).toLowerCase() + topic.slice(1);
+    const basePhrase = strippedWeak || rawClean;
+    const verbMatch = basePhrase.match(/^([a-zA-ZÀ-ÿ-]+)\s+(.+)$/);
+    let actionVerb = '';
+    let objectPhrase = basePhrase;
+
+    if (verbMatch) {
+      const candidateVerb = verbMatch[1].toLowerCase();
+      const strongOrActionVerbs = /^(membuat|mendesain|merancang|mengelola|mengajar|memperbaiki|menganalisis|menyusun|mengembangkan|menjalankan|meningkatkan|memimpin|membangun|mengoptimalkan|memangkas|mengoordinasikan|menginisiasi|mengotomatiskan|menyiapkan|memantau|mengevaluasi|melatih|menulis|menjual|menghubungi|built|designed|created|managed|taught|fixed|analyzed|developed|executed|improved|led|spearheaded|architected|engineered|reduced|slashed|boosted|increased|optimized|launched|streamlined|prepared|monitored|evaluated|trained|wrote|sold|coordinated)$/i;
+      if (strongOrActionVerbs.test(candidateVerb)) {
+        actionVerb = candidateVerb;
+        objectPhrase = verbMatch[2].trim();
+      }
+    }
+
+    const normalizedObject = objectPhrase.charAt(0).toLowerCase() + objectPhrase.slice(1);
+    const hasOwnMetric = /(\d+%|\d+\+|Rp\s?\d+|\$\d+|\d+x|\d+\s?(hari|bulan|jam|minggu|tahun|poin|orang|kandidat|klien|siswa|murid|peserta|proyek|dokumen|laporan|days|hours|weeks|months|years|points|users|clients|students|projects|reports))/i.test(rawClean);
+
+    return {
+      rawCore: rawClean,
+      actionVerb,
+      objectPhrase: normalizedObject,
+      hasOwnMetric
+    };
+  }
+
+  function convertLineToXyz(rawCore, lang) {
+    const parsed = extractUserCorePhrase(rawCore);
+    if (!parsed.rawCore) return '';
+
+    const obj = parsed.objectPhrase || parsed.rawCore.charAt(0).toLowerCase() + parsed.rawCore.slice(1);
+    const hasMetric = parsed.hasOwnMetric;
 
     if (lang === 'en') {
-      if (/\b(recruit|hiring|candidate|interview|cv|talent|onboarding|hr)\b/i.test(cleanTopic)) {
-        return `- Spearheaded ${cleanTopic} using structured competency screening, cutting turnaround time by [X%] across [N candidates].`;
+      const enVerbMap = {
+        created: 'Engineered and launched',
+        made: 'Built and standardized',
+        designed: 'Designed and delivered',
+        built: 'Architected and shipped',
+        managed: 'Directed and streamlined',
+        taught: 'Instructed and evaluated',
+        fixed: 'Diagnosed and resolved',
+        analyzed: 'Analyzed and synthesized',
+        developed: 'Developed and optimized',
+        prepared: 'Structured and delivered',
+        monitored: 'Tracked and optimized',
+        coordinated: 'Coordinated and accelerated'
+      };
+      const leadVerb = enVerbMap[parsed.actionVerb] || '';
+
+      if (/\b(recruit|hiring|candidate|interview|cv|talent|onboarding|hr)\b/i.test(obj)) {
+        const verb = leadVerb || 'Spearheaded';
+        return hasMetric
+          ? `- ${verb} ${obj} through structured competency screening, cutting turnaround time by [X%].`
+          : `- ${verb} ${obj} using structured competency screening, cutting turnaround time by [X%] across [N candidates].`;
       }
-      if (/\b(data|sql|python|dashboard|report|analysis|analytics|excel|kpi)\b/i.test(cleanTopic)) {
-        return `- Analyzed and automated ${cleanTopic} with structured data pipelines, improving reporting accuracy to [X%] and saving [N hours/week].`;
+      if (/\b(data|sql|python|dashboard|report|analysis|analytics|excel|kpi)\b/i.test(obj)) {
+        const verb = leadVerb || 'Analyzed and automated';
+        return hasMetric
+          ? `- ${verb} ${obj} with structured validation checks, improving reporting accuracy to [X%].`
+          : `- ${verb} ${obj} with structured data pipelines, improving reporting accuracy to [X%] and saving [N hours/week].`;
       }
-      if (/\b(teach|student|class|curriculum|mentor|training|module|education)\b/i.test(cleanTopic)) {
-        return `- Designed and delivered ${cleanTopic} with measurable learning milestones, boosting mastery outcomes by [X%] across [N students].`;
+      if (/\b(teach|student|class|curriculum|mentor|training|module|education)\b/i.test(obj)) {
+        const verb = leadVerb || 'Designed and facilitated';
+        return hasMetric
+          ? `- ${verb} ${obj} with measurable learning milestones, boosting mastery outcomes by [X%].`
+          : `- ${verb} ${obj} with measurable learning milestones, boosting mastery outcomes by [X%] across [N students].`;
       }
-      if (/\b(market|campaign|social|content|ads|seo|sales|lead|client)\b/i.test(cleanTopic)) {
-        return `- Executed data-driven ${cleanTopic} initiatives, driving a [X%] increase in qualified engagement and generating [$X K] / [N leads].`;
+      if (/\b(market|campaign|social|content|ads|seo|sales|lead|client|poster|instagram|design)\b/i.test(obj)) {
+        const verb = leadVerb || 'Executed and optimized';
+        return hasMetric
+          ? `- ${verb} ${obj} backed by audience performance tracking, driving a [X%] uplift in engagement.`
+          : `- ${verb} ${obj} backed by audience metrics, driving a [X%] increase in engagement across [N deliverables/leads].`;
       }
-      if (/\b(code|web|app|api|system|software|bug|feature|deploy)\b/i.test(cleanTopic)) {
-        return `- Engineered and optimized ${cleanTopic} with automated quality checks, improving system performance by [X%] and saving [N hours/week].`;
+      if (/\b(code|web|app|api|system|software|bug|feature|deploy|checkout)\b/i.test(obj)) {
+        const verb = leadVerb || 'Engineered and optimized';
+        return hasMetric
+          ? `- ${verb} ${obj} with automated quality checks, improving system reliability by [X%].`
+          : `- ${verb} ${obj} with automated quality checks, improving performance by [X%] and saving [N hours/week].`;
       }
-      if (/\b(finance|budget|invoice|audit|tax|payroll|accounting)\b/i.test(cleanTopic)) {
-        return `- Streamlined ${cleanTopic} with standardized reconciliation controls, managing [$X K] budget and shortening closing cycles by [N hours/week].`;
+      if (/\b(finance|budget|invoice|audit|tax|payroll|accounting)\b/i.test(obj)) {
+        const verb = leadVerb || 'Streamlined';
+        return hasMetric
+          ? `- ${verb} ${obj} with standardized reconciliation controls, achieving [X%] audit accuracy.`
+          : `- ${verb} ${obj} with standardized reconciliation controls, managing [$X K] and cutting closing time by [N hours/week].`;
       }
-      return `- Optimized ${cleanTopic} through standardized workflow execution, improving operational efficiency by [X%] and saving [N hours/week].`;
+      const fallbackVerb = leadVerb || 'Optimized';
+      return hasMetric
+        ? `- ${fallbackVerb} ${obj} through standardized execution, improving operational efficiency by [X%].`
+        : `- ${fallbackVerb} ${obj} through standardized workflow execution, improving efficiency by [X%] and saving [N hours/week].`;
     }
 
-    // Indonesian XYZ conversion preserving user's original topic context with honest Guided Metric Slots
-    if (/\b(rekrut|kandidat|wawancara|interview|hr|karyawan|onboarding|absensi|bpjs)\b/i.test(cleanTopic)) {
-      return `- Mengoptimalkan ${cleanTopic} melalui penyaringan berbasis kompetensi terstruktur untuk [N kandidat], memangkas durasi proses hingga [X%].`;
+    const idVerbMap = {
+      membuat: 'Menyusun dan mengoptimalkan',
+      mendesain: 'Merancang dan memproduksi',
+      merancang: 'Merancang dan mengimplementasikan',
+      mengelola: 'Mengelola dan menyederhanakan',
+      mengajar: 'Mengajar dan mengevaluasi',
+      memperbaiki: 'Mengidentifikasi dan memperbaiki',
+      menganalisis: 'Menganalisis dan memetakan',
+      menyusun: 'Menyusun dan menstandardisasi',
+      mengembangkan: 'Mengembangkan dan mengoptimalkan',
+      menjalankan: 'Mengeksekusi dan memantau',
+      meningkatkan: 'Meningkatkan dan mengakselerasi',
+      menyiapkan: 'Menyiapkan dan menyelaraskan',
+      memantau: 'Memantau dan mengevaluasi',
+      mengevaluasi: 'Mengevaluasi dan menyempurnakan',
+      melatih: 'Melatih dan membimbing',
+      menulis: 'Menulis dan menyunting',
+      menjual: 'Memasarkan dan mengonversi'
+    };
+    const leadVerbId = idVerbMap[parsed.actionVerb] || '';
+
+    if (/\b(rekrut|kandidat|wawancara|interview|hr|karyawan|onboarding|absensi|bpjs)\b/i.test(obj)) {
+      const verb = leadVerbId || 'Mengoptimalkan';
+      return hasMetric
+        ? `- ${verb} ${obj} melalui alur seleksi dan pemantauan terstruktur, memangkas durasi proses hingga [X%].`
+        : `- ${verb} ${obj} melalui penyaringan terstruktur untuk [N kandidat/karyawan], memangkas durasi proses hingga [X%].`;
     }
-    if (/\b(data|sql|python|dashboard|laporan|analisis|excel|kpi|rekap)\b/i.test(cleanTopic)) {
-      return `- Menganalisis dan menyusun ${cleanTopic} secara terstruktur untuk pemantauan KPI, meningkatkan akurasi pelaporan hingga [X%] dan menghemat [N jam/minggu].`;
+    if (/\b(data|sql|python|dashboard|laporan|analisis|excel|kpi|rekap)\b/i.test(obj)) {
+      const verb = leadVerbId || 'Menganalisis dan menyusun';
+      return hasMetric
+        ? `- ${verb} ${obj} secara terstruktur untuk pemantauan KPI, meningkatkan akurasi data hingga [X%].`
+        : `- ${verb} ${obj} secara terstruktur untuk pemantauan KPI, meningkatkan akurasi hingga [X%] dan menghemat [N jam/minggu].`;
     }
-    if (/\b(ajar|siswa|murid|kelas|kurikulum|materi|training|pelatihan|pendamping)\b/i.test(cleanTopic)) {
-      return `- Merancang dan memfasilitasi ${cleanTopic} dengan evaluasi berkala terukur bagi [N siswa], meningkatkan capaian pemahaman sebesar [X%].`;
+    if (/\b(ajar|siswa|murid|kelas|kurikulum|materi|training|pelatihan|pendamping|bahasa)\b/i.test(obj)) {
+      const verb = leadVerbId || 'Merancang dan memfasilitasi';
+      return hasMetric
+        ? `- ${verb} ${obj} dengan tolok ukur evaluasi berkala, meningkatkan capaian belajar sebesar [X%].`
+        : `- ${verb} ${obj} dengan evaluasi berkala terukur bagi [N siswa], meningkatkan capaian pemahaman sebesar [X%].`;
     }
-    if (/\b(marketing|kampanye|konten|sosial|iklan|ads|seo|penjualan|sales|klien|pelanggan)\b/i.test(cleanTopic)) {
-      return `- Mengeksekusi strategi ${cleanTopic} berbasis evaluasi metrik audiens, mendongkrak konversi prospek hingga [X%] dengan nilai kontribusi [Rp X jt].`;
+    if (/\b(marketing|kampanye|konten|sosial|iklan|ads|seo|penjualan|sales|klien|pelanggan|poster|instagram|promosi|desain)\b/i.test(obj)) {
+      const verb = leadVerbId || 'Mengeksekusi dan mengoptimalkan';
+      return hasMetric
+        ? `- ${verb} ${obj} berbasis evaluasi performa audiens, meningkatkan jangkauan dan konversi sebesar [X%].`
+        : `- ${verb} ${obj} berbasis metrik audiens, mendongkrak jangkauan/konversi hingga [X%] pada [N target/kampanye].`;
     }
-    if (/\b(aplikasi|web|sistem|api|kode|software|fitur|bug|database)\b/i.test(cleanTopic)) {
-      return `- Mengembangkan dan mengoptimalkan ${cleanTopic} dengan pengujian terstandar, meningkatkan performa sistem hingga [X%] dan menghemat [N jam/minggu].`;
+    if (/\b(aplikasi|web|sistem|api|kode|software|fitur|bug|database|checkout)\b/i.test(obj)) {
+      const verb = leadVerbId || 'Mengembangkan dan menguji';
+      return hasMetric
+        ? `- ${verb} ${obj} dengan pengujian terstandar, meningkatkan stabilitas sistem hingga [X%].`
+        : `- ${verb} ${obj} dengan pengujian terstandar, meningkatkan performa sistem hingga [X%] dan menghemat [N jam/minggu].`;
     }
-    if (/\b(keuangan|anggaran|invoice|audit|pajak|gaji|payroll|kas|akuntansi)\b/i.test(cleanTopic)) {
-      return `- Mengelola dan menyederhanakan ${cleanTopic} senilai [Rp X jt] sesuai standar kepatuhan, mencapai akurasi rekonsiliasi [X%] dan menghemat [N jam/minggu].`;
+    if (/\b(keuangan|anggaran|invoice|audit|pajak|gaji|payroll|kas|akuntansi)\b/i.test(obj)) {
+      const verb = leadVerbId || 'Mengelola dan menyederhanakan';
+      return hasMetric
+        ? `- ${verb} ${obj} sesuai standar kepatuhan, mencapai akurasi rekonsiliasi sebesar [X%].`
+        : `- ${verb} ${obj} senilai [Rp X jt] sesuai standar kepatuhan, mencapai akurasi [X%] dan menghemat [N jam/minggu].`;
     }
-    return `- Mengoptimalkan ${cleanTopic} melalui alur kerja terstandar, meningkatkan efisiensi eksekusi tim sebesar [X%] dan menghemat [N jam/minggu].`;
+
+    const fallbackVerbId = leadVerbId || 'Mengoptimalkan';
+    return hasMetric
+      ? `- ${fallbackVerbId} ${obj} melalui alur kerja terstandar, meningkatkan efisiensi eksekusi sebesar [X%].`
+      : `- ${fallbackVerbId} ${obj} melalui alur kerja terstandar, meningkatkan efisiensi sebesar [X%] dan menghemat [N jam/minggu].`;
   }
 
   function optimizeExperienceText(rawText, lang) {
-    if (!rawText || !rawText.trim()) return '';
+    if (!rawText || !rawText.trim()) {
+      return { text: '', changedCount: 0, corrections: [] };
+    }
     const activeLang = lang === 'en' ? 'en' : 'id';
     const lines = rawText.split('\n');
+    const corrections = [];
+    let changedCount = 0;
 
     const optimizedLines = lines.map((line) => {
       const trimmed = line.trim();
@@ -869,10 +1011,69 @@ CERTIFICATIONS
         return `- ${core}`;
       }
 
-      return convertLineToXyz(core, activeLang);
+      const improved = convertLineToXyz(core, activeLang);
+      if (improved && improved !== `- ${core}`) {
+        changedCount += 1;
+        const parsed = extractUserCorePhrase(core);
+        const note = activeLang === 'en'
+          ? (parsed.hasOwnMetric
+            ? 'Preserved your metric & sharpened action verb into XYZ structure.'
+            : 'Added active verb + guided metric slots [X%]/[N] tailored to your topic.')
+          : (parsed.hasOwnMetric
+            ? 'Metrik asli Anda dipertahankan & kata kerja dipertajam ke struktur XYZ.'
+            : 'Menambahkan verba aktif + slot metrik terukur [X%]/[N] sesuai topik Anda.');
+        corrections.push({
+          original: trimmed,
+          improved,
+          note
+        });
+      }
+      return improved;
     });
 
-    return optimizedLines.join('\n');
+    return {
+      text: optimizedLines.join('\n'),
+      changedCount,
+      corrections
+    };
+  }
+
+  function renderOptimizeFeedback(optRes, lang) {
+    if (!DOM.builderOptimizeFeedback) return;
+    const isEn = lang === 'en';
+    const corrections = (optRes && Array.isArray(optRes.corrections)) ? optRes.corrections : [];
+
+    if (corrections.length === 0) {
+      DOM.builderOptimizeFeedback.classList.remove('hidden');
+      DOM.builderOptimizeFeedback.innerHTML = `
+        <div class="p-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-xs text-emerald-700 dark:text-emerald-300">
+          ${escapeHtml(isEn
+            ? 'All experience bullets already use strong action verbs and measurable metrics.'
+            : 'Seluruh baris pengalaman Anda sudah memakai verba aksi aktif dan metrik terukur.')}
+        </div>
+      `;
+      return;
+    }
+
+    const headerLabel = isEn
+      ? `${corrections.length} bullet(s) upgraded to Formula XYZ (replace [X%] / [N] with your real numbers):`
+      : `${corrections.length} kalimat ditingkatkan ke Formula XYZ (ganti [X%] / [N] dengan angka asli Anda):`;
+
+    const itemsHtml = corrections.map((item) => `
+      <div class="p-2.5 rounded-lg border border-slate-200 dark:border-dark-border bg-white/70 dark:bg-dark-surface/70 space-y-1">
+        <div class="text-[11px] text-slate-500 dark:text-dark-textSec line-through">${escapeHtml(item.original)}</div>
+        <div class="text-xs font-medium text-slate-900 dark:text-white">${escapeHtml(item.improved)}</div>
+        <div class="text-[11px] text-emerald-700 dark:text-emerald-400">${escapeHtml(item.note)}</div>
+      </div>
+    `).join('');
+
+    DOM.builderOptimizeFeedback.classList.remove('hidden');
+    DOM.builderOptimizeFeedback.innerHTML = `
+      <div class="p-3 rounded-xl border border-slate-200 dark:border-dark-border bg-slate-50/80 dark:bg-dark-well/60 space-y-2">
+        <div class="text-xs font-semibold text-slate-800 dark:text-slate-200">${escapeHtml(headerLabel)}</div>
+        <div class="space-y-2">${itemsHtml}</div>
+      </div>
+    `;
   }
 
   function insertRolePreset(presetKey) {
@@ -905,11 +1106,27 @@ CERTIFICATIONS
     }
   }
 
+  function updateTemplateCardsUI(activeKey) {
+    if (!DOM.builderTemplateCards) return;
+    const cards = DOM.builderTemplateCards.querySelectorAll('[data-builder-template]');
+    cards.forEach((card) => {
+      const cardKey = card.getAttribute('data-builder-template') || '';
+      const isActive = cardKey === (activeKey || '');
+      card.setAttribute('aria-pressed', String(isActive));
+      card.classList.toggle('ring-2', isActive);
+      card.classList.toggle('ring-slate-900', isActive);
+      card.classList.toggle('dark:ring-white', isActive);
+      card.classList.toggle('border-slate-900', isActive);
+      card.classList.toggle('dark:border-white', isActive);
+    });
+  }
+
   function resetBuilderFields() {
     state.currentBuilderTemplate = '';
     if (DOM.builderTemplateSelect) {
       DOM.builderTemplateSelect.value = '';
     }
+    updateTemplateCardsUI('');
     if (DOM.builderName) DOM.builderName.value = '';
     if (DOM.builderContact) DOM.builderContact.value = '';
     if (DOM.builderSummary) DOM.builderSummary.value = '';
@@ -918,6 +1135,10 @@ CERTIFICATIONS
     if (DOM.builderSkills) DOM.builderSkills.value = '';
     if (DOM.builderAtsScorePanel) {
       DOM.builderAtsScorePanel.classList.add('hidden');
+    }
+    if (DOM.builderOptimizeFeedback) {
+      DOM.builderOptimizeFeedback.classList.add('hidden');
+      DOM.builderOptimizeFeedback.innerHTML = '';
     }
     renderBuilderLivePreview();
   }
@@ -933,11 +1154,16 @@ CERTIFICATIONS
     if (DOM.builderTemplateSelect) {
       DOM.builderTemplateSelect.value = templateKey;
     }
+    updateTemplateCardsUI(templateKey);
 
     const fields = parseTemplateToBuilderFields(templateKey);
     applyFieldsToBuilderInputs(fields);
     if (DOM.builderAtsScorePanel) {
       DOM.builderAtsScorePanel.classList.add('hidden');
+    }
+    if (DOM.builderOptimizeFeedback) {
+      DOM.builderOptimizeFeedback.classList.add('hidden');
+      DOM.builderOptimizeFeedback.innerHTML = '';
     }
 
     renderBuilderLivePreview();
@@ -1358,9 +1584,38 @@ CERTIFICATIONS
       DOM.langEnBtn.addEventListener('click', () => setLanguage('en'));
     }
 
+    if (DOM.builderTutorialToggle && DOM.builderTutorialContent) {
+      DOM.builderTutorialToggle.addEventListener('click', (e) => {
+        e.stopImmediatePropagation();
+        const isHidden = DOM.builderTutorialContent.classList.toggle('hidden');
+        DOM.builderTutorialToggle.setAttribute('aria-expanded', String(!isHidden));
+        if (DOM.builderTutorialChevron) {
+          const dict = i18n[state.language] || i18n.id;
+          DOM.builderTutorialChevron.textContent = isHidden
+            ? dict.builderTutorialToggleOpen
+            : dict.builderTutorialToggleClose;
+        }
+      });
+    }
+
     if (DOM.builderTemplateSelect) {
       DOM.builderTemplateSelect.addEventListener('change', (e) => {
         loadTemplateIntoBuilder(e.target.value);
+      });
+    }
+
+    if (DOM.builderTemplateCards) {
+      DOM.builderTemplateCards.addEventListener('click', (e) => {
+        const card = e.target.closest('[data-builder-template]');
+        if (!card) return;
+        const tplKey = card.getAttribute('data-builder-template') || '';
+        loadTemplateIntoBuilder(tplKey);
+      });
+    }
+
+    if (DOM.builderBlankBtn) {
+      DOM.builderBlankBtn.addEventListener('click', () => {
+        resetBuilderFields();
       });
     }
 
@@ -1396,7 +1651,9 @@ CERTIFICATIONS
           showToast(dict.autoOptimizeNoLinesToast);
           return;
         }
-        DOM.builderExperience.value = optimizeExperienceText(raw, state.language);
+        const optRes = optimizeExperienceText(raw, state.language);
+        DOM.builderExperience.value = optRes.text;
+        renderOptimizeFeedback(optRes, state.language);
         renderBuilderLivePreview();
         showToast(dict.autoOptimizeToast);
       });

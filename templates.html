@@ -91,7 +91,7 @@
   </script>
 
   <!-- Custom Stylesheet with Cache Busting -->
-  <link rel="stylesheet" href="style.css?v=4.1.0">
+  <link rel="stylesheet" href="style.css?v=4.3.0">
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -139,15 +139,17 @@
 
       <!-- Center Navigation Links (Desktop) -->
       <nav class="hidden md:flex items-center gap-2 lg:gap-2.5 shrink-0" aria-label="Navigasi Utama">
-        <a href="index.html" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-well border border-transparent hover:border-dark-wellBorder transition-all whitespace-nowrap shrink-0" data-i18n="navScan">
+        <a href="index.html" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-well border border-transparent hover:border-dark-wellBorder transition-all whitespace-nowrap shrink-0" data-i18n="navHome">
+          Beranda
+        </a>
+        <a href="screener.html" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-well border border-transparent hover:border-dark-wellBorder transition-all whitespace-nowrap shrink-0" data-i18n="navScan">
           Skrining CV
         </a>
         <a href="templates.html" class="px-3.5 py-1.5 rounded-lg text-xs font-semibold bg-dark-well border border-slate-500/40 text-slate-900 dark:text-white whitespace-nowrap shrink-0" aria-current="page" data-i18n="navTemplates">
           Template ATS
         </a>
-        <a href="builder.html" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-well border border-transparent hover:border-dark-wellBorder transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0">
-          <span data-i18n="navBuilder">Buat CV Instan</span>
-          <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-dark-well text-slate-800 dark:text-slate-200 border border-slate-500/40 whitespace-nowrap shrink-0" data-i18n="badgeNew">Baru</span>
+        <a href="builder.html" class="px-3.5 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-well border border-transparent hover:border-dark-wellBorder transition-all whitespace-nowrap shrink-0" data-i18n="navBuilder">
+          Buat CV Instan
         </a>
       </nav>
 
@@ -174,15 +176,17 @@
 
     <!-- Mobile Sub-Navigation -->
     <div class="md:hidden border-t border-dark-border/80 px-4 py-2 flex items-center gap-2 overflow-x-auto no-scrollbar">
-      <a href="index.html" class="px-3 py-1.5 rounded-lg text-[11px] font-medium text-dark-textSec hover:text-dark-textPri bg-dark-well/60 border border-dark-wellBorder whitespace-nowrap shrink-0" data-i18n="navScan">
+      <a href="index.html" class="px-3 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri bg-dark-well/60 border border-dark-wellBorder whitespace-nowrap shrink-0" data-i18n="navHome">
+        Beranda
+      </a>
+      <a href="screener.html" class="px-3 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri bg-dark-well/60 border border-dark-wellBorder whitespace-nowrap shrink-0" data-i18n="navScan">
         Skrining CV
       </a>
-      <a href="templates.html" class="px-3 py-1.5 rounded-lg text-[11px] font-semibold bg-dark-well border border-slate-500/40 text-slate-900 dark:text-white whitespace-nowrap shrink-0" aria-current="page" data-i18n="navTemplates">
+      <a href="templates.html" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-dark-well border border-slate-500/40 text-slate-900 dark:text-white whitespace-nowrap shrink-0" aria-current="page" data-i18n="navTemplates">
         Template ATS
       </a>
-      <a href="builder.html" class="px-3 py-1.5 rounded-lg text-[11px] font-medium text-dark-textSec hover:text-dark-textPri bg-dark-well/60 border border-dark-wellBorder whitespace-nowrap shrink-0 inline-flex items-center gap-1.5">
-        <span data-i18n="navBuilder">Buat CV Instan</span>
-        <span class="text-[9px] font-mono font-bold px-1.5 py-0.5 rounded bg-dark-well text-slate-800 dark:text-slate-200 border border-slate-500/40 whitespace-nowrap shrink-0" data-i18n="badgeNew">Baru</span>
+      <a href="builder.html" class="px-3 py-1.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri bg-dark-well/60 border border-dark-wellBorder whitespace-nowrap shrink-0" data-i18n="navBuilder">
+        Buat CV Instan
       </a>
     </div>
   </header>
@@ -234,11 +238,11 @@
         <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="internasional" data-i18n="filterInternasional">
           Standar Internasional (Global MNC)
         </button>
-        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="free" data-i18n="filterFree">
-          Akses Gratis
+        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="free">
+          Gratis (Free)
         </button>
-        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="pro" data-i18n="filterPro">
-          Pro (Segera Hadir)
+        <button class="filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap" data-filter="pro">
+          Berbayar (Pro • Rp 25.000)
         </button>
       </div>
     </div>
@@ -551,9 +555,9 @@
             <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold" data-i18n="c3Meta">
               Eksekutif & Manajerial
             </span>
-            <span class="text-[11px] font-mono font-semibold text-brand-amber flex items-center gap-1.5">
+              <span class="text-xs font-mono font-semibold text-brand-amber flex items-center gap-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span>
-              <span data-i18n="cardProBadge">Fitur Pro</span>
+              <span>Berbayar (Pro • Rp 25.000)</span>
             </span>
           </div>
 
@@ -879,9 +883,9 @@
             <span class="text-[10px] font-mono text-dark-textMuted uppercase tracking-wider font-semibold" data-i18n="c6Meta">
               Startup Silicon Valley & Venture
             </span>
-            <span class="text-[11px] font-mono font-semibold text-brand-amber flex items-center gap-1.5">
+              <span class="text-xs font-mono font-semibold text-brand-amber flex items-center gap-1.5">
               <span class="w-1.5 h-1.5 rounded-full bg-brand-amber"></span>
-              <span data-i18n="cardProBadge">Fitur Pro</span>
+              <span>Berbayar (Pro • Rp 25.000)</span>
             </span>
           </div>
 
@@ -1325,6 +1329,6 @@
   </div>
 
   <!-- Templates Logic Script -->
-  <script src="templates.js?v=4.1.0" defer></script>
+  <script src="templates.js?v=4.3.0" defer></script>
 </body>
 </html>

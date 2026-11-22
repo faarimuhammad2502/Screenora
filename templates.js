@@ -269,6 +269,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     id: {
       tplNavHub: 'Pusat Template',
       tplNavSubtitle: 'Katalog Template Resume ATS Teruji',
+      navHome: 'Beranda',
       navScan: 'Skrining CV',
       navTemplates: 'Template ATS',
       navBuilder: 'Buat CV Instan',
@@ -293,9 +294,9 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       btnCopyText: 'Salin Teks',
       btnPreview: 'Pratinjau',
       hoverPreview: 'Pratinjau Dokumen Lengkap',
-      hoverProComingSoon: 'Segera Hadir (Fitur Pro)',
-      btnComingSoon: 'Segera Hadir (Sedang Disiapkan)',
-      cardProBadge: 'Fitur Pro',
+      hoverProComingSoon: 'Segera Hadir (Pro • Rp 25.000)',
+      btnComingSoon: 'Berbayar (Pro • Rp 25.000) — Segera Hadir',
+      cardProBadge: 'Pro • Rp 25.000',
       match98: '98% Cocok ATS',
       match97: '97% Cocok ATS',
       match99: '99% Cocok ATS',
@@ -421,6 +422,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     en: {
       tplNavHub: 'Templates Hub',
       tplNavSubtitle: 'Tested ATS Resume Template Catalog',
+      navHome: 'Home',
       navScan: 'CV Screening',
       navTemplates: 'ATS Templates',
       navBuilder: 'Instant CV Builder',
@@ -445,9 +447,9 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       btnCopyText: 'Copy Text',
       btnPreview: 'Preview',
       hoverPreview: 'Full Document Preview',
-      hoverProComingSoon: 'Coming Soon (Pro Feature)',
-      btnComingSoon: 'Coming Soon (In Progress)',
-      cardProBadge: 'Pro Feature',
+      hoverProComingSoon: 'Coming Soon (Pro • Rp 25.000)',
+      btnComingSoon: 'Paid (Pro • Rp 25.000) — Coming Soon',
+      cardProBadge: 'Pro • Rp 25.000',
       match98: '98% ATS Match',
       match97: '97% ATS Match',
       match99: '99% ATS Match',
@@ -1433,7 +1435,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
         } catch (_) {
           // Ignore storage quota or privacy mode errors
         }
-        window.location.href = 'index.html?from=builder';
+        window.location.href = 'screener.html?from=builder';
       });
     }
 

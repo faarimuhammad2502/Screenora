@@ -58,10 +58,23 @@
       navStudio: 'Studio Diagnostik',
       navSubtitle: 'Kecerdasan Resume & Diagnostik ATS',
       privacyBadge: 'Lokal & Terenkripsi',
+      navHome: 'Beranda',
       navScan: 'Skrining CV',
       navTemplates: 'Template ATS',
       navBuilder: 'Buat CV Instan',
       badgeNew: 'Baru',
+
+      // Home: How It Works & Sample CV ATS Lolos
+      homeStep1Title: '1. Unggah atau Tempel CV',
+      homeStep1Desc: 'Unggah PDF/DOCX atau tempel teks CV Anda — seluruh pemindaian berjalan 100% lokal di browser.',
+      homeStep2Title: '2. Pilih Target Posisi',
+      homeStep2Desc: 'Sesuaikan standar pasar kerja (Nasional BUMN / Global MNC) dan jabatan target atau Job Description.',
+      homeStep3Title: '3. Lihat Skor & Perbaikan',
+      homeStep3Desc: 'Dapatkan skor kecocokan ATS, kata kunci yang hilang, koreksi kalimat XYZ, serta pertanyaan wawancara STAR.',
+      sampleCvEyebrow: 'CONTOH CV ATS LOLOS',
+      sampleCvTitle: 'Contoh CV yang Lolos Skrining ATS',
+      sampleCvSub: 'Lihat struktur 1-kolom bersih, kata kunci kompetensi yang tepat, dan kalimat pencapaian Formula XYZ terukur yang disukai rekruter.',
+      sampleCvTestBtn: 'Uji Contoh CV Ini',
 
       // Ecosystem / Services Hub Section
       ecoEyebrow: 'EKOSISTEM SCREENORA',
@@ -192,6 +205,8 @@
       faqA4: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-amber">Panduan Perbaikan Mandiri</span><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri mt-0.5">3 Langkah Cepat Menaikkan Skor ke Tier 1 (≥80%)</p><p class="text-[11px] text-dark-textSec mt-1">Skor &lt;65% menunjukkan adanya celah kata kunci penting atau narasi pengalaman kerja yang masih pasif.</p></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Langkah 01</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">Sisipkan Kata Kunci</p><p class="text-[11px] text-dark-textSec leading-relaxed">Klik <em>Salin Kata Kunci</em> pada kartu celah kualifikasi dan sematkan istilah teknis tersebut ke seksi keahlian & pengalaman.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Langkah 02</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">Terapkan Formula XYZ</p><p class="text-[11px] text-dark-textSec leading-relaxed">Ganti kalimat deskripsi tugas rutin dengan formula Google. Pastikan minimal 3 butir pengalaman menyertakan angka metrik (%).</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Langkah 03</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">Pindai Ulang Dokumen</p><p class="text-[11px] text-dark-textSec leading-relaxed">Lakukan pemindaian ulang di Screenora untuk memverifikasi kenaikan skor hingga mencapai Tier 1 (&ge;80%).</p></div></div></div>',
       faqQ5: 'Bagaimana format sesi Konsultasi 1-on-1 bersama praktisi HR?',
       faqA5: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder flex flex-col sm:flex-row sm:items-center justify-between gap-2"><div><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Konsultasi Privat Eksklusif</span><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri mt-0.5">Sesi Mentoring 45 Menit Daring (Google Meet / WhatsApp)</p><p class="text-[11px] text-dark-textSec">Bersama Muhammad Faari Akbar (S1 Psikologi & Praktisi Talent Management).</p></div><span class="text-[11px] font-mono text-brand-amber px-2.5 py-1 rounded bg-brand-amber/10 border border-brand-amber/30 whitespace-nowrap self-start sm:self-center font-semibold">Tahap Persiapan</span></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Modul 01</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">Bedah CV Baris demi Baris</p><p class="text-[11px] text-dark-textSec leading-relaxed">Restrukturisasi total setiap butir kalimat pengalaman kerja ke formula Google XYZ berdaya pikat tinggi.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Modul 02</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">Optimasi Profil LinkedIn</p><p class="text-[11px] text-dark-textSec leading-relaxed">Penajaman Headline dan About (format XYZ) agar profil ramah kata kunci bagi inbound recruiter korporat & tech.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Modul 03</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">Simulasi Wawancara STAR</p><p class="text-[11px] text-dark-textSec leading-relaxed">Latihan taktis menjawab pertanyaan wawancara berbasis perilaku (behavioral interview) yang kerap menggugurkan kandidat.</p></div></div></div>',
+      homeFaqQ4: 'Apa perbedaan fitur Gratis dan Berbayar (Rp 25.000)?',
+      homeFaqA4: 'Skrining CV, pengecekan skor ATS, perbandingan 2 CV, dan template dasar di Screenora sepenuhnya Gratis. Biaya Rp 25.000 hanya berlaku untuk unduh file dokumen siap edit pada Template Pro atau ekspor .doc dari Live CV Builder.',
 
       // Modals
       qrisModalBadge: 'SEGERA HADIR • TAHAP PERSIAPAN',
@@ -275,10 +290,23 @@
       navStudio: 'Diagnostic Studio',
       navSubtitle: 'AI Resume Intelligence & ATS Diagnostic',
       privacyBadge: 'Local & Encrypted',
+      navHome: 'Home',
       navScan: 'CV Screening',
       navTemplates: 'ATS Templates',
       navBuilder: 'Instant CV Builder',
       badgeNew: 'New',
+
+      // Home: How It Works & Passing ATS Sample CV
+      homeStep1Title: '1. Upload or Paste CV',
+      homeStep1Desc: 'Upload PDF/DOCX or paste your resume text — all scanning runs 100% locally in your browser.',
+      homeStep2Title: '2. Select Target Role',
+      homeStep2Desc: 'Match your target job market (National / Global MNC) and target role or pasted Job Description.',
+      homeStep3Title: '3. View Score & Fixes',
+      homeStep3Desc: 'Get your ATS match score, missing keywords, XYZ bullet rewrites, and STAR interview questions.',
+      sampleCvEyebrow: 'PASSING ATS CV SAMPLE',
+      sampleCvTitle: 'Sample CV That Passes ATS Screening',
+      sampleCvSub: 'See the clean single-column structure, targeted competency keywords, and measurable XYZ achievement bullets favored by recruiters.',
+      sampleCvTestBtn: 'Test This Sample CV',
 
       // Ecosystem / Services Hub Section
       ecoEyebrow: 'SCREENORA ECOSYSTEM',
@@ -409,6 +437,8 @@
       faqA4: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-amber">Self-Optimization Playbook</span><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri mt-0.5">3 Immediate Steps to Climb to Tier 1 (≥80%)</p><p class="text-[11px] text-dark-textSec mt-1">A &lt;65% score indicates critical competency keyword gaps or passive duty phrasing.</p></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Step 01</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">Inject Missing Keywords</p><p class="text-[11px] text-dark-textSec leading-relaxed">Click <em>Copy Keywords</em> in the Gaps card and embed required industry terms in skills and experiences.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Step 02</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">Implement XYZ Formula</p><p class="text-[11px] text-dark-textSec leading-relaxed">Replace generic duty lines with Google XYZ framing. Ensure at least 3 bullet points feature hard % metrics.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Step 03</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">Re-Screen Document</p><p class="text-[11px] text-dark-textSec leading-relaxed">Run a fresh diagnostic scan on Screenora to confirm your score enters the Shortlist Priority Tier 1 (&ge;80%).</p></div></div></div>',
       faqQ5: 'What is included in the 1-on-1 Consultation session with an HR practitioner?',
       faqA5: '<div class="space-y-3.5"><div class="p-3.5 bg-dark-well rounded-xl border border-dark-wellBorder flex flex-col sm:flex-row sm:items-center justify-between gap-2"><div><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Exclusive 1-on-1 Advisory</span><p class="text-xs sm:text-sm font-heading font-bold text-dark-textPri mt-0.5">45-Minute Live Mentoring (Google Meet / WhatsApp)</p><p class="text-[11px] text-dark-textSec">Led by Muhammad Faari Akbar (B.Sc. in Psychology & Talent Management Practitioner).</p></div><span class="text-[11px] font-mono text-brand-amber px-2.5 py-1 rounded bg-brand-amber/10 border border-brand-amber/30 whitespace-nowrap self-start sm:self-center font-semibold">In Preparation</span></div><div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 text-xs"><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Module 01</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">Line-by-Line CV Teardown</p><p class="text-[11px] text-dark-textSec leading-relaxed">Complete overhaul of every experience bullet into high-converting Google XYZ formula achievements.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Module 02</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">LinkedIn Profile Optimization</p><p class="text-[11px] text-dark-textSec leading-relaxed">Headline and About section refinement optimized for inbound enterprise and tech talent recruiters.</p></div><div class="p-3 rounded-lg bg-dark-surface border border-dark-border"><span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-emerald">Module 03</span><p class="font-bold text-dark-textPri text-xs mt-0.5 mb-1">STAR Interview Simulation</p><p class="text-[11px] text-dark-textSec leading-relaxed">Tactical mock practice tackling high-stakes behavioral questions that commonly filter out applicants.</p></div></div></div>',
+      homeFaqQ4: 'What is the difference between Free and Paid (Rp 25,000) features?',
+      homeFaqA4: 'CV screening, ATS score checking, 2-CV comparison, and basic templates on Screenora are completely Free. The Rp 25,000 fee only applies to downloading ready-to-edit document files for Pro Templates or exporting .doc from the Live CV Builder.',
 
       // Modals
       qrisModalBadge: 'COMING SOON • UNDER PREPARATION',
@@ -1868,16 +1898,16 @@ KEAHLIAN & KOMPETENSI
   function setTab(tabName) {
     state.activeTab = tabName;
     if (tabName === 'upload') {
-      DOM.tabUploadBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap bg-dark-surface dark:bg-dark-surface text-dark-textPri font-medium shadow-sm transition-all';
-      DOM.tabPasteBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap text-dark-textSec hover:text-dark-textPri transition-all';
-      DOM.dropzoneContainer.classList.remove('hidden');
-      DOM.pasteContainer.classList.add('hidden');
+      if (DOM.tabUploadBtn) DOM.tabUploadBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap bg-dark-surface dark:bg-dark-surface text-dark-textPri font-medium shadow-sm transition-all';
+      if (DOM.tabPasteBtn) DOM.tabPasteBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap text-dark-textSec hover:text-dark-textPri transition-all';
+      if (DOM.dropzoneContainer) DOM.dropzoneContainer.classList.remove('hidden');
+      if (DOM.pasteContainer) DOM.pasteContainer.classList.add('hidden');
     } else {
-      DOM.tabPasteBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap bg-dark-surface dark:bg-dark-surface text-dark-textPri font-medium shadow-sm transition-all';
-      DOM.tabUploadBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap text-dark-textSec hover:text-dark-textPri transition-all';
-      DOM.dropzoneContainer.classList.add('hidden');
-      DOM.pasteContainer.classList.remove('hidden');
-      DOM.rawCvText.focus();
+      if (DOM.tabPasteBtn) DOM.tabPasteBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap bg-dark-surface dark:bg-dark-surface text-dark-textPri font-medium shadow-sm transition-all';
+      if (DOM.tabUploadBtn) DOM.tabUploadBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap text-dark-textSec hover:text-dark-textPri transition-all';
+      if (DOM.dropzoneContainer) DOM.dropzoneContainer.classList.add('hidden');
+      if (DOM.pasteContainer) DOM.pasteContainer.classList.remove('hidden');
+      if (DOM.rawCvText) DOM.rawCvText.focus();
     }
   }
 
@@ -3252,10 +3282,10 @@ KEAHLIAN & KOMPETENSI
       DOM.consultWhatsAppBtn.href = `https://wa.me/6285892344722?text=${encodeURIComponent(waMsg)}`;
     }
 
-    DOM.inputView.classList.add('hidden');
-    DOM.resultsView.classList.remove('hidden');
+    if (DOM.inputView) DOM.inputView.classList.add('hidden');
+    if (DOM.resultsView) DOM.resultsView.classList.remove('hidden');
     saveSessionState('results');
-    if (!options.skipScroll) {
+    if (!options.skipScroll && DOM.resultsView) {
       window.scrollTo({ top: DOM.resultsView.offsetTop - 80, behavior: 'smooth' });
     }
   }
@@ -3264,31 +3294,32 @@ KEAHLIAN & KOMPETENSI
   // 14. EXECUTE SCREENING FLOW
   // --------------------------------------------------------------------------
   async function runScreening() {
+    const rawVal = DOM.rawCvText ? DOM.rawCvText.value.trim() : '';
     let textToAnalyze = '';
     if (state.activeTab === 'upload') {
-      textToAnalyze = state.cvText || DOM.rawCvText.value.trim();
+      textToAnalyze = state.cvText || rawVal;
     } else {
-      textToAnalyze = DOM.rawCvText.value.trim();
+      textToAnalyze = rawVal;
     }
 
     if (!textToAnalyze || textToAnalyze.length < 30) {
       showToast(state.language === 'id' ? i18n.id.toastNoText : i18n.en.toastNoText);
-      if (state.activeTab === 'upload' && !state.uploadedFile) {
+      if (state.activeTab === 'upload' && !state.uploadedFile && DOM.cvFileInput) {
         DOM.cvFileInput.click();
-      } else {
+      } else if (DOM.rawCvText) {
         DOM.rawCvText.focus();
       }
       return;
     }
 
-    DOM.runAnalysisBtn.disabled = true;
-    DOM.btnIcon.innerHTML = `<svg class="w-4 h-4 animate-spin text-black" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>`;
-    DOM.btnLabel.textContent = state.language === 'id' ? 'Memproses Matriks ATS...' : 'Evaluating Resume Matrix...';
+    if (DOM.runAnalysisBtn) DOM.runAnalysisBtn.disabled = true;
+    if (DOM.btnIcon) DOM.btnIcon.innerHTML = `<svg class="w-4 h-4 animate-spin text-black" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>`;
+    if (DOM.btnLabel) DOM.btnLabel.textContent = state.language === 'id' ? 'Memproses Matriks ATS...' : 'Evaluating Resume Matrix...';
     showToast(state.language === 'id' ? i18n.id.toastAnalyzing : i18n.en.toastAnalyzing);
 
     // Transition immediately to Skeleton Shimmer Loading Dashboard
-    DOM.inputView.classList.add('hidden');
-    DOM.resultsView.classList.add('hidden');
+    if (DOM.inputView) DOM.inputView.classList.add('hidden');
+    if (DOM.resultsView) DOM.resultsView.classList.add('hidden');
     if (DOM.skeletonLoadingView) {
       DOM.skeletonLoadingView.classList.remove('hidden');
       window.scrollTo({ top: DOM.skeletonLoadingView.offsetTop - 80, behavior: 'smooth' });
@@ -3302,9 +3333,9 @@ KEAHLIAN & KOMPETENSI
         DOM.skeletonLoadingView.classList.add('hidden');
       }
 
-      DOM.runAnalysisBtn.disabled = false;
-      DOM.btnIcon.innerHTML = `<svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>`;
-      DOM.btnLabel.textContent = state.language === 'id' ? i18n.id.runBtnLabel : i18n.en.runBtnLabel;
+      if (DOM.runAnalysisBtn) DOM.runAnalysisBtn.disabled = false;
+      if (DOM.btnIcon) DOM.btnIcon.innerHTML = `<svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>`;
+      if (DOM.btnLabel) DOM.btnLabel.textContent = state.language === 'id' ? i18n.id.runBtnLabel : i18n.en.runBtnLabel;
 
       renderAnalysisResults(analysis);
     }, 1250);
@@ -3486,52 +3517,72 @@ KEAHLIAN & KOMPETENSI
   // 15. EVENT LISTENERS SETUP
   // --------------------------------------------------------------------------
   function setupEventListeners() {
-    DOM.themeToggleBtn.addEventListener('click', toggleTheme);
+    if (DOM.themeToggleBtn) {
+      DOM.themeToggleBtn.addEventListener('click', toggleTheme);
+    }
 
-    DOM.langIdBtn.addEventListener('click', () => applyLanguage('id'));
-    DOM.langEnBtn.addEventListener('click', () => applyLanguage('en'));
+    if (DOM.langIdBtn) {
+      DOM.langIdBtn.addEventListener('click', () => applyLanguage('id'));
+    }
+    if (DOM.langEnBtn) {
+      DOM.langEnBtn.addEventListener('click', () => applyLanguage('en'));
+    }
 
-    DOM.tabUploadBtn.addEventListener('click', () => setTab('upload'));
-    DOM.tabPasteBtn.addEventListener('click', () => setTab('paste'));
+    if (DOM.tabUploadBtn) {
+      DOM.tabUploadBtn.addEventListener('click', () => setTab('upload'));
+    }
+    if (DOM.tabPasteBtn) {
+      DOM.tabPasteBtn.addEventListener('click', () => setTab('paste'));
+    }
 
-    DOM.browseFileBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      DOM.cvFileInput.click();
-    });
-
-    DOM.dropzone.addEventListener('click', () => {
-      DOM.cvFileInput.click();
-    });
-
-    DOM.cvFileInput.addEventListener('change', (e) => {
-      if (e.target.files && e.target.files[0]) {
-        processFile(e.target.files[0]);
-      }
-    });
-
-    ['dragenter', 'dragover'].forEach(eventName => {
-      DOM.dropzone.addEventListener(eventName, (e) => {
-        e.preventDefault();
+    if (DOM.browseFileBtn && DOM.cvFileInput) {
+      DOM.browseFileBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        DOM.dropzone.classList.add('dragover');
-      }, false);
-    });
+        DOM.cvFileInput.click();
+      });
+    }
 
-    ['dragleave', 'drop'].forEach(eventName => {
-      DOM.dropzone.addEventListener(eventName, (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        DOM.dropzone.classList.remove('dragover');
-      }, false);
-    });
+    if (DOM.dropzone && DOM.cvFileInput) {
+      DOM.dropzone.addEventListener('click', () => {
+        DOM.cvFileInput.click();
+      });
+    }
 
-    DOM.dropzone.addEventListener('drop', (e) => {
-      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
-        processFile(e.dataTransfer.files[0]);
-      }
-    });
+    if (DOM.cvFileInput) {
+      DOM.cvFileInput.addEventListener('change', (e) => {
+        if (e.target.files && e.target.files[0]) {
+          processFile(e.target.files[0]);
+        }
+      });
+    }
 
-    DOM.removeFileBtn.addEventListener('click', clearUploadedFile);
+    if (DOM.dropzone) {
+      ['dragenter', 'dragover'].forEach(eventName => {
+        DOM.dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          DOM.dropzone.classList.add('dragover');
+        }, false);
+      });
+
+      ['dragleave', 'drop'].forEach(eventName => {
+        DOM.dropzone.addEventListener(eventName, (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          DOM.dropzone.classList.remove('dragover');
+        }, false);
+      });
+
+      DOM.dropzone.addEventListener('drop', (e) => {
+        if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]) {
+          processFile(e.dataTransfer.files[0]);
+        }
+      });
+    }
+
+    if (DOM.removeFileBtn) {
+      DOM.removeFileBtn.addEventListener('click', clearUploadedFile);
+    }
 
     // Sample Profile Load (1-click instant demo)
     if (DOM.loadSampleCvBtn) {
@@ -3613,15 +3664,21 @@ KEAHLIAN & KOMPETENSI
       });
     }
 
-    DOM.runAnalysisBtn.addEventListener('click', runScreening);
+    if (DOM.runAnalysisBtn) {
+      DOM.runAnalysisBtn.addEventListener('click', runScreening);
+    }
 
-    DOM.backToInputBtn.addEventListener('click', () => {
-      clearSessionState();
-      if (DOM.skeletonLoadingView) DOM.skeletonLoadingView.classList.add('hidden');
-      DOM.resultsView.classList.add('hidden');
-      DOM.inputView.classList.remove('hidden');
-      window.scrollTo({ top: DOM.inputView.offsetTop - 80, behavior: 'smooth' });
-    });
+    if (DOM.backToInputBtn) {
+      DOM.backToInputBtn.addEventListener('click', () => {
+        clearSessionState();
+        if (DOM.skeletonLoadingView) DOM.skeletonLoadingView.classList.add('hidden');
+        if (DOM.resultsView) DOM.resultsView.classList.add('hidden');
+        if (DOM.inputView) {
+          DOM.inputView.classList.remove('hidden');
+          window.scrollTo({ top: DOM.inputView.offsetTop - 80, behavior: 'smooth' });
+        }
+      });
+    }
 
     // Export PDF (Browser Print)
     if (DOM.exportPdfBtn) {
@@ -3667,9 +3724,11 @@ KEAHLIAN & KOMPETENSI
     }
 
     // Copy Actionable Rewrite
-    DOM.copyRewriteBtn.addEventListener('click', () => {
-      copyTextToClipboard(DOM.rewriteAfterTxt.textContent, DOM.copyRewriteBtn, state.language);
-    });
+    if (DOM.copyRewriteBtn && DOM.rewriteAfterTxt) {
+      DOM.copyRewriteBtn.addEventListener('click', () => {
+        copyTextToClipboard(DOM.rewriteAfterTxt.textContent, DOM.copyRewriteBtn, state.language);
+      });
+    }
 
     // Copy Missing ATS Keywords Button
     if (DOM.copyMissingKeywordsBtn) {
@@ -4057,7 +4116,22 @@ KEAHLIAN & KOMPETENSI
           ? 'Draf CV dari Live Builder berhasil dimuat dan siap di-scan!'
           : 'CV draft from Live Builder loaded and ready to scan!'
       );
-    } else {
+    } else if (urlParams.get('sample') === '1') {
+      clearSessionState();
+      if (DOM.resultsView) DOM.resultsView.classList.add('hidden');
+      if (DOM.compareResultsView) DOM.compareResultsView.classList.add('hidden');
+      if (DOM.inputView) DOM.inputView.classList.remove('hidden');
+      setInputMode('single');
+      state.cvText = SAMPLE_PROFILE_TEXT;
+      if (DOM.rawCvText) DOM.rawCvText.value = SAMPLE_PROFILE_TEXT;
+      setTab('paste');
+      if (DOM.roleSelect) DOM.roleSelect.value = 'hr';
+      updateRoleDetails('hr');
+      showToast(state.language === 'id' ? i18n.id.toastSampleLoaded : i18n.en.toastSampleLoaded);
+      if (DOM.rawCvText || DOM.runAnalysisBtn) {
+        runScreening();
+      }
+    } else if (DOM.inputView || DOM.resultsView) {
       restoreSessionState();
     }
   }
