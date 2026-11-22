@@ -587,11 +587,11 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     activeFilter: 'all',
     currentActiveTemplate: null,
     currentBuilderTemplate: 'classic_corporate',
-    builderPaid: (() => {
+    payToken: (() => {
       try {
-        return sessionStorage.getItem('screenora_builder_paid') === '1';
+        return sessionStorage.getItem('screenora_pay_token') || '';
       } catch (_) {
-        return false;
+        return '';
       }
     })(),
     payMethod: 'qris'
@@ -1223,7 +1223,8 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   }
 
   function escapeHtml(str) {
-    return str
+    if (!str) return '';
+    return String(str)
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;')
@@ -1332,17 +1333,31 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     }
 
     if (DOM.builderDownloadBtn) {
-      DOM.builderDownloadBtn.addEventListener('click', () => {
+      DOM.builderDownloadBtn.addEventListener('click', async () => {
         const text = assembleBuilderPlainText();
         if (!text) {
           showToast(state.language === 'id' ? 'Isi minimal satu bagian CV terlebih dahulu.' : 'Please fill in at least one CV section first.');
           return;
         }
-        if (state.builderPaid) {
-          downloadBuilderDoc();
-        } else {
-          openPayModal();
+        if (state.payToken) {
+          try {
+            const res = await fetch('/api/verify-download', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ token: state.payToken })
+            });
+            const data = await res.json().catch(() => ({}));
+            if (res.ok && data.ok) {
+              downloadBuilderDoc();
+              return;
+            }
+          } catch (_) {
+            // Fall through to payment modal
+          }
+          state.payToken = '';
+          try { sessionStorage.removeItem('screenora_pay_token'); } catch (_) {}
         }
+        openPayModal();
       });
     }
 
@@ -1386,7 +1401,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
           });
           const data = await res.json().catch(() => ({}));
           if (res.ok && data.ok && data.token) {
-            state.builderPaid = true;
+            state.payToken = data.token;
             try {
               sessionStorage.setItem('screenora_pay_token', data.token);
             } catch (_) {
