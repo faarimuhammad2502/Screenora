@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap Index
-Sitemap: https://screenora.vercel.app/sitemap.xml
+Sitemap: https://screenora-xi.vercel.app/sitemap.xml

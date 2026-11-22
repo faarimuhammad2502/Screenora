@@ -52,7 +52,7 @@
       ]
     },
     {
-      "source": "/(style.css|app.js|templates.js|builder.js|banner.svg)",
+      "source": "/(style.css|app.js|templates.js|builder.js|banner.svg|banner.png)",
       "headers": [
         {
           "key": "Cache-Control",
