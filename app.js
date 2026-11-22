@@ -1875,6 +1875,25 @@ KEAHLIAN & KOMPETENSI
     }
 
     const fileExtension = file.name.split('.').pop().toLowerCase();
+    const ALLOWED_EXTENSIONS = ['pdf', 'docx', 'txt'];
+    if (!ALLOWED_EXTENSIONS.includes(fileExtension)) {
+      if (fileExtension === 'doc') {
+        throw new Error(
+          state.language === 'id'
+            ? 'Format .doc lama tidak didukung. Simpan sebagai .docx/.pdf atau gunakan tab Tempel Teks.'
+            : 'Legacy .doc format is not supported. Save as .docx/.pdf or use Paste Text.'
+        );
+      }
+      throw new Error(
+        state.language === 'id'
+          ? 'Format berkas tidak diizinkan. Gunakan hanya PDF, DOCX, atau TXT.'
+          : 'Unsupported file format. Only PDF, DOCX, or TXT files are allowed.'
+      );
+    }
+
+    const MAX_PDF_PAGES = 25;
+    const MAX_DOCX_XML_BYTES = 2 * 1024 * 1024;
+    const MAX_CV_CHARS = 100000;
     let extractedText = '';
 
     if (fileExtension === 'pdf') {
@@ -1886,8 +1905,9 @@ KEAHLIAN & KOMPETENSI
       }
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      const pageLimit = Math.min(pdf.numPages, MAX_PDF_PAGES);
       const pages = await Promise.all(
-        Array.from({ length: pdf.numPages }, (_, idx) =>
+        Array.from({ length: pageLimit }, (_, idx) =>
           pdf.getPage(idx + 1).then(page =>
             page.getTextContent().then(content => {
               const lines = [];
@@ -1937,7 +1957,13 @@ KEAHLIAN & KOMPETENSI
       if (!docXmlFile) {
         throw new Error('Invalid DOCX structure: word/document.xml not found.');
       }
+      if (docXmlFile._data && typeof docXmlFile._data.uncompressedSize === 'number' && docXmlFile._data.uncompressedSize > MAX_DOCX_XML_BYTES) {
+        throw new Error('DOCX content exceeds safe size limit.');
+      }
       const xmlStr = await docXmlFile.async('string');
+      if (xmlStr.length > MAX_DOCX_XML_BYTES) {
+        throw new Error('DOCX content exceeds safe size limit.');
+      }
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlStr, 'application/xml');
       const paragraphs = Array.from(xmlDoc.getElementsByTagName('w:p'));
@@ -1950,14 +1976,12 @@ KEAHLIAN & KOMPETENSI
         )
         .filter(Boolean);
       extractedText = lines.join('\n');
-    } else if (fileExtension === 'doc') {
-      throw new Error(
-        state.language === 'id'
-          ? 'Format .doc lama tidak didukung. Simpan sebagai .docx/.pdf atau gunakan tab Tempel Teks.'
-          : 'Legacy .doc format is not supported. Save as .docx/.pdf or use Paste Text.'
-      );
     } else {
       extractedText = await file.text();
+    }
+
+    if (extractedText.length > MAX_CV_CHARS) {
+      extractedText = extractedText.slice(0, MAX_CV_CHARS);
     }
 
     if (!extractedText || extractedText.trim().length < 40) {

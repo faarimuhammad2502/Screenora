@@ -29,6 +29,13 @@ function isRateLimited(ip) {
 
 function recordFailure(ip) {
   const now = Date.now();
+  if (failedAttempts.size > 1000) {
+    for (const [key, val] of failedAttempts.entries()) {
+      if (now - val.firstAt > RATE_WINDOW_MS) {
+        failedAttempts.delete(key);
+      }
+    }
+  }
   const record = failedAttempts.get(ip);
   if (!record || now - record.firstAt > RATE_WINDOW_MS) {
     failedAttempts.set(ip, { count: 1, firstAt: now });
@@ -106,6 +113,8 @@ function verifySessionToken(token) {
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
   res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
 
   if (req.method !== 'POST') {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
@@ -121,16 +130,21 @@ module.exports = async function handler(req, res) {
 
   let body = req.body;
   if (typeof body === 'string') {
+    if (body.length > 2048) {
+      return res.status(413).json({ ok: false, error: 'Payload too large' });
+    }
     try {
       body = JSON.parse(body);
     } catch (_) {
       return res.status(400).json({ ok: false, error: 'Invalid JSON body' });
     }
   }
-  body = body || {};
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return res.status(400).json({ ok: false, error: 'Invalid request payload' });
+  }
 
   // 1. Re-verify existing session token
-  if (body.token) {
+  if (typeof body.token === 'string' && body.token.length > 0 && body.token.length <= 512) {
     if (verifySessionToken(body.token)) {
       return res.status(200).json({ ok: true, token: body.token });
     }
@@ -138,7 +152,7 @@ module.exports = async function handler(req, res) {
   }
 
   // 2. Verify submitted access code
-  if (body.code) {
+  if (typeof body.code === 'string' && body.code.length > 0 && body.code.length <= 64) {
     if (verifyAccessCode(body.code)) {
       clearFailures(ip);
       const token = signSessionToken();
