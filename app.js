@@ -2052,7 +2052,10 @@ KEAHLIAN & KOMPETENSI
 
     } catch (err) {
       console.warn('File processing error:', err);
-      DOM.fileMetaTxt.textContent = 'Peringatan: Gagal ekstrak otomatis. Silakan gunakan tab Tempel Teks.';
+      const reason = err && err.message ? err.message : '';
+      DOM.fileMetaTxt.textContent = reason
+        ? `Peringatan: ${reason} Silakan gunakan tab Tempel Teks.`
+        : 'Peringatan: Gagal ekstrak otomatis. Silakan gunakan tab Tempel Teks.';
       showToast(state.language === 'id' ? 'Gagal membaca PDF. Anda dapat menyalin teks langsung di tab Tempel.' : 'Could not parse PDF. Please paste text directly.');
     }
   }
