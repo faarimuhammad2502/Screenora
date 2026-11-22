@@ -106,7 +106,7 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
   <!-- Custom Stylesheet with Cache Busting -->
-  <link rel="stylesheet" href="style.css?v=3.6.0">
+  <link rel="stylesheet" href="style.css?v=3.7.0">
 
   <!-- JSON-LD Structured Data (Schema.org WebApplication & Organization) -->
   <script type="application/ld+json">
@@ -546,6 +546,13 @@
                 <label for="customRoleTitleInput" class="block text-[11px] text-dark-textSec mb-1 font-medium" data-i18n="customRoleTitleLabel">Nama Jabatan Target:</label>
                 <input type="text" id="customRoleTitleInput" class="w-full bg-dark-surface border border-dark-border rounded-lg px-3 py-2 text-xs text-dark-textPri placeholder-dark-textMuted focus:outline-none focus:border-brand-emerald transition-colors" placeholder="Contoh: Senior Growth Marketing Specialist">
                 <span class="text-[10px] text-dark-textMuted mt-1 block" data-i18n="customRoleTitleHint">Format: [Tingkat] + [Fungsi] + [Bidang Spesifik]</span>
+              </div>
+
+              <!-- Paste Job Description (Optional Auto-Extract) -->
+              <div>
+                <label for="customJobDescInput" class="block text-[11px] text-dark-textSec mb-1 font-medium" data-i18n="customJobDescLabel">Tempel Iklan Lowongan Kerja (Opsional — Ekstrak Kata Kunci Otomatis):</label>
+                <textarea id="customJobDescInput" rows="3" class="w-full bg-dark-surface border border-dark-border rounded-lg px-3 py-2 text-xs text-dark-textPri placeholder-dark-textMuted focus:outline-none focus:border-brand-emerald transition-colors resize-y" data-i18n-placeholder="customJobDescPh" placeholder="Tempel teks Job Description dari LinkedIn/JobStreet di sini..."></textarea>
+                <button type="button" id="extractJdKeywordsBtn" class="mt-1.5 w-full py-1.5 px-3 rounded-lg bg-dark-surface border border-dark-border hover:border-brand-emerald/50 text-[11px] font-medium text-dark-textPri hover:text-brand-emerald transition-all" data-i18n="extractJdBtn">Ekstrak Kata Kunci dari Lowongan</button>
               </div>
 
               <!-- Keywords Input -->
@@ -1675,6 +1682,6 @@
   </div>
 
   <!-- Main JavaScript App Logic (Deferred for High Performance) -->
-  <script src="app.js?v=3.6.0" defer></script>
+  <script src="app.js?v=3.7.0" defer></script>
 </body>
 </html>

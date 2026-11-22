@@ -810,46 +810,46 @@ CERTIFICATIONS
 
     if (lang === 'en') {
       if (/\b(recruit|hiring|candidate|interview|cv|talent|onboarding|hr)\b/i.test(cleanTopic)) {
-        return `- Spearheaded ${cleanTopic} using structured competency screening, cutting turnaround time by 25% and lifting stakeholder satisfaction to 92%.`;
+        return `- Spearheaded ${cleanTopic} using structured competency screening, cutting turnaround time by [X%] across [N candidates].`;
       }
       if (/\b(data|sql|python|dashboard|report|analysis|analytics|excel|kpi)\b/i.test(cleanTopic)) {
-        return `- Analyzed and automated ${cleanTopic} with structured data pipelines, improving reporting accuracy to 99% and accelerating decision speed by 30%.`;
+        return `- Analyzed and automated ${cleanTopic} with structured data pipelines, improving reporting accuracy to [X%] and saving [N hours/week].`;
       }
       if (/\b(teach|student|class|curriculum|mentor|training|module|education)\b/i.test(cleanTopic)) {
-        return `- Designed and delivered ${cleanTopic} with measurable learning milestones, boosting participant mastery and engagement outcomes by 22%.`;
+        return `- Designed and delivered ${cleanTopic} with measurable learning milestones, boosting mastery outcomes by [X%] across [N students].`;
       }
       if (/\b(market|campaign|social|content|ads|seo|sales|lead|client)\b/i.test(cleanTopic)) {
-        return `- Executed data-driven ${cleanTopic} initiatives, driving a 35% increase in qualified engagement and reducing acquisition cost by 18%.`;
+        return `- Executed data-driven ${cleanTopic} initiatives, driving a [X%] increase in qualified engagement and generating [$X K] / [N leads].`;
       }
       if (/\b(code|web|app|api|system|software|bug|feature|deploy)\b/i.test(cleanTopic)) {
-        return `- Engineered and optimized ${cleanTopic} with automated quality checks, improving system performance by 35% and cutting defects by 40%.`;
+        return `- Engineered and optimized ${cleanTopic} with automated quality checks, improving system performance by [X%] and saving [N hours/week].`;
       }
       if (/\b(finance|budget|invoice|audit|tax|payroll|accounting)\b/i.test(cleanTopic)) {
-        return `- Streamlined ${cleanTopic} with standardized reconciliation controls, achieving 100% audit accuracy and shortening closing cycles by 30%.`;
+        return `- Streamlined ${cleanTopic} with standardized reconciliation controls, managing [$X K] budget and shortening closing cycles by [N hours/week].`;
       }
-      return `- Optimized ${cleanTopic} through standardized workflow execution, improving operational efficiency by 25% and ensuring 100% on-time delivery.`;
+      return `- Optimized ${cleanTopic} through standardized workflow execution, improving operational efficiency by [X%] and saving [N hours/week].`;
     }
 
-    // Indonesian XYZ conversion preserving user's original topic context
+    // Indonesian XYZ conversion preserving user's original topic context with honest Guided Metric Slots
     if (/\b(rekrut|kandidat|wawancara|interview|hr|karyawan|onboarding|absensi|bpjs)\b/i.test(cleanTopic)) {
-      return `- Mengoptimalkan ${cleanTopic} melalui penyaringan berbasis kompetensi terstruktur, memangkas durasi proses hingga 25% dan menjaga akurasi data 99%.`;
+      return `- Mengoptimalkan ${cleanTopic} melalui penyaringan berbasis kompetensi terstruktur untuk [N kandidat], memangkas durasi proses hingga [X%].`;
     }
     if (/\b(data|sql|python|dashboard|laporan|analisis|excel|kpi|rekap)\b/i.test(cleanTopic)) {
-      return `- Menganalisis dan menyusun ${cleanTopic} secara terstruktur untuk pemantauan KPI, meningkatkan akurasi pelaporan hingga 99% dan mempercepat keputusan tim sebesar 30%.`;
+      return `- Menganalisis dan menyusun ${cleanTopic} secara terstruktur untuk pemantauan KPI, meningkatkan akurasi pelaporan hingga [X%] dan menghemat [N jam/minggu].`;
     }
     if (/\b(ajar|siswa|murid|kelas|kurikulum|materi|training|pelatihan|pendamping)\b/i.test(cleanTopic)) {
-      return `- Merancang dan memfasilitasi ${cleanTopic} dengan evaluasi berkala terukur, meningkatkan capaian pemahaman serta keterlibatan peserta sebesar 22%.`;
+      return `- Merancang dan memfasilitasi ${cleanTopic} dengan evaluasi berkala terukur bagi [N siswa], meningkatkan capaian pemahaman sebesar [X%].`;
     }
     if (/\b(marketing|kampanye|konten|sosial|iklan|ads|seo|penjualan|sales|klien|pelanggan)\b/i.test(cleanTopic)) {
-      return `- Mengeksekusi strategi ${cleanTopic} berbasis evaluasi metrik audiens, mendongkrak konversi prospek hingga 35% dengan efisiensi biaya operasional 18%.`;
+      return `- Mengeksekusi strategi ${cleanTopic} berbasis evaluasi metrik audiens, mendongkrak konversi prospek hingga [X%] dengan nilai kontribusi [Rp X jt].`;
     }
     if (/\b(aplikasi|web|sistem|api|kode|software|fitur|bug|database)\b/i.test(cleanTopic)) {
-      return `- Mengembangkan dan mengoptimalkan ${cleanTopic} dengan pengujian terstandar, meningkatkan performa sistem hingga 35% dan menekan kendala teknis sebesar 40%.`;
+      return `- Mengembangkan dan mengoptimalkan ${cleanTopic} dengan pengujian terstandar, meningkatkan performa sistem hingga [X%] dan menghemat [N jam/minggu].`;
     }
     if (/\b(keuangan|anggaran|invoice|audit|pajak|gaji|payroll|kas|akuntansi)\b/i.test(cleanTopic)) {
-      return `- Mengelola dan menyederhanakan ${cleanTopic} sesuai standar kepatuhan, mencapai akurasi rekonsiliasi 100% serta mempercepat waktu pelaporan sebesar 30%.`;
+      return `- Mengelola dan menyederhanakan ${cleanTopic} senilai [Rp X jt] sesuai standar kepatuhan, mencapai akurasi rekonsiliasi [X%] dan menghemat [N jam/minggu].`;
     }
-    return `- Mengoptimalkan ${cleanTopic} melalui alur kerja terstandar, meningkatkan efisiensi eksekusi tim sebesar 25% dengan tingkat ketepatan waktu 100%.`;
+    return `- Mengoptimalkan ${cleanTopic} melalui alur kerja terstandar, meningkatkan efisiensi eksekusi tim sebesar [X%] dan menghemat [N jam/minggu].`;
   }
 
   function optimizeExperienceText(rawText, lang) {

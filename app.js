@@ -122,6 +122,11 @@
       customRoleTitleHint: 'Format: [Tingkat] + [Fungsi] + [Bidang Spesifik]',
       customKeywordsLabel: 'Kata Kunci / Keahlian Wajib Diuji (Pisahkan koma):',
       customKeywordsPlaceholder: 'misal: SQL, Tableau, ROI, Customer Journey, B2B',
+      customJobDescLabel: 'Tempel Job Description (Opsional — Ekstrak Kata Kunci Otomatis):',
+      customJobDescPh: 'Tempel deskripsi pekerjaan dari LinkedIn/JobStreet di sini untuk mengekstrak kata kunci ATS wajib secara otomatis...',
+      extractJdBtn: 'Ekstrak Kata Kunci JD',
+      jdExtractedToast: 'Kata kunci berhasil diekstrak dari Job Description!',
+      jdEmptyWarn: 'Tempel teks Job Description terlebih dahulu sebelum mengekstrak kata kunci.',
       customSeniorityLabel: 'Ekspektasi Tingkat Pengalaman:',
       seniorityEntry: 'Entry (0-2 thn)',
       seniorityMid: 'Mid (2-5 thn)',
@@ -334,6 +339,11 @@
       customRoleTitleHint: 'Format: [Seniority] + [Function] + [Specialization]',
       customKeywordsLabel: 'Must-Have ATS Keywords (Comma separated):',
       customKeywordsPlaceholder: 'e.g. SQL, Tableau, ROI, Customer Journey, B2B',
+      customJobDescLabel: 'Paste Job Description (Optional — Auto-Extract Keywords):',
+      customJobDescPh: 'Paste the job description from LinkedIn/JobStreet here to automatically extract must-have ATS keywords...',
+      extractJdBtn: 'Extract JD Keywords',
+      jdExtractedToast: 'Keywords successfully extracted from Job Description!',
+      jdEmptyWarn: 'Please paste a Job Description first before extracting keywords.',
       customSeniorityLabel: 'Experience Level Expectation:',
       seniorityEntry: 'Entry (0-2 yrs)',
       seniorityMid: 'Mid (2-5 yrs)',
@@ -1530,6 +1540,8 @@ KEAHLIAN & KOMPETENSI
     customArchetypeBtns: document.querySelectorAll('.custom-archetype-btn'),
     customRoleTitleInput: document.getElementById('customRoleTitleInput'),
     customRoleKeywordsInput: document.getElementById('customRoleKeywordsInput'),
+    customJobDescInput: document.getElementById('customJobDescInput'),
+    extractJdKeywordsBtn: document.getElementById('extractJdKeywordsBtn'),
     customSeniorityPills: document.querySelectorAll('#customSeniorityPills .seniority-pill'),
 
     // Action & Result Elements
@@ -1793,6 +1805,9 @@ KEAHLIAN & KOMPETENSI
     }
     if (DOM.customRoleKeywordsInput && dict.customKeywordsPlaceholder) {
       DOM.customRoleKeywordsInput.placeholder = dict.customKeywordsPlaceholder;
+    }
+    if (DOM.customJobDescInput && dict.customJobDescPh) {
+      DOM.customJobDescInput.placeholder = dict.customJobDescPh;
     }
     if (DOM.compareFileNameA && !state.compareFileA) {
       DOM.compareFileNameA.textContent = dict.compareUploadPrompt;
@@ -2658,6 +2673,159 @@ KEAHLIAN & KOMPETENSI
 // --------------------------------------------------------------------------
   // 12. ATS SCREENING & PSYCHOLOGICAL DIAGNOSTIC ALGORITHM
   // --------------------------------------------------------------------------
+  function escapeRegExp(str) {
+    return String(str).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function matchesKeywordBoundary(text, kw) {
+    if (!text || !kw) return false;
+    const trimmed = String(kw).trim();
+    if (!trimmed) return false;
+    const regex = new RegExp('(?:^|[^a-z0-9])' + escapeRegExp(trimmed) + '(?:$|[^a-z0-9])', 'i');
+    return regex.test(text);
+  }
+
+  const JD_STOPWORDS = new Set([
+    // Indonesian stopwords & generic job-posting filler
+    'yang', 'dan', 'atau', 'untuk', 'dengan', 'pada', 'dari', 'dalam', 'ke', 'di', 'sebagai',
+    'akan', 'dapat', 'bisa', 'harus', 'wajib', 'memiliki', 'punya', 'pengalaman', 'minimal',
+    'tahun', 'kandidat', 'pelamar', 'perusahaan', 'posisi', 'pekerjaan', 'tugas', 'tanggung',
+    'jawab', 'kualifikasi', 'persyaratan', 'syarat', 'keunggulan', 'nilai', 'tambah', 'serta',
+    'secara', 'baik', 'lancar', 'mampu', 'bekerja', 'tim', 'individu', 'mandiri', 'dll', 'dsb',
+    'lainnya', 'terkait', 'bidang', 'jurusan', 'lulusan', 'sarjana', 'pendidikan', 'setara',
+    'adalah', 'yaitu', 'yakni', 'antara', 'lain', 'oleh', 'karena', 'jika', 'bila', 'agar',
+    'supaya', 'tidak', 'bukan', 'belum', 'sudah', 'telah', 'sedang', 'lebih', 'kurang',
+    'sangat', 'paling', 'semua', 'setiap', 'beberapa', 'banyak', 'satu', 'dua', 'tiga',
+    'kami', 'anda', 'kita', 'mereka', 'ini', 'itu', 'tersebut', 'hal', 'atas', 'bawah',
+    'hingga', 'sampai', 'melalui', 'termasuk', 'khususnya', 'diutamakan', 'menjadi', 'membuat',
+    'membantu', 'melakukan', 'menjalankan', 'mengikuti', 'menjaga', 'memastikan', 'siap',
+    'bersedia', 'penempatan', 'lokasi', 'kantor', 'kerja', 'penuh', 'waktu', 'kontrak',
+    // English stopwords & generic job-posting filler
+    'the', 'and', 'for', 'with', 'that', 'this', 'from', 'are', 'was', 'were', 'will', 'would',
+    'have', 'has', 'had', 'you', 'your', 'our', 'we', 'they', 'their', 'who', 'whom', 'which',
+    'can', 'could', 'able', 'must', 'should', 'may', 'might', 'shall', 'years', 'year',
+    'experience', 'required', 'preferred', 'requirement', 'requirements', 'responsibilities',
+    'responsibility', 'qualifications', 'qualification', 'role', 'position', 'job', 'company',
+    'team', 'teams', 'work', 'working', 'skill', 'skills', 'strong', 'good', 'excellent',
+    'great', 'plus', 'bonus', 'etc', 'about', 'into', 'over', 'more', 'than', 'such', 'also',
+    'including', 'include', 'includes', 'related', 'field', 'degree', 'bachelor', 'master',
+    'min', 'max', 'minimum', 'maximum', 'not', 'but', 'all', 'any', 'both', 'each', 'other',
+    'using', 'used', 'use', 'make', 'making', 'build', 'building', 'support', 'supporting',
+    'ensure', 'ensuring', 'manage', 'managing', 'develop', 'developing', 'strong', 'proven',
+    'track', 'record', 'ability', 'knowledge', 'understanding', 'proficiency', 'fluent',
+    'written', 'verbal', 'environment', 'fast', 'paced', 'fast-paced', 'looking', 'seeking',
+    'join', 'help', 'day', 'daily', 'based', 'across', 'within', 'between', 'through', 'per'
+  ]);
+
+  const JD_PRIORITY_TERMS = new Set([
+    'sql', 'python', 'r', 'excel', 'tableau', 'power bi', 'looker', 'bigquery', 'snowflake',
+    'aws', 'gcp', 'azure', 'docker', 'kubernetes', 'react', 'vue', 'angular', 'node.js',
+    'typescript', 'javascript', 'java', 'golang', 'php', 'laravel', 'ci/cd', 'git', 'github',
+    'api', 'rest api', 'graphql', 'microservices', 'scrum', 'agile', 'jira', 'kanban',
+    'figma', 'ui/ux', 'ux', 'ui', 'qa', 'qc', 'automation', 'selenium', 'cypress',
+    'hris', 'ats', 'kpi', 'okr', 'roi', 'crm', 'erp', 'sap', 'b2b', 'b2c', 'saas',
+    'seo', 'sem', 'ppc', 'ga4', 'google analytics', 'meta ads', 'google ads', 'copywriting',
+    'rekrutmen', 'recruitment', 'talent acquisition', 'onboarding', 'offboarding', 'payroll',
+    'bpjs', 'pph', 'pph 21', 'ppn', 'psikotes', 'behavioral interview', 'people analytics',
+    'employer branding', 'performance management', 'training', 'coaching', 'mentoring',
+    'compensation', 'benefits', 'industrial relations', 'labor law', 'compliance', 'audit',
+    'sop', 'sla', 'data analysis', 'data analytics', 'data visualization', 'machine learning',
+    'deep learning', 'nlp', 'etl', 'product management', 'project management', 'roadmap',
+    'stakeholder management', 'business development', 'account management', 'lead generation',
+    'customer journey', 'retention', 'churn', 'conversion rate', 'funnel', 'supply chain',
+    'procurement', 'logistics', 'inventory', 'forecasting', 'budgeting', 'financial modeling',
+    'accounting', 'reconciliation', 'negotiation', 'public speaking', 'problem solving',
+    'critical thinking', 'leadership', 'cross-functional', 'strategic planning'
+  ]);
+
+  function extractKeywordsFromJd(jdText) {
+    if (!jdText || typeof jdText !== 'string') return [];
+
+    const candidates = new Map(); // lowerKey -> { display, score }
+    const clauses = jdText.split(/[\n\r,.;:()•|]+/);
+
+    const addCandidate = (rawPhrase, isBigram, boost) => {
+      const cleaned = rawPhrase.replace(/^[-./]+|[-./]+$/g, '').trim();
+      if (!cleaned || cleaned.length < 2) return;
+      const lowerKey = cleaned.toLowerCase();
+      if (/^\d+$/.test(lowerKey)) return;
+      if (JD_STOPWORDS.has(lowerKey)) return;
+
+      const isPriority = JD_PRIORITY_TERMS.has(lowerKey);
+      const isAcronym = /^[A-Z0-9+#/.-]{2,8}$/.test(cleaned) && /[A-Z]/.test(cleaned);
+      const isTechSymbol = /[+#/.]/.test(cleaned) && /[a-z]/i.test(cleaned);
+
+      let score = 1 + boost;
+      if (isPriority) score += 6;
+      if (isAcronym) score += 3;
+      if (isTechSymbol) score += 2.5;
+      if (isBigram && isPriority) score += 2;
+      else if (isBigram) score += 0.5;
+
+      const existing = candidates.get(lowerKey);
+      if (existing) {
+        existing.score += 1 + (isPriority ? 1.5 : 0);
+        // Prefer uppercase/title-case display over all-lowercase
+        if (/[A-Z]/.test(cleaned) && !/[A-Z]/.test(existing.display)) {
+          existing.display = cleaned;
+        }
+      } else {
+        candidates.set(lowerKey, { display: cleaned, score });
+      }
+    };
+
+    clauses.forEach(clause => {
+      const tokens = (clause.match(/[a-zA-Z0-9+#.\-\/]{2,}/g) || [])
+        .map(t => t.replace(/^[-./]+|[-./]+$/g, ''))
+        .filter(t => t.length >= 2);
+
+      for (let i = 0; i < tokens.length; i++) {
+        const w1 = tokens[i];
+        const l1 = w1.toLowerCase();
+        const w1Valid = !JD_STOPWORDS.has(l1) && !/^\d+$/.test(l1);
+
+        if (w1Valid) {
+          addCandidate(w1, false, 0);
+        }
+
+        if (i + 1 < tokens.length) {
+          const w2 = tokens[i + 1];
+          const l2 = w2.toLowerCase();
+          const w2Valid = !JD_STOPWORDS.has(l2) && !/^\d+$/.test(l2);
+          if (w1Valid && w2Valid) {
+            const bigram = `${w1} ${w2}`;
+            const bigramLower = bigram.toLowerCase();
+            if (JD_PRIORITY_TERMS.has(bigramLower) || (/^[A-Z]/.test(w1) && /^[A-Z]/.test(w2))) {
+              addCandidate(bigram, true, 1.5);
+            } else {
+              addCandidate(bigram, true, 0);
+            }
+          }
+        }
+      }
+    });
+
+    const sorted = Array.from(candidates.entries())
+      .sort((a, b) => b[1].score - a[1].score);
+
+    const selected = [];
+    const selectedLowers = new Set();
+
+    for (const [lowerKey, item] of sorted) {
+      if (selected.length >= 12) break;
+      // Avoid redundant unigram if a higher-ranked bigram already covers it
+      const coveredBySelectedBigram = !lowerKey.includes(' ') && Array.from(selectedLowers).some(
+        sel => sel.includes(' ') && sel.split(' ').includes(lowerKey)
+      );
+      if (coveredBySelectedBigram && !JD_PRIORITY_TERMS.has(lowerKey)) continue;
+
+      selected.push(item.display);
+      selectedLowers.add(lowerKey);
+    }
+
+    return selected;
+  }
+
   function analyzeResume(text, roleKey) {
     const lower = text.toLowerCase();
     const lang = state.language;
@@ -2709,7 +2877,7 @@ KEAHLIAN & KOMPETENSI
     const missingKeywords = [];
 
     targetKeywords.forEach(kw => {
-      if (lower.includes(kw.toLowerCase())) {
+      if (matchesKeywordBoundary(text, kw)) {
         matchedKeywords.push(kw);
       } else {
         missingKeywords.push(kw);
@@ -3419,6 +3587,34 @@ KEAHLIAN & KOMPETENSI
           const tplKey = btn.getAttribute('data-template');
           applyArchetypeTemplate(tplKey);
         });
+      });
+    }
+
+    // Auto-Extract Keywords from Job Description
+    if (DOM.extractJdKeywordsBtn) {
+      DOM.extractJdKeywordsBtn.addEventListener('click', () => {
+        const dict = i18n[state.language] || i18n.id;
+        const jdText = DOM.customJobDescInput ? DOM.customJobDescInput.value.trim() : '';
+        if (!jdText) {
+          showToast(dict.jdEmptyWarn || (state.language === 'id'
+            ? 'Tempel teks Job Description terlebih dahulu.'
+            : 'Please paste a Job Description first.'));
+          if (DOM.customJobDescInput) DOM.customJobDescInput.focus();
+          return;
+        }
+        const extracted = extractKeywordsFromJd(jdText);
+        if (extracted.length === 0) {
+          showToast(dict.jdEmptyWarn || (state.language === 'id'
+            ? 'Tidak ada kata kunci relevan yang dapat diekstrak.'
+            : 'No relevant keywords could be extracted.'));
+          return;
+        }
+        if (DOM.customRoleKeywordsInput) {
+          DOM.customRoleKeywordsInput.value = extracted.join(', ');
+        }
+        showToast(dict.jdExtractedToast || (state.language === 'id'
+          ? 'Kata kunci berhasil diekstrak dari Job Description!'
+          : 'Keywords extracted from Job Description!'));
       });
     }
 
