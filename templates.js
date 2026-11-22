@@ -746,14 +746,11 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
 
     const cards = document.querySelectorAll('.template-card');
     cards.forEach((card) => {
-      const category = card.getAttribute('data-category') || '';
-      if (filter === 'all') {
-        card.style.display = 'flex';
-      } else if (category.includes(filter)) {
-        card.style.display = 'flex';
-      } else {
-        card.style.display = 'none';
-      }
+      const category = (card.getAttribute('data-category') || '').trim();
+      const categories = category ? category.split(/\s+/) : [];
+      const isVisible = filter === 'all' || categories.includes(filter);
+      card.classList.remove('hidden');
+      card.style.display = isVisible ? 'flex' : 'none';
     });
   }
 
@@ -930,7 +927,8 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     if (DOM.previewSubtitle) DOM.previewSubtitle.textContent = (meta && dict[meta.descKey]) ? dict[meta.descKey] : tmpl.description;
     const previewContainer = DOM.previewModalContent || DOM.previewTextContent;
     if (previewContainer) {
-      previewContainer.innerHTML = `<div style="background:#ffffff;color:#1E293B;font-family:Calibri,Arial,sans-serif;padding:24px 28px;border-radius:8px;border:1px solid #e2e8f0;box-shadow:0 4px 16px rgba(0,0,0,0.08);">${renderPlainTextAsWordHtml(tmpl.plainText)}</div>`;
+      previewContainer.innerHTML = `<div style="background:#ffffff;color:#1E293B;font-family:Calibri,Arial,sans-serif;padding:24px 28px;border-radius:8px;border:1px solid #e2e8f0;box-shadow:0 4px 16px rgba(0,0,0,0.08);overflow-x:auto;word-break:break-word;">${renderPlainTextAsWordHtml(tmpl.plainText)}</div>`;
+      previewContainer.scrollTop = 0;
     }
 
     if (DOM.previewDownloadBtn) {
@@ -941,6 +939,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     }
 
     DOM.previewModalOverlay.classList.remove('hidden');
+    DOM.previewModalOverlay.classList.add('flex');
   }
 
   function closePreviewModal() {

@@ -1770,11 +1770,11 @@ KEAHLIAN & KOMPETENSI
     document.documentElement.lang = lang;
 
     if (lang === 'id') {
-      if (DOM.langIdBtn) DOM.langIdBtn.className = 'px-2.5 py-1 rounded-md transition-all bg-dark-surface dark:bg-dark-surface text-dark-textPri dark:text-dark-textPri shadow-sm font-semibold';
-      if (DOM.langEnBtn) DOM.langEnBtn.className = 'px-2.5 py-1 rounded-md transition-all text-dark-textSec dark:text-dark-textSec hover:text-dark-textPri font-medium';
+      if (DOM.langIdBtn) DOM.langIdBtn.className = 'px-2.5 py-1 rounded-md transition-all whitespace-nowrap bg-dark-surface dark:bg-dark-surface text-dark-textPri dark:text-dark-textPri shadow-sm font-semibold';
+      if (DOM.langEnBtn) DOM.langEnBtn.className = 'px-2.5 py-1 rounded-md transition-all whitespace-nowrap text-dark-textSec dark:text-dark-textSec hover:text-dark-textPri font-medium';
     } else {
-      if (DOM.langEnBtn) DOM.langEnBtn.className = 'px-2.5 py-1 rounded-md transition-all bg-dark-surface dark:bg-dark-surface text-dark-textPri dark:text-dark-textPri shadow-sm font-semibold';
-      if (DOM.langIdBtn) DOM.langIdBtn.className = 'px-2.5 py-1 rounded-md transition-all text-dark-textSec dark:text-dark-textSec hover:text-dark-textPri font-medium';
+      if (DOM.langEnBtn) DOM.langEnBtn.className = 'px-2.5 py-1 rounded-md transition-all whitespace-nowrap bg-dark-surface dark:bg-dark-surface text-dark-textPri dark:text-dark-textPri shadow-sm font-semibold';
+      if (DOM.langIdBtn) DOM.langIdBtn.className = 'px-2.5 py-1 rounded-md transition-all whitespace-nowrap text-dark-textSec dark:text-dark-textSec hover:text-dark-textPri font-medium';
     }
 
     const dict = i18n[lang];
@@ -1867,13 +1867,13 @@ KEAHLIAN & KOMPETENSI
   function setTab(tabName) {
     state.activeTab = tabName;
     if (tabName === 'upload') {
-      DOM.tabUploadBtn.className = 'px-2.5 py-1 rounded bg-dark-surface dark:bg-dark-surface text-dark-textPri font-medium shadow-sm transition-all';
-      DOM.tabPasteBtn.className = 'px-2.5 py-1 rounded text-dark-textSec hover:text-dark-textPri transition-all';
+      DOM.tabUploadBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap bg-dark-surface dark:bg-dark-surface text-dark-textPri font-medium shadow-sm transition-all';
+      DOM.tabPasteBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap text-dark-textSec hover:text-dark-textPri transition-all';
       DOM.dropzoneContainer.classList.remove('hidden');
       DOM.pasteContainer.classList.add('hidden');
     } else {
-      DOM.tabPasteBtn.className = 'px-2.5 py-1 rounded bg-dark-surface dark:bg-dark-surface text-dark-textPri font-medium shadow-sm transition-all';
-      DOM.tabUploadBtn.className = 'px-2.5 py-1 rounded text-dark-textSec hover:text-dark-textPri transition-all';
+      DOM.tabPasteBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap bg-dark-surface dark:bg-dark-surface text-dark-textPri font-medium shadow-sm transition-all';
+      DOM.tabUploadBtn.className = 'px-2.5 py-1 rounded whitespace-nowrap text-dark-textSec hover:text-dark-textPri transition-all';
       DOM.dropzoneContainer.classList.add('hidden');
       DOM.pasteContainer.classList.remove('hidden');
       DOM.rawCvText.focus();
@@ -3204,11 +3204,11 @@ KEAHLIAN & KOMPETENSI
         DOM.secondaryRewritesList.innerHTML = res.secondaryRewrites.map((item, idx) => `
           <div class="p-3.5 sm:p-4 rounded-xl bg-slate-50 dark:bg-dark-well border border-slate-300 dark:border-dark-wellBorder space-y-3">
             <div class="space-y-1.5">
-              <div class="flex items-center justify-between">
+              <div class="flex flex-wrap items-center justify-between gap-2">
                 <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
                   ${lang === 'id' ? 'Butir #' + (idx + 2) + ' Asli di CV Anda' : 'Original Experience Bullet #' + (idx + 2)}
                 </span>
-                <span class="text-[9.5px] font-mono font-semibold text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-dark-surface border border-slate-300 dark:border-dark-wellBorder">
+                <span class="text-[9.5px] font-mono font-semibold text-slate-700 dark:text-slate-300 px-1.5 py-0.5 rounded bg-slate-200/70 dark:bg-dark-surface border border-slate-300 dark:border-dark-wellBorder whitespace-nowrap shrink-0">
                   ${lang === 'id' ? 'Perlu Diperbaiki' : 'Needs Fix'}
                 </span>
               </div>
@@ -3220,13 +3220,13 @@ KEAHLIAN & KOMPETENSI
               </p>
             </div>
             <div class="space-y-1.5 pt-2 border-t border-slate-300 dark:border-dark-wellBorder">
-              <div class="flex items-center justify-between">
+              <div class="flex flex-wrap items-center justify-between gap-2">
                 <span class="text-[10.5px] font-mono font-bold uppercase tracking-wider text-slate-900 dark:text-white flex items-center gap-1.5">
-                  <span class="w-1.5 h-1.5 rounded-full bg-slate-800 dark:bg-slate-200"></span>
+                  <span class="w-1.5 h-1.5 rounded-full bg-slate-800 dark:bg-slate-200 shrink-0"></span>
                   <span>${lang === 'id' ? 'Rekomendasi Formula XYZ (Siap Salin)' : 'Recommended XYZ Formula (Ready to Copy)'}</span>
                 </span>
-                <button type="button" class="copy-secondary-rewrite-btn text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-heading font-bold flex items-center gap-1 transition-colors" data-copy-target="${encodeURIComponent(item.rewrite)}">
-                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                <button type="button" class="copy-secondary-rewrite-btn text-[11px] text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white font-heading font-bold flex items-center gap-1 transition-colors whitespace-nowrap shrink-0" data-copy-target="${encodeURIComponent(item.rewrite)}">
+                  <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
                   <span>${lang === 'id' ? 'Salin Kalimat' : 'Copy Sentence'}</span>
                 </button>
               </div>
@@ -3327,8 +3327,8 @@ KEAHLIAN & KOMPETENSI
     const isCompare = state.inputMode === 'compare';
 
     if (DOM.modeSingleBtn && DOM.modeCompareBtn) {
-      const activeClass = 'px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm';
-      const inactiveClass = 'px-3 py-1.5 rounded-lg text-xs font-medium transition-all text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white';
+      const activeClass = 'px-4 py-2 rounded-lg text-xs font-heading font-semibold bg-slate-900 text-white dark:bg-white dark:text-slate-950 shadow-sm transition-all flex items-center justify-center gap-2 whitespace-nowrap';
+      const inactiveClass = 'px-4 py-2 rounded-lg text-xs font-heading font-semibold text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-2 whitespace-nowrap';
       DOM.modeSingleBtn.className = isCompare ? inactiveClass : activeClass;
       DOM.modeCompareBtn.className = isCompare ? activeClass : inactiveClass;
       DOM.modeSingleBtn.setAttribute('aria-pressed', String(!isCompare));
@@ -3373,18 +3373,18 @@ KEAHLIAN & KOMPETENSI
       const weak = res.weakBulletCount || 0;
       const metrics = res.metricCount || 0;
       els.bulletsEl.innerHTML = `
-        <div class="grid grid-cols-3 gap-2 text-center">
-          <div class="p-2 rounded-lg bg-slate-50 dark:bg-dark-well border border-slate-200 dark:border-dark-border">
+        <div class="grid grid-cols-3 gap-2.5 sm:gap-3 text-center">
+          <div class="p-2.5 sm:p-3 rounded-lg bg-slate-50 dark:bg-dark-well border border-slate-200 dark:border-dark-border">
             <div class="text-sm font-bold text-slate-900 dark:text-white">${strong}</div>
-            <div class="text-[10.5px] text-slate-600 dark:text-slate-400">${lang === 'id' ? 'Kalimat Kuat' : 'Strong'}</div>
+            <div class="text-[10.5px] text-slate-600 dark:text-slate-400 leading-tight mt-0.5">${lang === 'id' ? 'Kalimat Kuat' : 'Strong'}</div>
           </div>
-          <div class="p-2 rounded-lg bg-slate-50 dark:bg-dark-well border border-slate-200 dark:border-dark-border">
+          <div class="p-2.5 sm:p-3 rounded-lg bg-slate-50 dark:bg-dark-well border border-slate-200 dark:border-dark-border">
             <div class="text-sm font-bold text-slate-900 dark:text-white">${weak}</div>
-            <div class="text-[10.5px] text-slate-600 dark:text-slate-400">${lang === 'id' ? 'Perlu XYZ' : 'Needs XYZ'}</div>
+            <div class="text-[10.5px] text-slate-600 dark:text-slate-400 leading-tight mt-0.5">${lang === 'id' ? 'Perlu XYZ' : 'Needs XYZ'}</div>
           </div>
-          <div class="p-2 rounded-lg bg-slate-50 dark:bg-dark-well border border-slate-200 dark:border-dark-border">
+          <div class="p-2.5 sm:p-3 rounded-lg bg-slate-50 dark:bg-dark-well border border-slate-200 dark:border-dark-border">
             <div class="text-sm font-bold text-slate-900 dark:text-white">${metrics}</div>
-            <div class="text-[10.5px] text-slate-600 dark:text-slate-400">${lang === 'id' ? 'Metrik Angka' : 'Metrics'}</div>
+            <div class="text-[10.5px] text-slate-600 dark:text-slate-400 leading-tight mt-0.5">${lang === 'id' ? 'Metrik Angka' : 'Metrics'}</div>
           </div>
         </div>
       `;
@@ -3563,23 +3563,8 @@ KEAHLIAN & KOMPETENSI
 
     // Market Standard Switcher Click Handlers (Indonesia vs Internasional)
     if (DOM.stdNasionalBtn && DOM.stdGlobalBtn) {
-      DOM.stdNasionalBtn.addEventListener('click', () => {
-        state.screeningStandard = 'id';
-        DOM.stdNasionalBtn.className = 'py-2 px-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 bg-dark-surface text-brand-emerald border border-brand-emerald/30 shadow-sm';
-        DOM.stdGlobalBtn.className = 'py-2 px-2.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-1.5 bg-transparent border border-transparent';
-        DOM.stdNasionalBtn.setAttribute('aria-checked', 'true');
-        DOM.stdGlobalBtn.setAttribute('aria-checked', 'false');
-        updateStandardUI(state.language);
-      });
-
-      DOM.stdGlobalBtn.addEventListener('click', () => {
-        state.screeningStandard = 'global';
-        DOM.stdGlobalBtn.className = 'py-2 px-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 bg-dark-surface text-brand-emerald border border-brand-emerald/30 shadow-sm';
-        DOM.stdNasionalBtn.className = 'py-2 px-2.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-1.5 bg-transparent border border-transparent';
-        DOM.stdGlobalBtn.setAttribute('aria-checked', 'true');
-        DOM.stdNasionalBtn.setAttribute('aria-checked', 'false');
-        updateStandardUI(state.language);
-      });
+      DOM.stdNasionalBtn.addEventListener('click', () => applyScreeningStandard('id'));
+      DOM.stdGlobalBtn.addEventListener('click', () => applyScreeningStandard('global'));
     }
 
     // Role Dropdown Change Handler
@@ -3947,8 +3932,8 @@ KEAHLIAN & KOMPETENSI
   function applyScreeningStandard(std) {
     state.screeningStandard = std === 'global' ? 'global' : 'id';
     const isGlobal = state.screeningStandard === 'global';
-    const activeCls = 'py-2 px-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 bg-dark-surface text-brand-emerald border border-brand-emerald/30 shadow-sm';
-    const inactiveCls = 'py-2 px-2.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-1.5 bg-transparent border border-transparent';
+    const activeCls = 'py-2 px-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap bg-dark-surface text-brand-emerald border border-brand-emerald/30 shadow-sm';
+    const inactiveCls = 'py-2 px-2.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-1.5 whitespace-nowrap bg-transparent border border-transparent';
 
     if (DOM.stdNasionalBtn && DOM.stdGlobalBtn) {
       DOM.stdNasionalBtn.className = isGlobal ? inactiveCls : activeCls;

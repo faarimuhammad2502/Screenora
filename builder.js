@@ -958,18 +958,22 @@ CERTIFICATIONS
     if (DOM.builderEditorCol) {
       DOM.builderEditorCol.classList.toggle('hidden', isPreview);
       DOM.builderEditorCol.classList.toggle('block', !isPreview);
+      DOM.builderEditorCol.classList.add('lg:block');
     }
     if (DOM.builderPreviewCol) {
       DOM.builderPreviewCol.classList.toggle('hidden', !isPreview);
       DOM.builderPreviewCol.classList.toggle('block', isPreview);
+      DOM.builderPreviewCol.classList.add('lg:block');
     }
     const activeClasses = ['bg-dark-surface', 'text-dark-textPri', 'border-dark-border'];
     const inactiveClasses = ['text-dark-textSec', 'hover:text-dark-textPri', 'border-transparent'];
     if (DOM.mobileBuilderTabEditor) {
+      DOM.mobileBuilderTabEditor.classList.add('whitespace-nowrap');
       activeClasses.forEach(c => DOM.mobileBuilderTabEditor.classList.toggle(c, !isPreview));
       inactiveClasses.forEach(c => DOM.mobileBuilderTabEditor.classList.toggle(c, isPreview));
     }
     if (DOM.mobileBuilderTabPreview) {
+      DOM.mobileBuilderTabPreview.classList.add('whitespace-nowrap');
       activeClasses.forEach(c => DOM.mobileBuilderTabPreview.classList.toggle(c, isPreview));
       inactiveClasses.forEach(c => DOM.mobileBuilderTabPreview.classList.toggle(c, !isPreview));
     }
@@ -1176,7 +1180,7 @@ CERTIFICATIONS
     }
     if (DOM.builderAtsTierBadge) {
       DOM.builderAtsTierBadge.textContent = result.tierLabel;
-      DOM.builderAtsTierBadge.className = `px-2.5 py-0.5 rounded-full border text-[11px] font-mono font-semibold ${result.tierClass}`;
+      DOM.builderAtsTierBadge.className = `px-2.5 py-0.5 rounded-full border text-[11px] font-mono font-semibold whitespace-nowrap ${result.tierClass}`;
     }
     if (DOM.builderAtsSummaryText) {
       DOM.builderAtsSummaryText.textContent = result.summaryText;

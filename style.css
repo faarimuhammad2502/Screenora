@@ -815,3 +815,12 @@ html:not(.dark) .skeleton-shimmer {
     display: none !important;
   }
 }
+
+/* Hide horizontal scrollbar on compact mobile sub-nav & filter bars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
