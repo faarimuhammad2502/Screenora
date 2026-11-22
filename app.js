@@ -1922,7 +1922,13 @@ KEAHLIAN & KOMPETENSI
         window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
       }
       const arrayBuffer = await file.arrayBuffer();
-      const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      let pdf;
+      try {
+        pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+      } catch (_workerErr) {
+        // Fallback to in-thread parsing if browser/CSP/adblocker blocks cross-origin PDF worker
+        pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer, disableWorker: true }).promise;
+      }
       const pageLimit = Math.min(pdf.numPages, MAX_PDF_PAGES);
       const pages = [];
       const BATCH_SIZE = 5;
