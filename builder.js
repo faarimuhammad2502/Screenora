@@ -1452,7 +1452,6 @@ CERTIFICATIONS
     });
 
     window.optimizeExperienceText = optimizeExperienceText;
-    window.renderWordHtmlFromPlainText = renderWordHtmlFromPlainText;
     window.openPayModal = openPayModal;
     window.closePayModal = closePayModal;
     window.setPayMethod = setPayMethod;

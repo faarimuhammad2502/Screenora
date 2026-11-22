@@ -9,6 +9,11 @@ const failedAttempts = new Map();
 const DEFAULT_CODE_SHA256 = '6272efa34ec38f6e05a69c5cb273eb315d8788605cd397d35b24b08cf861d64c';
 
 function getClientIp(req) {
+  // Prioritize Vercel edge-set headers that cannot be spoofed by clients
+  const vercelIp = req.headers['x-vercel-forwarded-for'] || req.headers['x-real-ip'];
+  if (typeof vercelIp === 'string' && vercelIp.length > 0) {
+    return vercelIp.split(',')[0].trim();
+  }
   const fwd = req.headers['x-forwarded-for'];
   if (typeof fwd === 'string' && fwd.length > 0) {
     return fwd.split(',')[0].trim();
@@ -35,6 +40,10 @@ function recordFailure(ip) {
         failedAttempts.delete(key);
       }
     }
+  }
+  if (failedAttempts.size >= 2000 && !failedAttempts.has(ip)) {
+    const oldestKey = failedAttempts.keys().next().value;
+    if (oldestKey !== undefined) failedAttempts.delete(oldestKey);
   }
   const record = failedAttempts.get(ip);
   if (!record || now - record.firstAt > RATE_WINDOW_MS) {

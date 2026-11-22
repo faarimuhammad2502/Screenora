@@ -1906,45 +1906,54 @@ KEAHLIAN & KOMPETENSI
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
       const pageLimit = Math.min(pdf.numPages, MAX_PDF_PAGES);
-      const pages = await Promise.all(
-        Array.from({ length: pageLimit }, (_, idx) =>
-          pdf.getPage(idx + 1).then(page =>
-            page.getTextContent().then(content => {
-              const lines = [];
-              let currentLine = [];
-              let lastY = null;
+      const pages = [];
+      const BATCH_SIZE = 5;
 
-              for (const item of content.items) {
-                const y = Array.isArray(item.transform) ? item.transform[5] : null;
-                const yChanged = lastY !== null && y !== null && Math.abs(y - lastY) > 3;
+      for (let start = 1; start <= pageLimit; start += BATCH_SIZE) {
+        const end = Math.min(start + BATCH_SIZE - 1, pageLimit);
+        const batchPromises = [];
+        for (let pageNum = start; pageNum <= end; pageNum++) {
+          batchPromises.push(
+            pdf.getPage(pageNum).then(page =>
+              page.getTextContent().then(content => {
+                const lines = [];
+                let currentLine = [];
+                let lastY = null;
 
-                if (yChanged && currentLine.length > 0) {
+                for (const item of content.items) {
+                  const y = Array.isArray(item.transform) ? item.transform[5] : null;
+                  const yChanged = lastY !== null && y !== null && Math.abs(y - lastY) > 3;
+
+                  if (yChanged && currentLine.length > 0) {
+                    lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
+                    currentLine = [];
+                  }
+
+                  if (item.str) {
+                    currentLine.push(item.str);
+                  }
+
+                  if (item.hasEOL && currentLine.length > 0) {
+                    lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
+                    currentLine = [];
+                    lastY = null;
+                  } else if (y !== null) {
+                    lastY = y;
+                  }
+                }
+
+                if (currentLine.length > 0) {
                   lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
-                  currentLine = [];
                 }
 
-                if (item.str) {
-                  currentLine.push(item.str);
-                }
-
-                if (item.hasEOL && currentLine.length > 0) {
-                  lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
-                  currentLine = [];
-                  lastY = null;
-                } else if (y !== null) {
-                  lastY = y;
-                }
-              }
-
-              if (currentLine.length > 0) {
-                lines.push(currentLine.join(' ').replace(/\s+/g, ' ').trim());
-              }
-
-              return lines.filter(Boolean).join('\n');
-            })
-          )
-        )
-      );
+                return lines.filter(Boolean).join('\n');
+              })
+            )
+          );
+        }
+        const batchResults = await Promise.all(batchPromises);
+        pages.push(...batchResults);
+      }
 
       extractedText = pages.join('\n\n');
     } else if (fileExtension === 'docx') {
