@@ -1227,18 +1227,17 @@ CERTIFICATIONS
     if (DOM.payPanelQris) DOM.payPanelQris.classList.toggle('hidden', !isQris);
     if (DOM.payPanelBca) DOM.payPanelBca.classList.toggle('hidden', isQris);
 
-    const activeClasses = ['bg-emerald-500/15', 'text-emerald-400', 'border-emerald-500/40', 'font-semibold'];
-    const inactiveClasses = ['bg-transparent', 'text-slate-400', 'border-slate-700/60'];
+    const baseClass = 'py-2 px-2.5 rounded-lg text-[11px] font-heading tracking-tight transition-colors text-center';
+    const activeClass = `${baseClass} font-semibold bg-dark-surface text-slate-900 dark:text-white border border-slate-400/50 shadow-sm`;
+    const inactiveClass = `${baseClass} font-medium bg-transparent text-dark-textSec hover:text-dark-textPri border border-transparent`;
 
     if (DOM.payTabQrisBtn) {
       DOM.payTabQrisBtn.setAttribute('aria-selected', isQris ? 'true' : 'false');
-      activeClasses.forEach((cls) => DOM.payTabQrisBtn.classList.toggle(cls, isQris));
-      inactiveClasses.forEach((cls) => DOM.payTabQrisBtn.classList.toggle(cls, !isQris));
+      DOM.payTabQrisBtn.className = isQris ? activeClass : inactiveClass;
     }
     if (DOM.payTabBcaBtn) {
       DOM.payTabBcaBtn.setAttribute('aria-selected', !isQris ? 'true' : 'false');
-      activeClasses.forEach((cls) => DOM.payTabBcaBtn.classList.toggle(cls, !isQris));
-      inactiveClasses.forEach((cls) => DOM.payTabBcaBtn.classList.toggle(cls, isQris));
+      DOM.payTabBcaBtn.className = !isQris ? activeClass : inactiveClass;
     }
   }
 

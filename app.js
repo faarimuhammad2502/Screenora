@@ -1820,6 +1820,7 @@ KEAHLIAN & KOMPETENSI
     renderRoleSelectOptions(lang);
     updateStandardUI(lang);
     updateRoleDetails(state.selectedRole);
+    updateSeniorityPillsUI(state.customSeniority);
 
     if (state.currentAnalysis) {
       const text = state.cvText || (DOM.rawCvText ? DOM.rawCvText.value.trim() : '');
@@ -2180,17 +2181,7 @@ KEAHLIAN & KOMPETENSI
     
     // Set Seniority
     state.customSeniority = tpl.seniority;
-    if (DOM.customSeniorityPills) {
-      DOM.customSeniorityPills.forEach(pill => {
-        if (pill.getAttribute('data-level') === tpl.seniority) {
-          pill.classList.add('active', 'bg-brand-emeraldBg', 'border-brand-emerald/40', 'text-brand-emerald', 'font-semibold');
-          pill.classList.remove('bg-dark-surface', 'border-dark-border', 'text-dark-textSec');
-        } else {
-          pill.classList.remove('active', 'bg-brand-emeraldBg', 'border-brand-emerald/40', 'text-brand-emerald', 'font-semibold');
-          pill.classList.add('bg-dark-surface', 'border-dark-border', 'text-dark-textSec');
-        }
-      });
-    }
+    updateSeniorityPillsUI(tpl.seniority);
 
     showToast(lang === 'id' ? 'Template posisi kustom berhasil dimuat!' : 'Custom role template loaded successfully!');
   }
@@ -3617,12 +3608,7 @@ KEAHLIAN & KOMPETENSI
       DOM.customSeniorityPills.forEach(pill => {
         pill.addEventListener('click', () => {
           state.customSeniority = pill.getAttribute('data-level');
-          DOM.customSeniorityPills.forEach(p => {
-            p.classList.remove('active', 'bg-brand-emeraldBg', 'border-brand-emerald/40', 'text-brand-emerald', 'font-semibold');
-            p.classList.add('bg-dark-surface', 'border-dark-border', 'text-dark-textSec');
-          });
-          pill.classList.add('active', 'bg-brand-emeraldBg', 'border-brand-emerald/40', 'text-brand-emerald', 'font-semibold');
-          pill.classList.remove('bg-dark-surface', 'border-dark-border', 'text-dark-textSec');
+          updateSeniorityPillsUI(state.customSeniority);
         });
       });
     }
@@ -3929,10 +3915,27 @@ KEAHLIAN & KOMPETENSI
   // --------------------------------------------------------------------------
   const SESSION_STORAGE_KEY = 'screenora_session_state';
 
+  function updateSeniorityPillsUI(level) {
+    if (!DOM.customSeniorityPills) return;
+    DOM.customSeniorityPills.forEach(pill => {
+      const isMatch = pill.getAttribute('data-level') === level;
+      pill.classList.remove('bg-brand-emeraldBg', 'border-brand-emerald/40', 'text-brand-emerald');
+      pill.classList.add('bg-dark-surface');
+      pill.classList.toggle('active', isMatch);
+      pill.classList.toggle('border-slate-400/50', isMatch);
+      pill.classList.toggle('text-slate-900', isMatch);
+      pill.classList.toggle('dark:text-white', isMatch);
+      pill.classList.toggle('font-semibold', isMatch);
+      pill.classList.toggle('shadow-sm', isMatch);
+      pill.classList.toggle('border-dark-border', !isMatch);
+      pill.classList.toggle('text-dark-textSec', !isMatch);
+    });
+  }
+
   function applyScreeningStandard(std) {
     state.screeningStandard = std === 'global' ? 'global' : 'id';
     const isGlobal = state.screeningStandard === 'global';
-    const activeCls = 'py-2 px-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap bg-dark-surface text-brand-emerald border border-brand-emerald/30 shadow-sm';
+    const activeCls = 'py-2 px-2.5 rounded-lg text-xs font-semibold transition-all flex items-center justify-center gap-1.5 whitespace-nowrap bg-dark-surface text-slate-900 dark:text-white border border-slate-400/50 shadow-sm';
     const inactiveCls = 'py-2 px-2.5 rounded-lg text-xs font-medium text-dark-textSec hover:text-dark-textPri transition-all flex items-center justify-center gap-1.5 whitespace-nowrap bg-transparent border border-transparent';
 
     if (DOM.stdNasionalBtn && DOM.stdGlobalBtn) {
@@ -3990,19 +3993,7 @@ KEAHLIAN & KOMPETENSI
       }
       if (saved.customSeniority) {
         state.customSeniority = saved.customSeniority;
-        if (DOM.customSeniorityPills) {
-          DOM.customSeniorityPills.forEach(p => {
-            const isMatch = p.getAttribute('data-level') === saved.customSeniority;
-            p.classList.toggle('active', isMatch);
-            p.classList.toggle('bg-brand-emeraldBg', isMatch);
-            p.classList.toggle('border-brand-emerald/40', isMatch);
-            p.classList.toggle('text-brand-emerald', isMatch);
-            p.classList.toggle('font-semibold', isMatch);
-            p.classList.toggle('bg-dark-surface', !isMatch);
-            p.classList.toggle('border-dark-border', !isMatch);
-            p.classList.toggle('text-dark-textSec', !isMatch);
-          });
-        }
+        updateSeniorityPillsUI(saved.customSeniority);
       }
       if (saved.selectedRole) {
         state.selectedRole = saved.selectedRole;
@@ -4040,6 +4031,7 @@ KEAHLIAN & KOMPETENSI
     applyLanguage(state.language);
     setupEventListeners();
     updateRoleDetails(state.selectedRole);
+    updateSeniorityPillsUI(state.customSeniority);
 
     const urlParams = new URLSearchParams(window.location.search);
     let builderDraft = null;

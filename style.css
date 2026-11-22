@@ -329,6 +329,16 @@ html:not(.dark) #starQuestionTxt {
   font-weight: 500 !important;
 }
 
+/* Executive Monochrome Primary CTA Safety Override in Light Mode */
+html:not(.dark) .bg-white.text-slate-950 {
+  background-color: #0F172A !important;
+  color: #FFFFFF !important;
+}
+
+html:not(.dark) .bg-white.text-slate-950:hover {
+  background-color: #1E293B !important;
+}
+
 /* Dropzone & Inputs in Light Mode */
 html:not(.dark) #dropzone {
   background-color: #EEF2F7 !important;
@@ -337,8 +347,8 @@ html:not(.dark) #dropzone {
 
 html:not(.dark) #dropzone:hover,
 html:not(.dark) #dropzone.dragover {
-  border-color: #059669 !important;
-  background-color: #ECFDF5 !important;
+  border-color: #0F172A !important;
+  background-color: #F1F5F9 !important;
 }
 
 html:not(.dark) #rawCvText {
@@ -369,8 +379,8 @@ html:not(.dark) #tabPasteBtn.bg-dark-surface {
 html:not(.dark) #stdNasionalBtn.bg-dark-surface,
 html:not(.dark) #stdGlobalBtn.bg-dark-surface {
   background-color: #FFFFFF !important;
-  border-color: #059669 !important;
-  color: #047857 !important;
+  border-color: #0F172A !important;
+  color: #0F172A !important;
   font-weight: 700 !important;
 }
 
@@ -394,9 +404,9 @@ html:not(.dark) .role-pill:not(.active-role) p:first-child {
 }
 
 html:not(.dark) .seniority-pill.active {
-  background-color: #DCFCE7 !important;
-  border-color: #86EFAC !important;
-  color: #15803D !important;
+  background-color: #E2E8F0 !important;
+  border-color: #0F172A !important;
+  color: #0F172A !important;
   font-weight: 700 !important;
 }
 
@@ -431,8 +441,8 @@ html:not(.dark) #openProModalBtn:hover {
 }
 
 html:not(.dark) #openConsultModalBtn:hover {
-  border-color: #059669 !important;
-  color: #065F46 !important;
+  border-color: #0F172A !important;
+  color: #0F172A !important;
 }
 
 /* Templates Page: Filter Bar & Document Sheets */
@@ -443,8 +453,8 @@ html:not(.dark) #filterBar {
 
 html:not(.dark) .filter-btn.active {
   background-color: #FFFFFF !important;
-  border-color: #059669 !important;
-  color: #047857 !important;
+  border-color: #0F172A !important;
+  color: #0F172A !important;
   box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08) !important;
   font-weight: 700 !important;
 }
@@ -467,8 +477,8 @@ html:not(.dark) .template-card {
 }
 
 html:not(.dark) .template-card:hover {
-  border-color: #059669 !important;
-  box-shadow: 0 10px 28px rgba(5, 150, 105, 0.08) !important;
+  border-color: #64748B !important;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08) !important;
 }
 
 html:not(.dark) .template-card .w-full.bg-white {
@@ -478,12 +488,12 @@ html:not(.dark) .template-card .w-full.bg-white {
 }
 
 html:not(.dark) .template-card button[onclick^="downloadTemplate"] {
-  background-color: #059669 !important;
+  background-color: #0F172A !important;
   color: #FFFFFF !important;
 }
 
 html:not(.dark) .template-card button[onclick^="downloadTemplate"]:hover {
-  background-color: #047857 !important;
+  background-color: #1E293B !important;
 }
 
 html:not(.dark) .template-card button[onclick^="copyTemplateText"] {
@@ -534,8 +544,12 @@ html:not(.dark) #previewTextContent {
 }
 
 html:not(.dark) #previewDownloadBtn {
-  background-color: #059669 !important;
+  background-color: #0F172A !important;
   color: #FFFFFF !important;
+}
+
+html:not(.dark) #previewDownloadBtn:hover {
+  background-color: #1E293B !important;
 }
 
 html:not(.dark) #previewCopyBtn {
@@ -571,13 +585,13 @@ html:not(.dark) select#roleSelect {
 
 /* Custom Template Archetype & Seniority Buttons */
 .custom-archetype-btn:hover {
-  background-color: rgba(16, 185, 129, 0.08);
+  background-color: rgba(255, 255, 255, 0.06);
 }
 
 .seniority-pill.active {
-  background-color: rgba(16, 185, 129, 0.15) !important;
-  border-color: rgba(16, 185, 129, 0.4) !important;
-  color: #10B981 !important;
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(148, 163, 184, 0.5) !important;
+  color: #F8FAFC !important;
   font-weight: 600;
 }
 

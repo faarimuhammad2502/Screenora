@@ -738,7 +738,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     const buttons = document.querySelectorAll('.filter-btn');
     buttons.forEach((btn) => {
       if (btn.getAttribute('data-filter') === filter) {
-        btn.className = 'filter-btn active px-4 py-2 rounded-xl text-xs font-heading font-semibold transition-all bg-dark-surface border border-brand-emerald/40 text-brand-emerald shadow-sm whitespace-nowrap';
+        btn.className = 'filter-btn active px-4 py-2 rounded-xl text-xs font-heading font-semibold transition-all bg-dark-surface border border-slate-400/50 text-slate-900 dark:text-white shadow-sm whitespace-nowrap';
       } else {
         btn.className = 'filter-btn px-4 py-2 rounded-xl text-xs font-heading font-medium text-dark-textSec hover:text-dark-textPri hover:bg-dark-surface/60 border border-transparent transition-all whitespace-nowrap';
       }
@@ -1158,18 +1158,17 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
       DOM.payPanelBca.classList.toggle('hidden', isQris);
     }
 
-    const activeClasses = ['bg-emerald-500/15', 'text-emerald-400', 'border-emerald-500/40', 'font-semibold'];
-    const inactiveClasses = ['bg-transparent', 'text-slate-400', 'border-slate-700/60'];
+    const baseClass = 'py-2 px-2.5 rounded-lg text-[11px] font-heading tracking-tight transition-colors text-center';
+    const activeClass = `${baseClass} font-semibold bg-dark-surface text-slate-900 dark:text-white border border-slate-400/50 shadow-sm`;
+    const inactiveClass = `${baseClass} font-medium bg-transparent text-dark-textSec hover:text-dark-textPri border border-transparent`;
 
     if (DOM.payTabQrisBtn) {
       DOM.payTabQrisBtn.setAttribute('aria-selected', isQris ? 'true' : 'false');
-      activeClasses.forEach((cls) => DOM.payTabQrisBtn.classList.toggle(cls, isQris));
-      inactiveClasses.forEach((cls) => DOM.payTabQrisBtn.classList.toggle(cls, !isQris));
+      DOM.payTabQrisBtn.className = isQris ? activeClass : inactiveClass;
     }
     if (DOM.payTabBcaBtn) {
       DOM.payTabBcaBtn.setAttribute('aria-selected', !isQris ? 'true' : 'false');
-      activeClasses.forEach((cls) => DOM.payTabBcaBtn.classList.toggle(cls, !isQris));
-      inactiveClasses.forEach((cls) => DOM.payTabBcaBtn.classList.toggle(cls, isQris));
+      DOM.payTabBcaBtn.className = !isQris ? activeClass : inactiveClass;
     }
   }
 
