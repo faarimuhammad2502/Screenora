@@ -1313,6 +1313,12 @@ CERTIFICATIONS
         state.currentBuilderTemplate = '';
         if (DOM.builderTemplateSelect) DOM.builderTemplateSelect.value = '';
         applyFieldsToBuilderInputs(fields);
+        if (DOM.builderExperience && DOM.builderExperience.value.trim()) {
+          const optRes = optimizeExperienceText(DOM.builderExperience.value, state.language);
+          if (optRes && optRes.changedCount > 0) {
+            DOM.builderExperience.value = optRes.text;
+          }
+        }
         if (DOM.builderAtsScorePanel) {
           DOM.builderAtsScorePanel.classList.add('hidden');
         }
