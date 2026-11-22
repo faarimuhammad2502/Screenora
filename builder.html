@@ -91,7 +91,7 @@
   </script>
 
   <!-- Custom Stylesheet with Cache Busting -->
-  <link rel="stylesheet" href="style.css?v=3.5.0">
+  <link rel="stylesheet" href="style.css?v=3.6.0">
 
   <!-- JSON-LD Structured Data -->
   <script type="application/ld+json">
@@ -215,13 +215,25 @@
       </div>
     </section>
 
+    <!-- Mobile Sticky Tab Switcher (Editor CV / Pratinjau A4) -->
+    <div class="lg:hidden sticky top-16 z-30 -mx-1 px-1 py-2 bg-dark-bg/90 backdrop-blur-md">
+      <div class="grid grid-cols-2 gap-1.5 p-1 bg-dark-well border border-dark-wellBorder rounded-xl shadow-lg">
+        <button id="mobileBuilderTabEditor" type="button" class="py-2 px-3 rounded-lg text-xs font-heading font-semibold tracking-tight bg-dark-surface text-dark-textPri border border-dark-border transition-colors text-center" data-i18n="mobileTabEditor">
+          Editor CV
+        </button>
+        <button id="mobileBuilderTabPreview" type="button" class="py-2 px-3 rounded-lg text-xs font-heading font-semibold tracking-tight text-dark-textSec hover:text-dark-textPri border border-transparent transition-colors text-center" data-i18n="mobileTabPreview">
+          Pratinjau A4
+        </button>
+      </div>
+    </div>
+
     <!-- ===================================================================
          SPLIT 2-COLUMN WORKSPACE (EDITOR + A4 LIVE PREVIEW)
          =================================================================== -->
     <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
       <!-- LEFT COLUMN (lg:col-span-6): EDITOR & AUTO-OPTIMIZE -->
-      <div class="lg:col-span-6 bg-dark-surface border border-dark-border rounded-2xl p-5 sm:p-6 shadow-xl space-y-5">
+      <div id="builderEditorCol" class="lg:col-span-6 lg:block bg-dark-surface border border-dark-border rounded-2xl p-5 sm:p-6 shadow-xl space-y-5">
 
         <!-- Template Selector -->
         <div class="pb-4 border-b border-dark-border flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -332,7 +344,7 @@
       </div>
 
       <!-- RIGHT COLUMN (lg:col-span-6): REAL-TIME A4 WORD PREVIEW + ACTION BAR -->
-      <div class="lg:col-span-6 lg:sticky lg:top-24 space-y-4">
+      <div id="builderPreviewCol" class="hidden lg:block lg:col-span-6 lg:sticky lg:top-24 space-y-4">
         <div class="flex items-center justify-between">
           <span class="text-[11px] font-heading font-semibold uppercase tracking-wider text-dark-textSec" data-i18n="builderPreviewLabel">
             Pratinjau Dokumen A4 (Real-Time)
@@ -549,6 +561,6 @@
   </div>
 
   <!-- Live CV Builder Logic Script -->
-  <script src="builder.js?v=3.5.0" defer></script>
+  <script src="builder.js?v=3.6.0" defer></script>
 </body>
 </html>

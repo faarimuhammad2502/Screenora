@@ -138,6 +138,7 @@
       retestBtn: 'Uji Dokumen atau Posisi Lain',
       exportPdfBtn: 'Simpan PDF',
       copySummaryBtn: 'Salin Ringkasan',
+      sendToBuilderBtn: 'Perbaiki di CV Instan',
       scaleShortlist: '≥80% Prioritas Utama',
       scaleReserve: '65–79% Kelompok Cadangan',
       scaleRisk: '<65% Risiko Gugur',
@@ -349,6 +350,7 @@
       retestBtn: 'Test Another Document or Role',
       exportPdfBtn: 'Save PDF',
       copySummaryBtn: 'Copy Summary',
+      sendToBuilderBtn: 'Fix in Instant Builder',
       scaleShortlist: '≥80% Shortlist Priority',
       scaleReserve: '65–79% Backup Pool',
       scaleRisk: '<65% At Risk',
@@ -1540,6 +1542,7 @@ KEAHLIAN & KOMPETENSI
     backToInputBtn: document.getElementById('backToInputBtn'),
     exportPdfBtn: document.getElementById('exportPdfBtn'),
     copySummaryBtn: document.getElementById('copySummaryBtn'),
+    sendToBuilderBtn: document.getElementById('sendToBuilderBtn'),
     resDocName: document.getElementById('resDocName'),
     resRoleName: document.getElementById('resRoleName'),
     scoreNumber: document.getElementById('scoreNumber'),
@@ -3467,6 +3470,23 @@ KEAHLIAN & KOMPETENSI
           DOM.copySummaryBtn,
           state.language
         );
+      });
+    }
+
+    // Bridge: Send Active CV Text to Instant Builder
+    if (DOM.sendToBuilderBtn) {
+      DOM.sendToBuilderBtn.addEventListener('click', () => {
+        const text = state.cvText || (DOM.rawCvText ? DOM.rawCvText.value.trim() : '');
+        if (!text) {
+          showToast(state.language === 'id' ? 'Tidak ada teks CV untuk dikirim.' : 'No CV text available to send.');
+          return;
+        }
+        try {
+          sessionStorage.setItem('screenora_screener_draft', text);
+        } catch (_) {
+          // Ignore storage errors silently
+        }
+        window.location.href = 'builder.html?from=screener';
       });
     }
 

@@ -296,6 +296,8 @@ CERTIFICATIONS
       builderPresetsLabel: 'Sisipkan Contoh Pengalaman Siap Pakai',
       builderPresetsHint: 'Klik untuk isi otomatis',
       autoOptimizeBtn: 'Optimasi Otomatis ke Formula XYZ (ATS-Friendly)',
+      mobileTabEditor: 'Editor CV',
+      mobileTabPreview: 'Pratinjau A4',
       builderPreviewLabel: 'Pratinjau Dokumen Word (A4)',
       builderCopyBtn: 'Salin Teks',
       builderCheckAtsBtn: 'Cek Skor ATS',
@@ -321,7 +323,8 @@ CERTIFICATIONS
       autoOptimizeNoLinesToast: 'Tambahkan minimal satu baris pengalaman kerja untuk dioptimasi.',
       presetAddedToast: 'Contoh pencapaian XYZ berhasil disisipkan!',
       emptyCvToast: 'Isi minimal satu bagian CV terlebih dahulu.',
-      isMinimalText: 'Isi minimal 40 karakter pada CV Anda sebelum mengecek skor ATS.'
+      isMinimalText: 'Isi minimal 40 karakter pada CV Anda sebelum mengecek skor ATS.',
+      screenerDraftLoaded: 'Teks CV dari hasil skrining berhasil dimuat ke editor!'
     },
     en: {
       navStudio: 'Diagnostic Studio',
@@ -355,6 +358,8 @@ CERTIFICATIONS
       builderPresetsLabel: 'Insert Ready-to-Use Role Presets',
       builderPresetsHint: 'Click to auto-fill',
       autoOptimizeBtn: 'Auto-Optimize to XYZ Formula (ATS-Friendly)',
+      mobileTabEditor: 'CV Editor',
+      mobileTabPreview: 'A4 Preview',
       builderPreviewLabel: 'Live Word Document Preview (A4)',
       builderCopyBtn: 'Copy Text',
       builderCheckAtsBtn: 'Check ATS Score',
@@ -380,7 +385,8 @@ CERTIFICATIONS
       autoOptimizeNoLinesToast: 'Please add at least one experience line to optimize.',
       presetAddedToast: 'XYZ achievement preset inserted!',
       emptyCvToast: 'Please fill in at least one CV section first.',
-      isMinimalText: 'Please enter at least 40 characters in your resume before checking the ATS score.'
+      isMinimalText: 'Please enter at least 40 characters in your resume before checking the ATS score.',
+      screenerDraftLoaded: 'CV text from screening loaded into editor!'
     }
   };
 
@@ -419,6 +425,10 @@ CERTIFICATIONS
     themeLabel: document.getElementById('themeLabel'),
     langIdBtn: document.getElementById('langIdBtn'),
     langEnBtn: document.getElementById('langEnBtn'),
+    mobileBuilderTabEditor: document.getElementById('mobileBuilderTabEditor'),
+    mobileBuilderTabPreview: document.getElementById('mobileBuilderTabPreview'),
+    builderEditorCol: document.getElementById('builderEditorCol'),
+    builderPreviewCol: document.getElementById('builderPreviewCol'),
     builderTemplateSelect: document.getElementById('builderTemplateSelect'),
     builderName: document.getElementById('builderName'),
     builderContact: document.getElementById('builderContact'),
@@ -563,8 +573,7 @@ CERTIFICATIONS
     return null;
   }
 
-  function parseTemplateToBuilderFields(templateKey) {
-    const tmpl = TEMPLATES[templateKey] || TEMPLATES.classic_corporate;
+  function parsePlainTextIntoBuilderFields(rawText) {
     const result = {
       name: '',
       contact: '',
@@ -573,9 +582,9 @@ CERTIFICATIONS
       education: '',
       skills: ''
     };
-    if (!tmpl || !tmpl.plainText) return result;
+    if (!rawText || !rawText.trim()) return result;
 
-    const lines = tmpl.plainText.split('\n');
+    const lines = rawText.replace(/\r\n?/g, '\n').split('\n');
     const contactLines = [];
     const buckets = {
       summary: [],
@@ -586,11 +595,14 @@ CERTIFICATIONS
 
     let currentSection = null;
     let firstSectionSeen = false;
+    let nameAssigned = false;
 
-    lines.forEach((line, idx) => {
+    lines.forEach((line) => {
       const trimmed = line.trim();
-      if (idx === 0) {
+      if (!nameAssigned) {
+        if (!trimmed) return;
         result.name = trimmed;
+        nameAssigned = true;
         return;
       }
 
@@ -622,6 +634,11 @@ CERTIFICATIONS
     result.education = buckets.education.join('\n').trim();
     result.skills = buckets.skills.join('\n').trim();
     return result;
+  }
+
+  function parseTemplateToBuilderFields(templateKey) {
+    const tmpl = TEMPLATES[templateKey] || TEMPLATES.classic_corporate;
+    return parsePlainTextIntoBuilderFields(tmpl && tmpl.plainText ? tmpl.plainText : '');
   }
 
   function assembleBuilderPlainText() {
@@ -918,17 +935,44 @@ CERTIFICATIONS
     }
 
     const fields = parseTemplateToBuilderFields(templateKey);
-    if (DOM.builderName) DOM.builderName.value = fields.name;
-    if (DOM.builderContact) DOM.builderContact.value = fields.contact;
-    if (DOM.builderSummary) DOM.builderSummary.value = fields.summary;
-    if (DOM.builderExperience) DOM.builderExperience.value = fields.experience;
-    if (DOM.builderEducation) DOM.builderEducation.value = fields.education;
-    if (DOM.builderSkills) DOM.builderSkills.value = fields.skills;
+    applyFieldsToBuilderInputs(fields);
     if (DOM.builderAtsScorePanel) {
       DOM.builderAtsScorePanel.classList.add('hidden');
     }
 
     renderBuilderLivePreview();
+  }
+
+  function applyFieldsToBuilderInputs(fields) {
+    if (!fields) return;
+    if (DOM.builderName) DOM.builderName.value = fields.name || '';
+    if (DOM.builderContact) DOM.builderContact.value = fields.contact || '';
+    if (DOM.builderSummary) DOM.builderSummary.value = fields.summary || '';
+    if (DOM.builderExperience) DOM.builderExperience.value = fields.experience || '';
+    if (DOM.builderEducation) DOM.builderEducation.value = fields.education || '';
+    if (DOM.builderSkills) DOM.builderSkills.value = fields.skills || '';
+  }
+
+  function setMobileBuilderTab(tab) {
+    const isPreview = tab === 'preview';
+    if (DOM.builderEditorCol) {
+      DOM.builderEditorCol.classList.toggle('hidden', isPreview);
+      DOM.builderEditorCol.classList.toggle('block', !isPreview);
+    }
+    if (DOM.builderPreviewCol) {
+      DOM.builderPreviewCol.classList.toggle('hidden', !isPreview);
+      DOM.builderPreviewCol.classList.toggle('block', isPreview);
+    }
+    const activeClasses = ['bg-dark-surface', 'text-dark-textPri', 'border-dark-border'];
+    const inactiveClasses = ['text-dark-textSec', 'hover:text-dark-textPri', 'border-transparent'];
+    if (DOM.mobileBuilderTabEditor) {
+      activeClasses.forEach(c => DOM.mobileBuilderTabEditor.classList.toggle(c, !isPreview));
+      inactiveClasses.forEach(c => DOM.mobileBuilderTabEditor.classList.toggle(c, isPreview));
+    }
+    if (DOM.mobileBuilderTabPreview) {
+      activeClasses.forEach(c => DOM.mobileBuilderTabPreview.classList.toggle(c, isPreview));
+      inactiveClasses.forEach(c => DOM.mobileBuilderTabPreview.classList.toggle(c, !isPreview));
+    }
   }
 
   function evaluateBuilderAtsScore(plainText) {
@@ -1253,10 +1297,46 @@ CERTIFICATIONS
     ensureBlankTemplateOption();
     setLanguage(state.language);
 
-    if (urlTemplate && TEMPLATES[urlTemplate]) {
+    if (urlParams.get('from') === 'screener') {
+      let screenerDraft = null;
+      try {
+        screenerDraft = sessionStorage.getItem('screenora_screener_draft');
+      } catch (_) {
+        screenerDraft = null;
+      }
+
+      if (screenerDraft && screenerDraft.trim()) {
+        const fields = parsePlainTextIntoBuilderFields(screenerDraft);
+        state.currentBuilderTemplate = '';
+        if (DOM.builderTemplateSelect) DOM.builderTemplateSelect.value = '';
+        applyFieldsToBuilderInputs(fields);
+        if (DOM.builderAtsScorePanel) {
+          DOM.builderAtsScorePanel.classList.add('hidden');
+        }
+        try {
+          sessionStorage.removeItem('screenora_screener_draft');
+        } catch (_) {
+          // Ignore storage errors silently
+        }
+        renderBuilderLivePreview();
+        const dict = i18n[state.language] || i18n.id;
+        showToast(dict.screenerDraftLoaded);
+      } else if (urlTemplate && TEMPLATES[urlTemplate]) {
+        loadTemplateIntoBuilder(urlTemplate);
+      } else {
+        resetBuilderFields();
+      }
+    } else if (urlTemplate && TEMPLATES[urlTemplate]) {
       loadTemplateIntoBuilder(urlTemplate);
     } else {
       resetBuilderFields();
+    }
+
+    if (DOM.mobileBuilderTabEditor) {
+      DOM.mobileBuilderTabEditor.addEventListener('click', () => setMobileBuilderTab('editor'));
+    }
+    if (DOM.mobileBuilderTabPreview) {
+      DOM.mobileBuilderTabPreview.addEventListener('click', () => setMobileBuilderTab('preview'));
     }
 
     if (DOM.themeToggleBtn) {

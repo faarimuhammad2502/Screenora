@@ -106,7 +106,7 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
   <!-- Custom Stylesheet with Cache Busting -->
-  <link rel="stylesheet" href="style.css?v=3.4.0">
+  <link rel="stylesheet" href="style.css?v=3.6.0">
 
   <!-- JSON-LD Structured Data (Schema.org WebApplication & Organization) -->
   <script type="application/ld+json">
@@ -759,6 +759,10 @@
           <button type="button" id="exportPdfBtn" class="px-3 py-1.5 rounded-lg text-xs font-heading font-semibold bg-brand-emerald text-black hover:bg-brand-emeraldDark transition-all flex items-center gap-1.5 shadow-sm">
             <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>
             <span data-i18n="exportPdfBtn">Simpan PDF</span>
+          </button>
+          <button type="button" id="sendToBuilderBtn" class="px-3 py-1.5 rounded-lg text-xs font-heading font-semibold bg-dark-surface border border-dark-border text-dark-textPri hover:border-brand-emerald/60 hover:text-brand-emerald transition-all flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span data-i18n="sendToBuilderBtn">Perbaiki di CV Instan</span>
           </button>
           <button id="backToInputBtn" class="px-2.5 py-1.5 text-xs font-medium text-dark-textSec hover:text-dark-textPri flex items-center gap-1.5 transition-colors">
             <span>←</span>
@@ -1671,6 +1675,6 @@
   </div>
 
   <!-- Main JavaScript App Logic (Deferred for High Performance) -->
-  <script src="app.js?v=3.4.0" defer></script>
+  <script src="app.js?v=3.6.0" defer></script>
 </body>
 </html>
