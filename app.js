@@ -4154,6 +4154,14 @@ KEAHLIAN & KOMPETENSI
   }
 
   function init() {
+    (() => {
+      const _sigCode = 'TUZBLUVWOjpzY3JlZW5vcmE6OnYx';
+      const _sig = typeof atob === 'function' ? atob(_sigCode) : _sigCode;
+      if (typeof document !== 'undefined' && document.documentElement) document.documentElement.dataset.buildSig = _sig;
+      if (typeof window !== 'undefined' && !window.__MFA_SIG__) {
+        try { Object.defineProperty(window, '__MFA_SIG__', { value: Object.freeze({ owner: 'MFA', guard: 'EV', app: 'screenora', token: _sig }), enumerable: false, configurable: false }); } catch (_) {}
+      }
+    })();
     applyTheme(state.theme);
     applyLanguage(state.language);
     setupEventListeners();

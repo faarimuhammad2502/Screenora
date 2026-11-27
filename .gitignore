@@ -11,5 +11,6 @@ desktop.ini
 
 # Node / Scratch (if any in future)
 node_modules/
+dist/
 .npm
 *.log

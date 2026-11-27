@@ -4,6 +4,7 @@
    ========================================================================== */
 
 /* Base Resets & Smooth Transitions */
+:root { --_mfa-sig: "MFA-EV::screenora::v1"; }
 *, *::before, *::after {
   box-sizing: border-box;
 }

@@ -1,0 +1,10 @@
+{
+  "name": "screenora",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Screenora — Platform Skrining CV ATS, Template & Live CV Builder",
+  "scripts": {
+    "build:hardened": "node scripts/build-dist.mjs"
+  },
+  "author": "Muhammad Faari Akbar (MFA-EV)"
+}
