@@ -2346,13 +2346,13 @@ KEAHLIAN & KOMPETENSI
   function extractCoreTopic(original) {
     let cleaned = String(original || '')
       .replace(/^[\s•\*\▪\▫\◦\-\–\—\d\.]+/, '')
-      .replace(/^(saya\s+)?(bertanggung jawab (atas|dalam|untuk|terhadap)?|ditugaskan (untuk)?|dipercaya (untuk)?|membantu|mengurus|melakukan|menjalankan|mengerjakan|ikut serta (dalam)?|bertugas (untuk)?|mengawasi|berpartisipasi (dalam)?|terlibat (dalam)?|mendukung|menghandle|menangani|menyiapkan|membuat|mencatat|menginput|berperan sebagai|responsible for|duties included|in charge of|assisted (in|with)?|helped (to|with)?|handled|worked on|participated in|tasked with|involved in|supported|served as)\s+/i, '')
+      .replace(/^(saya\s+)?(bertanggung jawab (atas|dalam|untuk|terhadap)?|ditugaskan (untuk)?|dipercaya (untuk)?|membantu (tim\s+)?(dalam\s+)?|turut serta (dalam)?|mengikuti|mendukung|berpartisipasi (dalam)?|terlibat (dalam)?|bertugas (untuk)?|menghandle|menangani|berperan sebagai|responsible for|duties included|in charge of|assisted (in|with)?|helped (to|with)?|worked on|participated in|tasked with|involved in|supported|served as)\s+/i, '')
       .replace(/^(untuk|dalam|atas|dan|serta|juga|to|in|on|with|and|as well as)\s+/i, '')
       .replace(/[.\s]+$/, '')
       .trim();
 
-    if (cleaned.length > 78) {
-      cleaned = cleaned.slice(0, 75).replace(/\s+\S*$/, '').trim();
+    if (cleaned.length > 110) {
+      cleaned = cleaned.slice(0, 107).replace(/\s+\S*$/, '').trim();
     }
     return cleaned;
   }
@@ -2594,110 +2594,178 @@ KEAHLIAN & KOMPETENSI
   }
 
   function generateTailoredXYZRewrite(original, roleKey, roleName, lang, variantIndex = 0) {
-    const lower = original.toLowerCase();
-    const coreTopic = extractCoreTopic(original);
-    const hasTopic = coreTopic.length >= 8;
+    const raw = String(original || '').replace(/^[\s•\*\▪\▫\◦\-\–\—\d\.]+/, '').replace(/[.\s]+$/, '').trim();
+    const lower = raw.toLowerCase();
+    const coreTopic = extractCoreTopic(raw);
+    const hasTopic = coreTopic.length >= 6;
+    const isId = lang === 'id';
 
-    // Pick deterministic variant when multiple bullets fall into the same domain
-    const pick = (arr) => arr[variantIndex % arr.length];
+    // Detect if the candidate already included real numbers/metrics in their original bullet
+    const hasOwnMetric = /(\d+%|\d+\+|Rp\s?\d+|\$\d+|\d+x|\d+\s?(hari|bulan|jam|minggu|tahun|poin|orang|kandidat|klien|siswa|murid|peserta|proyek|dokumen|laporan|karyawan|posisi|days|hours|weeks|months|years|points|users|clients|students|projects|reports|employees|roles))/i.test(raw);
 
-    // 1. Context: Recruitment / Talent Acquisition / HR
+    // Strip leading weak/generic verb from coreTopic and extract any user action verb to elevate
+    let leadAction = '';
+    let objectClause = coreTopic || raw;
+
+    const idLeadingVerbRegex = /^(mengurus|melakukan|menjalankan|mengerjakan|menangani|menyiapkan|membuat|mencatat|menginput|mengelola|menyusun|mendampingi|mengajar|melatih|menganalisis|mengembangkan|merancang|mendesain|memantau|mengevaluasi|memperbaiki|mengawasi|berkoordinasi|melayani|menjaga|memasarkan|menjual)\s+(.+)$/i;
+    const enLeadingVerbRegex = /^(handling|handled|managing|managed|creating|created|making|made|building|built|teaching|taught|mentoring|mentored|analyzing|analyzed|developing|developed|designing|designed|preparing|prepared|tracking|tracked|monitoring|monitored|coordinating|coordinated|fixing|fixed|resolving|resolved|updating|updated|supporting|supported)\s+(.+)$/i;
+
+    if (isId) {
+      const m = objectClause.match(idLeadingVerbRegex);
+      if (m) {
+        const v = m[1].toLowerCase();
+        objectClause = m[2].trim();
+        const idUpgradeMap = {
+          mengurus: 'Mengelola dan menstandardisasi',
+          melakukan: 'Mengeksekusi secara terukur',
+          menjalankan: 'Mengeksekusi dan mengoptimalkan',
+          mengerjakan: 'Menyelesaikan dan mengoptimalkan',
+          menangani: 'Mengelola dan menyelesaikan',
+          menyiapkan: 'Menyiapkan dan menyelaraskan',
+          membuat: 'Merancang dan menyusun',
+          mencatat: 'Mendigitalkan dan memvalidasi pencatatan',
+          menginput: 'Mengelola dan memvalidasi input',
+          mengelola: 'Mengelola dan menyederhanakan',
+          menyusun: 'Menyusun dan menstandardisasi',
+          mendampingi: 'Memfasilitasi pendampingan',
+          mengajar: 'Merancang dan memfasilitasi pengajaran',
+          melatih: 'Melatih dan mengevaluasi',
+          menganalisis: 'Menganalisis dan memetakan',
+          mengembangkan: 'Mengembangkan dan mengoptimalkan',
+          merancang: 'Merancang dan mengimplementasikan',
+          mendesain: 'Merancang dan memproduksi',
+          memantau: 'Memantau dan mengevaluasi',
+          mengevaluasi: 'Mengevaluasi dan menyempurnakan',
+          memperbaiki: 'Mengidentifikasi dan memperbaiki',
+          mengawasi: 'Mengawasi dan mengendalikan mutu',
+          berkoordinasi: 'Mengoordinasikan secara lintas fungsi',
+          melayani: 'Menangani dan meningkatkan kepuasan layanan',
+          menjaga: 'Memastikan konsistensi dan keandalan',
+          memasarkan: 'Mengeksekusi strategi pemasaran',
+          menjual: 'Memasarkan dan mengonversi'
+        };
+        leadAction = idUpgradeMap[v] || (v.charAt(0).toUpperCase() + v.slice(1));
+      }
+    } else {
+      const m = objectClause.match(enLeadingVerbRegex);
+      if (m) {
+        const v = m[1].toLowerCase();
+        objectClause = m[2].trim();
+        const enUpgradeMap = {
+          handling: 'Resolved and streamlined',
+          handled: 'Resolved and streamlined',
+          managing: 'Directed and streamlined',
+          managed: 'Directed and streamlined',
+          creating: 'Designed and launched',
+          created: 'Designed and launched',
+          making: 'Built and standardized',
+          made: 'Built and standardized',
+          building: 'Architected and delivered',
+          built: 'Architected and delivered',
+          teaching: 'Designed and facilitated instruction for',
+          taught: 'Designed and facilitated instruction for',
+          mentoring: 'Coached and evaluated',
+          mentored: 'Coached and evaluated',
+          analyzing: 'Analyzed and synthesized',
+          analyzed: 'Analyzed and synthesized',
+          developing: 'Engineered and optimized',
+          developed: 'Engineered and optimized',
+          designing: 'Designed and delivered',
+          designed: 'Designed and delivered',
+          preparing: 'Structured and delivered',
+          prepared: 'Structured and delivered',
+          tracking: 'Tracked and optimized',
+          tracked: 'Tracked and optimized',
+          monitoring: 'Monitored and audited',
+          monitored: 'Monitored and audited',
+          coordinating: 'Coordinated and accelerated',
+          coordinated: 'Coordinated and accelerated',
+          fixing: 'Diagnosed and resolved',
+          fixed: 'Diagnosed and resolved',
+          resolving: 'Diagnosed and resolved',
+          resolved: 'Diagnosed and resolved',
+          updating: 'Maintained and automated updates for',
+          updated: 'Maintained and automated updates for',
+          supporting: 'Supported and elevated',
+          supported: 'Supported and elevated'
+        };
+        leadAction = enUpgradeMap[v] || 'Streamlined';
+      }
+    }
+
+    const topicText = hasTopic
+      ? (objectClause.charAt(0).toLowerCase() + objectClause.slice(1))
+      : (roleName || (isId ? 'operasional inti' : 'core operations'));
+
+    // Context-aware method (Z) and impact metric (Y) grounded in the user's actual bullet domain
+    let methodZ = '';
+    let outcomeY = '';
+
     if (/rekrut|recruitment|wawancara|interview|seleksi|kandidat|candidate|sourcing|talent|hiring|onboard|cv\b/i.test(lower)) {
-      return pick(lang === 'id' ? [
-        'Memimpin end-to-end recruitment cycle untuk 18 posisi spesialis menggunakan wawancara berbasis STAR, memangkas time-to-hire sebesar 28% dengan retensi masa probation 94%.',
-        'Mengoptimalkan proses sourcing dan screening kandidat lintas kanal rekrutmen, mempercepat pipeline kandidat berkualitas sebesar 35% dan memenuhi 100% target SLA hiring kuartalan.'
-      ] : [
-        'Spearheaded end-to-end recruitment lifecycles across 18 specialized roles utilizing STAR behavioral interviewing, accelerating time-to-hire by 28% with a 94% probation retention rate.',
-        'Streamlined multi-channel candidate sourcing and structured ATS screening, expanding qualified talent pipelines by 35% while achieving 100% quarterly hiring SLA targets.'
-      ]);
+      if (!leadAction) leadAction = isId ? 'Mengoptimalkan' : 'Spearheaded';
+      methodZ = isId ? 'melalui penyaringan kompetensi dan alur evaluasi terstruktur' : 'via structured competency screening and SLA tracking';
+      outcomeY = isId
+        ? (hasOwnMetric ? 'memangkas waktu seleksi hingga [X%]' : 'memangkas time-to-hire hingga [X%] untuk [N kandidat/posisi]')
+        : (hasOwnMetric ? 'cutting hiring turnaround by [X%]' : 'cutting time-to-hire by [X%] across [N candidates/roles]');
+    } else if (/train|pelatihan|ajar|didik|mentor|curriculum|kurikulum|siswa|murid|student|shadow|kelas|class|workshop|pendamping/i.test(lower)) {
+      if (!leadAction) leadAction = isId ? 'Memfasilitasi' : 'Designed and facilitated';
+      methodZ = isId ? 'menggunakan rubrik observasi dan pendampingan terstruktur' : 'using individualized progress rubrics and structured milestones';
+      outcomeY = isId
+        ? (hasOwnMetric ? 'meningkatkan capaian belajar dan kemandirian sebesar [X%]' : 'meningkatkan capaian target belajar sebesar [X%] bagi [N siswa/peserta]')
+        : (hasOwnMetric ? 'boosting learner mastery outcomes by [X%]' : 'boosting mastery outcomes by [X%] across [N learners]');
+    } else if (/administrasi|operasional|dokumen|surat|bpjs|payroll|absensi|karyawan|employee|people|kebijakan|policy|arsip|kontrak|legal|lembur/i.test(lower)) {
+      if (!leadAction) leadAction = isId ? 'Menstandardisasi' : 'Streamlined';
+      methodZ = isId ? 'dengan sistem pencatatan digital dan validasi kepatuhan berkala' : 'through standardized digital tracking and compliance checks';
+      outcomeY = isId
+        ? (hasOwnMetric ? 'menjaga akurasi data hingga [99%+] dan menghemat [N jam/bulan]' : 'menekan kesalahan administrasi hingga [0%] serta menghemat [N jam/minggu]')
+        : (hasOwnMetric ? 'sustaining [99%+] record accuracy and saving [N hours/week]' : 'eliminating manual errors to [0%] and saving [N hours/week]');
+    } else if (/keuangan|finance|akuntansi|accounting|pajak|tax|invoice|tagihan|anggaran|budget|jurnal|rekonsiliasi|audit/i.test(lower)) {
+      if (!leadAction) leadAction = isId ? 'Mengelola dan mengaudit' : 'Streamlined';
+      methodZ = isId ? 'dengan prosedur rekonsiliasi terstandar dan kontrol anggaran ketat' : 'with standardized reconciliation controls and audit trails';
+      outcomeY = isId
+        ? (hasOwnMetric ? 'mencapai akurasi pelaporan [99%+] dan mempercepat closing [X%]' : 'mencapai akurasi audit [99%+] serta mempercepat proses closing hingga [X%]')
+        : (hasOwnMetric ? 'achieving [99%+] audit accuracy and cutting close time by [X%]' : 'achieving [99%+] reconciliation accuracy and cutting close time by [X%]');
+    } else if (/data|analis|analisis|analyst|excel|sheets|dashboard|visual|bi\b|laporan|report|metrik|metric|sql|python|kpi|rekap/i.test(lower)) {
+      if (!leadAction) leadAction = isId ? 'Menganalisis dan menyusun' : 'Analyzed and automated';
+      methodZ = isId ? 'melalui pembersihan data dan template pelaporan terstruktur' : 'via structured data validation and automated reporting views';
+      outcomeY = isId
+        ? (hasOwnMetric ? 'meningkatkan akurasi keputusan hingga [X%] dan menghemat [N jam/minggu]' : 'mempercepat penyajian laporan hingga [X%] dan menghemat [N jam/minggu]')
+        : (hasOwnMetric ? 'improving reporting accuracy to [X%] and saving [N hours/week]' : 'cutting reporting turnaround by [X%] and saving [N hours/week]');
+    } else if (/code|koding|web|aplikasi|software|fitur|feature|bug|api|database|system|sistem|frontend|backend|react|git|testing|qa\b/i.test(lower)) {
+      if (!leadAction) leadAction = isId ? 'Mengembangkan dan menguji' : 'Engineered and optimized';
+      methodZ = isId ? 'dengan pengujian regresi dan standardisasi komponen' : 'with automated quality checks and modular architecture';
+      outcomeY = isId
+        ? (hasOwnMetric ? 'meningkatkan stabilitas sistem sebesar [X%]' : 'meningkatkan performa/stabilitas sebesar [X%] dan menekan bug hingga [N%]')
+        : (hasOwnMetric ? 'improving system reliability by [X%]' : 'improving performance by [X%] and reducing defects by [N%]');
+    } else if (/produk|product|roadmap|backlog|sprint|scrum|user story|proyek|project|timeline|milestone/i.test(lower)) {
+      if (!leadAction) leadAction = isId ? 'Mengoordinasikan' : 'Orchestrated';
+      methodZ = isId ? 'melalui pemetaan prioritas dan sinkronisasi lintas tim' : 'through prioritized sprint milestones and cross-team alignment';
+      outcomeY = isId
+        ? (hasOwnMetric ? 'mencapai ketepatan rilis sebesar [X%]' : 'mencapai ketepatan delivery [X%] dan mempercepat siklus eksekusi [N%]')
+        : (hasOwnMetric ? 'achieving [X%] on-time milestone delivery' : 'achieving [X%] on-time delivery across [N initiatives]');
+    } else if (/marketing|pemasaran|campaign|iklan|ads|sosmed|social media|konten|content|leads|sales|penjualan|roi|omzet|pelanggan|customer|klien|client|order/i.test(lower)) {
+      if (!leadAction) leadAction = isId ? 'Mengeksekusi dan mengoptimalkan' : 'Executed and optimized';
+      methodZ = isId ? 'berbasis evaluasi metrik audiens dan SLA respons terukur' : 'backed by audience metrics and standardized response SLAs';
+      outcomeY = isId
+        ? (hasOwnMetric ? 'meningkatkan konversi/kepuasan sebesar [X%]' : 'meningkatkan engagement atau konversi sebesar [X%] dari [N target]')
+        : (hasOwnMetric ? 'lifting conversion or satisfaction by [X%]' : 'lifting engagement or conversion by [X%] across [N targets]');
+    } else {
+      if (!leadAction) leadAction = isId ? 'Mengoptimalkan' : 'Optimized';
+      methodZ = isId ? 'melalui alur kerja terstandar dan evaluasi berkala' : 'through standardized workflows and periodic quality checks';
+      outcomeY = isId
+        ? (hasOwnMetric ? 'meningkatkan efisiensi eksekusi sebesar [X%]' : 'meningkatkan efisiensi kerja sebesar [X%] dan menghemat [N jam/minggu]')
+        : (hasOwnMetric ? 'improving execution efficiency by [X%]' : 'improving operational efficiency by [X%] and saving [N hours/week]');
     }
 
-    // 2. Context: Training / Learning / Mentoring / Shadow Teacher / Education
-    if (/train|pelatihan|ajar|didik|mentor|curriculum|kurikulum|siswa|murid|student|shadow|kelas|class|workshop|pendamping/i.test(lower)) {
-      return pick(lang === 'id' ? [
-        'Merancang program pembelajaran dan pendampingan terstruktur berbasis asesmen individual, mendongkrak penguasaan kompetensi target sebesar 35% dengan tingkat kepuasan 96%.',
-        'Mengimplementasikan modul evaluasi perkembangan dan bimbingan berkala bagi 30+ peserta didik, meningkatkan kemandirian belajar dan ketercapaian target kurikulum sebesar 40%.'
-      ] : [
-        'Designed and executed structured individualized learning pathways, driving a 35% increase in target competency mastery while securing a 96% participant satisfaction rating.',
-        'Implemented personalized progress-tracking rubrics across 30+ learners, boosting curriculum milestone completion rates by 40% within one academic term.'
-      ]);
+    // Rotate subtle framing for multiple bullets without altering the candidate's real context
+    if (variantIndex % 2 === 1) {
+      return isId
+        ? `${leadAction} ${topicText} ${methodZ}, sehingga berhasil ${outcomeY}.`
+        : `${leadAction} ${topicText} ${methodZ}, resulting in ${outcomeY}.`;
     }
-
-    // 3. Context: HR Operations / Administration / Legal / Compliance
-    if (/administrasi|operasional|dokumen|surat|bpjs|payroll|absensi|karyawan|employee|people|kebijakan|policy|arsip|kontrak|legal/i.test(lower)) {
-      return pick(lang === 'id' ? [
-        'Mendigitalkan alur administrasi SDM dan audit kepatuhan data personil untuk 120+ karyawan, menghemat 14 jam kerja operasional per minggu serta menekan deviasi kepatuhan hingga 0%.',
-        'Menstandardisasi sistem pengarsipan dokumen dan pemrosesan kontrak internal, memangkas waktu penelusuran berkas sebesar 50% dan memastikan ketepatan jadwal payroll 100%.'
-      ] : [
-        'Digitized HR administrative workflows and personnel compliance records across 120+ employees, saving 14 operational hours weekly while reducing internal audit variances to 0%.',
-        'Standardized digital document indexing and contract lifecycle tracking, cutting record retrieval time by 50% and maintaining 100% on-time payroll compliance.'
-      ]);
-    }
-
-    // 4. Context: Finance / Accounting / Tax / Budget
-    if (/keuangan|finance|akuntansi|accounting|pajak|tax|invoice|tagihan|anggaran|budget|jurnal|rekonsiliasi|audit/i.test(lower)) {
-      return pick(lang === 'id' ? [
-        'Mengotomatisasi proses rekonsiliasi transaksi dan pelaporan keuangan bulanan, memangkas waktu tutup buku (closing) sebesar 40% dengan tingkat akurasi audit 99.8%.',
-        'Mengelola kontrol anggaran operasional dan verifikasi invoice vendor bernilai Rp500jt+, menekan pemborosan biaya sebesar 15% tanpa mengganggu SLA pembayaran.'
-      ] : [
-        'Automated monthly financial reconciliation and general ledger workflows, accelerating month-end closing by 40% while sustaining 99.8% audit accuracy.',
-        'Managed operational budget controls and vendor invoice audits, reducing recurring overhead costs by 15% with 100% on-time settlement compliance.'
-      ]);
-    }
-
-    // 5. Context: Data Analysis / Business Analysis / Excel / Dashboard
-    if (/data|analis|analisis|analyst|excel|dashboard|visual|bi\b|laporan|report|metrik|metric|sql|python|kpi/i.test(lower)) {
-      return pick(lang === 'id' ? [
-        'Membangun automated data model dan dashboard analitik interaktif, memangkas siklus pembuatan laporan rutin sebesar 65% dan menyajikan insights akurat untuk keputusan manajerial.',
-        'Menganalisis tren performa operasional dari 50.000+ baris data menggunakan Excel/SQL, mengidentifikasi bottleneck utama yang berhasil meningkatkan efisiensi proses sebesar 24%.'
-      ] : [
-        'Architected automated data pipelines and executive dashboards, reducing weekly reporting cycles by 65% while delivering real-time actionable intelligence to leadership.',
-        'Analyzed operational datasets exceeding 50,000+ records via SQL and BI tooling, uncovering workflow bottlenecks that lifted process efficiency by 24%.'
-      ]);
-    }
-
-    // 6. Context: Software Engineering / Web / Tech / QA
-    if (/code|koding|web|aplikasi|software|fitur|feature|bug|api|database|system|frontend|backend|react|git|testing|qa\b/i.test(lower)) {
-      return pick(lang === 'id' ? [
-        'Mengarsitekturi dan merilis modul sistem berkinerja tinggi, menurunkan latensi API p95 sebesar 38% serta mempertahankan uptime operasional pada standar 99.9% SLA.',
-        'Mengotomatisasi skenario pengujian regresi dan refactoring komponen inti, memangkas bug produksi pasca-rilis sebesar 45% dan mempercepat siklus deployment tim sebesar 30%.'
-      ] : [
-        'Architected and deployed high-throughput system modules, reducing p95 API response latency by 38% while sustaining a 99.9% operational uptime SLA.',
-        'Automated end-to-end regression suites and refactored core UI/API bottlenecks, cutting post-release production defects by 45% and accelerating release velocity by 30%.'
-      ]);
-    }
-
-    // 7. Context: Product Management / Agile / Project
-    if (/produk|product|roadmap|backlog|sprint|scrum|user story|proyek|project|timeline|milestone/i.test(lower)) {
-      return pick(lang === 'id' ? [
-        'Memimpin riset discovery dan delivery roadmap produk lintas divisi, meningkatkan adopsi fitur baru sebesar 42% dan memangkas cycle time sprint engineering hingga 25%.',
-        'Mengkoordinasikan eksekusi 6+ proyek strategis lintas fungsi dengan metodologi Agile, mencapai tingkat ketepatan rilis (on-time delivery) 95% sesuai target bisnis.'
-      ] : [
-        'Orchestrated product discovery and cross-functional roadmap execution, increasing new feature adoption by 42% and shortening sprint engineering cycle time by 25%.',
-        'Directed 6+ cross-functional Agile delivery initiatives from scoping to launch, achieving a 95% on-time milestone completion rate.'
-      ]);
-    }
-
-    // 8. Context: Digital Marketing / Growth / Sales / Social Media
-    if (/marketing|pemasaran|campaign|iklan|ads|sosmed|social media|konten|content|leads|sales|penjualan|roi|omzet|pelanggan|customer|klien|client/i.test(lower)) {
-      return pick(lang === 'id' ? [
-        'Mengeksekusi strategi kampanye berbasis data analitik performa, melipatgandakan Return on Ad Spend (ROAS) hingga 3.6x dan mendongkrak perolehan prospek (leads) sebesar 48%.',
-        'Membangun strategi retensi dan komunikasi pelanggan terukur, meningkatkan tingkat konversi penjualan sebesar 27% dan menjaga skor kepuasan klien di angka 4.8/5.'
-      ] : [
-        'Executed data-driven performance campaigns, scaling Return on Ad Spend (ROAS) to 3.6x while generating a 48% increase in qualified inbound lead acquisitions.',
-        'Spearheaded structured client engagement and retention playbooks, lifting sales conversion rates by 27% while sustaining a 4.8/5 customer satisfaction score.'
-      ]);
-    }
-
-    // 9. Adaptive Context: Preserve candidate's actual core topic + role alignment
-    const topicLabel = hasTopic ? coreTopic : (roleName || (lang === 'id' ? 'operasional inti' : 'core operations'));
-    return pick(lang === 'id' ? [
-      `Mengoptimalkan pelaksanaan ${topicLabel} melalui standardisasi alur kerja terukur, meningkatkan efisiensi tim sebesar 32% dan menjaga tingkat ketepatan delivery 98%.`,
-      `Memimpin inisiatif ${topicLabel} bersama pemangku kepentingan terkait, memangkas waktu penyelesaian tugas sebesar 25% serta melampaui target KPI ${roleName || 'divisi'}.`
-    ] : [
-      `Spearheaded the systematic execution of ${topicLabel} via standardized workflows, accelerating team operational efficiency by 32% with a 98% quality delivery benchmark.`,
-      `Led cross-functional ${topicLabel} initiatives aligned with ${roleName || 'departmental'} KPIs, cutting turnaround time by 25% while exceeding quarterly quality targets.`
-    ]);
+    return isId
+      ? `${leadAction} ${topicText} ${methodZ}, untuk ${outcomeY}.`
+      : `${leadAction} ${topicText} ${methodZ}, ${outcomeY}.`;
   }
 
 // --------------------------------------------------------------------------
