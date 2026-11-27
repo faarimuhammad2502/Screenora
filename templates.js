@@ -293,6 +293,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
 
       // Common card elements
       btnDownloadDocx: 'Unduh Format Word (.docx)',
+      btnUnlockProDoc: 'Unduh .doc (Rp 25.000)',
       btnCopyText: 'Salin Teks',
       btnPreview: 'Pratinjau',
       hoverPreview: 'Pratinjau Dokumen Lengkap',
@@ -448,6 +449,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
 
       // Common card elements
       btnDownloadDocx: 'Download Word Format (.docx)',
+      btnUnlockProDoc: 'Download .doc (Rp 25.000)',
       btnCopyText: 'Copy Text',
       btnPreview: 'Preview',
       hoverPreview: 'Full Document Preview',
@@ -587,11 +589,14 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     ? urlLang
     : ((storedLang === 'id' || storedLang === 'en') ? storedLang : 'id');
 
+  const PRO_TEMPLATE_KEYS = new Set(['executive_leadership', 'silicon_valley']);
+
   const state = {
     theme: localStorage.getItem('screenora_theme') || 'dark',
     language: initialLang,
     activeFilter: 'all',
     currentActiveTemplate: null,
+    pendingProTemplate: null,
     currentBuilderTemplate: 'classic_corporate',
     payToken: (() => {
       try {
@@ -864,10 +869,36 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     URL.revokeObjectURL(url);
   }
 
-  function downloadTemplate(templateKey) {
+  async function downloadTemplate(templateKey) {
     const tmpl = TEMPLATES[templateKey];
     if (!tmpl) {
       showToast(state.language === 'id' ? 'Template tidak ditemukan.' : 'Template not found.');
+      return;
+    }
+
+    if (PRO_TEMPLATE_KEYS.has(templateKey)) {
+      if (state.payToken) {
+        try {
+          const res = await fetch('/api/verify-download', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: state.payToken })
+          });
+          const data = await res.json().catch(() => ({}));
+          if (res.ok && data.ok) {
+            exportPlainTextToWord(tmpl.plainText, tmpl.title, tmpl.filename);
+            showToast(state.language === 'id' ? `Template Pro ${tmpl.title} berhasil diunduh!` : `Pro Template ${tmpl.title} downloaded successfully!`);
+            return;
+          }
+        } catch (_) {
+          // Fall through to payment modal
+        }
+        state.payToken = '';
+        try { sessionStorage.removeItem('screenora_pay_token'); } catch (_) {}
+      }
+      state.pendingProTemplate = templateKey;
+      closePreviewModal();
+      openPayModal();
       return;
     }
 
@@ -926,10 +957,13 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     const metaMap = {
       classic_corporate: { titleKey: 'c1Title', descKey: 'c1Desc', tag: lang === 'en' ? 'NATIONAL STANDARD • OFFICIAL 1-COLUMN' : 'STANDAR NASIONAL • 1-KOLOM RESMI' },
       fresh_graduate: { titleKey: 'c2Title', descKey: 'c2Desc', tag: lang === 'en' ? 'NATIONAL STANDARD • ENTRY LEVEL' : 'STANDAR NASIONAL • ENTRY LEVEL' },
+      executive_leadership: { titleKey: 'c3Title', descKey: 'c3Desc', tag: lang === 'en' ? 'PRO TEMPLATE • EXECUTIVE & P&L' : 'TEMPLATE PRO • EKSEKUTIF & P&L' },
       global_tech: { titleKey: 'c4Title', descKey: 'c4Desc', tag: 'INTERNATIONAL ATS • WORKDAY & GREENHOUSE READY' },
-      global_product: { titleKey: 'c5Title', descKey: 'c5Desc', tag: lang === 'en' ? 'INTERNATIONAL ATS • METRIC & KPI FOCUSED' : 'STANDAR INTERNASIONAL • METRIC & KPI' }
+      global_product: { titleKey: 'c5Title', descKey: 'c5Desc', tag: lang === 'en' ? 'INTERNATIONAL ATS • METRIC & KPI FOCUSED' : 'STANDAR INTERNASIONAL • METRIC & KPI' },
+      silicon_valley: { titleKey: 'c6Title', descKey: 'c6Desc', tag: lang === 'en' ? 'PRO TEMPLATE • SILICON VALLEY ELITE' : 'TEMPLATE PRO • SILICON VALLEY ELITE' }
     };
 
+    const isPro = PRO_TEMPLATE_KEYS.has(templateKey);
     const meta = metaMap[templateKey];
     if (DOM.previewTag) DOM.previewTag.textContent = meta ? meta.tag : tmpl.tag;
     if (DOM.previewTitle) DOM.previewTitle.textContent = (meta && dict[meta.titleKey]) ? dict[meta.titleKey] : tmpl.title;
@@ -941,10 +975,19 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     }
 
     if (DOM.previewDownloadBtn) {
+      DOM.previewDownloadBtn.textContent = isPro ? dict.btnUnlockProDoc : dict.btnDownloadDocx;
       DOM.previewDownloadBtn.onclick = () => downloadTemplate(templateKey);
     }
     if (DOM.previewCopyBtn) {
-      DOM.previewCopyBtn.onclick = () => copyTemplateText(templateKey);
+      DOM.previewCopyBtn.onclick = () => {
+        if (isPro && !state.payToken) {
+          state.pendingProTemplate = templateKey;
+          closePreviewModal();
+          openPayModal();
+          return;
+        }
+        copyTemplateText(templateKey);
+      };
     }
 
     DOM.previewModalOverlay.classList.remove('hidden');
@@ -1416,7 +1459,13 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
             }
             closePayModal();
             showToast(dict.paySuccessToast);
-            downloadBuilderDoc({ silentToast: true });
+            if (state.pendingProTemplate) {
+              const targetKey = state.pendingProTemplate;
+              state.pendingProTemplate = null;
+              await downloadTemplate(targetKey);
+            } else {
+              downloadBuilderDoc({ silentToast: true });
+            }
           } else if (res.status === 429) {
             showToast(state.language === 'id' ? 'Terlalu banyak percobaan. Tunggu 5 menit.' : 'Too many attempts. Please wait 5 minutes.');
           } else {
