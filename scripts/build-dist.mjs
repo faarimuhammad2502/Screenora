@@ -7,7 +7,7 @@ import { spawnSync } from 'node:child_process';
 const CONFIG = {
   htmlFiles: ['index.html', 'builder.html', 'screener.html', 'templates.html', 'templates-pro.html'],
   jsFiles: ['app.js', 'builder.js', 'templates.js'],
-  cssFiles: ['style.css'],
+  cssFiles: ['style.css', 'tailwind.css'],
   staticFiles: ['banner.png', 'banner.svg', 'robots.txt', 'sitemap.xml', 'vercel.json'],
   copyDirs: ['api']
 };
@@ -76,7 +76,20 @@ function copyRecursive(src, dest) {
   }
 }
 
+function buildTailwindCss() {
+  const isWin = process.platform === 'win32';
+  const localBin = path.join(rootDir, 'node_modules', '.bin', isWin ? 'tailwindcss.cmd' : 'tailwindcss');
+  const args = ['-i', 'src/tailwind.input.css', '-o', 'tailwind.css', '--minify'];
+  const res = fs.existsSync(localBin)
+    ? spawnSync(isWin ? 'cmd.exe' : localBin, isWin ? ['/d', '/c', localBin, ...args] : args, { cwd: rootDir, encoding: 'utf8' })
+    : spawnSync(isWin ? 'cmd.exe' : 'npx', isWin ? ['/d', '/c', 'npx', '-y', 'tailwindcss@3', ...args] : ['-y', 'tailwindcss@3', ...args], { cwd: rootDir, encoding: 'utf8' });
+  if (res.status !== 0) {
+    throw new Error(`Tailwind build failed: ${res.stderr || res.stdout}`);
+  }
+}
+
 function build() {
+  buildTailwindCss();
   fs.rmSync(distDir, { recursive: true, force: true });
   fs.mkdirSync(distDir, { recursive: true });
 

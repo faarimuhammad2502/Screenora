@@ -1,0 +1,46 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Page palette tokens preserving exact theme shades across Landing/Screener and Templates/Builder */
+:root {
+  --twc-dark-bg: 10 11 14;
+  --twc-dark-surface: 17 19 25;
+  --twc-dark-border: 30 35 46;
+  --twc-dark-well: 22 26 34;
+  --twc-dark-wellBorder: 38 45 59;
+  --twc-dark-textPri: 248 250 252;
+  --twc-dark-textSec: 203 213 225;
+  --twc-dark-textMuted: 148 163 184;
+
+  --twc-light-bg: 248 249 251;
+  --twc-light-surface: 255 255 255;
+  --twc-light-border: 226 230 237;
+  --twc-light-well: 241 243 247;
+  --twc-light-wellBorder: 222 226 234;
+  --twc-light-textPri: 10 13 20;
+  --twc-light-textSec: 95 102 117;
+  --twc-light-textMuted: 148 156 174;
+
+  --twc-brand-emeraldBg: 19 33 27;
+  --twc-brand-amberBg: 36 29 18;
+}
+
+html[data-page="suite"] {
+  --twc-dark-bg: 8 10 15;
+  --twc-dark-surface: 14 18 27;
+  --twc-dark-border: 26 34 52;
+  --twc-dark-well: 19 24 36;
+  --twc-dark-wellBorder: 30 38 56;
+
+  --twc-light-bg: 248 249 250;
+  --twc-light-border: 203 213 225;
+  --twc-light-well: 241 245 249;
+  --twc-light-wellBorder: 226 232 240;
+  --twc-light-textPri: 15 23 42;
+  --twc-light-textSec: 71 85 105;
+  --twc-light-textMuted: 148 163 184;
+
+  --twc-brand-emeraldBg: 13 36 28;
+  --twc-brand-amberBg: 39 30 14;
+}

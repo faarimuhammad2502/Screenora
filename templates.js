@@ -1325,6 +1325,35 @@ Unlock with a verified Screenora Pro access code to view the full resume text, c
         if (e.target === DOM.previewModalOverlay) closePreviewModal();
       });
     }
+
+    // Delegated handler replacing inline onclick attributes for strict CSP compliance
+    const handleTplAction = (action, templateKey) => {
+      if (action === 'preview' && templateKey) {
+        openPreviewModal(templateKey);
+      } else if (action === 'download' && templateKey) {
+        downloadTemplate(templateKey);
+      } else if (action === 'copy' && templateKey) {
+        copyTemplateText(templateKey);
+      } else if (action === 'close-preview') {
+        closePreviewModal();
+      } else if (action === 'close-coming-soon') {
+        closeComingSoonModal();
+      }
+    };
+
+    document.addEventListener('click', (e) => {
+      const trigger = e.target.closest('[data-tpl-action]');
+      if (!trigger) return;
+      handleTplAction(trigger.getAttribute('data-tpl-action'), trigger.getAttribute('data-template-key'));
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const trigger = e.target.closest('[data-tpl-action][role="button"]');
+      if (!trigger) return;
+      e.preventDefault();
+      handleTplAction(trigger.getAttribute('data-tpl-action'), trigger.getAttribute('data-template-key'));
+    });
     if (DOM.comingSoonModalOverlay) {
       DOM.comingSoonModalOverlay.addEventListener('click', (e) => {
         if (e.target === DOM.comingSoonModalOverlay) closeComingSoonModal();

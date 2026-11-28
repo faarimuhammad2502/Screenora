@@ -4,7 +4,11 @@
   "version": "1.0.0",
   "description": "Screenora — Platform Skrining CV ATS, Template & Live CV Builder",
   "scripts": {
+    "build:css": "tailwindcss -i src/tailwind.input.css -o tailwind.css --minify",
     "build:hardened": "node scripts/build-dist.mjs"
   },
-  "author": "Muhammad Faari Akbar (MFA-EV)"
+  "author": "Muhammad Faari Akbar (MFA-EV)",
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
+  }
 }
