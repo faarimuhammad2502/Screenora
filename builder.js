@@ -422,7 +422,7 @@ CERTIFICATIONS
   const state = {
     theme: localStorage.getItem('screenora_theme') || 'dark',
     language: initialLang,
-    currentBuilderTemplate: (urlTemplate && TEMPLATES[urlTemplate]) ? urlTemplate : '',
+    currentBuilderTemplate: (urlTemplate && Object.hasOwn(TEMPLATES, urlTemplate)) ? urlTemplate : '',
     payToken: (() => {
       try {
         return sessionStorage.getItem('screenora_pay_token') || '';
@@ -664,7 +664,7 @@ CERTIFICATIONS
   }
 
   function parseTemplateToBuilderFields(templateKey) {
-    const tmpl = TEMPLATES[templateKey] || TEMPLATES.classic_corporate;
+    const tmpl = (templateKey && Object.hasOwn(TEMPLATES, templateKey) ? TEMPLATES[templateKey] : null) || TEMPLATES.classic_corporate;
     return parsePlainTextIntoBuilderFields(tmpl && tmpl.plainText ? tmpl.plainText : '');
   }
 
@@ -1144,7 +1144,7 @@ CERTIFICATIONS
   }
 
   function loadTemplateIntoBuilder(templateKey) {
-    if (!templateKey || !TEMPLATES[templateKey]) {
+    if (!templateKey || !Object.hasOwn(TEMPLATES, templateKey)) {
       resetBuilderFields();
       return;
     }
@@ -1558,12 +1558,12 @@ CERTIFICATIONS
         renderBuilderLivePreview();
         const dict = i18n[state.language] || i18n.id;
         showToast(dict.screenerDraftLoaded);
-      } else if (urlTemplate && TEMPLATES[urlTemplate]) {
+      } else if (urlTemplate && Object.hasOwn(TEMPLATES, urlTemplate)) {
         loadTemplateIntoBuilder(urlTemplate);
       } else {
         resetBuilderFields();
       }
-    } else if (urlTemplate && TEMPLATES[urlTemplate]) {
+    } else if (urlTemplate && Object.hasOwn(TEMPLATES, urlTemplate)) {
       loadTemplateIntoBuilder(urlTemplate);
     } else {
       resetBuilderFields();

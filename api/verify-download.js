@@ -9,10 +9,14 @@ const failedAttempts = new Map();
 const DEFAULT_CODE_SHA256 = '6272efa34ec38f6e05a69c5cb273eb315d8788605cd397d35b24b08cf861d64c';
 
 function getClientIp(req) {
-  // Prioritize Vercel edge-set headers that cannot be spoofed by clients
-  const vercelIp = req.headers['x-vercel-forwarded-for'] || req.headers['x-real-ip'];
+  // Prioritize Vercel edge-set header before potentially spoofable forwarding headers
+  const vercelIp = req.headers['x-vercel-forwarded-for'];
   if (typeof vercelIp === 'string' && vercelIp.length > 0) {
     return vercelIp.split(',')[0].trim();
+  }
+  const realIp = req.headers['x-real-ip'];
+  if (typeof realIp === 'string' && realIp.length > 0) {
+    return realIp.split(',')[0].trim();
   }
   const fwd = req.headers['x-forwarded-for'];
   if (typeof fwd === 'string' && fwd.length > 0) {
@@ -58,7 +62,8 @@ function clearFailures(ip) {
 }
 
 function getSigningSecret() {
-  return process.env.SCREENORA_TOKEN_SECRET || process.env.VERCEL_PROJECT_ID || 'screenora-default-hmac-key-v1';
+  // Prefer dedicated server secret env var (never derive secret material from non-secret project IDs)
+  return process.env.SCREENORA_TOKEN_SECRET || 'screenora-default-hmac-key-v1';
 }
 
 function sha256Hex(str) {
@@ -129,6 +134,11 @@ module.exports = async function handler(req, res) {
     return res.status(405).json({ ok: false, error: 'Method not allowed' });
   }
 
+  const contentType = String(req.headers['content-type'] || '').toLowerCase();
+  if (!contentType.includes('application/json')) {
+    return res.status(415).json({ ok: false, error: 'Content-Type must be application/json' });
+  }
+
   const ip = getClientIp(req);
   if (isRateLimited(ip)) {
     return res.status(429).json({
@@ -155,8 +165,10 @@ module.exports = async function handler(req, res) {
   // 1. Re-verify existing session token
   if (typeof body.token === 'string' && body.token.length > 0 && body.token.length <= 512) {
     if (verifySessionToken(body.token)) {
+      clearFailures(ip);
       return res.status(200).json({ ok: true, token: body.token });
     }
+    recordFailure(ip);
     return res.status(401).json({ ok: false, error: 'Session token expired or invalid' });
   }
 

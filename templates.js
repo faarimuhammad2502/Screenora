@@ -870,7 +870,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   }
 
   async function downloadTemplate(templateKey) {
-    const tmpl = TEMPLATES[templateKey];
+    const tmpl = Object.hasOwn(TEMPLATES, templateKey) ? TEMPLATES[templateKey] : null;
     if (!tmpl) {
       showToast(state.language === 'id' ? 'Template tidak ditemukan.' : 'Template not found.');
       return;
@@ -921,7 +921,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   }
 
   function copyTemplateText(templateKey) {
-    const tmpl = TEMPLATES[templateKey];
+    const tmpl = Object.hasOwn(TEMPLATES, templateKey) ? TEMPLATES[templateKey] : null;
     if (!tmpl) return;
     copyTextToClipboard(tmpl.plainText);
   }
@@ -947,7 +947,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   // 9. MODALS (PREVIEW & COMING SOON)
   // --------------------------------------------------------------------------
   function openPreviewModal(templateKey) {
-    const tmpl = TEMPLATES[templateKey];
+    const tmpl = Object.hasOwn(TEMPLATES, templateKey) ? TEMPLATES[templateKey] : null;
     if (!tmpl || !DOM.previewModalOverlay) return;
 
     state.currentActiveTemplate = templateKey;
@@ -1034,7 +1034,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   }
 
   function parseTemplateToBuilderFields(templateKey) {
-    const tmpl = TEMPLATES[templateKey] || TEMPLATES.classic_corporate;
+    const tmpl = (Object.hasOwn(TEMPLATES, templateKey) ? TEMPLATES[templateKey] : null) || TEMPLATES.classic_corporate;
     const result = {
       name: '',
       contact: '',
@@ -1104,7 +1104,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     const skills = DOM.builderSkills ? DOM.builderSkills.value.trim() : '';
 
     const isIntlTemplate = ['global_tech', 'global_product', 'silicon_valley'].includes(state.currentBuilderTemplate);
-    const useEnLabels = isIntlTemplate || (!TEMPLATES[state.currentBuilderTemplate] && state.language === 'en');
+    const useEnLabels = isIntlTemplate || (!Object.hasOwn(TEMPLATES, state.currentBuilderTemplate) && state.language === 'en');
 
     const headers = useEnLabels
       ? {
@@ -1171,7 +1171,7 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   }
 
   function openCvBuilder(templateKey = 'classic_corporate') {
-    const resolvedKey = TEMPLATES[templateKey] ? templateKey : 'classic_corporate';
+    const resolvedKey = Object.hasOwn(TEMPLATES, templateKey) ? templateKey : 'classic_corporate';
     state.currentBuilderTemplate = resolvedKey;
 
     if (DOM.builderTemplateSelect) {

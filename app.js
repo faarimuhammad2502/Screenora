@@ -1955,10 +1955,10 @@ KEAHLIAN & KOMPETENSI
       const arrayBuffer = await file.arrayBuffer();
       let pdf;
       try {
-        pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+        pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer, isEvalSupported: false }).promise;
       } catch (_workerErr) {
         // Fallback to in-thread parsing if browser/CSP/adblocker blocks cross-origin PDF worker
-        pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer, disableWorker: true }).promise;
+        pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer, disableWorker: true, isEvalSupported: false }).promise;
       }
       const pageLimit = Math.min(pdf.numPages, MAX_PDF_PAGES);
       const pages = [];
@@ -2021,15 +2021,50 @@ KEAHLIAN & KOMPETENSI
       if (!docXmlFile) {
         throw new Error('Invalid DOCX structure: word/document.xml not found.');
       }
-      if (docXmlFile._data && typeof docXmlFile._data.uncompressedSize === 'number' && docXmlFile._data.uncompressedSize > MAX_DOCX_XML_BYTES) {
-        throw new Error('DOCX content exceeds safe size limit.');
-      }
-      const xmlStr = await docXmlFile.async('string');
+      const xmlStr = await new Promise((resolve, reject) => {
+        const chunks = [];
+        let totalBytes = 0;
+        let settled = false;
+        const stream = docXmlFile.internalStream('uint8array');
+        stream
+          .on('data', (chunk) => {
+            if (settled) return;
+            totalBytes += chunk.byteLength;
+            if (totalBytes > MAX_DOCX_XML_BYTES) {
+              settled = true;
+              try { if (typeof stream.pause === 'function') stream.pause(); } catch (_) {}
+              reject(new Error('DOCX content exceeds safe size limit.'));
+              return;
+            }
+            chunks.push(chunk);
+          })
+          .on('error', (err) => {
+            if (!settled) {
+              settled = true;
+              reject(err);
+            }
+          })
+          .on('end', () => {
+            if (settled) return;
+            settled = true;
+            const merged = new Uint8Array(totalBytes);
+            let offset = 0;
+            for (const c of chunks) {
+              merged.set(c, offset);
+              offset += c.byteLength;
+            }
+            resolve(new TextDecoder('utf-8').decode(merged));
+          });
+        stream.resume();
+      });
       if (xmlStr.length > MAX_DOCX_XML_BYTES) {
         throw new Error('DOCX content exceeds safe size limit.');
       }
       const parser = new DOMParser();
       const xmlDoc = parser.parseFromString(xmlStr, 'application/xml');
+      if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
+        throw new Error('Malformed DOCX XML content.');
+      }
       const paragraphs = Array.from(xmlDoc.getElementsByTagName('w:p'));
       const lines = paragraphs
         .map(p =>
@@ -3234,7 +3269,7 @@ KEAHLIAN & KOMPETENSI
 
     DOM.scoreTierLabel.textContent = res.tierName;
     DOM.scoreTierLabel.style.setProperty('color', palette.color, 'important');
-    DOM.tierBadgePill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-current"></span><span>${res.tierBadge}</span>`;
+    DOM.tierBadgePill.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-current"></span><span>${escapeHtml(res.tierBadge)}</span>`;
     DOM.tierBadgePill.style.setProperty('color', palette.color, 'important');
     DOM.tierBadgePill.style.setProperty('border-color', palette.border, 'important');
     DOM.tierBadgePill.style.setProperty('background-color', palette.bg, 'important');
@@ -4136,15 +4171,36 @@ KEAHLIAN & KOMPETENSI
         }
       }
 
-      if (saved.view === 'results' && saved.currentAnalysis) {
-        state.cvText = saved.cvText || '';
+      if (saved.view === 'results' && typeof saved.cvText === 'string' && saved.cvText.trim()) {
+        state.cvText = saved.cvText.slice(0, 100000);
         if (DOM.rawCvText) DOM.rawCvText.value = state.cvText;
-        state.currentAnalysis = saved.currentAnalysis;
+        state.currentAnalysis = analyzeResume(state.cvText, state.selectedRole);
         renderAnalysisResults(state.currentAnalysis, { skipScroll: true });
-      } else if (saved.view === 'compareResults' && saved.currentComparison) {
-        if (DOM.compareTextA) DOM.compareTextA.value = saved.compareTextA || '';
-        if (DOM.compareTextB) DOM.compareTextB.value = saved.compareTextB || '';
-        state.currentComparison = saved.currentComparison;
+      } else if (
+        saved.view === 'compareResults' &&
+        typeof saved.compareTextA === 'string' &&
+        typeof saved.compareTextB === 'string' &&
+        saved.compareTextA.trim().length >= 40 &&
+        saved.compareTextB.trim().length >= 40
+      ) {
+        const textA = saved.compareTextA.trim().slice(0, 100000);
+        const textB = saved.compareTextB.trim().slice(0, 100000);
+        if (DOM.compareTextA) DOM.compareTextA.value = textA;
+        if (DOM.compareTextB) DOM.compareTextB.value = textB;
+        const lang = state.language;
+        const savedNameA = saved.currentComparison && typeof saved.currentComparison.nameA === 'string'
+          ? saved.currentComparison.nameA.slice(0, 120)
+          : i18n[lang].compareCandidateA;
+        const savedNameB = saved.currentComparison && typeof saved.currentComparison.nameB === 'string'
+          ? saved.currentComparison.nameB.slice(0, 120)
+          : i18n[lang].compareCandidateB;
+        state.currentComparison = {
+          resA: analyzeResume(textA, state.selectedRole),
+          resB: analyzeResume(textB, state.selectedRole),
+          roleKey: state.selectedRole,
+          nameA: savedNameA,
+          nameB: savedNameB
+        };
         setInputMode('compare');
         renderComparisonResults(state.currentComparison, { skipScroll: true });
       }
