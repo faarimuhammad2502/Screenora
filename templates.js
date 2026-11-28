@@ -203,28 +203,15 @@ CERTIFICATIONS
       category: 'nasional',
       filename: 'CV_ATS_Executive_Leadership_Screenora.doc',
       description: 'Format 2-halaman berdensitas tinggi untuk Head of Department, General Manager, dan Direktur dengan tanggung jawab anggaran dan tim besar.',
-      plainText: `HENDRA WIJAYA, M.M.
-Jakarta Selatan, DKI Jakarta | +62 811-7788-9900 | hendra.wijaya@email.com | linkedin.com/in/hendrawijaya
+      isProLocked: true,
+      previewTeaser: `HENDRA WIJAYA, M.M.
+Jakarta Selatan, DKI Jakarta | Executive P&L Format (Screenora Pro)
 
 RINGKASAN EKSEKUTIF
-Executive Leader dengan 10+ tahun rekam jejak memimpin transformasi operasional multi-cabang, restrukturisasi proses bisnis, dan pengelolaan anggaran P&L hingga Rp 45 Miliar. Sukses meningkatkan margin operasional sebesar 18% dan memangkas biaya rantai pasok (supply chain) senilai Rp 8.2 Miliar melalui implementasi Lean Six Sigma dan otomatisasi ERP. Berpengalaman membina dan menyelaraskan 180+ staf lintas divisi Komersial, Supply Chain, dan People Operations.
+Executive Leader dengan 10+ tahun rekam jejak memimpin transformasi operasional multi-cabang dan pengelolaan anggaran P&L hingga Rp 45 Miliar...
 
-PENGALAMAN KEPEMIMPINAN
-
-PT ASTRA NUSANTARA MEGAH — Jakarta
-Head of Operations | Januari 2021 – Sekarang
-- Memegang akuntabilitas penuh atas anggaran operasional tahunan sebesar Rp 45 Miliar di 4 kantor cabang regional, mencatatkan efisiensi budget 14% di bawah plafon.
-- Memimpin transformasi digital alur gudang dan inventaris ke sistem ERP modern, mempercepat perputaran inventaris (Inventory Turnover) dari 3.2x menjadi 5.1x per tahun.
-- Mengembangkan program retensi talenta kunci bersama tim HR, menurunkan angka turn-over staf level supervisor dan manajerial dari 16% menjadi 4.5%.
-
-PT MULTI SARANA LOGISTIK — Surabaya
-Senior Operations Manager | Juni 2016 – Desember 2020
-- Mengawasi armada distribusi 60+ unit logistik dan 120 tenaga kerja lapangan dengan On-Time Delivery Rate 98.7%.
-- Menegosiasikan ulang kontrak 15 vendor pihak ketiga, menghasilkan penghematan biaya tahunan sebesar Rp 3.4 Miliar.
-
-PENDIDIKAN TINGGI
-UNIVERSITAS AIRLANGGA — Magister Manajemen (M.M.) | Lulus: 2016
-UNIVERSITAS BRAWIJAYA — Sarjana Teknik Industri (S.T.) | Lulus: 2013`
+[KONTEN LENGKAP TEMPLATE PRO TERKUNCI]
+Masukkan kode akses Screenora Pro untuk membuka pratinjau penuh, menyalin struktur ke Word/Docs, dan mengunduh berkas .doc siap edit.`
     },
 
     silicon_valley: {
@@ -234,31 +221,15 @@ UNIVERSITAS BRAWIJAYA — Sarjana Teknik Industri (S.T.) | Lulus: 2013`
       category: 'internasional',
       filename: 'Resume_Silicon_Valley_Startup_Screenora.doc',
       description: 'Layout 1-halaman ultra-padat dengan teknik penulisan high-signal low-noise untuk kandidat senior di ekosistem startup Seri A hingga Pra-IPO.',
-      plainText: `MARCUS VANCE
-San Francisco, CA (Open to Remote / Relocation) | marcus.vance@email.com | github.com/mvance | marcusvance.com
+      isProLocked: true,
+      previewTeaser: `MARCUS VANCE
+San Francisco, CA | Silicon Valley Elite Format (Screenora Pro)
 
 EXECUTIVE SUMMARY
-Staff Systems Architect with 8+ years scaling infrastructure from Seed to Series C ($80M ARR). Designed fault-tolerant Kubernetes mesh processing 40K req/sec at sub-50ms latency. Reduced cloud compute spend by $1.2M annually via spot-instance orchestration and eBPF kernel profiling.
+Staff Systems Architect with 8+ years scaling infrastructure from Seed to Series C ($80M ARR)...
 
-CORE EXPERTISE
-- Distributed Systems: Kubernetes, Terraform, AWS/GCP, Kafka, Envoy, eBPF, Go, Rust, PostgreSQL, Redis.
-- Architecture: High-Throughput Microservices, Zero-Trust Mesh, Multi-Region Active-Active DR.
-
-VENTURE EXPERIENCE
-
-HYPERSCALE AI (YC S21) — San Francisco, CA
-Staff Systems Architect | March 2022 – Present
-- Scaled core inference cluster from 20 to 500 GPUs with automated dynamic batching, saving $1.2M/yr in compute.
-- Engineered global edge proxy reducing p99 latency by 68% across US, EU, and APAC endpoints.
-- Mentored 14 core engineers, establishing 100% automated CI/CD canary deployments with zero production downtime.
-
-NEBULA CORE NETWORKS — Seattle, WA
-Lead Platform Engineer | January 2019 – February 2022
-- Architected multi-tenant Kubernetes platform supporting 12 internal engineering squads, cutting cluster deploy time by 75%.
-- Implemented distributed tracing with OpenTelemetry, decreasing mean-time-to-resolution (MTTR) by 55%.
-
-EDUCATION
-UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
+[PRO TEMPLATE CONTENT LOCKED]
+Unlock with a verified Screenora Pro access code to view the full resume text, copy cleanly, and download the editable .doc file.`
     }
   };
 
@@ -869,6 +840,28 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     URL.revokeObjectURL(url);
   }
 
+  async function fetchProTemplate(templateKey) {
+    if (!state.payToken) return null;
+    try {
+      const res = await fetch('/api/pro-template', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token: state.payToken, templateKey })
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok && data.template && data.template.plainText) {
+        return data.template;
+      }
+      if (res.status === 401) {
+        state.payToken = '';
+        try { sessionStorage.removeItem('screenora_pay_token'); } catch (_) {}
+      }
+    } catch (_) {
+      // Network or server unavailable
+    }
+    return null;
+  }
+
   async function downloadTemplate(templateKey) {
     const tmpl = Object.hasOwn(TEMPLATES, templateKey) ? TEMPLATES[templateKey] : null;
     if (!tmpl) {
@@ -878,23 +871,12 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
 
     if (PRO_TEMPLATE_KEYS.has(templateKey)) {
       if (state.payToken) {
-        try {
-          const res = await fetch('/api/verify-download', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ token: state.payToken })
-          });
-          const data = await res.json().catch(() => ({}));
-          if (res.ok && data.ok) {
-            exportPlainTextToWord(tmpl.plainText, tmpl.title, tmpl.filename);
-            showToast(state.language === 'id' ? `Template Pro ${tmpl.title} berhasil diunduh!` : `Pro Template ${tmpl.title} downloaded successfully!`);
-            return;
-          }
-        } catch (_) {
-          // Fall through to payment modal
+        const proTmpl = await fetchProTemplate(templateKey);
+        if (proTmpl) {
+          exportPlainTextToWord(proTmpl.plainText, proTmpl.title || tmpl.title, proTmpl.filename || tmpl.filename);
+          showToast(state.language === 'id' ? `Template Pro ${tmpl.title} berhasil diunduh!` : `Pro Template ${tmpl.title} downloaded successfully!`);
+          return;
         }
-        state.payToken = '';
-        try { sessionStorage.removeItem('screenora_pay_token'); } catch (_) {}
       }
       state.pendingProTemplate = templateKey;
       closePreviewModal();
@@ -920,9 +902,20 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     }
   }
 
-  function copyTemplateText(templateKey) {
+  async function copyTemplateText(templateKey) {
     const tmpl = Object.hasOwn(TEMPLATES, templateKey) ? TEMPLATES[templateKey] : null;
     if (!tmpl) return;
+    if (PRO_TEMPLATE_KEYS.has(templateKey)) {
+      const proTmpl = state.payToken ? await fetchProTemplate(templateKey) : null;
+      if (!proTmpl) {
+        state.pendingProTemplate = templateKey;
+        closePreviewModal();
+        openPayModal();
+        return;
+      }
+      copyTextToClipboard(proTmpl.plainText);
+      return;
+    }
     copyTextToClipboard(tmpl.plainText);
   }
 
@@ -969,9 +962,23 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     if (DOM.previewTitle) DOM.previewTitle.textContent = (meta && dict[meta.titleKey]) ? dict[meta.titleKey] : tmpl.title;
     if (DOM.previewSubtitle) DOM.previewSubtitle.textContent = (meta && dict[meta.descKey]) ? dict[meta.descKey] : tmpl.description;
     const previewContainer = DOM.previewModalContent || DOM.previewTextContent;
-    if (previewContainer) {
-      previewContainer.innerHTML = `<div style="background:#ffffff;color:#1E293B;font-family:Calibri,Arial,sans-serif;padding:24px 28px;border-radius:8px;border:1px solid #e2e8f0;box-shadow:0 4px 16px rgba(0,0,0,0.08);overflow-x:auto;word-break:break-word;">${renderPlainTextAsWordHtml(tmpl.plainText)}</div>`;
+    const renderPreviewBox = (rawText) => {
+      if (!previewContainer) return;
+      previewContainer.innerHTML = `<div style="background:#ffffff;color:#1E293B;font-family:Calibri,Arial,sans-serif;padding:24px 28px;border-radius:8px;border:1px solid #e2e8f0;box-shadow:0 4px 16px rgba(0,0,0,0.08);overflow-x:auto;word-break:break-word;">${renderPlainTextAsWordHtml(rawText)}</div>`;
       previewContainer.scrollTop = 0;
+    };
+
+    if (isPro) {
+      renderPreviewBox(tmpl.previewTeaser || '');
+      if (state.payToken) {
+        fetchProTemplate(templateKey).then((proTmpl) => {
+          if (proTmpl && state.currentActiveTemplate === templateKey) {
+            renderPreviewBox(proTmpl.plainText);
+          }
+        });
+      }
+    } else {
+      renderPreviewBox(tmpl.plainText);
     }
 
     if (DOM.previewDownloadBtn) {
@@ -980,12 +987,6 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     }
     if (DOM.previewCopyBtn) {
       DOM.previewCopyBtn.onclick = () => {
-        if (isPro && !state.payToken) {
-          state.pendingProTemplate = templateKey;
-          closePreviewModal();
-          openPayModal();
-          return;
-        }
         copyTemplateText(templateKey);
       };
     }
@@ -1171,7 +1172,9 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
   }
 
   function openCvBuilder(templateKey = 'classic_corporate') {
-    const resolvedKey = Object.hasOwn(TEMPLATES, templateKey) ? templateKey : 'classic_corporate';
+    const resolvedKey = (Object.hasOwn(TEMPLATES, templateKey) && !PRO_TEMPLATE_KEYS.has(templateKey))
+      ? templateKey
+      : 'classic_corporate';
     state.currentBuilderTemplate = resolvedKey;
 
     if (DOM.builderTemplateSelect) {
@@ -1365,8 +1368,26 @@ UNIVERSITY OF WASHINGTON — B.S. in Computer Engineering | 2018`
     }
 
     if (DOM.previewToBuilderBtn) {
-      DOM.previewToBuilderBtn.addEventListener('click', () => {
-        window.location.href = 'builder.html?template=' + encodeURIComponent(state.currentActiveTemplate || 'classic_corporate');
+      DOM.previewToBuilderBtn.addEventListener('click', async (e) => {
+        const activeKey = state.currentActiveTemplate || 'classic_corporate';
+        if (PRO_TEMPLATE_KEYS.has(activeKey)) {
+          e.preventDefault();
+          const proTmpl = state.payToken ? await fetchProTemplate(activeKey) : null;
+          if (!proTmpl) {
+            state.pendingProTemplate = activeKey;
+            closePreviewModal();
+            openPayModal();
+            return;
+          }
+          try {
+            sessionStorage.setItem('screenora_screener_draft', proTmpl.plainText);
+          } catch (_) {
+            // Ignore storage errors silently
+          }
+          window.location.href = 'builder.html?from=screener';
+          return;
+        }
+        window.location.href = 'builder.html?template=' + encodeURIComponent(activeKey);
       });
     }
 
